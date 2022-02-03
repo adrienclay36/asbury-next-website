@@ -1,0 +1,4 @@
+.btn {
+    -webkit-transition: background-color 600ms ease;
+    transition: background-color 600ms ease;
+}

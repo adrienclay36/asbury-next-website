@@ -1,0 +1,31 @@
+.imageDiv {
+  height: 500px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1629146468381-e8947bc2dfec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  position: fixed;
+  z-index: -1000;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.divPlaceholder {
+    height: 500px;
+}
+
+.content {
+  position: absolute;
+}
+
+.floatingImage {
+  position: fixed;
+  z-index: -1000;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
