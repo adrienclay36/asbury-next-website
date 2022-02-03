@@ -25,7 +25,7 @@ const Footer = () => {
             {navLinks.map((link) => {
               return (
                 <Link key={link.text} href={link.href} passHref>
-                  <li className="mb-2 cursor-pointer tracking-widest hover:text-seaFoam-400">
+                  <li className="lg:mb-6 cursor-pointer tracking-widest hover:text-seaFoam-400">
                     {link.text}
                   </li>
                 </Link>
