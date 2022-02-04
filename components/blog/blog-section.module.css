@@ -1,0 +1,8 @@
+.btn:active {
+    @apply bg-seaFoam-400 text-white;
+    outline: none;
+}
+.btn:focus {
+    @apply bg-seaFoam-400 text-white;
+    outline: none;
+}

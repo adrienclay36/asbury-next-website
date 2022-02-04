@@ -8,6 +8,7 @@ const Logo = ({ extraMargin }) => {
       width={153.6}
       src="/images/AsburyLogoFull.png"
       alt="Asbury Logo"
+      priority={true}
     />
   );
 };

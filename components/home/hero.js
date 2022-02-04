@@ -34,16 +34,16 @@ const Hero = () => {
           </p>
           <div id="action-buttons" className="mt-12">
             <MainButton onClick={() => router.push("/welcome")} margin={"mx-4"}>About</MainButton>
-            <MainButton margin={"mx-4"}>Worship</MainButton>
+            <MainButton onClick={() => router.push("/worship")} margin={"mx-4"}>Worship</MainButton>
           </div>
         </div>
         <div className="flex flex-1 justify-center mt-12">
-          <a href="#features">
+          <button onClick={() => {document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>
             <HiChevronDoubleDown
               className={`text-white opacity-70 cursor-pointer hover:text-seaFoam-300 ${styles.chevron}`}
               size={50}
             />
-          </a>
+          </button>
         </div>
       </div>
     </section>

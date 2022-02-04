@@ -4,7 +4,11 @@ import { navLinks } from '../navbar/navbar';
 import Link from 'next/link';
 import SocialIcons from '../navbar/social-icons';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
+
 const Footer = () => {
+  const router = useRouter();
   return (
     <footer className="py-8 bg-gray-100">
       <div className="container flex flex-col items-center">
@@ -28,7 +32,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="my-6 mt-12 lg:mt-4">
-          <Link href="/" passHref>
+          <button onClick={() => router.push("/")}>
             <Image
               className="max-h-16 cursor-pointer"
               src="/images/AsburyLogoFull.png"
@@ -36,7 +40,7 @@ const Footer = () => {
               height={64}
               width={153}
             />
-          </Link>
+          </button>
         </div>
         <div className="pb-10">
           <p className="text-center text-gray-400 text-xs">

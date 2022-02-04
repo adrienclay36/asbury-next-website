@@ -6,7 +6,7 @@ const BlogItem = ({ title, author, content, date }) => {
       {/* Author and Date */}
       <div className="flex flex-1 m-4">
         <h1 className="uppercase font-semibold text-seaFoam-600">{title}</h1>
-        <date className="ml-4 font-semibold text-seaFoam-400">{date}</date>
+        <p className="ml-4 font-semibold text-seaFoam-400">{date}</p>
       </div>
       <p className="ml-4 mb-4 font-semibold text-gray-600">{author}</p>
       <p className="ml-4 text-gray-500 w-full">

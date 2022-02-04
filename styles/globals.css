@@ -7,6 +7,6 @@
 
 
 html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     @apply bg-gray-100;
 }

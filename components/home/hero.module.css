@@ -1,5 +1,5 @@
 .heroImage {
-  background-image: url("https://images.unsplash.com/photo-1629146468498-47b3e40422f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80");
+  background-image: url("/images/hero.jpg");
   height: 1000px;
   background-position: center;
   background-repeat: no-repeat;
