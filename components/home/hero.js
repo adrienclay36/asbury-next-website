@@ -3,15 +3,20 @@ import Image from 'next/image';
 import Navbar from '../navbar/navbar';
 import styles from './hero.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { HiChevronDoubleDown } from "react-icons/hi";
 
 import MainButton from '../ui/main-button';
+
 const Hero = () => {
+  const router = useRouter();
 
 
   const onOpen = () => {
     return null;
   }
+
+
 
   return (
     <section className={styles.fadeIn}>
@@ -28,7 +33,7 @@ const Hero = () => {
             glory of God.
           </p>
           <div id="action-buttons" className="mt-12">
-            <MainButton margin={"mx-4"}>About</MainButton>
+            <MainButton onClick={() => router.push("/welcome")} margin={"mx-4"}>About</MainButton>
             <MainButton margin={"mx-4"}>Worship</MainButton>
           </div>
         </div>

@@ -14,7 +14,7 @@ const InfoSection = ({ title, content }) => {
         <div className="flex flex-1 justify-between items-center">
           <h1 className="uppercase m-1 font-semibold text-xl">{title}</h1>
           <button onClick={toggleOpen}>
-            <AiOutlinePlusCircle size={40} className={`text-seaFoam-500 ${isOpen && styles['rotate-open']} ${!isOpen && !isInitial && styles['rotate-close']}`} />
+            <AiOutlinePlusCircle size={40} className={`text-seaFoam-500 hover:text-seaFoam-700 ${isOpen && styles['rotate-open']} ${!isOpen && !isInitial && styles['rotate-close']}`} />
           </button>
         </div>
 

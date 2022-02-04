@@ -15,8 +15,6 @@ const WelcomeSection = () => {
         <h1 className="text-4xl mt-12 uppercase tracking-widest">Who We Are</h1>
         </div>
 
-        
-
         <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
 
       {info.map((item) => {

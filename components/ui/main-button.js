@@ -4,6 +4,7 @@ const MainButton = (props) => {
   return (
     <button
       type="button"
+      onClick={props.onClick || null}
       className={`px-7 py-3 hover:bg-seaFoam-800 font-semibold tracking-widest border-2 shadow-md border-gray-300 text-white uppercase rounded-lg ${props.margin} ${styles.btn}`}
     >
       {props.children}

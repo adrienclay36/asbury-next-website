@@ -84,10 +84,6 @@ export const navLinks = [
     href: "/blog",
   },
   {
-    text: "Staff",
-    href: "/staff",
-  },
-  {
     text: "Giving",
     href: "/giving",
   },
@@ -95,5 +91,9 @@ export const navLinks = [
     text: "Connect",
     href: "/connect",
   },
+  {
+    text: "Joys & Concerns",
+    href: "/joys-and-concerns"
+  }
 
 ];

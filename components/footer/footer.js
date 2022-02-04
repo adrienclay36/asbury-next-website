@@ -8,18 +8,12 @@ const Footer = () => {
   return (
     <footer className="py-8 bg-gray-100">
       <div className="container flex flex-col items-center">
-          <div className="mb-12">
-
-        <Link href="/" passHref>
-          <Image
-            className="max-h-16 cursor-pointer"
-            src="/images/AsburyLogoFull.png"
-            alt="Asbury Logo"
-            height={64}
-            width={153}
-            />
-        </Link>
-            </div>
+        <div className="flex gap-10 my-12 md:mt-0">
+          <SocialIcons
+            textColor="text-seaFoam-500"
+            textHover={"text-seaFoam-800"}
+          />
+        </div>
         <div className="flex flex-1 flex-wrap items-center justify-center md:justify-start gap-12">
           <ul className="flex flex-col lg:flex-row justify-end text-black text-center uppercase gap-12 text-md">
             {navLinks.map((link) => {
@@ -33,11 +27,24 @@ const Footer = () => {
             })}
           </ul>
         </div>
-        <div className="flex gap-10 mt-12 md:mt-0">
-          <SocialIcons textColor="text-seaFoam-500" textHover={"text-seaFoam-800"} />
+        <div className="my-6">
+          <Link href="/" passHref>
+            <Image
+              className="max-h-16 cursor-pointer"
+              src="/images/AsburyLogoFull.png"
+              alt="Asbury Logo"
+              height={64}
+              width={153}
+            />
+          </Link>
         </div>
-        <div>
-            <p className="py-10 text-center text-gray-400 text-xs">&copy; Asbury Methodist Church 2022</p>
+        <div className="pb-10">
+          <p className="text-center text-gray-400 text-xs">
+            &copy; Asbury Methodist Church 2022
+          </p>
+          <p className="text-center mt-5 text-gray-400 text-xs">
+            10000 Candelaria Rd NE, Albuquerque, NM 87112
+          </p>
         </div>
       </div>
     </footer>

@@ -8,9 +8,9 @@ const Features = () => {
         <h1 className="uppercase text-3xl">Featured At Asbury</h1>
         <div className="h-1 w-60 rounded-lg bg-gray-400 mx-10 mt-5"></div>
       </div>
-      <div className="container grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-screen-lg mt-12">
+      <div className="container grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 max-w-screen-lg mt-12">
         <FeatureItem
-          href="/giving"
+          href={"/giving"}
           title={"giving"}
           subtext={"For good"}
           image={
@@ -18,7 +18,7 @@ const Features = () => {
           }
         />
         <FeatureItem
-          href="/about"
+          href={"/welcome"}
           title={"about"}
           subtext={"Asbury"}
           image={
@@ -26,7 +26,7 @@ const Features = () => {
           }
         />
         <FeatureItem
-          href="/mothers-day-out"
+          href={"/mothers-day-out"}
           title={"MDO"}
           subtext={"Mothers Day Out"}
           image={
