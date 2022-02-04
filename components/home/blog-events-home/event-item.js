@@ -1,9 +1,11 @@
 import React from 'react';
 import { getDateInfo } from "../../../utils/dates";
+import Link from 'next/link';
 const EventItem = ({ date, title, timeframe}) => {
     const { day, monthText } = getDateInfo(date);
   return (
-    <div className="border-b-2 mb-3 flex flex-1 py-2 pb-3 px-1">
+    <Link href="/eventID" passHref>
+    <div className=" cursor-pointer border-b-2 mb-3 flex flex-1 py-2 pb-3 px-1">
       {/* Date */}
       <div className=" h-24 w-24 flex justify-start text-center flex-col border-2 p-4 rounded-full">
         <h1 className="text-2xl uppercase">{day}</h1>
@@ -18,6 +20,7 @@ const EventItem = ({ date, title, timeframe}) => {
         </h1>
       </div>
     </div>
+    </Link>
   );
 };
 

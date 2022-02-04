@@ -8,7 +8,7 @@ import { HiChevronDoubleDown } from "react-icons/hi";
 import MainButton from '../ui/main-button';
 const Hero = () => {
   return (
-    <section>
+    <section className={styles.fadeIn}>
       <div className={`${styles.heroImage}`}>
         <div className="pt-4">
           <Navbar textColor="text-white" invertImage={true} />

@@ -13,7 +13,7 @@ const BlogItem = ({ title, author, content, date }) => {
         {content.length > 100 && content + "..."}
       </p>
       <Link href="/postid" passHref>
-        <p className="ml-4 my-2 text-seaFoam-500">Read More</p>
+        <p className="ml-4 my-2 text-seaFoam-500 cursor-pointer">Read More</p>
       </Link>
     </div>
   );
