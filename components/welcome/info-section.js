@@ -10,7 +10,7 @@ const InfoSection = ({ title, content }) => {
     }
   return (
     <>
-      <div className="container mt-8 p-6 sm:w-5/6 rounded-lg shadow-lg border-2">
+      <div className="container mt-8 p-6 w-11/12 lg:w-5/6 md:w-5/6 rounded-lg shadow-lg border-2">
         <div className="flex flex-1 justify-between items-center">
           <h1 className="uppercase m-1 font-semibold text-xl">{title}</h1>
           <button onClick={toggleOpen}>

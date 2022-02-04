@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 const StaffCard = ({ name, jobTitle, description, image }) => {
   return (
-    <div className="flex flex-1 flex-col justify-center items-center shadow-lg rounded-lg my-16 sm:w-3/6 mx-auto p-10">
+    <div className="flex flex-1 flex-col justify-center items-center shadow-lg rounded-lg my-16 w-11/12 md:w-3/6 lg:w-3/6 mx-auto p-10">
       <div>
         <Image
           className="rounded-full shadow-lg"
