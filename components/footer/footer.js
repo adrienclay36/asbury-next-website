@@ -27,7 +27,7 @@ const Footer = () => {
             })}
           </ul>
         </div>
-        <div className="my-6">
+        <div className="my-6 mt-12 lg:mt-4">
           <Link href="/" passHref>
             <Image
               className="max-h-16 cursor-pointer"
