@@ -1,12 +1,4 @@
 
-
-
-.mobile-hidden {
-    max-height: 0;
-    transition: max-height .5s ease-out;
-    overflow: hidden;
-}
-
 @keyframes menuOpen {
     0% {
         max-height: 0;
@@ -16,8 +8,20 @@
     }
 }
 
+
+.mobile-hidden {
+    max-height: 0;
+    transition: max-height .5s ease-out;
+    overflow: hidden;
+}
+
+
 .mobile-open {
     max-height: 1000px;
     transition: max-height 1.5s ease-out;
     overflow: hidden;
+}
+
+.last-li:last-child {
+    padding-bottom: 1rem;
 }

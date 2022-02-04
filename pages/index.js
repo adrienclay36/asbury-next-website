@@ -15,12 +15,12 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="font-primaryFont">
       <Hero />
       <Features />
       {!loading && <ImageDiv />}
       <BlogEvents />
       <Footer />
-    </>
+    </div>
   );
 }

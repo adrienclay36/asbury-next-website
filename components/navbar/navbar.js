@@ -14,6 +14,9 @@ const Navbar = (props) => {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
         setIsInitial(false);
+        if(!props.home){
+          props.onOpen();
+        }
 
     }
   return (
@@ -58,6 +61,7 @@ const Navbar = (props) => {
           isOpen={isOpen}
           className={styles.menuSlide}
           navLinks={navLinks}
+          inverted={props.inverted}
         />
       </div>
     </div>

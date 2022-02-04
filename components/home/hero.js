@@ -4,14 +4,20 @@ import Navbar from '../navbar/navbar';
 import styles from './hero.module.css';
 import Link from 'next/link';
 import { HiChevronDoubleDown } from "react-icons/hi";
-// <Navbar classes="sm:absolute" textColor="text-white" />;
+
 import MainButton from '../ui/main-button';
 const Hero = () => {
+
+
+  const onOpen = () => {
+    return null;
+  }
+
   return (
     <section className={styles.fadeIn}>
       <div className={`${styles.heroImage}`}>
         <div className="pt-4">
-          <Navbar textColor="text-white" invertImage={true} />
+          <Navbar textColor="text-white" invertImage={true} home={true} onOpen={onOpen} />
         </div>
         <div className="text-center mt-16">
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
