@@ -62,9 +62,9 @@ export const givingItems = [
     external: false,
   },
   {
-    title: "Online Giving",
+    title: "STOCK OR MUTUAL FUNDS",
     content:
-      "Make an online donation, or set up recurring donations, via our secure PayPal merchant account by clicking below.",
+      "If you have securities (stocks, bonds, or mutual funds) that have accumulated long-term capital gains, you may want to consider donating some of them to Asbury instead of writing a check.",
     buttonText: "Learn More",
     href: "/giving/security-donations",
     external: false,
