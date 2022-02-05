@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import styles from './info-section.module.css';
@@ -8,6 +9,8 @@ const InfoSection = ({ title, content }) => {
         setIsOpen(!isOpen);
         setIsInitial(false);
     }
+
+    
   return (
     <>
       <div className="container mt-8 p-6 w-11/12 lg:w-5/6 md:w-5/6 rounded-lg shadow-lg border-2">
