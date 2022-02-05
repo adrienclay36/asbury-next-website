@@ -1,14 +1,13 @@
 import React from 'react';
-import InfoSection from './info-section';
-import Image from 'next/image';
 import SectionHeading from '../ui/section-heading';
+import InfoDropdown from '../ui/info-dropdown/info-dropdown';
 const WelcomeSection = () => {
   return (
     <SectionHeading title="Welcome" subheading="Who We Are">
         <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
 
       {info.map((item) => {
-        return <InfoSection key={item.title} title={item.title} content={item.content}/>
+        return <InfoDropdown key={item.title} title={item.title} content={item.content}/>
       })}
         </div>
       </SectionHeading>

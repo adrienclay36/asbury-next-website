@@ -34,13 +34,13 @@ const SecurityHero = () => {
         before making any decision regarding these items.
       </p>
       <div>
-        <h1 className="text-center text-2xl mt-12">
+        <h1 className="text-center text-2xl mt-16">
           If you decide to make such a donation, you will fall into one of the
           following categories:
         </h1>
       </div>
 
-      <div className="grid gap-20 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 mt-12 text-center font-semibold">
+      <div className="grid gap-20 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 my-20 text-center font-semibold">
         <div>
           <h1 className="text-6xl mb-4 text-seaFoam-600">1</h1>
           <p className="text-lg">
