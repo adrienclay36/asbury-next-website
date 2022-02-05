@@ -92,8 +92,11 @@ export const navLinks = [
     href: "/connect",
   },
   {
+    text: "Library",
+    href: "/library",
+  },
+  {
     text: "Joys & Concerns",
-    href: "/joys-and-concerns"
-  }
-
+    href: "/joys-and-concerns",
+  },
 ];

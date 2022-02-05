@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
         <title>Asbury UMC</title>
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
-      <NextNProgress height={4} color={"#fff"}/>
+      <NextNProgress height={4} color={"#899e9c"} />
       <Component {...pageProps} />
     </>
   );
