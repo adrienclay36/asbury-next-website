@@ -33,7 +33,7 @@ const InfoDropdown = ({ title, content, buttonText, external, href }) => {
               isOpen ? styles.open : styles.closed
             }`}
           >
-            <p className="text-lg text-gray-500">{content}</p>
+            <p className="text-lg text-gray-500 text-center">{content}</p>
             {buttonText && (
               <div className="flex justify-center items-center">
 
