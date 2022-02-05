@@ -1,6 +1,6 @@
 import React from "react";
 
-const FeaturedPostItem = ({ id, title, author, date, content, image }) => {
+const BlogPostItem = ({ id, title, author, date, content, image }) => {
   const formatDate = date.toLocaleDateString("en-us");
   return (
     <div className="border-2 shadow-lgw-full mx-auto w-full">
@@ -27,4 +27,4 @@ const FeaturedPostItem = ({ id, title, author, date, content, image }) => {
   );
 };
 
-export default FeaturedPostItem;
+export default BlogPostItem;

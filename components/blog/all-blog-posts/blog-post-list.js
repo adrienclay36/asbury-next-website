@@ -1,10 +1,10 @@
 import React from 'react';
-import FeaturedPostItem from './featured-post-item';
-const FeaturedPosts = ({ posts }) => {
+import BlogPostItem from './blog-post-item';
+const BlogPostList = ({ posts }) => {
   return (
     <section className="container grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 my-12">
       {posts.map((post) => (
-        <FeaturedPostItem
+        <BlogPostItem
           key={post.id}
           id={post.id}
           title={post.title}
@@ -18,6 +18,6 @@ const FeaturedPosts = ({ posts }) => {
   );
 };
 
-export default FeaturedPosts;
+export default BlogPostList;
 
 
