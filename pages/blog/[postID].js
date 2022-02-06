@@ -3,11 +3,11 @@ import { getAllBlogPosts, getBlogPostByID } from '../../firebase-util';
 import Layout from '../../components/layout/layout';
 import SinglePostSection from '../../components/blog/single-post/single-post-section';
 const SinglePost = (props) => {
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState(props.post);
 
   return (
-      <Layout title={props.post.title} description={props.post.content}>
-          <SinglePostSection post={props.post} />
+      <Layout title={post.title} description={post.content}>
+          <SinglePostSection post={post} />
 
       </Layout>
   );

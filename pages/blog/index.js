@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/layout/layout';
 import BlogSection from '../../components/blog/blog-section';
 import { getAllBlogPosts } from "../../firebase-util";
@@ -7,9 +7,10 @@ import axios from 'axios';
 
 
 const BlogHome = (props) => {
+  const [posts, setPosts] = useState(props.posts);
   return (
       <Layout title="Blog" description={"Asbury Blog - Keep up to date with us!"}>
-          <BlogSection posts={props.posts}/>
+          <BlogSection posts={posts}/>
       </Layout>
   );
 };
