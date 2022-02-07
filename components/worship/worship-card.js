@@ -1,7 +1,7 @@
 import React from 'react';
 const WorshipCard = () => {
   return (
-    <div className="container flex flex-1 flex-col items-center justify-center mx-auto shadow-lg border-2 rounded-lg m-12 w-11/12 lg:w-2/6 md:w-2/6 p-10">
+    <div className="container flex flex-1 flex-col items-center justify-center mx-auto shadow-lg border-2 rounded-lg m-12 w-11/12 lg:w-2/6 md:w-11/12 p-10">
       <h1 className="mx-10 text-3xl uppercase text-seaFoam-700">Traditional</h1>
       <p className="text-xl uppercase text-seaFoam-400 font-semibold my-4">
         Sundays

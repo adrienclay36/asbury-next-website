@@ -1,16 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { getAllBlogPosts, deleteBlogPost, updateBlogPost } from '../../../firebase-util';
+import { getAllBlogPosts, deleteBlogPost, updateBlogPost, createBlogPost } from '../../../firebase-util';
 
 
 export const BlogContext = React.createContext({
-    posts: [],
-    deletePost: (id) => {},
-    createPost: () => {},
-    updatePost: (id, title, author, image, content) => {},
-    modifying: false,
-
-})
+  posts: [],
+  deletePost: (id) => {},
+  createPost: (title, author, image, content) => {},
+  updatePost: (id, title, author, image, content) => {},
+  modifying: false,
+});
 
 
 const BlogContextProvider = (props) => {
@@ -28,8 +27,13 @@ const BlogContextProvider = (props) => {
     }
     
     const updatePost = async(id, title, author, image, content) => {
+        console.log(title, author, image, content);
         await updateBlogPost(id, title, author, image, content);
         toggleModifying();
+    }
+
+    const createPost = async (title, author, image, content) => {
+        await createBlogPost(title, author, image, content);
     }
 
 
@@ -41,6 +45,7 @@ const BlogContextProvider = (props) => {
         posts: posts,
         deletePost: deletePost,
         updatePost: updatePost,
+        createPost: createPost,
         modifying: modifying,
         
     }

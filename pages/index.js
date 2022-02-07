@@ -5,9 +5,10 @@ import BlogEvents from "../components/home/blog-events-home/blog-event";
 import Footer from "../components/footer/footer";
 import styles from '../components/home/hero.module.css';
 import { useState, useEffect } from "react";
-export default function Home() {
+import { getBlogPostsByLimit } from '../firebase-util';
+export default function Home(props) {
   const [loading, setLoading] = useState(true);
-
+  const [posts, setPosts] = useState(props.posts);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -21,8 +22,20 @@ export default function Home() {
       <Hero />
       <Features />
       {!loading && <ImageDiv />}
-      <BlogEvents />
+      <BlogEvents posts={props.posts} />
       <Footer />
     </div>
   );
+}
+
+
+export const getStaticProps = async (context) => {
+  const posts = await getBlogPostsByLimit(3);
+
+  return {
+    props: {
+      posts: posts,
+    },
+    revalidate: 10,
+  }
 }

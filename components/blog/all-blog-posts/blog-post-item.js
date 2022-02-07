@@ -21,7 +21,7 @@ const BlogPostItem = ({ id, title, author, date, content, image }) => {
       <div className="px-10 pb-5">
         <p>{content.length > 50 ? content.slice(0, 100) + "..." : content}</p>
       </div>
-      <div className="flex justify-end items-center p-4">
+      <div className="flex justify-center lg:justify-end md:justify-end items-center p-4">
         <button
           onClick={() => router.push(`/blog/${id}`)}
           className="px-7 py-3 m-2 rounded-md bg-seaFoam-400 text-white uppercase font-semibold tracking-wide"

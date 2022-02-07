@@ -12,7 +12,7 @@ const PostEditForm = ({post, id }) => {
 
     const updatePostHandler = async (e) => {
         e.preventDefault();
-        const response = await blogContext.updatePost(id, title, author, content, image);
+        await blogContext.updatePost(id, title, author, image, content);
         router.push("/admin/blog-dashboard");
     }
 
@@ -33,6 +33,7 @@ const PostEditForm = ({post, id }) => {
             id="title"
             type="text"
             value={title}
+            maxLength="70"
             required
             />
         </div>
@@ -46,6 +47,7 @@ const PostEditForm = ({post, id }) => {
             id="author"
             type="text"
             value={author}
+            maxLength="70"
             required
             />
         </div>
@@ -57,7 +59,7 @@ const PostEditForm = ({post, id }) => {
             onChange={(e) => setImage(e.target.value)}
             className="p-2"
             id="image"
-            type="text"
+            type="url"
             value={image}
             required
           />
@@ -76,7 +78,7 @@ const PostEditForm = ({post, id }) => {
             required
             />
         </div>
-        <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold">Save Changes</button>
+        <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold hover:bg-emerald-800">Save Changes</button>
       </form>
     </div>
             </>

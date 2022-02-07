@@ -4,23 +4,14 @@ import BlogOperations from '../../../components/admin/blog-dash/blog-operations'
 import { useRouter } from 'next/router';
 import BlogContextProvider from '../../../components/admin/blog-dash/blog-store';
 import { auth } from '../../../firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import { useAuth } from '../../../hooks/useAuth';
 const BlogDashboard = () => {
     const router = useRouter();
-    const [user, setUser] = useState();
+    const user = useAuth(auth);
+   
 
 
-    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        if (!currentUser) {
-          router.push("/admin");
-          return;
-        }
-
-        setUser(currentUser);
-      });
-      return unsubscribe;
-    }, [user]);
+    
 
     if (!user) {
       return null;

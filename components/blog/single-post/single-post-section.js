@@ -30,7 +30,7 @@ const SinglePostSection = ({ post }) => {
       </div>
 
       <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg">
-        <p>{post.content}</p>
+        <p className="whitespace-pre-line">{post.content}</p>
       </div>
 
       <div className="text-center mt-12">

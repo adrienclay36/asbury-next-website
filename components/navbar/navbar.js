@@ -75,13 +75,14 @@ export const navLinks = [
     text: "Welcome",
     href: "/welcome",
   },
-  {
-    text: "Worship",
-    href: "/worship",
-  },
+
   {
     text: "Blog",
     href: "/blog",
+  },
+  {
+    text: "Events",
+    href: "/events",
   },
   {
     text: "Giving",
