@@ -1,0 +1,37 @@
+@keyframes rotateOnOpen {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotateOnClose {
+    0% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(0);
+    }
+}
+
+.rotate-open {
+    animation: rotateOnOpen .75s ease;
+    animation-fill-mode: forwards;
+}
+
+.rotate-close {
+    animation: rotateOnClose .75s ease;
+    animation-fill-mode: forwards;
+}
+
+.overlay {
+    position: absolute;
+
+}
+
+
+

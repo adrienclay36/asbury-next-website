@@ -7,6 +7,8 @@ import {
   getDoc,
   doc,
   limit,
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db, auth, storage } from "./firebase-config";
 
@@ -42,3 +44,16 @@ export const getBlogPostByID = async (id) => {
   }
   
 };
+
+export const deleteBlogPost = async (id) => {
+  const blogDoc = await doc(db, "blog_posts", id);
+  const response = await deleteDoc(blogDoc);
+}
+
+export const updateBlogPost = async (id, title, author, image, content) => {
+  console.log(id);
+  const blogDoc = await doc(db, "blog_posts", id);
+  const newFields = {title, author, image, content};
+  await updateDoc(blogDoc, newFields);
+  return true;
+}
