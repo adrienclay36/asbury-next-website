@@ -3,18 +3,76 @@ import SectionHeading from "../ui/section-heading";
 import AboutView from "./about-view/about-view";
 import BookView from './book-view/book-view'
 import styles from "./library-section.module.css";
+import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
 
-const LibrarySection = ({ books }) => {
+import axios from 'axios';
+import PageLoading from "../PageLoading/PageLoading";
+const LibrarySection = () => {
   const [aboutView, setAboutView] = useState(false);
   const [booksView, setBooksView] = useState(true);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [books, setBooks] = useState([]);
+  const [query, setQuery] = useState('');
+
+  const getBooks = async () => {
+    setLoading(true);
+    setBooks([]);
+    try{
+
+      const response = await axios.get(`/api/library?page=${pageNumber}`);
+      setBooks(response.data.books);
+      setTotalPages(response.data.totalPages);
+      setLoading(false);
+    } catch(err) {
+      console.log(err.message);
+    }
+
+  }
+
+  const getQuery = (inputQuery) => {
+    setQuery(inputQuery);
+  }
+  
+
+  const getQueriedData = async () => {
+    setBooks([]);
+
+    try{
+      const response = await axios.get(`/api/library/query?searchTerm=${query}`)
+      setBooks(response.data.books);
+    } catch(error) {
+      console.log(error.message);
+    }
+
+  }
 
   useEffect(() => {
-    document.getElementById("aboutButton").focus();
-  }, []);
+    if(query){
+      getQueriedData()
+    } else{
+      getBooks();
+    }
+  }, [query])
 
-  const getQuery = (query) => {
-      console.log(query);
+ 
+  useEffect(() => {
+    if(!booksView) {
+      setBooks([]);
+    }
+    getBooks();
+  },[pageNumber, booksView])
+
+  const increasePage = () => {
+    setPageNumber(Math.min(totalPages, pageNumber + 1));
+
   }
+  const decreasePage = () => {
+    setPageNumber(Math.max(0, pageNumber - 1));
+  }
+
+
 
   const showAbout = () => {
     setAboutView(true);
@@ -25,6 +83,18 @@ const LibrarySection = ({ books }) => {
     setBooksView(true);
     setAboutView(false);
   };
+  const bookControlsBottom = (
+    <div className="flex flex-1 p-4 justify-center items-center">
+      <button onClick={decreasePage} className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800">
+        <MdOutlineArrowBackIos/>
+      </button>
+      <button onClick={increasePage} className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800">
+        <MdOutlineArrowForwardIos/>
+      </button>
+    </div>
+  );
+
+  
 
   return (
     <SectionHeading title="Library">
@@ -50,7 +120,9 @@ const LibrarySection = ({ books }) => {
       </div>
 
       {aboutView && <AboutView />}
-      {booksView && <BookView getQuery={getQuery} books={books} />}
+      {booksView && <BookView getBooks={getBooks} getQuery={getQuery} getQueriedData={getQueriedData} increasePage={increasePage} decreasePage={decreasePage} books={books} />}
+      
+      {booksView && bookControlsBottom}
     </SectionHeading>
   );
 };
