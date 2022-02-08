@@ -6,7 +6,9 @@ const handler = async (req, res) => {
     const response = await getQuerydata(query);
     let status;
     if(response.books.length === 0) {
-        status = "No Data"
+        status = "No Data";
+    } else {
+      status = "ok";
     }
     res
       .status(200)
