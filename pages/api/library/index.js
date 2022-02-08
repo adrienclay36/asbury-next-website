@@ -1,6 +1,5 @@
 import { getAllBooks } from "../../../mongo-util"
 
-
 const handler = async (req, res) => {
     if(req.method === 'GET') {
         const pageNumber = parseInt(req.query.page || "0");

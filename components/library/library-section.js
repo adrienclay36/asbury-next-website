@@ -37,11 +37,13 @@ const LibrarySection = () => {
   
 
   const getQueriedData = async () => {
+    setLoading(true);
     setBooks([]);
 
     try{
       const response = await axios.get(`/api/library/query?searchTerm=${query}`)
       setBooks(response.data.books);
+      setLoading(false);
     } catch(error) {
       console.log(error.message);
     }
@@ -120,7 +122,7 @@ const LibrarySection = () => {
       </div>
 
       {aboutView && <AboutView />}
-      {booksView && <BookView getBooks={getBooks} getQuery={getQuery} getQueriedData={getQueriedData} increasePage={increasePage} decreasePage={decreasePage} books={books} />}
+      {booksView && <BookView loading={loading} getBooks={getBooks} getQuery={getQuery} getQueriedData={getQueriedData} increasePage={increasePage} decreasePage={decreasePage} books={books} />}
       
       {booksView && bookControlsBottom}
     </SectionHeading>

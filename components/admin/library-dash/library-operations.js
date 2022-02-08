@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
+import BookList from './book-list';
 const LibraryOperations = () => {
   return (
     <div className="container my-12">
@@ -12,7 +13,7 @@ const LibraryOperations = () => {
           <span className="mr-4">Create New</span>
         </button>
       </div>
-
+      <BookList/>
     </div>
   );
 };

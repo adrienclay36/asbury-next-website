@@ -6,10 +6,12 @@ import PageLoading from '../../PageLoading/PageLoading';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BsX } from 'react-icons/bs';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
-const BookView = ({ books, decreasePage, increasePage, getQueriedData, getBooks, getQuery }) => {
+const BookView = ({ books, decreasePage, increasePage, getQueriedData, getBooks, getQuery, loading }) => {
     const [showGrid, setShowGrid] = useState(false);
     const [showList, setShowList] = useState(true);
     const [query, setQuery] = useState('');
+
+    
 
 
 
@@ -91,7 +93,8 @@ const BookView = ({ books, decreasePage, increasePage, getQueriedData, getBooks,
         >
           <MdOutlineArrowBackIos />
         </button>
-        {books.length === 0 && <PageLoading />}
+        {loading && <PageLoading />}
+        {books.length === 0 && !loading && <p>No Results for that query...</p>}
         <button
           onClick={increasePage}
           className="p-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"

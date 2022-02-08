@@ -50,7 +50,7 @@ export const getQuerydata = async (query) => {
       },
     ];
     const booksColl = db.collection("books");
-    let cursor = await booksColl.aggregate(agg);
+    let cursor = await booksColl.aggregate(agg).limit(100);
 
     const books = [];
     await cursor.forEach((doc) =>
