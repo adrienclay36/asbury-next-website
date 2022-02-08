@@ -4,9 +4,9 @@ import AboutView from "./about-view/about-view";
 import BookView from './book-view/book-view'
 import styles from "./library-section.module.css";
 
-const LibrarySection = () => {
-  const [aboutView, setAboutView] = useState(true);
-  const [booksView, setBooksView] = useState(false);
+const LibrarySection = ({ books }) => {
+  const [aboutView, setAboutView] = useState(false);
+  const [booksView, setBooksView] = useState(true);
 
   useEffect(() => {
     document.getElementById("aboutButton").focus();
@@ -57,42 +57,3 @@ const LibrarySection = () => {
 
 export default LibrarySection;
 
-
-export const books = [
-  {
-    id: "b1",
-    deweyNumber: "003.21",
-    authorCode: "SWE",
-    author: "Sweeney, Linda Booth",
-    title: "Connected Wisdom",
-    subject: "Natural Laws",
-    availability: true,
-  },
-  {
-    id: "b2",
-    deweyNumber: "027",
-    authorCode: "HAR",
-    author: "Harris, Linda G.",
-    title: "One Book at a Time: History of the Library in NM",
-    subject: "Libraries, New Mexico, History",
-    availability: false,
-  },
-  {
-    id: "b3",
-    deweyNumber: "028.9",
-    authorCode: "PRI",
-    author: "Prior, Karen Swallow",
-    title: "On Reading Well: Finding the Good Life through Great Books",
-    subject: "Books and Reading, Christianity, Literature",
-    availability: true,
-  },
-  {
-    id: "b4",
-    deweyNumber: "031.02",
-    authorCode: "KIP",
-    author: "Kipfer, Barbara Ann",
-    title: "14,000 Things to be happy about.",
-    subject: "Happiness",
-    availability: true,
-  },
-];
