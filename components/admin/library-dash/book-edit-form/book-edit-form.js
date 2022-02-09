@@ -1,42 +1,41 @@
-import React, { useState, useContext } from "react";
-import { useRouter } from "next/router";
-import { LibraryContext } from "../library-admin-store";
+import React, { useState, useContext } from 'react'
+import { useRouter } from 'next/router';
+import { LibraryContext } from '../library-admin-store';
 import PageLoading from '../../../PageLoading/PageLoading';
-const NewBookForm = () => {
-  const libraryContext = useContext(LibraryContext);
-  const [title, setTitle] = useState("");
-  const [subject, setSubject] = useState("");
-  const [author, setAuthor] = useState("");
-  const [deweyNumber, setDeweyNumber] = useState("");
-  const [authorCode, setAuthorCode] = useState("");
-  const [availability, setAvailability] = useState("true");
-  const [adding, setAdding] = useState(false);
-  const router = useRouter();
+const BookEditForm = ({ book }) => {
+     const libraryContext = useContext(LibraryContext);
+     const [title, setTitle] = useState(book.title);
+     const [subject, setSubject] = useState(book.subject);
+     const [author, setAuthor] = useState(book.author);
+     const [deweyNumber, setDeweyNumber] = useState(book.deweyNumber);
+     const [authorCode, setAuthorCode] = useState(book.authorCode);
+     const [availability, setAvailability] = useState(book.availability.toString());
+     const [adding, setAdding] = useState(false);
+     const router = useRouter();
 
 
- 
-  const addBookHandler = async (e) => {
-    setAdding(true);
-    e.preventDefault();
-    await libraryContext.addBook(
-      title,
-      subject,
-      author,
-      deweyNumber,
-      authorCode,
-      availability
-    );
-    router.push("/admin/library-dashboard");
-  };
+     const updateBookHandler = async (e) => {
+         e.preventDefault();
+         setAdding(true);
+         await libraryContext.updateBook(
+           book._id,
+           title,
+           subject,
+           author,
+           deweyNumber,
+           authorCode,
+           availability
+         );
+         router.push("/admin/library-dashboard");
+     }
 
-  const optionChange = (e) => {
-    setAvailability(e.target.value);
-  }
+     const optionChange = (e) => {
+       setAvailability(e.target.value);
+     };
 
-
-  if(adding) {
-    return <PageLoading/>
-  }
+     if(adding) {
+         return <PageLoading/>
+     }
   return (
     <>
       <div className="text-center">
@@ -48,7 +47,7 @@ const NewBookForm = () => {
         </button>
       </div>
       <div className="container w-11/12 lg:w-3/6 mt-12 p-4 border-2 rounded-lg shadow-md mb-40">
-        <form onSubmit={addBookHandler}>
+        <form onSubmit={updateBookHandler}>
           <div className="flex flex-1 flex-col mb-8">
             <label htmlFor="title" className="text-lg mb-2 font-semibold">
               Title
@@ -157,12 +156,12 @@ const NewBookForm = () => {
             type="submit"
             className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
           >
-            Add Book
+            Update Book
           </button>
         </form>
       </div>
     </>
   );
-};
+}
 
-export default NewBookForm;
+export default BookEditForm;

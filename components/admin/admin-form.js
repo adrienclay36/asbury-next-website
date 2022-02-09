@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { auth } from '../../firebase-config';
 import styles from './admin-form.module.css';
+import { useAuth } from "../../hooks/useAuth";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -14,6 +15,13 @@ const AdminForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+
+    const user = useAuth(auth);
+
+    if(user) {
+      router.push("/admin/admin-dashboard")
+      return null;
+    }
 
 
 

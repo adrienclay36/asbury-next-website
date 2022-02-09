@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export const LibraryContext = React.createContext({
   books: [],
+  book: {},
   pageNumber: 0,
   totalPages: 0,
   modifying: false,
@@ -17,6 +18,9 @@ export const LibraryContext = React.createContext({
   addBook: (title, subject, author, deweyNumber, authorCode, availability) => {},
   deleteBook: (id) => {},
   setModifying: () => {},
+  getBookById: (id) => {},
+  updateBook: (id, title, subject, author, deweyNumber, authorCode, availability) => {},
+  toggleAvailable: (id) => {},
 });
 
 const LibraryProvider = (props) => {
@@ -27,6 +31,7 @@ const LibraryProvider = (props) => {
  const [noData, setNoData] = useState(false);
  const [query, setQuery] = useState("");
  const [modifying, setModifying] = useState("");
+ const [book, setBook] = useState({});
 
  const getBooks = async () => {
    setNoData(false);
@@ -45,7 +50,7 @@ const LibraryProvider = (props) => {
  // Get books use Effect, listening on pageNumber Changes
  useEffect(() => {
    getBooks();
- }, [pageNumber]);
+ }, [pageNumber, modifying]);
 
  const getQueriedData = async () => {
    setLoading(true);
@@ -106,8 +111,55 @@ const LibraryProvider = (props) => {
    
  };
 
+ const deleteBook = async (id) => {
+   try {
+     const response = await axios.delete(`/api/library/${id}`);
+     toggleModifying();
+   } catch (err) {
+     console.log(err.message);
+   }
+ }
+
+
+ const getBookById = async (id) => {
+   try {
+     const response = await axios.get(`api/library/${id}`)
+     setBook(response.data.book);
+   } catch(err){
+     console.log(err.message);
+   }
+ }
+
+
+ const updateBook = async (id, title, subject, author, deweyNumber, authorCode, availability) => {
+   const boolAvailability = availability === 'true' ? true : false;
+   const bookData = {
+     title: title,
+     subject: subject,
+     author: author,
+     deweyNumber: deweyNumber,
+     authorCode: authorCode,
+     availability: boolAvailability,
+   }
+   try {
+     const response = await axios.post(`/api/library/${id}`, bookData);
+   } catch(err) {
+     console.log(err.message);
+   }
+ }
+
+ const toggleAvailable = async (id) => {
+   const response = await axios.patch(`/api/library/${id}`);
+ }
+
+
+ const toggleModifying = () => {
+   setModifying(!modifying);
+ }
+
  const contextValue = {
    books: books,
+   book: book,
    pageNumber: pageNumber,
    totalPages: totalPages,
    increasePage: increasePage,
@@ -119,6 +171,10 @@ const LibraryProvider = (props) => {
    setNoData: setNoData,
    setModifying: setModifying,
    addBook: addBook,
+   deleteBook: deleteBook,
+   getBookById: getBookById,
+   updateBook: updateBook,
+   toggleAvailable: toggleAvailable
  };
   return (
       <LibraryContext.Provider value={contextValue}>

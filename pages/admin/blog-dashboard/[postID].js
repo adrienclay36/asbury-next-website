@@ -28,6 +28,7 @@ const EditPost = () => {
   }, [postID]);
 
   if (!user) {
+    router.replace("/admin");
     return null;
   }
 
