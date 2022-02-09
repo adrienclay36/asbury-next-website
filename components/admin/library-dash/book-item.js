@@ -5,8 +5,8 @@ const BookItem = ({ book }) => {
   return (
     <>
       <div className="container p-4">
-        <div className="flex flex-1 justify-between items-center">
-          <div className="p-2">
+        <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-center lg:justify-between md:justify-between items-center">
+          <div className="p-2 text-center lg:text-left md:text-left">
             <h1 className="text-lg font-semibold">{book.title}</h1>
             <p>{book.author}</p>
             <p>{book.subject}</p>

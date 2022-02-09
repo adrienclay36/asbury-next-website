@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { auth } from "../../../firebase-config";
 import { useAuth } from "../../../hooks/useAuth";
 import LibraryOperations from "../../../components/admin/library-dash/library-operations";
-import LibraryContextProvider from '../../../components/admin/library-dash/library-store';
+import LibraryProvider from "../../../components/admin/library-dash/library-admin-store";
 const LibraryDashboard = () => {
 
   const user = useAuth(auth);
@@ -13,11 +13,11 @@ const LibraryDashboard = () => {
     return null;
   }
   return (
-    <LibraryContextProvider>
+    <LibraryProvider>
       <AdminLayout>
           <LibraryOperations/>
       </AdminLayout>
-    </LibraryContextProvider>
+    </LibraryProvider>
   );
 };
 
