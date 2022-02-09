@@ -70,3 +70,15 @@ export const getQuerydata = async (query) => {
 
 
 }
+
+
+export const addBook = async (bookData) => {
+  const client = await connectDB();
+  const db = client.db();
+  try{
+    await db.collection("books").insertOne(bookData);
+    return {status: "ok"}
+  } catch(err) {
+    return {status: "ok", error: err.message}
+  }
+}

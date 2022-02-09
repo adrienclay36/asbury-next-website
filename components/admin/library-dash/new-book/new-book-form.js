@@ -8,11 +8,14 @@ const NewBookForm = () => {
   const [author, setAuthor] = useState("");
   const [deweyNumber, setDeweyNumber] = useState("");
   const [authorCode, setAuthorCode] = useState("");
-  const [availability, setAvailability] = useState(true);
+  const [availability, setAvailability] = useState("true");
   const router = useRouter();
-  const addBookHandler = (e) => {
+
+
+ 
+  const addBookHandler = async (e) => {
     e.preventDefault();
-    libraryContext.addBook(
+    await libraryContext.addBook(
       title,
       subject,
       author,
@@ -20,7 +23,12 @@ const NewBookForm = () => {
       authorCode,
       availability
     );
+    router.push("/admin/library-dashboard");
   };
+
+  const optionChange = (e) => {
+    setAvailability(e.target.value);
+  }
   return (
     <>
       <div className="text-center">
@@ -108,8 +116,11 @@ const NewBookForm = () => {
             />
           </div>
 
-          <div className="flex flex-1 flex-col">
-            <div className="mb-2">
+          <div
+            className="flex flex-1 flex-row mb-4"
+            onChangeCapture={(e) => setAvailability(e.target.value)}
+          >
+            <div className="mb-2 mx-2">
               <label className="mx-2" htmlFor="available">
                 Available
               </label>
@@ -118,8 +129,7 @@ const NewBookForm = () => {
                 id="available"
                 name="availability"
                 value={true}
-                onChange={(e) => setAvailability(e.target.value)}
-                checked
+                onChange={optionChange}
               />
             </div>
             <div className="mb-2">
@@ -129,9 +139,9 @@ const NewBookForm = () => {
               <input
                 type="radio"
                 id="unavailable"
-                value={false}
                 name="availability"
-                onChange={(e) => setAvailability(e.target.value)}
+                value={false}
+                onChange={optionChange}
               />
             </div>
           </div>
@@ -139,7 +149,7 @@ const NewBookForm = () => {
             type="submit"
             className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
           >
-            Create Post
+            Add Book
           </button>
         </form>
       </div>

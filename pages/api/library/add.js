@@ -1,9 +1,9 @@
+import { addBook } from "../../../mongo-util";
 
-
-const handler = (req, res) => {
+const handler = async (req, res) => {
     if (req.method === 'POST') {
-        console.log(req.body);
-        res.status(200).json({status: "ok"});
+        const response = await addBook(req.body);
+        res.status(200).json(response);
     }
 }
 

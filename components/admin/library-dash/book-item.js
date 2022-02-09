@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 const BookItem = ({ book }) => {
+  
   return (
     <>
       <div className="container p-4">
@@ -12,6 +13,7 @@ const BookItem = ({ book }) => {
             <p>{book.subject}</p>
             <h1>{book.deweyNumber}</h1>
             <h1>{book.authorCode}</h1>
+            <h1>{book.availability ? "Available" : "Checked Out"}</h1>
           </div>
           <div>
           </div>

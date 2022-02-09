@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 export const LibraryContext = React.createContext({
   books: [],
   pageNumber: 0,
@@ -84,12 +85,13 @@ const LibraryProvider = (props) => {
  };
 
 
- const addBook = async(title, subject, author, deweyNumber, authorCode, availability) => {
-    console.log(availability);
+ const addBook = async (title, subject, author, deweyNumber, authorCode, availability) => {
+    const boolAvailability = availability === 'true' ? true : false;
+    
    const newBook = {
      deweyNumber: deweyNumber,
      authorCode: authorCode,
-     availability: availability,
+     availability: boolAvailability,
      author: author,
      title: title,
      subject: subject
