@@ -109,7 +109,6 @@ const AdminBlogProvider = (props) => {
     }
     try {
       const response = await axios.post("/api/blog/add", newPost);
-      console.log(response);
     } catch (err) {
       console.log(err.message);
     }
