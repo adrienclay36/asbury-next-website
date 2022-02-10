@@ -37,12 +37,12 @@ const BookItem = ({ book }) => {
             <div>
               <button
               onClick={toggleAvailableHandler}
-                className={`px-4 py-2 mx-1 mb-2 lg:mb-0 ${available ? 'bg-green-800' : 'bg-red-800'} text-white rounded-lg ${available ? 'hover:bg-red-800' : 'hover:bg-green-800'}`}
+                className={`px-4 py-2 mx-1 mb-2 lg:mb-0 ${available ? 'bg-green-800' : 'bg-transparent border-2 border-gray-400'} text-white rounded-lg ${available ? 'hover:bg-green-900' : 'hover:bg-gray-200'}`}
               >
                 {available ? (
                   <BsToggleOn className="text-white" />
                 ) : (
-                  <BsToggleOff className="text-white" />
+                  <BsToggleOff className="text-gray-400" />
                 )}
               </button>
               <button

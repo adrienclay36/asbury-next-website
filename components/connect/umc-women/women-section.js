@@ -37,30 +37,34 @@ const WomenSection = () => {
           Besides being part of the at-large group, members can join circles
           that meet in members&apos; homes or at the church.
         </p>
-        <p className="text-xl font-semibold text-seaFoam-500 mx-auto text-center mt-12 uppercase">There are three current Asbury UMW circles:</p>
+        <p className="text-xl font-semibold text-seaFoam-500 mx-auto text-center mt-12 mb-20 uppercase">
+          There are three current Asbury UMW circles:
+        </p>
 
-        <div className="grid gap-20 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 mb-20 text-center font-semibold">
-          <div className="p-4 shadow-md my-12 border-2 rounded-lg">
-            <h1 className="text-3xl mt-4 mb-4 text-seaFoam-600">
+        <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 mb-14 text-center font-semibold mt-14">
+          <div>
+            <h1 className="text-2xl lg:text-3xl md:text-3xl text-seaFoam-600 mb-4">
               Elizabeth Circle
             </h1>
-            <HRThin />
+            <hr className="w-3/6 mx-auto" />
             <p className="text-lg p-6">
               Meets the third Tuesday of each month at 9:30 AM.
             </p>
           </div>
-          <div className="p-4 shadow-md my-12 border-2 rounded-lg">
-            <h1 className="text-3xl mt-4 mb-4 text-seaFoam-600">
+          <div>
+            <h1 className="text-2xl lg:text-3xl md:text-3xl text-seaFoam-600 mb-4">
               Hannah Circle
             </h1>
-            <HRThin />
+            <hr className="w-3/6 mx-auto" />
             <p className="text-lg p-6">
               Meets the third Tuesday of each month at 7:15 PM.
             </p>
           </div>
-          <div className="p-4 shadow-md my-12 border-2 rounded-lg">
-            <h1 className="text-3xl mt-4 mb-4 text-seaFoam-600">Ruth Circle</h1>
-            <HRThin />
+          <div>
+            <h1 className="text-2xl lg:text-3xl md:text-3xl text-seaFoam-600 mb-4">
+              Ruth Circle
+            </h1>
+            <hr className="w-3/6 mx-auto" />
             <p className="text-lg p-6">
               Meets the third Thursday of the month at 9:30 AM.
             </p>

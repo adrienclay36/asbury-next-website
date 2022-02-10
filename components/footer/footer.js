@@ -46,12 +46,13 @@ const Footer = () => {
           <p className="text-center text-gray-400 text-xs">
             &copy; Asbury Methodist Church 2022
           </p>
-          <p className="text-center mt-5 text-gray-400 text-xs">
-            505-299-0643
-          </p>
+          <p className="text-center mt-5 text-gray-400 text-xs">505-299-0643</p>
           <p className="text-center mt-5 text-gray-400 text-xs">
             10000 Candelaria Rd NE, Albuquerque, NM 87112
           </p>
+          <Link href="/admin">
+            <p className="text-center mt-5 text-gray-400 text-xs cursor-pointer underline">Admin</p>
+          </Link>
         </div>
       </div>
     </footer>

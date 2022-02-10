@@ -6,8 +6,8 @@ import styles from "./library-section.module.css";
 import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
 import { LibraryMainContext } from "./library-store-main";
 const LibrarySection = () => {
-  const [aboutView, setAboutView] = useState(false);
-  const [booksView, setBooksView] = useState(true);
+  const [aboutView, setAboutView] = useState(true);
+  const [booksView, setBooksView] = useState(false);
 
   const libraryContext = useContext(LibraryMainContext);
 

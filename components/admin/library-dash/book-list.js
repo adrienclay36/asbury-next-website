@@ -22,6 +22,10 @@ const BookList = () => {
     libraryContext.getBooks();
   };
 
+  const exportToCSV = () => {
+    
+  }
+
   return (
     <div>
       <div className="container flex items-center justify-center my-10">
@@ -48,7 +52,7 @@ const BookList = () => {
         >
           <MdOutlineArrowBackIos />
         </button>
-
+        <button onClick={exportToCSV} className="px-3 py-2 bg-slate-400 rounded-lg text-white font-semibold">Export To CSV</button>
         <button
           onClick={libraryContext.increasePage}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"

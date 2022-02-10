@@ -2,12 +2,11 @@ import React from 'react';
 
 const GivingCard = () => {
   return (
-    <div className="container flex flex-1 flex-col items-center justify-center mx-auto shadow-lg border-2 rounded-lg m-12 w-11/12 lg:w-2/6 md:w-2/6 p-10">
-      <h1 className="mx-10 text-3xl uppercase text-seaFoam-700">Thank you</h1>
+    <div className="container flex flex-1 flex-col items-center justify-center mx-auto shadow-lg border-2 rounded-lg m-12 w-11/12 lg:w-2/6 md:11/12 p-10">
+      <h1 className="mx-10 text-xl lg:text-3xl md:text-3xl uppercase text-seaFoam-700">Thank you</h1>
       <p className="text-xl uppercase text-seaFoam-400 font-semibold my-4">
         From Asbury
       </p>
-      <div className="h-0.5 w-64 rounded-lg bg-gray-200 mx-10 my-5"></div>
 
       <div>
         <p className="py-4 text-center leading-loose">

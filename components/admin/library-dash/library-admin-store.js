@@ -114,7 +114,11 @@ const LibraryProvider = (props) => {
  const deleteBook = async (id) => {
    try {
      const response = await axios.delete(`/api/library/${id}`);
-     toggleModifying();
+     if(query) {
+       await getQueriedData();
+     } else {
+       toggleModifying();
+     }
    } catch (err) {
      console.log(err.message);
    }
