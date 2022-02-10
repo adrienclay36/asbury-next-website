@@ -1,0 +1,52 @@
+@keyframes bounceUp {
+    0%{
+        transform: translateY(50%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+.post-animation-0 {
+    opacity: 0;
+    animation: bounceUp .5s ease-out;
+    animation-fill-mode: forwards;
+}
+
+.post-animation-1 {
+    opacity: 0;
+    animation: bounceUp .5s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: .10s;
+}
+
+.post-animation-2 {
+    opacity: 0;
+    animation: bounceUp .5s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: .20s;
+}
+
+.post-animation-3 {
+    opacity: 0;
+    animation: bounceUp .5s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: .30s;
+}
+.post-animation-4 {
+    opacity: 0;
+    animation: bounceUp .5s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: .40s;
+}
+
+.post-animation-5 {
+    opacity: 0;
+    animation: bounceUp .5s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: .50s;
+}
