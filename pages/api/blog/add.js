@@ -1,10 +1,7 @@
 import { addPost } from "../../../mongo-util-blog";
-import { auth } from '../../../firebase-config';
-import { getAuth } from "firebase/auth";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
-    
     const newPost = {
       title: req.body.title,
       author: req.body.author,
