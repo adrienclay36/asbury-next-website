@@ -18,6 +18,13 @@ const BookItem = ({ book }) => {
     libraryContext.toggleAvailable(book._id);
     setAvailable(!available);
   }
+
+  const deleteBookHandler = async () => {
+    const confirmDelete = confirm("Are you sure you want to delete this item? This operation cannot be undone");
+    if(confirmDelete) {
+      libraryContext.deleteBook(book._id);
+    }
+  }
  
   
   return (
@@ -55,7 +62,7 @@ const BookItem = ({ book }) => {
               </button>
               <button className="px-4 py-2 mx-1 my-4 lg:my-0 md:my-0 bg-red-600 rounded-lg hover:bg-red-800">
                 <BsTrash
-                  onClick={() => libraryContext.deleteBook(book._id)}
+                  onClick={deleteBookHandler}
                   className="text-white"
                 />
               </button>

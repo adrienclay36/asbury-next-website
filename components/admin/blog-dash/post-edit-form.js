@@ -1,20 +1,25 @@
 import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { BlogContext } from './blog-store';
+import PageLoading from "../../PageLoading/PageLoading";
 const PostEditForm = ({post, id }) => {
     const [title, setTitle] = useState(post.title);
     const [author, setAuthor] = useState(post.author);
     const [content, setContent] = useState(post.content);
     const [image, setImage] = useState(post.image);
+    const [updating, setUpdating] = useState(false);
     const blogContext = useContext(BlogContext);
     const router = useRouter();
     
 
     const updatePostHandler = async (e) => {
+        setUpdating(true);
         e.preventDefault();
-        await blogContext.updatePost(id, title, author, image, content);
+        await blogContext.updatePost(id, title, image, author, content);
         router.push("/admin/blog-dashboard");
     }
+
+   
 
   return (
       <>
@@ -78,7 +83,7 @@ const PostEditForm = ({post, id }) => {
             required
             />
         </div>
-        <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold hover:bg-emerald-800">Save Changes</button>
+        {updating ? <PageLoading/> : <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold hover:bg-emerald-800">Save Changes</button>}
       </form>
     </div>
             </>

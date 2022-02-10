@@ -4,17 +4,23 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BsX } from "react-icons/bs";
 import PageLoading from "../../PageLoading/PageLoading";
 import BookItem from "./book-item";
-import styles from './book-list.module.css';
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos} from 'react-icons/md';
+import styles from "./book-list.module.css";
+import axios from 'axios';
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+
+
 const BookList = () => {
   const libraryContext = useContext(LibraryContext);
-  const [query, setQuery] = useState('');
-
+  const [query, setQuery] = useState("");
+  const [allBooks, setAllBooks] = useState([]);
 
   const provideQuery = (e) => {
     setQuery(e.target.value);
     libraryContext.setQuery(e.target.value);
-  }
+  };
 
   const clearInput = () => {
     setQuery("");
@@ -22,8 +28,9 @@ const BookList = () => {
     libraryContext.getBooks();
   };
 
-  const exportToCSV = () => {
-    
+  const retrieveBooks = async () => {
+    const response = await axios.get("/api/library/all");
+    setAllBooks(response.data.books);
   }
 
   return (
@@ -52,7 +59,7 @@ const BookList = () => {
         >
           <MdOutlineArrowBackIos />
         </button>
-        <button onClick={exportToCSV} className="px-3 py-2 bg-slate-400 rounded-lg text-white font-semibold">Export To CSV</button>
+       
         <button
           onClick={libraryContext.increasePage}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
@@ -62,7 +69,7 @@ const BookList = () => {
       </div>
       <div className={`${styles.scroll} border-2`}>
         {libraryContext.loading && <PageLoading />}
-        {libraryContext.noData && (
+        {libraryContext.noData && libraryContext.books.length === 0 && (
           <h1 className="text-center text-lg font-semibold mt-4 text-red-700">
             No Data found for that query...
           </h1>

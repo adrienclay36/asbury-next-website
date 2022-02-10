@@ -1,12 +1,13 @@
-import { getAllBlogPosts } from "../../../firebase-util"
+import { getPagedPosts } from "../../../mongo-util-blog";
 
 const handler = async (req, res) => {
     if(req.method === 'GET') {
-        const {posts, totalPages} = await getAllBlogPosts();
-        res.status(200).json({posts, totalPages});
+        const pageNumber = parseInt(req.query.page || "0");
+        const response = await getPagedPosts(pageNumber);
 
+        res.status(200).json({ posts: response.posts, totalPages: response.totalPages })
     }
-
 }
 
 export default handler;
+

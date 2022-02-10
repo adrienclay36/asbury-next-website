@@ -34,9 +34,7 @@ const NewBookForm = () => {
   }
 
 
-  if(adding) {
-    return <PageLoading/>
-  }
+  
   return (
     <>
       <div className="text-center">
@@ -153,12 +151,12 @@ const NewBookForm = () => {
               />
             </div>
           </div>
-          <button
+          {adding ? <PageLoading/> : <button
             type="submit"
             className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
           >
             Add Book
-          </button>
+          </button>}
         </form>
       </div>
     </>

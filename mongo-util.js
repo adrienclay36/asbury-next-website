@@ -7,7 +7,7 @@ export const connectDB = async () => {
   return client;
 };
 
-export const getAllBooks = async (pageNumber) => {
+export const getPagedBooks = async (pageNumber) => {
   const client = await connectDB();
   const PAGE_SIZE = 15;
 
@@ -35,6 +35,33 @@ export const getAllBooks = async (pageNumber) => {
 
   return { books: books, totalPages: Math.ceil(total / PAGE_SIZE) };
 };
+
+
+export const getAllBooks = async () => {
+   const client = await connectDB();
+
+  const db = client.db();
+  const response = await db
+    .collection("books")
+    .find();
+  const books = [];
+  await response.forEach((doc) =>
+    books.push({
+      _id: doc._id.toString(),
+      title: doc.title,
+      authorCode: doc.authorCode,
+      author: doc.author,
+      subject: doc.subject,
+      availability: doc.availability,
+      deweyNumber: doc.deweyNumber,
+    })
+  );
+
+  client.close();
+
+  return { books: books };
+  
+}
 
 export const getQuerydata = async (query) => {
   const client = await connectDB();
@@ -118,7 +145,9 @@ export const updateBookById = async (id, bookData) => {
   const client = await connectDB();
   const db = client.db();
   try {
-    await db.collection("books").updateOne({ _id: ObjectId(id) }, { $set: bookData } );
+    await db
+      .collection("books")
+      .updateOne({ _id: ObjectId(id) }, { $set: bookData });
     client.close();
     return { status: "ok", message: "Updated Book" };
   } catch (err) {
@@ -132,11 +161,15 @@ export const toggleAvailability = async (id) => {
   const db = client.db();
 
   try {
-    await db.collection("books").findOneAndUpdate({_id: ObjectId(id)},[{$set:{availability:{$eq:[false,"$availability"]}}}]);
+    await db
+      .collection("books")
+      .findOneAndUpdate({ _id: ObjectId(id) }, [
+        { $set: { availability: { $eq: [false, "$availability"] } } },
+      ]);
     client.close();
-    return { status: "ok", message: "Toggled Availability"};
-  } catch(err) {
+    return { status: "ok", message: "Toggled Availability" };
+  } catch (err) {
     client.close();
-    return { status: "err", message: err.message};
+    return { status: "err", message: err.message };
   }
-}
+};

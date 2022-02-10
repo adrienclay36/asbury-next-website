@@ -17,7 +17,6 @@ const EditBook = () => {
     
     const getBook = async () => {
         const response = await axios.get(`/api/library/${bookID}`)
-        console.log(response.data);
         setBook(response.data.book);
     }
 

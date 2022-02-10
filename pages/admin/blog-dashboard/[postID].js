@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../../../firebase-config";
-
-import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import { useRouter } from "next/router";
-import { getBlogPostByID } from "../../../firebase-util";
+import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import PageLoading from "../../../components/PageLoading/PageLoading";
 import PostEditForm from "../../../components/admin/blog-dash/post-edit-form";
-import BlogContextProvider from "../../../components/admin/blog-dash/blog-store";
+import AdminBlogProvider from "../../../components/admin/blog-dash/blog-store";
 import { useAuth } from "../../../hooks/useAuth";
+import axios from 'axios';
 const EditPost = () => {
   const [post, setPost] = useState();
-  const user = useAuth(auth);
-  
   const router = useRouter();
+  const user = useAuth(auth);
   const postID = router.query.postID;
-
   
+
   const getPost = async () => {
-    const fetchedPost = await getBlogPostByID(postID);
-    setPost(fetchedPost);
+    const response = await axios.get(`/api/blog/${postID}`);
+    setPost(response.data.post);
   };
 
   useEffect(() => {
@@ -32,13 +30,35 @@ const EditPost = () => {
   }
 
   return (
-    <BlogContextProvider>
+    <AdminBlogProvider>
       <AdminLayout>
         {!post && <PageLoading />}
-        {post && <PostEditForm post={post} id={postID} />}
+        {post && <PostEditForm post={post} id={post._id} />}
       </AdminLayout>
-    </BlogContextProvider>
+    </AdminBlogProvider>
   );
 };
 
 export default EditPost;
+
+// export const getStaticPaths = async () => {
+//   const { posts } = await getAllPosts();
+//   const paths = posts.map((post) => ({ params: { postID: post._id } }));
+
+//   return {
+//     paths: paths,
+//     fallback: "blocking",
+//   };
+// };
+
+// export const getStaticProps = async (context) => {
+//   const postID = context.params.postID;
+//   const post = await getPostById(postID);
+
+//   return {
+//     props: {
+//       post: post.post,
+//     },
+//     revalidate: 30,
+//   };
+// };

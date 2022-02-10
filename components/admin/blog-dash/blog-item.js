@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { IoMdExit } from 'react-icons/io';
-import { deleteBlogPost } from "../../../firebase-util";
 import { BlogContext } from "./blog-store";
 import { useRouter } from 'next/router';
 import Link from "next/link";
@@ -13,7 +12,7 @@ const BlogItem = ({ post }) => {
   const deletePostHandler = (e) => {
     const response = confirm("Are you sure you want to delete this post? This operation cannot be undone");
     if(response) {
-      blogContext.deletePost(post.id);
+      blogContext.deletePost(post._id);
     }
   }
 
@@ -37,7 +36,7 @@ const BlogItem = ({ post }) => {
         </div>
       </div>
       <div>
-        <Link href={`/blog/${post.id}`} passHref>
+        <Link href={`/blog/${post._id}`} passHref>
           <a target="_blank" rel="noreferrer">
           <button className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-cyan-700 text-white rounded-lg hover:bg-cyan-900">
             <IoMdExit className="text-white" />
@@ -45,7 +44,7 @@ const BlogItem = ({ post }) => {
           </a>
         </Link>
         <button
-          onClick={() => router.push(`/admin/blog-dashboard/${post.id}`)}
+          onClick={() => router.push(`/admin/blog-dashboard/${post._id}`)}
           className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
         >
           <BsPencilSquare className="text-white" />

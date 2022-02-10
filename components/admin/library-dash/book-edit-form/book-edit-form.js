@@ -33,9 +33,7 @@ const BookEditForm = ({ book }) => {
        setAvailability(e.target.value);
      };
 
-     if(adding) {
-         return <PageLoading/>
-     }
+     
   return (
     <>
       <div className="text-center">
@@ -152,12 +150,12 @@ const BookEditForm = ({ book }) => {
               />
             </div>
           </div>
-          <button
+          {adding ? <PageLoading/> : <button
             type="submit"
             className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
           >
             Update Book
-          </button>
+          </button>}
         </form>
       </div>
     </>

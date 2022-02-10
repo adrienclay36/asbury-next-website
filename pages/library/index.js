@@ -16,14 +16,3 @@ const LibraryHome = (props) => {
 };
 
 export default LibraryHome;
-
-// export const getStaticProps = async (context) => {
-//   const books = await getAllBooks();
-
-//   return {
-//     props: {
-//       books: books,
-//     },
-//     revalidate: 1600,
-//   }
-// }

@@ -1,6 +1,7 @@
 import React, { useState, useContext} from 'react';
 import { BlogContext } from './blog-store';
 import { useRouter } from 'next/router';
+import PageLoading from '../../PageLoading/PageLoading';
 const NewPostForm = () => {
     const router = useRouter();
     const [title, setTitle] = useState('');
@@ -8,18 +9,23 @@ const NewPostForm = () => {
     const [image, setImage] = useState('');
     const [content, setContent] = useState('');
     const [error, setError] = useState(true);
+    const [adding, setAdding] = useState(false);
     const blogContext = useContext(BlogContext);
+    
 
 
-    const addPostHandler = (e) => {
+    const addPostHandler = async (e) => {
+        setAdding(true);
         e.preventDefault();
         if(!title || !image || !author || !content) {
             setError(true);
             return;
         }
-        blogContext.createPost(title, author, image, content);
+        await blogContext.addPost(title, image, author, content);
         router.push("/admin/blog-dashboard");
     }
+
+
   return (
     <>
       <div className="text-center">
@@ -87,9 +93,9 @@ const NewPostForm = () => {
               required
             />
           </div>
-          <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold">
+          {adding ? <PageLoading/> : <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold">
             Create Post
-          </button>
+          </button>}
         </form>
       </div>
     </>

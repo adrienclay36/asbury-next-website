@@ -23,6 +23,8 @@ export const LibraryContext = React.createContext({
   toggleAvailable: (id) => {},
 });
 
+
+let isInitial = true;
 const LibraryProvider = (props) => {
  const [books, setBooks] = useState([]);
  const [pageNumber, setPageNumber] = useState(0);
@@ -30,7 +32,7 @@ const LibraryProvider = (props) => {
  const [loading, setLoading] = useState(false);
  const [noData, setNoData] = useState(false);
  const [query, setQuery] = useState("");
- const [modifying, setModifying] = useState("");
+ const [modifying, setModifying] = useState(false);
  const [book, setBook] = useState({});
 
  const getBooks = async () => {
@@ -42,6 +44,7 @@ const LibraryProvider = (props) => {
      setBooks(response.data.books);
      setTotalPages(response.data.totalPages);
      setLoading(false);
+     isInitial = false;
    } catch (err) {
      console.log(err.message);
    }
@@ -71,7 +74,14 @@ const LibraryProvider = (props) => {
  };
 
  useEffect(() => {
-   if (query) {
+  //  Don't run side effect on initial render
+   if (!isInitial) {
+    //  If query has changed and there is not a query, the user has backspaced or cleraed manually
+    // In this case, get the books so something loads, otherwise it would stay empty
+     if(!query) {
+       getBooks();
+       return;
+     }
      // Wait until the user is done typing (or try)
      const timeout = setTimeout(getQueriedData, 500);
 

@@ -1,29 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import BlogItem from "./blog-item";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsX } from "react-icons/bs";
-const BlogList = ({ posts }) => {
-  const [filteredPosts, setFilteredPosts] = useState([]);
+import { BlogContext } from "./blog-store";
+import PageLoading from '../../PageLoading/PageLoading';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
+const BlogList = () => {
   const [query, setQuery] = useState("");
-  const filterHandler = (e) => {
-    setQuery(e.target.value);
-    const newFilter = posts.filter((post) => {
-      return (
-        post.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        post.author.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        post.date.toString().includes(e.target.value)
-      );
-    });
+  const blogContext = useContext(BlogContext);
 
-    if (e.target.value === "") {
-      setFilteredPosts([]);
-    } else {
-      setFilteredPosts(newFilter);
-    }
+  const provideQuery = (e) => {
+    setQuery(e.target.value);
+    blogContext.setQuery(e.target.value);
   };
+
   const clearInput = () => {
-    setFilteredPosts([]);
     setQuery("");
+    blogContext.setNoData(false);
+    blogContext.getPosts();
   };
   return (
     <>
@@ -38,27 +32,54 @@ const BlogList = ({ posts }) => {
           <input
             className="px-4 py-2 w-full lg:w-96 md:w-96 mx-auto border-2 rounded-md focus:outline-none outline-none active:outline-none border-seaFoam-500"
             value={query}
-            onChange={filterHandler}
+            onChange={provideQuery}
             type="text"
             placeholder="Start Typing to Search Posts"
           />
         </div>
       </div>
 
-      {filteredPosts.length === 0 && (
-        <div>
-          {posts.map((post) => (
-            <BlogItem key={post.id} post={post} />
-          ))}
-        </div>
-      )}
-      {filteredPosts.length > 0 && (
-        <div>
-          {filteredPosts.map((post) => (
-            <BlogItem key={post.id} post={post} />
-          ))}
-        </div>
-      )}
+      <div className="flex flex-1 p-4 justify-between items-center container">
+        <button
+          onClick={blogContext.decreasePage}
+          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+        >
+          <MdOutlineArrowBackIos />
+        </button>
+        <button
+          onClick={blogContext.increasePage}
+          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+        >
+          <MdOutlineArrowForwardIos />
+        </button>
+      </div>
+
+      <div>
+        {blogContext.loading && <PageLoading />}
+        {blogContext.noData && blogContext.posts.length === 0 && (
+          <h1 className="text-center text-lg font-semibold mt-4 text-red-700">
+            No posts found. Be sure to enter full names to search by names. (Case Insensitive)
+          </h1>
+        )}
+        {blogContext.posts.map((post) => (
+          <BlogItem key={post._id} post={post} />
+        ))}
+      </div>
+
+      <div className="flex flex-1 p-4 justify-between items-center container">
+        <button
+          onClick={blogContext.decreasePage}
+          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+        >
+          <MdOutlineArrowBackIos />
+        </button>
+        <button
+          onClick={blogContext.increasePage}
+          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+        >
+          <MdOutlineArrowForwardIos />
+        </button>
+      </div>
     </>
   );
 };

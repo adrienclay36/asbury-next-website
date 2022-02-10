@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { auth } from '../../../firebase-config';
 import AdminLayout from '../../../components/admin/admin-layout/admin-layout';
-import BlogContextProvider from '../../../components/admin/blog-dash/blog-store';
+import AdminBlogProvider from '../../../components/admin/blog-dash/blog-store';
 import NewPostForm from '../../../components/admin/blog-dash/new-post-form';
 const NewPost = () => {
   const user = useAuth(auth);
@@ -13,11 +13,11 @@ const NewPost = () => {
 
 
   return (
-    <BlogContextProvider>
+    <AdminBlogProvider>
     <AdminLayout>
       <NewPostForm/>
     </AdminLayout>
-    </BlogContextProvider>
+    </AdminBlogProvider>
   );
 };
 
