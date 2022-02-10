@@ -43,7 +43,7 @@ const LibrarySection = () => {
         <button
           id="aboutButton"
           onClick={showAbout}
-          className={`border-2 rounded-l-lg uppercase text-seaFoam-600 text-2xl w-full py-2 ${
+          className={`border-2 rounded-l-lg uppercase text-seaFoam-600 text-md lg:text-xl md:text-xl w-full py-2 ${
             aboutView && styles["btn-filled"]
           }`}
         >
@@ -52,7 +52,7 @@ const LibrarySection = () => {
         <button
           id="booksButton"
           onClick={showBooks}
-          className={`border-2 rounded-r-lg uppercase text-seaFoam-600 text-2xl w-full py-2 ${
+          className={`border-2 rounded-r-lg uppercase text-seaFoam-600 text-md lg:text-xl md:text-xl w-full py-2 ${
             booksView && styles["btn-filled"]
           }`}
         >
@@ -62,7 +62,7 @@ const LibrarySection = () => {
 
       {aboutView && <AboutView />}
       {booksView && <BookView />}
-      
+
       {booksView && bookControlsBottom}
     </SectionHeading>
   );

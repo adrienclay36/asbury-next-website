@@ -10,7 +10,7 @@ const BookListView = () => {
   const checkedOut = <span className="text-red-300">Checked Out</span>;
   return (
     <div>
-      <div className="flex flex-1 justify-between items-center">
+      <div className="flex flex-1 hidden lg:flex md:flex justify-between items-center">
         <h1 className="p-4 uppercase font-semibold">Book</h1>
         <div>
           <h1 className="px-4 uppercase font-semibold text-right">Dewey #</h1>

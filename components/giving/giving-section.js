@@ -1,6 +1,6 @@
 import React from "react";
 import SectionHeading from "../ui/section-heading";
-import GivingCard from "./giving-card";
+
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
 import SquareCard from "../ui/square-card/square-card";
 

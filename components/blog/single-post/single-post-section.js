@@ -10,7 +10,7 @@ const SinglePostSection = ({ post }) => {
         <img className="object-cover w-full h-96" src={post.image} />
       </div>
 
-      <div className="w-5/6 lg:w-3/6 mx-auto flex flex-1 justify-between items-center">
+      <div className="w-5/6 lg:w-3/6 mx-auto flex flex-1 flex-col lg:flex-row md:flex-row justify-between items-center text-center lg:text-left md:text-left">
         <div>
           <h1 className="font-semibold uppercase text-xl my-4">{post.title}</h1>
           <h1 className="font-semibold uppercase text-lg text-seaFoam-700">
@@ -29,7 +29,7 @@ const SinglePostSection = ({ post }) => {
       <HRThin/>
       </div>
 
-      <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg">
+      <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg text-center lg:text-left md:text-left">
         <p className="whitespace-pre-line">{post.content}</p>
       </div>
 
