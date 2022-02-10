@@ -4,7 +4,7 @@ import { LibraryMainContext } from '../library-store-main';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BsX } from 'react-icons/bs';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
-const BookView = ({ books, decreasePage, increasePage, getQueriedData, getBooks, getQuery, loading }) => {
+const BookView = () => {
 
     const [query, setQuery] = useState('');
 
@@ -21,6 +21,22 @@ const BookView = ({ books, decreasePage, increasePage, getQueriedData, getBooks,
       libraryContext.setQuery(e.target.value);
       
     }
+
+    const decreasePageHandler = () => {
+      libraryContext.decreasePage();
+      if (query) {
+        setQuery("");
+        libraryContext.setQuery("");
+      }
+    };
+
+    const increasePageHandler = () => {
+      libraryContext.increasePage();
+      if (query) {
+        setQuery("");
+        libraryContext.setQuery("");
+      }
+    };
 
 
   return (
@@ -42,25 +58,39 @@ const BookView = ({ books, decreasePage, increasePage, getQueriedData, getBooks,
           />
         </div>
       </div>
-     
 
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
-          onClick={libraryContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
         >
           <MdOutlineArrowBackIos />
         </button>
-        
+
         <button
-          onClick={libraryContext.increasePage}
+          onClick={increasePageHandler}
           className="p-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
         >
           <MdOutlineArrowForwardIos />
         </button>
       </div>
 
-      <BookListView/>
+      <BookListView />
+
+      <div className="flex flex-1 p-4 justify-center items-center">
+        <button
+          onClick={decreasePageHandler}
+          className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
+        >
+          <MdOutlineArrowBackIos />
+        </button>
+        <button
+          onClick={increasePageHandler}
+          className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
+        >
+          <MdOutlineArrowForwardIos />
+        </button>
+      </div>
     </div>
   );
 };

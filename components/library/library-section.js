@@ -24,17 +24,7 @@ const LibrarySection = () => {
     setBooksView(true);
     setAboutView(false);
   };
-  const bookControlsBottom = (
-    <div className="flex flex-1 p-4 justify-center items-center">
-      <button onClick={libraryContext.decreasePage} className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800">
-        <MdOutlineArrowBackIos/>
-      </button>
-      <button onClick={libraryContext.increasePage} className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800">
-        <MdOutlineArrowForwardIos/>
-      </button>
-    </div>
-  );
-
+ 
   
 
   return (
@@ -63,7 +53,7 @@ const LibrarySection = () => {
       {aboutView && <AboutView />}
       {booksView && <BookView />}
 
-      {booksView && bookControlsBottom}
+
     </SectionHeading>
   );
 };

@@ -37,7 +37,6 @@ const AdminBlogProvider = (props) => {
       const response = await axios.get(`/api/blog?page=${pageNumber}`);
       setPosts(response.data.posts);
       setTotalPages(response.data.totalPages);
-      console.log(response.data.totalPages);
       setLoading(false);
       isInitial = false;
     } catch (err) {

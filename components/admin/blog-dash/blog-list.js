@@ -19,6 +19,23 @@ const BlogList = () => {
     blogContext.setNoData(false);
     blogContext.getPosts();
   };
+
+  const decreasePageHandler = () => {
+    blogContext.decreasePage();
+    if(query) {
+      setQuery("");
+      blogContext.setQuery("");
+    }
+  }
+
+
+  const increasePageHandler = () => {
+    blogContext.increasePage();
+    if(query) {
+      setQuery("");
+      blogContext.setQuery("");
+    }
+  }
   return (
     <>
       <div className="container flex items-center justify-center mt-8 mb-8 lg:mb-0 md:mb-0">
@@ -41,13 +58,13 @@ const BlogList = () => {
 
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
-          onClick={blogContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowBackIos />
         </button>
         <button
-          onClick={blogContext.increasePage}
+          onClick={increasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowForwardIos />
@@ -68,13 +85,13 @@ const BlogList = () => {
 
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
-          onClick={blogContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowBackIos />
         </button>
         <button
-          onClick={blogContext.increasePage}
+          onClick={increasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowForwardIos />

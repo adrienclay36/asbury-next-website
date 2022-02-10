@@ -22,6 +22,22 @@ const BlogPostList = ({ posts }) => {
     blogContext.getPosts();
   };
 
+  const decreasePageHandler = () => {
+    blogContext.decreasePage();
+    if (query) {
+      setQuery("");
+      blogContext.setQuery("");
+    }
+  };
+
+  const increasePageHandler = () => {
+    blogContext.increasePage();
+    if (query) {
+      setQuery("");
+      blogContext.setQuery("");
+    }
+  };
+
   return (
     <section>
       <div className="container flex items-center justify-center mb-2">
@@ -43,14 +59,14 @@ const BlogPostList = ({ posts }) => {
       </div>
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
-          onClick={blogContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
         >
           <MdOutlineArrowBackIos />
         </button>
 
         <button
-          onClick={blogContext.increasePage}
+          onClick={increasePageHandler}
           className="p-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
         >
           <MdOutlineArrowForwardIos />
@@ -78,13 +94,13 @@ const BlogPostList = ({ posts }) => {
 
       <div className="flex flex-1 p-4 justify-center items-center">
         <button
-          onClick={blogContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
         >
           <MdOutlineArrowBackIos />
         </button>
         <button
-          onClick={blogContext.increasePage}
+          onClick={increasePageHandler}
           className="p-4 border-2 mx-4 rounded-lg bg-seaFoam-600 text-white hover:bg-seaFoam-800"
         >
           <MdOutlineArrowForwardIos />

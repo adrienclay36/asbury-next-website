@@ -33,6 +33,22 @@ const BookList = () => {
     setAllBooks(response.data.books);
   }
 
+
+  const decreasePageHandler = () => {
+    libraryContext.decreasePage();
+    if (query) {
+      setQuery("");
+      libraryContext.setQuery("");
+    }
+  };
+
+  const increasePageHandler = () => {
+    libraryContext.increasePage();
+    if (query) {
+      setQuery("");
+      libraryContext.setQuery("");
+    }
+  };
   return (
     <div>
       <div className="container flex items-center justify-center my-10">
@@ -54,14 +70,14 @@ const BookList = () => {
       </div>
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
-          onClick={libraryContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowBackIos />
         </button>
        
         <button
-          onClick={libraryContext.increasePage}
+          onClick={increasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowForwardIos />
@@ -81,14 +97,14 @@ const BookList = () => {
 
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
-          onClick={libraryContext.decreasePage}
+          onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowBackIos />
         </button>
 
         <button
-          onClick={libraryContext.increasePage}
+          onClick={increasePageHandler}
           className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowForwardIos />
