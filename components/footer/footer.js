@@ -50,7 +50,7 @@ const Footer = () => {
           <p className="text-center mt-5 text-gray-400 text-xs">
             10000 Candelaria Rd NE, Albuquerque, NM 87112
           </p>
-          <Link href="/admin">
+          <Link href="/admin" passHref>
             <p className="text-center mt-5 text-gray-400 text-xs cursor-pointer underline">Admin</p>
           </Link>
         </div>
