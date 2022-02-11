@@ -1,40 +1,39 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { auth } from '../../firebase-config';
+import { supabase } from '../../supabase-client';
 import styles from './admin-form.module.css';
-import { useAuth } from "../../hooks/useAuth";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import PageLoading from '../PageLoading/PageLoading';
+
 
 const AdminForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    const [emailSignIn, setEmailSignIn] = useState(false);
+    const [loggingIn, setLoggingIn] = useState(false);
 
-    const user = useAuth(auth);
 
-    if(user) {
-      router.push("/admin/admin-dashboard")
-      return null;
-    }
 
 
 
     const adminLoginHandler = async (e) => {
         e.preventDefault();
-        try{
-            const loggedIn = await signInWithEmailAndPassword(auth, email, password);
-            router.replace("/admin/admin-dashboard");
-        } catch(err) {
-            console.log(err.message);
+        setLoggingIn(true);
+        if(email && password) {
+          const {error, data } = await supabase.auth.signIn({email, password});
+          
+
+          if(error){
             setError(true);
-            setPassword('');
+            setLoggingIn(false);
+            return;
+          }
+
+          router.push("/admin/admin-dashboard")
         }
+        
 
     }
     const passwordChangeHandler = (e) => {
@@ -49,6 +48,8 @@ const AdminForm = () => {
       }
       setEmail(e.target.value);
     }
+
+    
 
 
   return (
@@ -96,9 +97,9 @@ const AdminForm = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                required
                 className={error ? styles.passError : styles.password}
                 placeholder="Password"
+                required
               />
             </div>
           </div>
@@ -117,7 +118,7 @@ const AdminForm = () => {
             </div>
           </div>
 
-          <div>
+          {!emailSignIn && !loggingIn && <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
@@ -139,7 +140,15 @@ const AdminForm = () => {
               </span>
               Sign in
             </button>
-          </div>
+          </div>}
+          {emailSignIn && (
+            <div className="text-center">
+              <p className="text-semibold text-green-700 mt-10">
+                Check your email to sign in - you will receive a login link!
+              </p>
+            </div>
+          )}
+          {loggingIn && <PageLoading/>}
           {error && (
             <div className="text-center">
               <p className="text-semibold text-red-700 mt-10">

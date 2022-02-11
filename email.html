@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Reset Password</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      body {
+        font-family: "Red Hat Display", sans-serif;
+      }
+
+      .container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+      }
+      .muted {
+          font-weight: 200!important;
+          color: rgb(172, 172, 172);
+      }
+    </style>
+  </head>
+  <body>
+      <div class="container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div>
+              <h2>Hey there...</h2>
+            </div>
+
+            <p>Looks like you needed to reset your password.</p>
+
+
+
+        <p><a href="{{ .ConfirmationURL }}">Click Here To Do That</a></p>
+        <p class="muted">If you didn't sign up to receive this message, please ignore this email!</p>
+
+        <p>Yours Truly,</p>
+        <p>The Asbury Admin Team</p>
+      </div>
+  </body>
+</html>

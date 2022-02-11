@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import styles from './navbar.module.css';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { auth } from '../../../../firebase-config';
-import { signOut } from 'firebase/auth';
 import Image from "next/image";
 import { useRouter } from 'next/router';
+import { supabase } from '../../../../supabase-client';
 const AdminNavbar = (props) => {
   const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +14,7 @@ const AdminNavbar = (props) => {
 
     const logoutHandler = async (e) => {
       e.preventDefault();
-      signOut(auth);
+      await supabase.auth.signOut();
       router.replace("/admin");
     }
 

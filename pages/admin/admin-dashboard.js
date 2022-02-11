@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from '../../firebase-config';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import AdminLayout from '../../components/admin/admin-layout/admin-layout';
 import WelcomeDash from '../../components/admin/welcome-dash/welcome-dash';
-import { useAuth } from '../../hooks/useAuth';
-const AdminDashboard = () => {
-    const router = useRouter();
+import { supabase } from '../../supabase-client';
+
+const AdminDashboard = ({ user }) => {
+   
+
     
-
-    const logoutHandler = async () => {
-        await signOut(auth);
-        router.replace("/admin");
-    }
-
-    const user = useAuth(auth);
-    
-
-    if(!user) {
-        return null;
-    }
 
   return (
      <AdminLayout>
@@ -29,3 +17,17 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+
+export const getServerSideProps = async ( { req, res } ) => {
+    const { user } = await supabase.auth.api.getUserByCookie(req);
+    if(!user) {
+        return {
+            props: {},
+            redirect: { destination: "/admin"}
+        }
+    }
+    return {
+        props: { user }
+    }
+}

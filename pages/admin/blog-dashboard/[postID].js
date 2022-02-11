@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../../../firebase-config";
+import { useSupaBaseAuth } from "../../../hooks/useSupaBaseAuth";
 import { useRouter } from "next/router";
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import PageLoading from "../../../components/PageLoading/PageLoading";
 import PostEditForm from "../../../components/admin/blog-dash/post-edit-form";
 import AdminBlogProvider from "../../../components/admin/blog-dash/blog-store";
-import { useAuth } from "../../../hooks/useAuth";
 import axios from 'axios';
 const EditPost = () => {
   const [post, setPost] = useState();
   const router = useRouter();
-  const user = useAuth(auth);
   const postID = router.query.postID;
+  const user = useSupaBaseAuth();
   
 
   const getPost = async () => {
@@ -25,9 +24,9 @@ const EditPost = () => {
     }
   }, [postID]);
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
+
+ 
 
   return (
     <AdminBlogProvider>

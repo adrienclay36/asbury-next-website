@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^1.30.0",
     "axios": "^0.25.0",
     "firebase": "^9.6.6",
     "mongodb": "^4.3.1",

@@ -3,11 +3,14 @@ import Image from 'next/image';
 import { auth } from '../../firebase-config';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { supabase } from '../../supabase-client';
+import PageLoading from '../PageLoading/PageLoading';
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [sending, setSending] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -24,11 +27,13 @@ const ForgotPasswordForm = () => {
 
 
     const resetHandler = async (e) => {
+      setSending(true);
         e.preventDefault();
         if(email) {
             try {
-                const reset = await sendPasswordResetEmail(auth, email);
+                const { data, error } = supabase.auth.api.resetPasswordForEmail(email);
                 setSuccess(true);
+                setSending(false);
                 setTimeout(() => {
                   router.push("/admin");
                 }, 3000)
@@ -87,8 +92,8 @@ const ForgotPasswordForm = () => {
               </p>
             </div>
           )}
-
-          <div>
+          {sending && <PageLoading/>}
+          {!sending && !success && <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
@@ -110,7 +115,7 @@ const ForgotPasswordForm = () => {
               </span>
               Reset Password
             </button>
-          </div>
+          </div>}
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <button
