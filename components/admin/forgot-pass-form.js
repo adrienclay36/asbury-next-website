@@ -5,6 +5,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
 import PageLoading from '../PageLoading/PageLoading';
+import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ const ForgotPasswordForm = () => {
         e.preventDefault();
         if(email) {
             try {
-                const { data, error } = supabase.auth.api.resetPasswordForEmail(email);
+                const { data, error } = await supabase.auth.api.resetPasswordForEmail(email);
                 setSuccess(true);
                 setSending(false);
                 setTimeout(() => {
@@ -92,8 +93,8 @@ const ForgotPasswordForm = () => {
               </p>
             </div>
           )}
-          {sending && <PageLoading/>}
-          {!sending && !success && <div>
+          
+          {!success && <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
@@ -113,7 +114,7 @@ const ForgotPasswordForm = () => {
                   />
                 </svg>
               </span>
-              Reset Password
+              {sending ? <DualRingLoader/> : "Reset Password"}
             </button>
           </div>}
           <div className="flex items-center justify-between">

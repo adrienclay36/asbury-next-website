@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
 import styles from './admin-form.module.css';
 import PageLoading from '../PageLoading/PageLoading';
-
+import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 
 const AdminForm = () => {
     const router = useRouter();
@@ -120,8 +120,9 @@ const AdminForm = () => {
             </div>
           </div>
 
-          {!emailSignIn && !loggingIn && <div>
+          <div>
             <button
+              disabled={emailSignIn || loggingIn}
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
             >
@@ -140,9 +141,9 @@ const AdminForm = () => {
                   />
                 </svg>
               </span>
-              Sign in
+              {loggingIn ? <DualRingLoader /> : "Sign In"}
             </button>
-          </div>}
+          </div>
           {emailSignIn && (
             <div className="text-center">
               <p className="text-semibold text-green-700 mt-10">
@@ -150,7 +151,7 @@ const AdminForm = () => {
               </p>
             </div>
           )}
-          {loggingIn && <PageLoading/>}
+
           {error && (
             <div className="text-center">
               <p className="text-semibold text-red-700 mt-10">

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import PageLoading from '../PageLoading/PageLoading';
 import { supabase } from '../../supabase-client';
 import { useRouter } from 'next/router';
+import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 const ResetPasswordForm = ({ token }) => {
     const [sending, setSending] = useState(false);
     const [error, setError] = useState(false);
@@ -11,6 +12,7 @@ const ResetPasswordForm = ({ token }) => {
     const router = useRouter();
     const resetHandler = async (e) => {
         e.preventDefault();
+        setSending(true);
         if(!password){
             setError(true);
             return;
@@ -27,6 +29,7 @@ const ResetPasswordForm = ({ token }) => {
 
         if(error) {
           setError(true);
+          setSending(false);
           setTimeout(()=>{
             router.push("/")
           }, 3000)
@@ -84,8 +87,7 @@ const ResetPasswordForm = ({ token }) => {
               </p>
             </div>
           )}
-          {sending && <PageLoading />}
-          {!sending && !success && (
+          {!success && (
             <div>
               <button
                 type="submit"
@@ -106,7 +108,7 @@ const ResetPasswordForm = ({ token }) => {
                     />
                   </svg>
                 </span>
-                Reset Password
+                {sending ? <DualRingLoader/> : "Reset Password"}
               </button>
             </div>
           )}
