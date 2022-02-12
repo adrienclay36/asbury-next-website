@@ -103,6 +103,6 @@ export const navLinks = [
   },
   {
     text: 'Worship Services',
-    href: '/admin/programs-dashboard',
+    href: '/admin/worship-service-dashboard',
   }
 ];

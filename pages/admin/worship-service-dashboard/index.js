@@ -1,11 +1,11 @@
 import React from 'react'
 import AdminLayout from '../../../components/admin/admin-layout/admin-layout';
-import ProgramOperations from '../../../components/admin/programs-dash/program-operations';
+import WorshipServiceOperations from '../../../components/admin/service-dash/worship-service-operations';
 import { supabase } from '../../../supabase-client';
 const ProgramsDashboard = () => {
   return (
     <AdminLayout>
-      <ProgramOperations/>
+      <WorshipServiceOperations/>
     </AdminLayout>
   );
 }

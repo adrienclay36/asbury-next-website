@@ -4,13 +4,14 @@ import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import HRThin from "../../ui/HRThin";
 import { getSignedUrl } from "../../../supabase-util";
 import { useRouter } from "next/router";
-const ProgramOperations = () => {
+const WorshipServiceOperations = () => {
   const [file, setFile] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [downloadingFile, setDownloadingFile] = useState(false);
   const [liveLink, setLiveLink] = useState("");
   const [settingLink, setSettingLink] = useState(false);
+  const [removingLink, setRemovingLink] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -73,11 +74,13 @@ const ProgramOperations = () => {
 
   const removeCurrent = async (e) => {
       e.preventDefault();
+      setRemovingLink(true);
       const { data } = await supabase.from("live_source").select();
       if (data.length > 0) {
         const idToDrop = data[0].id;
         await supabase.from("live_source").delete().match({ id: idToDrop });
       }
+      setRemovingLink(false);
   }
 
 
@@ -127,9 +130,11 @@ const ProgramOperations = () => {
         <form onSubmit={updateLiveLinkHandler}>
           <input
             type="text"
+            className="px-2 mb-16 w-full"
             required
             value={liveLink}
             onChange={(e) => setLiveLink(e.target.value)}
+            placeholder={"Facebook Live Link"}
           />
           <button
             type="submit"
@@ -143,12 +148,13 @@ const ProgramOperations = () => {
           className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mt-8 w-4/6"
           type="button"
           onClick={removeCurrent}
+          disabled={removingLink ? true : false}
         >
-          Remove Current Source
+          {removingLink ? <DualRingLoader /> : "Remove Current Source"}
         </button>
       </div>
     </div>
   );
 };
 
-export default ProgramOperations;
+export default WorshipServiceOperations;

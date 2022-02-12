@@ -22,10 +22,10 @@ const WelcomeDash = () => {
           buttonText="Go to Librarian Dashboard"
         />
         <WelcomeItem
-          title="Weekly Programs"
-          description="Upload the weekly programs for visitors to scan into on their phones"
-          href="/admin/programs-dashboard"
-          buttonText="Go to Programs Dashboard"
+          title="Worship Services"
+          description="Upload the weekly programs for visitors and add livestream links for the forwarded live stream."
+          href="/admin/worship-service-dashboard"
+          buttonText="Go to Service Dashboard"
         />
       </div>
     </div>

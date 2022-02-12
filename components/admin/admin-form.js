@@ -23,11 +23,9 @@ const AdminForm = () => {
         setLoggingIn(true);
         if(email && password) {
           const {error, data } = await supabase.auth.signIn({email, password});
-          
 
-          if(!error){
+          if(data){
             router.replace("/admin/admin-dashboard");
-            
             return;
           } else {
             setError(true);
