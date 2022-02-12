@@ -102,7 +102,7 @@ export const navLinks = [
     href: "/admin/library-dashboard",
   },
   {
-    text: 'Programs',
+    text: 'Worship Services',
     href: '/admin/programs-dashboard',
   }
 ];

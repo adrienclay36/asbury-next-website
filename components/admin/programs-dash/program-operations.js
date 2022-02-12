@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../../supabase-client";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
-import HRThin from '../../ui/HRThin';
+import HRThin from "../../ui/HRThin";
 import { getSignedUrl } from "../../../supabase-util";
 import { useRouter } from "next/router";
 const ProgramOperations = () => {
@@ -9,6 +9,8 @@ const ProgramOperations = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [downloadingFile, setDownloadingFile] = useState(false);
+  const [liveLink, setLiveLink] = useState("");
+  const [settingLink, setSettingLink] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -52,12 +54,37 @@ const ProgramOperations = () => {
   };
 
   const downloadQRCode = async (e) => {
-      const url = await getSignedUrl("programs", `qrcodes/programs.png`);
-      router.push(url);
+    const url = await getSignedUrl("programs", `qrcodes/programs.png`);
+    router.push(url);
+  };
+
+  const updateLiveLinkHandler = async (e) => {
+    e.preventDefault();
+    setSettingLink(true);
+    const { data } = await supabase.from("live_source").select();
+    if(data.length > 0) {
+        const idToDrop = data[0].id;
+        await supabase.from('live_source').delete().match({id: idToDrop});
+    }
+    await supabase.from('live_source').insert({ source: liveLink });
+    setLiveLink('');
+    setSettingLink(false);
+  };
+
+  const removeCurrent = async (e) => {
+      e.preventDefault();
+      const { data } = await supabase.from("live_source").select();
+      if (data.length > 0) {
+        const idToDrop = data[0].id;
+        await supabase.from("live_source").delete().match({ id: idToDrop });
+      }
   }
+
+
+
   return (
-    <div>
-      <div className="container flex flex-1 flex-col justify-content items-center mt-24 text-center border-2 p-10 w-11/12 lg:w-2/6 md:w-2/6 rounded-lg shadow-md">
+    <div className="container grid sm:grid-cols-1 lg:grid-cols-2 md:grid-cols-2 mt-24">
+      <div className="container flex flex-1 flex-col justify-content items-center text-center border-2 p-10 w-11/12 lg:w-5/6 md:w-5/6 mb-12 rounded-lg shadow-md">
         <h1 className="text-lg lg:text-2xl md:text-2xl font-semibold uppercase ">
           Upload Today&apos;s Program
         </h1>
@@ -72,7 +99,7 @@ const ProgramOperations = () => {
           <div>
             <button
               type="submit"
-              className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mb-8 w-full"
+              className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mb-2w-full"
               disabled={loading ? true : false}
             >
               {!loading ? "Upload Program" : <DualRingLoader />}
@@ -82,19 +109,42 @@ const ProgramOperations = () => {
             )}
           </div>
         </form>
-      </div>
-
-      <div className="container flex flex-1 flex-col justify-content items-center mt-10 mb-10 text-center border-2 p-10 w-11/12 lg:w-2/6 md:w-2/6 rounded-lg shadow-md">
-        <h1 className="text-lg lg:text-2xl md:text-2xl font-semibold uppercase ">
-          Download The QR Code
-        </h1>
-        <HRThin />
         <button
+          type="button"
           onClick={downloadQRCode}
           className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mt-8 w-full"
           disabled={downloadingFile ? true : false}
         >
           {!downloadingFile ? "Download QR Code" : <DualRingLoader />}
+        </button>
+      </div>
+
+      <div className="container flex flex-1 flex-col justify-content items-center text-center border-2 p-10 w-11/12 lg:w-5/6 md:w-5/6 mb-12 rounded-lg shadow-md">
+        <h1 className="text-lg lg:text-2xl md:text-2xl font-semibold uppercase ">
+          Update Live Stream Link
+        </h1>
+        <HRThin />
+        <form onSubmit={updateLiveLinkHandler}>
+          <input
+            type="text"
+            required
+            value={liveLink}
+            onChange={(e) => setLiveLink(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mt-8 w-full"
+            disabled={settingLink ? true : false}
+          >
+            {!settingLink ? "Update Link" : <DualRingLoader />}
+          </button>
+        </form>
+        <button
+          className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mt-8 w-4/6"
+          type="button"
+          onClick={removeCurrent}
+        >
+          Remove Current Source
         </button>
       </div>
     </div>
