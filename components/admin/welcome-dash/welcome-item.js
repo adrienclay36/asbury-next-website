@@ -12,7 +12,7 @@ const WelcomeItem = ({ title, description, buttonText, href}) => {
     }
   return (
     <>
-      <div className="container border-2 p-8 shadow-lg rounded-lg mt-12 lg:mt-0 w-11/12 mx-auto">
+      <div className="container border-2 p-8 shadow-lg rounded-lg mt-12 lg:mt-0 w-11/12 mx-auto mb-12">
         <h1 className="font-semibold text-seaFoam-700 mb-4">{title}</h1>
         <hr className="mb-5"/>
         <p className="font-semibold mb-2">{description}</p>

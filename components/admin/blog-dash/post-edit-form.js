@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { BlogContext } from './blog-store';
-import PageLoading from "../../PageLoading/PageLoading";
+import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
 const PostEditForm = ({post, id }) => {
     const [title, setTitle] = useState(post.title);
     const [author, setAuthor] = useState(post.author);
@@ -83,7 +83,7 @@ const PostEditForm = ({post, id }) => {
             required
             />
         </div>
-        {updating ? <PageLoading/> : <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold hover:bg-emerald-800">Save Changes</button>}
+        <button disabled={updating ? true : false} className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold hover:bg-emerald-800">{updating ? <DualRingLoader/> : "Save Changes"}</button>
       </form>
     </div>
             </>

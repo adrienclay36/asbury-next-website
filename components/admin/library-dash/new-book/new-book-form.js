@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { LibraryContext } from "../library-admin-store";
-import PageLoading from '../../../PageLoading/PageLoading';
+import DualRingLoader from "../../../dual-ring-loader/DualRingLoader";
 const NewBookForm = () => {
   const libraryContext = useContext(LibraryContext);
   const [title, setTitle] = useState("");
@@ -151,12 +151,13 @@ const NewBookForm = () => {
               />
             </div>
           </div>
-          {adding ? <PageLoading/> : <button
+          <button
             type="submit"
             className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
+            disabled={adding ? true : false}
           >
-            Add Book
-          </button>}
+            {adding ? <DualRingLoader /> : "Add Book"}
+          </button>
         </form>
       </div>
     </>

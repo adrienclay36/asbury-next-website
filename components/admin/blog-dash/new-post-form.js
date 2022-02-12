@@ -1,7 +1,7 @@
 import React, { useState, useContext} from 'react';
 import { BlogContext } from './blog-store';
 import { useRouter } from 'next/router';
-import PageLoading from '../../PageLoading/PageLoading';
+import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
 const NewPostForm = () => {
     const router = useRouter();
     const [title, setTitle] = useState('');
@@ -93,9 +93,12 @@ const NewPostForm = () => {
               required
             />
           </div>
-          {adding ? <PageLoading/> : <button className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold">
-            Create Post
-          </button>}
+          <button
+            disabled={adding ? true : false}
+            className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
+          >
+            {adding ? <DualRingLoader /> : "Create Post"}
+          </button>
         </form>
       </div>
     </>
