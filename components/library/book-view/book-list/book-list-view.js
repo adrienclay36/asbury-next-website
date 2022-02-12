@@ -22,7 +22,7 @@ const BookListView = () => {
         {libraryContext.loading && <PageLoading />}
         {libraryContext.noData && <h1 className="text-lg text-center mt-4 font-semibold">No Data for that query...</h1>}
         {libraryContext.books.map((book) => (
-          <BookListItem key={book._id} book={book} />
+          <BookListItem key={book.id} book={book} />
         ))}
       </div>
     </div>

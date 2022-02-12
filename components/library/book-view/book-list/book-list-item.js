@@ -25,13 +25,13 @@ const BookListItem = ({ book }) => {
             <span className="lg:hidden md:hidden sm:flex font-semibold">
               Dewey #:
             </span>{" "}
-            {book.deweyNumber}
+            {book.deweynumber}
           </p>
           <p className="py-2 lg:py-0 md:py-0">
             <span className="lg:hidden md:hidden sm:flex font-semibold">
               Author Code:
             </span>{" "}
-            {book.authorCode}
+            {book.authorcode}
           </p>
         </div>
       </div>

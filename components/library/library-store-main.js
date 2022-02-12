@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { getPagedData, getQueriedData, getTotalPages } from "../../supabase-util";
 
-export const LibraryMainContext = React.createContext( {
+const PAGE_SIZE = 15;
+
+export const LibraryMainContext = React.createContext({
   books: [],
   pageNumber: 0,
   totalPages: 0,
@@ -13,8 +16,7 @@ export const LibraryMainContext = React.createContext( {
   setQuery: () => {},
   getBooks: () => {},
   setNoData: () => {},
-
-})
+});
 
 let isInitial = true;
 const LibraryMainContextProvider = (props) => {
@@ -23,62 +25,50 @@ const LibraryMainContextProvider = (props) => {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [noData, setNoData] = useState(false);
-  const [query, setQuery] = useState('');
-
-
+  const [query, setQuery] = useState("");
 
   const getBooks = async () => {
     setNoData(false);
     setLoading(true);
     setBooks([]);
-    try {
-      const response = await axios.get(`/api/library?page=${pageNumber}`);
-      setBooks(response.data.books);
-      setTotalPages(response.data.totalPages);
-      setLoading(false);
-      isInitial = false;
-    } catch (err) {
-      console.log(err.message);
-    }
+    const data = await getPagedData(pageNumber, PAGE_SIZE, "books");
+    setBooks(data);
+    setLoading(false);
+    isInitial = false;
+  };
 
-  }
+  const initTotalPages = async () => {
+    const totalPages = await getTotalPages(PAGE_SIZE, "books");
+    setTotalPages(totalPages);
+  };
 
-  
+  useEffect(() => {
+    initTotalPages();
+  }, []);
 
   // Get books use Effect, listening on pageNumber Changes
   useEffect(() => {
     getBooks();
-  },[pageNumber])
+  }, [pageNumber]);
 
-
-
-
-  const getQueriedData = async () => {
+  const callQueryFunction = async () => {
     setLoading(true);
     setBooks([]);
+    const { data, status } = await getQueriedData('books', query, 'search_books_ts');
 
-    try {
-      const response = await axios.get(
-        `/api/library/query?searchTerm=${query}`
-      );
-      setBooks(response.data.books);
-      if(response.data.status !== "ok") {
-        setNoData(true);
-      } else {
-        setNoData(false);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.log(error.message);
+    setBooks(data);
+    if (status !== "ok") {
+      setNoData(true);
+    } else {
+      setNoData(false);
     }
+    setLoading(false);
   };
-
-
 
   useEffect(() => {
     // Don't run side effect on initial render
-    if(!isInitial) {
-      if(!query) {
+    if (!isInitial) {
+      if (!query) {
         //  If query has changed and there is not a query, the user has backspaced or cleraed manually
         // In this case, get the books so something loads, otherwise it would stay empty
         getBooks();
@@ -86,28 +76,22 @@ const LibraryMainContextProvider = (props) => {
         return;
       }
       // Wait until the user is done typing (or try)
-      const timeout = setTimeout(getQueriedData, 500);
+      const timeout = setTimeout(callQueryFunction, 500);
 
       // If user types, clear the timeout with cleanup function
       return () => {
         clearTimeout(timeout);
-      }
-
+      };
     }
-  }, [query])
+  }, [query]);
 
-  
-  
   const increasePage = () => {
     setPageNumber(Math.min(totalPages, pageNumber + 1));
-
   };
   const decreasePage = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
-
   };
-  
-  
+
   const contextValue = {
     books: books,
     pageNumber: pageNumber,
@@ -119,17 +103,13 @@ const LibraryMainContextProvider = (props) => {
     getBooks: getBooks,
     noData: noData,
     setNoData: setNoData,
-
-  }
-
+  };
 
   return (
-
     <LibraryMainContext.Provider value={contextValue}>
       {props.children}
     </LibraryMainContext.Provider>
-  
-    );
+  );
 };
 
 export default LibraryMainContextProvider;

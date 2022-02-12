@@ -74,7 +74,7 @@ const BookView = () => {
           <MdOutlineArrowForwardIos />
         </button>
       </div>
-
+      {/* List of books here */}
       <BookListView />
 
       <div className="flex flex-1 p-4 justify-center items-center">
