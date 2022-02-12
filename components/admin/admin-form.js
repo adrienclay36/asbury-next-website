@@ -26,6 +26,7 @@ const AdminForm = () => {
 
           if(data){
             router.push("/admin/admin-dashboard");
+            router.push("/admin/admin-dashboard");
             return;
           } else {
             setError(true);
