@@ -25,16 +25,16 @@ const AdminForm = () => {
           const {error, data } = await supabase.auth.signIn({email, password});
 
           if(data){
-            router.push("/admin/admin-dashboard");
-            router.push("/admin/admin-dashboard");
-            return;
+            setTimeout(() => {
+              router.push("/admin/admin-dashboard");
+            }, 1000);
           } else {
             setError(true);
             setLoggingIn(false);
           }
 
         }
-        setLoggingIn(false);
+        
     }
     const passwordChangeHandler = (e) => {
       if(error) {
