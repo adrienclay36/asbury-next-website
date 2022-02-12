@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getPagedDataByDate, getTotalPages, getQueriedData, addItemToTable, deleteItemFromTable, updateItemInTable } from '../../../supabase-util';
+import { supabase } from "../../../supabase-client";
 
+const PAGE_SIZE = 6;
+const TABLE = 'posts';
 export const BlogContext = React.createContext({
   posts: [],
   pageNumber: 0,
@@ -33,52 +37,61 @@ const AdminBlogProvider = (props) => {
     setNoData(false);
     setLoading(true);
     setPosts([]);
-    try {
-      const response = await axios.get(`/api/blog?page=${pageNumber}`);
-      setPosts(response.data.posts);
-      setTotalPages(response.data.totalPages);
-      setLoading(false);
-      isInitial = false;
-    } catch (err) {
-      console.log(err.message);
-    }
+
+    const data = await getPagedDataByDate(
+      pageNumber,
+      PAGE_SIZE,
+      TABLE,
+      "postdate"
+    );
+    setPosts(data);
+    setLoading(false);
+    isInitial = false;
   };
+
+  const initTotalPages = async () => {
+    const totalPages = await getTotalPages(PAGE_SIZE, TABLE);
+    setTotalPages(totalPages);
+  };
+
+  useEffect(() => {
+    initTotalPages();
+  }, []);
 
   useEffect(() => {
     getPosts();
-  }, [pageNumber, modifying]);
+  }, [pageNumber]);
 
-  const getQueriedData = async () => {
+  const callQueryFunction = async () => {
     setLoading(true);
     setPosts([]);
+    const { data, status } = await getQueriedData(
+      TABLE,
+      query,
+      "search_blog_ts"
+    );
 
-    try {
-      const response = await axios.get(`/api/blog/query?searchTerm=${query}`);
-      setPosts(response.data.posts);
-      if (response.data.status !== "ok") {
-        setNoData(true);
-      } else {
-        setNoData(false);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.log(error.message);
+    setPosts(data);
+    if (status !== "ok") {
+      setNoData(true);
+    } else {
+      setNoData(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-
-    // Don't run on initial render
+    // Don't run side effect on initial render
     if (!isInitial) {
+      //  If query has changed and there is not a query, the user has backspaced or cleraed manually
+      // In this case, get the books so something loads, otherwise it would stay empty
 
-      if(!query) {
-        //  If query has changed and there is not a query, the user has backspaced or cleraed manually
-        // In this case, get the books so something loads, otherwise it would stay empty
+      if (!query) {
         getPosts();
         return;
       }
       // Wait until the user is done typing (or try)
-      const timeout = setTimeout(getQueriedData, 500);
+      const timeout = setTimeout(callQueryFunction, 500);
 
       // If user types, clear the timeout with cleanup function
       return () => {
@@ -88,15 +101,13 @@ const AdminBlogProvider = (props) => {
   }, [query]);
 
   const increasePage = () => {
-    setPageNumber(Math.min(totalPages, pageNumber + 1));
+    setPageNumber(Math.min(totalPages - 1, pageNumber + 1));
   };
   const decreasePage = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
   };
 
-  const toggleModifying = () => {
-    setModifying(!modifying);
-  };
+  
 
 
   const addPost = async (title, image, author, content) => {
@@ -105,44 +116,34 @@ const AdminBlogProvider = (props) => {
       title,
       image,
       author,
-      content,
+      postcontent: content,
+      postdate: new Date(),
     }
-    try {
-      const response = await axios.post("/api/blog/add", newPost);
-    } catch (err) {
-      console.log(err.message);
-    }
+    console.log(newPost.postdate);
+    await addItemToTable(TABLE, newPost);
   }
 
 
 
   const deletePost = async (id) => {
-    try {
-      const response = await axios.delete(`/api/blog/${id}`);
-      if (query) {
-        await getQueriedData();
-      } else {
-        toggleModifying();
-      }
-    } catch (err) {
-      console.log(err.message);
+    await deleteItemFromTable(TABLE, id);
+    if (query) {
+      await callQueryFunction();
+    } else {
+      getPosts();
+      initTotalPages();
     }
   };
 
 
   const updatePost = async (id, title, image, author, content) => {
     const postData = {
-      title,
-      image,
-      author,
-      content,
+      title: title,
+      author: author,
+      image: image,
+      postcontent: content,
     };
-    try {
-      const response = await axios.post(`/api/blog/${id}`, postData);
-      console.log(response);
-    } catch (err) {
-      console.log(err.message);
-    }
+    const response = await updateItemInTable(TABLE, id, postData);
   };
 
 

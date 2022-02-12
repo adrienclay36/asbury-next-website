@@ -6,8 +6,6 @@ import {
   BsToggleOff,
   BsToggleOn,
 } from "react-icons/bs";
-
-import axios from 'axios';
 import { LibraryContext } from './library-admin-store';
 const BookItem = ({ book }) => {
   const [available, setAvailable] = useState(book.availability);
@@ -15,16 +13,19 @@ const BookItem = ({ book }) => {
   const router = useRouter();
 
   const toggleAvailableHandler = () => {
-    libraryContext.toggleAvailable(book._id);
+    libraryContext.toggleAvailable(book.id);
     setAvailable(!available);
   }
 
   const deleteBookHandler = async () => {
     const confirmDelete = confirm("Are you sure you want to delete this item? This operation cannot be undone");
     if(confirmDelete) {
-      libraryContext.deleteBook(book._id);
+      libraryContext.deleteBook(book.id);
     }
   }
+
+  const availableClass = 'text-green-700 font-semibold';
+  const checkedOut = 'text-red-700 font-semibold'
  
   
   return (
@@ -35,9 +36,9 @@ const BookItem = ({ book }) => {
             <h1 className="text-lg font-semibold">{book.title}</h1>
             <p>{book.author}</p>
             <p>{book.subject}</p>
-            <h1>{book.deweyNumber}</h1>
-            <h1>{book.authorCode}</h1>
-            <h1>{available ? "Available" : "Checked Out"}</h1>
+            <h1>{book.deweynumber}</h1>
+            <h1>{book.authorcode}</h1>
+            <h1 className={available ? availableClass : checkedOut}>{available ? "Available" : "Checked Out"}</h1>
           </div>
           <div></div>
           <div>
@@ -54,7 +55,7 @@ const BookItem = ({ book }) => {
               </button>
               <button
                 onClick={() =>
-                  router.push(`/admin/library-dashboard/${book._id}`)
+                  router.push(`/admin/library-dashboard/${book.id}`)
                 }
                 className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
               >

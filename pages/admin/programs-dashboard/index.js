@@ -1,19 +1,16 @@
-import React from 'react';
+import React from 'react'
 import AdminLayout from '../../../components/admin/admin-layout/admin-layout';
-import AdminBlogProvider from '../../../components/admin/blog-dash/blog-store';
-import NewPostForm from '../../../components/admin/blog-dash/new-post-form';
+import ProgramOperations from '../../../components/admin/programs-dash/program-operations';
 import { supabase } from '../../../supabase-client';
-const NewPost = () => {
+const ProgramsDashboard = () => {
   return (
-    <AdminBlogProvider>
     <AdminLayout>
-      <NewPostForm/>
+      <ProgramOperations/>
     </AdminLayout>
-    </AdminBlogProvider>
   );
-};
+}
 
-export default NewPost;
+export default ProgramsDashboard
 
 
 export const getServerSideProps = async ({ req, res }) => {

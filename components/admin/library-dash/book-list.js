@@ -91,7 +91,7 @@ const BookList = () => {
           </h1>
         )}
         {libraryContext.books.map((book) => (
-          <BookItem key={book._id} id={book._id} book={book} />
+          <BookItem key={book.id} id={book.id} book={book} />
         ))}
       </div>
 

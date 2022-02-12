@@ -1,8 +1,12 @@
 import React from "react";
-import { useRouter } from 'next/router';
-import styles from './blog-post-item.module.css';
+import { useRouter } from "next/router";
+import styles from "./blog-post-item.module.css";
 const BlogPostItem = ({ id, title, author, date, content, image, i }) => {
-  const formatDate = new Date(date).toLocaleDateString("en-US");
+  const formatDate = new Date(date.replace(/-/g, "/").replace(/T.+/, "")).toLocaleDateString("en-US");
+  const formatTitle = title
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/\s+/g, "-").replace("---", "-")
+    .toLowerCase();
   const router = useRouter();
   return (
     <div className={styles[`post-animation-${i}`]}>
@@ -29,7 +33,7 @@ const BlogPostItem = ({ id, title, author, date, content, image, i }) => {
         </div>
         <div className="flex justify-center lg:justify-end md:justify-end items-center p-4">
           <button
-            onClick={() => router.push(`/blog/${id}`)}
+            onClick={() => router.push(`/blog/${id}/${formatTitle}`)}
             className="px-7 py-3 m-2 rounded-md bg-seaFoam-400 text-white uppercase font-semibold tracking-wide"
           >
             Read More

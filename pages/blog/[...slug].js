@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { getAllBlogPosts, getBlogPostByID } from '../../firebase-util';
-import { getPostById, getAllPosts } from '../../mongo-util-blog';
+import React, { useState } from 'react';
+import { getItemById, getAllItems } from '../../supabase-util';
 import Layout from '../../components/layout/layout';
 import SinglePostSection from '../../components/blog/single-post/single-post-section';
+import { supabase } from '../../supabase-client';
 const SinglePost = (props) => {
     const [post, setPost] = useState(props.post);
 
@@ -18,25 +18,29 @@ export default SinglePost;
 
 
 export const getStaticPaths = async () => {
-    const {posts} = await getAllPosts();
-    const paths = posts.map(post => ({params: { postID: post._id }}));
+    const { data } = await supabase.from('posts').select();
+
+
+    const paths = data.map((item) => ({
+      params: { slug: [item.id.toString(), item.title] },
+    }));
 
     return {
-        paths: paths,
-        fallback: 'blocking',
-    }
+      paths: paths,
+      fallback: "blocking",
+    };
 }
 
 export const getStaticProps = async (context) => {
-    const postID = context.params.postID;
-    const post = await getPostById(postID);
+    const slug = context.params.slug;
+    const { data } = await supabase.from("posts").select().eq("id", slug[0]);
 
 
     return {
         props: {
-            post: post.post,
+            post: data[0],
         },
-        revalidate: 30,
+        revalidate: 3600,
     }
 
 }

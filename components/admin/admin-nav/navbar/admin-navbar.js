@@ -101,4 +101,8 @@ export const navLinks = [
     text: "Librarian",
     href: "/admin/library-dashboard",
   },
+  {
+    text: 'Programs',
+    href: '/admin/programs-dashboard',
+  }
 ];

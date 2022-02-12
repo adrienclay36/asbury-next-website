@@ -8,11 +8,17 @@ const BlogItem = ({ post }) => {
   const blogContext = useContext(BlogContext);
   const router = useRouter();
 
+  const formatTitle = post.title
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/\s+/g, "-")
+    .replace("---", "-")
+    .toLowerCase();
+
 
   const deletePostHandler = (e) => {
     const response = confirm("Are you sure you want to delete this post? This operation cannot be undone");
     if(response) {
-      blogContext.deletePost(post._id);
+      blogContext.deletePost(post.id);
     }
   }
 
@@ -36,7 +42,7 @@ const BlogItem = ({ post }) => {
         </div>
       </div>
       <div>
-        <Link href={`/blog/${post._id}`} passHref>
+        <Link href={`/blog/${post.id}/${formatTitle}`} passHref>
           <a target="_blank" rel="noreferrer">
           <button className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-cyan-700 text-white rounded-lg hover:bg-cyan-900">
             <IoMdExit className="text-white" />
@@ -44,7 +50,7 @@ const BlogItem = ({ post }) => {
           </a>
         </Link>
         <button
-          onClick={() => router.push(`/admin/blog-dashboard/${post._id}`)}
+          onClick={() => router.push(`/admin/blog-dashboard/${post.id}`)}
           className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
         >
           <BsPencilSquare className="text-white" />

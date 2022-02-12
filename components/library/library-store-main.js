@@ -43,7 +43,7 @@ const LibraryMainContextProvider = (props) => {
   };
 
   useEffect(() => {
-    initTotalPages();
+      initTotalPages();
   }, []);
 
   // Get books use Effect, listening on pageNumber Changes
@@ -86,7 +86,7 @@ const LibraryMainContextProvider = (props) => {
   }, [query]);
 
   const increasePage = () => {
-    setPageNumber(Math.min(totalPages, pageNumber + 1));
+    setPageNumber(Math.min(totalPages - 1, pageNumber + 1));
   };
   const decreasePage = () => {
     setPageNumber(Math.max(0, pageNumber - 1));

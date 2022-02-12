@@ -7,9 +7,9 @@ const BookEditForm = ({ book }) => {
      const [title, setTitle] = useState(book.title);
      const [subject, setSubject] = useState(book.subject);
      const [author, setAuthor] = useState(book.author);
-     const [deweyNumber, setDeweyNumber] = useState(book.deweyNumber);
-     const [authorCode, setAuthorCode] = useState(book.authorCode);
-     const [availability, setAvailability] = useState(book.availability.toString());
+     const [deweyNumber, setDeweyNumber] = useState(book.deweynumber);
+     const [authorCode, setAuthorCode] = useState(book.authorcode);
+     const [availability, setAvailability] = useState(book.availability);
      const [adding, setAdding] = useState(false);
      const router = useRouter();
 
@@ -18,7 +18,7 @@ const BookEditForm = ({ book }) => {
          e.preventDefault();
          setAdding(true);
          await libraryContext.updateBook(
-           book._id,
+           book.id,
            title,
            subject,
            author,

@@ -79,7 +79,7 @@ const BlogList = () => {
           </h1>
         )}
         {blogContext.posts.map((post) => (
-          <BlogItem key={post._id} post={post} />
+          <BlogItem key={post.id} post={post} />
         ))}
       </div>
 

@@ -5,7 +5,7 @@ import PageLoading from "../../PageLoading/PageLoading";
 const PostEditForm = ({post, id }) => {
     const [title, setTitle] = useState(post.title);
     const [author, setAuthor] = useState(post.author);
-    const [content, setContent] = useState(post.content);
+    const [content, setContent] = useState(post.postcontent);
     const [image, setImage] = useState(post.image);
     const [updating, setUpdating] = useState(false);
     const blogContext = useContext(BlogContext);
