@@ -33,8 +33,6 @@ const AdminForm = () => {
           }
 
         }
-        
-
     }
     const passwordChangeHandler = (e) => {
       if(error) {
