@@ -25,6 +25,7 @@ const AdminForm = () => {
           const {error, data } = await supabase.auth.signIn({email, password});
 
           if(data){
+            // Immediate redirect causes the SSR authentication on /admin/admin-dashboard to miss the cookie, and hangs the redirect.
             setTimeout(() => {
               router.push("/admin/admin-dashboard");
             }, 1000);

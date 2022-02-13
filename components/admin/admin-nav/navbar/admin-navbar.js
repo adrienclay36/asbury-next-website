@@ -31,7 +31,7 @@ const AdminNavbar = (props) => {
           props.marginTop && "sm:mt-12"
         }`}
       >
-        <Link href="/admin/admin-dashboard" passHref>
+        <Link href="/" passHref>
           <div className={`py-1 ${props.invertImage && "invert"}`}>
             <Image
               className={`max-h-16 py-1 cursor-pointer`}
@@ -94,7 +94,7 @@ export const navLinks = [
     href: "/admin/admin-dashboard",
   },
   {
-    text: "Blog Operations",
+    text: "Blog",
     href: "/admin/blog-dashboard",
   },
   {
