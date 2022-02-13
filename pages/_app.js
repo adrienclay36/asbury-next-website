@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import "antd/dist/antd.css";
 import { useEffect, useState } from 'react';
 import { polyfill } from 'smoothscroll-polyfill';
 import { useRouter } from 'next/router';

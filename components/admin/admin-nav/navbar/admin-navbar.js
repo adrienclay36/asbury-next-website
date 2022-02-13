@@ -20,7 +20,7 @@ const AdminNavbar = (props) => {
       await supabase.auth.signOut();
       setTimeout(() => {
         router.replace("/admin");
-      }, 200)
+      }, 500)
       
     }
 
@@ -87,6 +87,7 @@ const AdminNavbar = (props) => {
           navLinks={navLinks}
           inverted={props.inverted}
           logoutHandler={logoutHandler}
+          loggingOut={loggingOut}
         />
       </div>
     </div>

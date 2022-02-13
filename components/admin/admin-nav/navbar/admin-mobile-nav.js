@@ -2,7 +2,8 @@ import React from 'react';
 import MobileNavItem from './mobile-nav-item';
 import styles from './mobile-nav.module.css';
 import Link from 'next/link';
-const MobileNav = ({ navLinks, isOpen, textColor, logoutHandler }) => {
+
+const MobileNav = ({ navLinks, isOpen, textColor, logoutHandler, loggingOut }) => {
   return (
     <div className="container">
       <ul
