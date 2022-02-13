@@ -15,7 +15,10 @@ const AdminNavbar = (props) => {
     const logoutHandler = async (e) => {
       e.preventDefault();
       await supabase.auth.signOut();
-      router.replace("/admin");
+      setTimeout(() => {
+        router.replace("/admin");
+      }, 1000)
+      
     }
 
     const toggleMenu = () => {
