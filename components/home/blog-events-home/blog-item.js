@@ -1,6 +1,11 @@
 import React from "react";
 import Link from "next/link";
 const BlogItem = ({ id, title, author, content, date, index }) => {
+  const formatTitle = title
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/\s+/g, "-")
+    .replace("---", "-")
+    .toLowerCase();
   return (
     <li
       className={`${
@@ -14,9 +19,9 @@ const BlogItem = ({ id, title, author, content, date, index }) => {
       </div>
       <p className="ml-4 mb-4 font-semibold text-gray-600">{author}</p>
       <p className="ml-4 text-gray-500 w-full">
-        {content.length > 100 && content.slice(0, 100) + "..."}
+        {content.length > 100 && content.slice(0, 200) + "..."}
       </p>
-      <Link href={`/blog/${id}`} passHref>
+      <Link href={`/blog/${id}/${formatTitle}`} passHref>
         <p className="ml-4 my-2 text-seaFoam-500 cursor-pointer">Read More</p>
       </Link>
     </li>

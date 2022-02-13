@@ -7,17 +7,20 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import Image from "next/image";
 import { useRouter } from 'next/router';
 import { supabase } from '../../../../supabase-client';
+import DualRingLoader from '../../../dual-ring-loader/DualRingLoader';
 const AdminNavbar = (props) => {
   const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [isInitial, setIsInitial] = useState(true);
+    const [loggingOut, setLoggingOut] = useState(false);
 
     const logoutHandler = async (e) => {
+      setLoggingOut(true);
       e.preventDefault();
       await supabase.auth.signOut();
       setTimeout(() => {
         router.replace("/admin");
-      }, 1000)
+      }, 500)
       
     }
 
@@ -60,9 +63,10 @@ const AdminNavbar = (props) => {
           })}
           <button
             onClick={logoutHandler}
-            className="mb-2 cursor-pointer tracking-widest text-lg hover:text-seaFoam-600 uppercase"
+            disabled={loggingOut ? true : false}
+            className="mb-2 cursor-pointer tracking-widest text-lg w-36 hover:bg-emerald-800 uppercase px-3 py-2 bg-emerald-900 rounded-lg shadow-md text-white"
           >
-            Logout
+            {loggingOut ? <DualRingLoader/> : 'Logout'}
           </button>
         </ul>
         <div className="flex sm:hidden flex-1 justify-end mr-3">

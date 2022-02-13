@@ -6,6 +6,7 @@ import Footer from "../components/footer/footer";
 import styles from '../components/home/hero.module.css';
 import { useState, useEffect } from "react";
 import { getBlogPostsByLimit } from '../firebase-util';
+import { supabase } from "../supabase-client";
 export default function Home(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
@@ -30,11 +31,14 @@ export default function Home(props) {
 
 
 export const getStaticProps = async (context) => {
-  const posts = await getBlogPostsByLimit(3);
+  const { data } = await supabase
+    .from('posts')
+    .select()
+    .order('postdate', { ascending: false }).order('id', { ascending: false}).limit(3);
 
   return {
     props: {
-      posts: posts,
+      posts: data,
     },
     revalidate: 10,
   }

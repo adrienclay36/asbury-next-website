@@ -28,7 +28,7 @@ const AdminForm = () => {
             // Immediate redirect causes the SSR authentication on /admin/admin-dashboard to miss the cookie, and hangs the redirect.
             setTimeout(() => {
               router.push("/admin/admin-dashboard");
-            }, 1000);
+            }, 500);
           } else {
             setError(true);
             setLoggingIn(false);
