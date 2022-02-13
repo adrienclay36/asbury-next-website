@@ -14,7 +14,7 @@ const EventsSection = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 100)
+    }, 200)
 
     return () => {
       clearTimeout(timeout);
