@@ -5,7 +5,6 @@ import BlogEvents from "../components/home/blog-events-home/blog-event";
 import Footer from "../components/footer/footer";
 import styles from '../components/home/hero.module.css';
 import { useState, useEffect } from "react";
-import { getBlogPostsByLimit } from '../firebase-util';
 import { supabase } from "../supabase-client";
 export default function Home(props) {
   const [loading, setLoading] = useState(true);

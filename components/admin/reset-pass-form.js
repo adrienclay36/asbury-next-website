@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
-import PageLoading from '../PageLoading/PageLoading';
 import { supabase } from '../../supabase-client';
 import { useRouter } from 'next/router';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';

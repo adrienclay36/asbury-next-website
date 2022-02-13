@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SectionHeader from "../ui/section-heading";
-import Link from "next/link";
 import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
+import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from "@fullcalendar/daygrid";
 import PageLoading from '../PageLoading/PageLoading';
 const EventsSection = () => {
@@ -29,17 +29,20 @@ const EventsSection = () => {
 
   const googleCal = (
     <FullCalendar
-          plugins={[googleCalendarPlugin, dayGridPlugin, interactionPlugin]}
-          googleCalendarApiKey={process.env.NEXT_PUBLIC_GOOGLE_API}
-          events={eventObject}
-          selectable
-        />
-  )
+      plugins={[googleCalendarPlugin, listPlugin, dayGridPlugin, interactionPlugin]}
+      googleCalendarApiKey={process.env.NEXT_PUBLIC_GOOGLE_API}
+      initialView="listWeek"
+      events={eventObject}
+      selectable
+      stickyHeaderDates={false}
+      headerToolbar={{start: 'title', center: 'dayGridMonth listWeek', end:'today prev,next'}}
+    />
+  );
 
 
   return (
     <SectionHeader title="Events">
-      <div className="w-5/6 mx-auto">
+      <div className="w-full lg:w-5/6 md:w-5/6 mx-auto">
         {!loading  ? googleCal : loadingDiv}
       </div>
     </SectionHeader>

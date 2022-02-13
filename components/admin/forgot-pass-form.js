@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { auth } from '../../firebase-config';
-import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
-import PageLoading from '../PageLoading/PageLoading';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 
 const ForgotPasswordForm = () => {

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import HRThin from '../../ui/HRThin';
 import { useRouter } from "next/router";
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
 const WelcomeItem = ({ title, description, buttonText, href}) => {

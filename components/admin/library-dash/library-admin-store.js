@@ -9,7 +9,6 @@ import {
   updateItemInTable,
   toggleBooleanValue
 } from "../../../supabase-util";
-import { supabase } from "../../../supabase-client";
 const PAGE_SIZE = 15;
 const TABLE = "books";
 export const LibraryContext = React.createContext({

@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
 import styles from './admin-form.module.css';
-import PageLoading from '../PageLoading/PageLoading';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 
 const AdminForm = () => {
