@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import { supabase } from '../supabase-client';
 import Head from 'next/head';
 import NextNProgress from 'nextjs-progressbar';
+import "@fullcalendar/common/main.css";
+import "@fullcalendar/daygrid/main.css";
+import "@fullcalendar/timegrid/main.css";
 function MyApp({ Component, pageProps }) {
 
   const [authenticatedState, setAuthenticatedState] =
