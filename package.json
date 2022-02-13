@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.30.0",
-    "antd": "^4.18.6",
     "axios": "^0.25.0",
     "firebase": "^9.6.6",
     "mongodb": "^4.3.1",
