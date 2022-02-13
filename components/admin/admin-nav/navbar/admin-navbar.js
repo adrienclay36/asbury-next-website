@@ -20,7 +20,7 @@ const AdminNavbar = (props) => {
       await supabase.auth.signOut();
       setTimeout(() => {
         router.replace("/admin");
-      }, 500)
+      }, 200)
       
     }
 
