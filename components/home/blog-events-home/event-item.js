@@ -3,10 +3,11 @@ import { getDateInfo } from "../../../utils/dates";
 import Link from 'next/link';
 const EventItem = ({ date, title, timeframe, start, end}) => {
     const { day, monthText } = getDateInfo(date);
-    const startTime = new Date(start).toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit'});
+    const startTime = new Date(start).toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
     const endTime = new Date(end).toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
+      timeZone: "America/Denver"
     });
     console.log(startTime);
   return (
