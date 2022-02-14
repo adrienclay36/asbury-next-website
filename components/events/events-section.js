@@ -6,9 +6,26 @@ import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from "@fullcalendar/daygrid";
 import PageLoading from '../PageLoading/PageLoading';
+import axios from 'axios';
+
 const EventsSection = () => {
   const [loading, setLoading] = useState(true);
   const eventObject = { googleCalendarId: process.env.NEXT_PUBLIC_CALENDAR_ID}
+
+  // const fetchICS = async () => {
+  //   const response = await axios.get(
+  //     "/api/events"
+  //   );
+
+   
+
+  //   console.log(response);
+   
+  // }
+
+  // useEffect(() => {
+  //   fetchICS();
+  // }, [])
   
   
   useEffect(() => {
@@ -21,6 +38,8 @@ const EventsSection = () => {
     }
   }, [])
 
+  
+
   const loadingDiv = (
     <div style={{height: "90vh"}} className="max-w-screen-lg mx-auto flex flex-1 items-center justify-center">
       <PageLoading/>
@@ -29,13 +48,24 @@ const EventsSection = () => {
 
   const googleCal = (
     <FullCalendar
-      plugins={[googleCalendarPlugin, listPlugin, dayGridPlugin, interactionPlugin]}
+      plugins={[
+        googleCalendarPlugin,
+        listPlugin,
+        dayGridPlugin,
+        interactionPlugin,
+      ]}
       googleCalendarApiKey={process.env.NEXT_PUBLIC_GOOGLE_API}
       initialView="listWeek"
       events={eventObject}
       selectable
       stickyHeaderDates={false}
-      headerToolbar={{start: 'title', center: 'dayGridMonth listWeek', end:'today prev,next'}}
+      headerToolbar={{
+        start: "title",
+        end: "prev,next",
+      }}
+      eventClick={(event) => {
+        window.open(event.url, "gcalevent", "width=700,height=600");
+      }}
     />
   );
 

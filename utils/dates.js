@@ -2,7 +2,7 @@
 const dateNumbers = {
     1: 'Jan',
     2: 'Feb',
-    3: 'March',
+    3: 'Mar',
     4: 'Apr',
     5: 'May',
     6: 'Jun',

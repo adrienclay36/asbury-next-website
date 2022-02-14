@@ -6,6 +6,7 @@ import Footer from "../components/footer/footer";
 import styles from '../components/home/hero.module.css';
 import { useState, useEffect } from "react";
 import { supabase } from "../supabase-client";
+import axios from "axios";
 export default function Home(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
@@ -22,7 +23,7 @@ export default function Home(props) {
       <Hero />
       <Features />
       {!loading && <ImageDiv />}
-      <BlogEvents posts={props.posts} />
+      <BlogEvents posts={props.posts}/>
       <Footer />
     </div>
   );
@@ -34,6 +35,7 @@ export const getStaticProps = async (context) => {
     .from('posts')
     .select()
     .order('postdate', { ascending: false }).order('id', { ascending: false}).limit(3);
+
 
   return {
     props: {
