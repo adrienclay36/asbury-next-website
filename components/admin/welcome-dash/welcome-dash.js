@@ -27,6 +27,18 @@ const WelcomeDash = () => {
           href="/admin/worship-service-dashboard"
           buttonText="Go to Service Dashboard"
         />
+        <WelcomeItem
+          title="Add An Administrator"
+          description="Add an administrator via email by giving them an email and a temporary password."
+          href="/admin/add-admin"
+          buttonText="Add Administrator"
+        />
+        <WelcomeItem
+          title="Change Your Password"
+          description="Change your admin login password"
+          href="/admin/change-password"
+          buttonText="Change Password"
+        />
       </div>
     </div>
   );
