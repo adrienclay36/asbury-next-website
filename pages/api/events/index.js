@@ -1,7 +1,6 @@
-
-import axios from 'axios';
+import axios from "axios";
 const ical = require("ical");
-
+import { nanoid } from 'nanoid';
 const months = [
   "Jan",
   "Feb",
@@ -22,40 +21,63 @@ const googleURL =
 
 const churchEventsURL =
   "http://www.mychurchevents.com/calendar/ical/57664083/public.ics?tz=z93";
+
+function addMonths(d, n) {
+  var dt = new Date(d.getTime());
+  dt.setMonth(dt.getMonth() + n);
+  return dt;
+}
+
+
 const handler = async (req, res) => {
   if (req.method === "GET") {
     const response = await axios.get(churchEventsURL);
 
-     const data = ical.parseICS(response.data);
-     const events = [];
-     for (let k in data) {
-       if (data.hasOwnProperty(k)) {
-         var ev = data[k];
-         if (data[k].type == "VEVENT") {
-            if(new Date(ev.start) >= new Date()){
+    const data = ical.parseICS(response.data);
+    const events = [];
 
-                events.push({
-                    summary: ev.summary,
-                    start: new Date(ev.start),
-                    end: new Date(ev.end),
-                    location: ev.location,
-                })
-            }
-        //    console.log(
-        //      `${ev.summary} is in ${
-        //        ev.location
-        //      } on the ${new Date(ev.start).getDate()} of ${
-        //        months[new Date(ev.start).getMonth()]
-        //      } at ${new Date(ev.start).toLocaleTimeString("en-US")}`
-        //    );
-         }
-       }
-     }
+    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: "America/Denver"});
+    const today = formatter.format(new Date());
+    const todayDateObject = new Date(today);
+    const oneMonthForward = addMonths(todayDateObject, 1);
+
+    const time = todayDateObject.getTime();
+
+
+    for (let k in data) {
+      if(data[k].rrule) {
+        if(data[k].summary !== "Mother's Day Out") {
+          const dates = data[k].rrule.between(todayDateObject, oneMonthForward);
+          dates.forEach(date => {
+            events.push({
+              id: nanoid(),
+              summary: data[k].summary,
+              start: data[k].start,
+              end: data[k].end,
+              date: date,
+            });
+          })
+        }
+      } else {
+        if(data[k].summary && data[k].start && data[k].end) {
+          events.push({
+            id: nanoid(),
+            summary: data[k].summary,
+            start: new Date(data[k].start),
+            end: new Date(data[k].end),
+            date: new Date(data[k].start),
+          });
+        }
+      }
+    }
+
     const byDate = events.sort((a, b) => {
-        return a.start - b.start;
-    })
-    
-    res.status(200).json({status: "ok", events: byDate});
+      return a.date - b.date;
+    });
+
+    const todayAndLater = events.filter(item => {return item.date >= todayDateObject});
+
+    res.status(200).json({ status: "ok", events: todayAndLater });
   }
 };
 

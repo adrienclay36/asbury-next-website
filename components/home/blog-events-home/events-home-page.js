@@ -31,8 +31,8 @@ const EventsHomePage = () => {
         {!loading && <ul>
           {events.map((event) => (
             <EventItem
-              key={event.start}
-              date={event.start}
+              key={event.id}
+              date={event.date}
               start={event.start}
               end={event.end}
               title={event.summary}

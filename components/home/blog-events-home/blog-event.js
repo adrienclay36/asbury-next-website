@@ -9,7 +9,7 @@ const BlogEvents = ({ posts }) => {
         <h1 className="uppercase text-3xl">Blog & Events</h1>
         <div className="h-1 w-60 rounded-lg bg-gray-400 mx-10 mt-5"></div>
       </div>
-      <div className="container grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-20 max-w-screen-lg mt-12">
+      <div className="container grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5 max-w-screen-lg mt-12">
           <BlogHomePage posts={posts}/>
           <EventsHomePage/>
       </div>

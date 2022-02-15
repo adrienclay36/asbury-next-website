@@ -98,6 +98,6 @@ export const navLinks = [
   },
   {
     text: "Joys & Concerns",
-    href: "/joys-and-concerns",
+    href: "https://asbury-social.netlify.app/",
   },
 ];

@@ -11,22 +11,6 @@ import axios from 'axios';
 const EventsSection = () => {
   const [loading, setLoading] = useState(true);
   const eventObject = { googleCalendarId: process.env.NEXT_PUBLIC_CALENDAR_ID}
-
-  // const fetchICS = async () => {
-  //   const response = await axios.get(
-  //     "/api/events"
-  //   );
-
-   
-
-  //   console.log(response);
-   
-  // }
-
-  // useEffect(() => {
-  //   fetchICS();
-  // }, [])
-  
   
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -62,9 +46,6 @@ const EventsSection = () => {
       headerToolbar={{
         start: "title",
         end: "prev,next",
-      }}
-      eventClick={(event) => {
-        window.open(event.url, "gcalevent", "width=700,height=600");
       }}
     />
   );
