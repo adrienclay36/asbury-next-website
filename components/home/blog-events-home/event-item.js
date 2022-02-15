@@ -9,6 +9,7 @@ const EventItem = ({ date, title, timeframe, start, end}) => {
       minute: "2-digit",
       timeZone: "America/Denver"
     });
+    
   return (
     <Link href="/events" passHref>
     <div className=" cursor-pointer border-b-2 mb-3 flex flex-1 py-2 pb-3 px-1">

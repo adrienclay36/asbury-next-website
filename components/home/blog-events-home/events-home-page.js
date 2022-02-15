@@ -36,7 +36,7 @@ const EventsHomePage = () => {
               start={event.start}
               end={event.end}
               title={event.summary}
-              timeframe={"1:00PM - 6:00PM"}
+              
             />
           ))}
         </ul>}

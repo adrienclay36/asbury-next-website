@@ -41,8 +41,6 @@ const handler = async (req, res) => {
     const todayDateObject = new Date(today);
     const oneMonthForward = addMonths(todayDateObject, 1);
 
-    const time = todayDateObject.getTime();
-
 
     for (let k in data) {
       if(data[k].rrule) {
@@ -75,7 +73,7 @@ const handler = async (req, res) => {
       return a.date - b.date;
     });
 
-    const todayAndLater = events.filter(item => {return item.date >= todayDateObject});
+    const todayAndLater = byDate.filter(item => {return item.date >= todayDateObject});
 
     res.status(200).json({ status: "ok", events: todayAndLater });
   }
