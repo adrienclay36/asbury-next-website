@@ -4,12 +4,22 @@ import Link from 'next/link';
 const EventItem = ({ date, title, start, end}) => {
   console.log(typeof(start));
     const { day, monthText } = getDateInfo(date);
-    const startTime = new Date(start).toUTCString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
-    const endTime = new Date(end).toUTCString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "America/Denver"
-    });
+    const startTime = new Date(start);
+    const endTime = new Date(end);
+
+    function formatDate(inputDate) {
+      var hours = inputDate.getUTCHours();
+      var minutes = inputDate.getUTCMinutes();
+      var ampm = hours >= 12 ? "pm" : "am";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      var strTime = hours + ":" + minutes + " " + ampm;
+      return strTime
+    }
+
+    const formatStart = formatDate(startTime);
+    const formatEnd = formatDate(endTime);
     
     
 
@@ -29,7 +39,7 @@ const EventItem = ({ date, title, start, end}) => {
           {title.length > 20 ? title.slice(0,28) + "..." : title}
         </h1>
         <h1 className="uppercase font-semibold text-seaFoam-600 text-md mt-4">
-          {startTime} - {endTime}
+          {formatStart} - {formatEnd}
         </h1>
       </div>
     </div>
