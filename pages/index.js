@@ -5,6 +5,7 @@ import BlogEvents from "../components/home/blog-events-home/blog-event";
 import Footer from "../components/footer/footer";
 import styles from '../components/home/hero.module.css';
 import { useState, useEffect } from "react";
+import HeroInfo from "../components/home/info-section-two/hero-info";
 import { supabase } from "../supabase-client";
 import axios from "axios";
 export default function Home(props) {
@@ -24,6 +25,7 @@ export default function Home(props) {
       <Features />
       {!loading && <ImageDiv />}
       <BlogEvents posts={props.posts}/>
+      {/* <HeroInfo/> */}
       <Footer />
     </div>
   );
