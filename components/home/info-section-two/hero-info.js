@@ -6,7 +6,7 @@ const HeroInfo = () => {
         <div className={styles['hero-text']}>
 
           
-            <h1 className="text-4xl lg:text-8xl md:text-7xl text-left text-white font-bold mb-12">Traditional Service</h1>
+            <h1 className="text-4xl lg:text-8xl md:text-7xl text-left text-white font-bold mb-12"><span className={`${styles.clip} bg-clip-text text-transparent`}>Traditional</span> Service</h1>
             <div>
               <p className="text-4xl font-semibold mb-6 uppercase opacity-70">Sundays</p>
 
