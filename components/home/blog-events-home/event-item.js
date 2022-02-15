@@ -3,26 +3,26 @@ import { getDateInfo } from "../../../utils/dates";
 import Link from 'next/link';
 const EventItem = ({ date, title, start, end}) => {
     const { day, monthText } = getDateInfo(date);
-    // const startTime = new Date(start).toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
-    // const endTime = new Date(end).toLocaleTimeString("en-US", {
-    //   hour: "numeric",
-    //   minute: "2-digit",
-    //   timeZone: "America/Denver"
-    // });
+    const startTime = new Date(start).toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
+    const endTime = new Date(end).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "America/Denver"
+    });
+
+    const utcStart = new Date(start).toUTCString();
+    const utcEnd = new Date(end).toUTCString();
+    const newStart = new Date(utcStart).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/Denver"})
+    const newEnd = new Date(utcEnd).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "America/Denver",
+    });
+    
+    
 
 
-    const calcTime = (date, offset) => {
-
-
-      const utc = date.getTime() + date.getTimezoneOffset() * 60000;
-
-      const nd = new Date(utc + 3600000 * offset);
-
-      return nd.toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"});
-    }
-
-    const startTime = calcTime(new Date(start), +7);
-    const endTime = calcTime(new Date(end), +7);
+   
     
   return (
     <Link href="/events" passHref>
@@ -37,7 +37,7 @@ const EventItem = ({ date, title, start, end}) => {
           {title.length > 20 ? title.slice(0,28) + "..." : title}
         </h1>
         <h1 className="uppercase font-semibold text-seaFoam-600 text-md mt-4">
-          {startTime} - {endTime}
+          {newStart} - {newEnd}
         </h1>
       </div>
     </div>
