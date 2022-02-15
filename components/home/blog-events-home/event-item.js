@@ -2,21 +2,13 @@ import React from 'react';
 import { getDateInfo } from "../../../utils/dates";
 import Link from 'next/link';
 const EventItem = ({ date, title, start, end}) => {
+  console.log(typeof(start));
     const { day, monthText } = getDateInfo(date);
-    const startTime = new Date(start).toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
-    const endTime = new Date(end).toLocaleTimeString("en-US", {
+    const startTime = new Date(start).toTimeString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
+    const endTime = new Date(end).toTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       timeZone: "America/Denver"
-    });
-
-    const utcStart = new Date(start).toUTCString();
-    const utcEnd = new Date(end).toUTCString();
-    const newStart = new Date(utcStart).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/Denver"})
-    const newEnd = new Date(utcEnd).toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "America/Denver",
     });
     
     
@@ -37,7 +29,7 @@ const EventItem = ({ date, title, start, end}) => {
           {title.length > 20 ? title.slice(0,28) + "..." : title}
         </h1>
         <h1 className="uppercase font-semibold text-seaFoam-600 text-md mt-4">
-          {newStart} - {newEnd}
+          {startTime} - {endTime}
         </h1>
       </div>
     </div>
