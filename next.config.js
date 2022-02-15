@@ -17,4 +17,8 @@ module.exports = withTM({
   images: {
     domains: ["https://images.unsplash.com"],
   },
+  i18n: {
+    locales: ['en-US'],
+    defaultLocale: 'en-US',
+  }
 });
