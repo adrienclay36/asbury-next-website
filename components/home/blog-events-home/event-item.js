@@ -4,8 +4,8 @@ import Link from 'next/link';
 const EventItem = ({ date, title, start, end}) => {
   console.log(typeof(start));
     const { day, monthText } = getDateInfo(date);
-    const startTime = new Date(start).toLocaleTimeString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
-    const endTime = new Date(end).toLocaleTimeString("en-US", {
+    const startTime = new Date(start).toUTCString("en-US", { hour: 'numeric', minute: '2-digit', timeZone: "America/Denver"});
+    const endTime = new Date(end).toUTCString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       timeZone: "America/Denver"
