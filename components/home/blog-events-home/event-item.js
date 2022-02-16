@@ -2,7 +2,6 @@ import React from "react";
 import { getDateInfo } from "../../../utils/dates";
 import Link from "next/link";
 const EventItem = ({ date, title, start, end, index }) => {
-  console.log(typeof start);
   const { day, monthText } = getDateInfo(date);
   const startTime = new Date(start);
   const endTime = new Date(end);

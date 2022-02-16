@@ -7,9 +7,8 @@ const HeroInfo = () => {
       <div className={styles["hero-text"]}>
         <h1 className="text-5xl lg:text-8xl md:text-7xl text-center text-white font-bold mb-12">
           <span className={`${styles.clip} bg-clip-text text-transparent`}>
-            Traditional
+            Traditional Service
           </span>{" "}
-          Service
         </h1>
         <div>
           <p
@@ -18,13 +17,12 @@ const HeroInfo = () => {
             Sundays
           </p>
           <div className="flex flex-1 justify-center">
-            <CgCross
-              size={50}
-              className="bg-clip-text text-center"
-            />
+            <CgCross size={50} className="bg-clip-text text-center" />
           </div>
 
-          <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-center items-center">
+          <div
+            className={`${styles.clip} flex flex-1 flex-col lg:flex-row md:flex-row justify-center items-center bg-clip-text text-transparent`}
+          >
             <p className="m-4 text-xl lg:text-2xl md:text-2xl font-bold">
               8:00AM
             </p>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsFacebook} from 'react-icons/bs';
 import { MdOndemandVideo } from "react-icons/md";
-import { AiFillTwitterCircle } from 'react-icons/ai';
+import { BsFillEnvelopeFill } from "react-icons/bs";
 import { useRouter } from 'next/router';
 import { ImBubble } from 'react-icons/im';
 import Link from 'next/link';
@@ -29,6 +29,12 @@ const SocialIcons = ({ textColor, textHover }) => {
         onClick={() => router.push("/livestream")}
         size={30}
         className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
+      />
+
+      <BsFillEnvelopeFill
+      onClick={() => router.push("/contact")}
+      size={30}
+      className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
       />
     </div>
   );
