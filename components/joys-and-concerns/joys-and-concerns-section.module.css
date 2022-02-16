@@ -1,0 +1,4 @@
+.btn-filled {
+    outline: none;
+    @apply bg-seaFoam-500 text-white;
+}

@@ -6,6 +6,7 @@ import styles from './navbar.module.css';
 import { AiOutlineMenu } from 'react-icons/ai';
 import SocialIcons from './social-icons';
 import Image from 'next/image';
+import LogoUnited from '../logo/LogoUnited';
 import Logo from '../logo/Logo';
 const Navbar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +30,7 @@ const Navbar = (props) => {
       >
         <Link href="/" passHref>
           <div className={`py-1 ${props.invertImage && "invert"}`}>
-            <Logo/>
+            <LogoUnited/>
           </div>
         </Link>
         <ul

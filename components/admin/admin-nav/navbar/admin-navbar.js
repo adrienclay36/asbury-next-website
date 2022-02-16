@@ -43,7 +43,7 @@ const AdminNavbar = (props) => {
               className={`max-h-16 py-1 cursor-pointer`}
               height={64}
               width={153.6}
-              src="/images/AsburyLogoFull.png"
+              src="/images/UMCLeft.png"
               alt="Asbury Logo"
               priority={true}
             />

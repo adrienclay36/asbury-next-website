@@ -25,7 +25,7 @@ export default function Home(props) {
       <Features />
       {!loading && <ImageDiv />}
       <BlogEvents posts={props.posts}/>
-      {/* <HeroInfo/> */}
+      <HeroInfo/>
       <Footer />
     </div>
   );

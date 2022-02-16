@@ -35,7 +35,7 @@ const Footer = () => {
           <button onClick={() => router.push("/")}>
             <Image
               className="max-h-16 cursor-pointer"
-              src="/images/AsburyLogoFull.png"
+              src="/images/UMCLeft.png"
               alt="Asbury Logo"
               height={64}
               width={153}

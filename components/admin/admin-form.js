@@ -60,7 +60,7 @@ const AdminForm = () => {
             width={154}
             height={64}
             className="h-12 w-auto"
-            src="/images/AsburyLogoFull.png"
+            src="/images/UMCLeft.png"
             alt="Workflow"
           />
         </div>
