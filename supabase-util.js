@@ -29,6 +29,17 @@ export const getPagedDataByDate = async (page, size, table, dateColumn) => {
   return data;
 };
 
+export const getPagedDataByID = async (page, size, table, dateColumn) => {
+  let { from, to } = getPagination(page, size);
+  const { data } = await supabase
+    .from(table)
+    .select()
+    .order("id", { ascending: false })
+    .range(from, to - 1);
+
+  return data;
+};
+
 export const getTotalPages = async (size, table) => {
   const { count } = await supabase.from(table).select("*", { count: "exact" });
 
@@ -120,3 +131,5 @@ export const getSignedUrl = async (bucket, filename) => {
     .createSignedUrl(filename, 60);
   return signedURL;
 }
+
+/* PRAYER POSTS SPECIFIC HELPERS */

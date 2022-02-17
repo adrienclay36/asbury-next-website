@@ -19,12 +19,13 @@ const SocialIcons = ({ textColor, textHover }) => {
           className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
         />
       </a>
-      <a href="https://asbury-social.netlify.app/" target="_blank" rel="noreferrer">
+
         <ImBubble
+        onClick={() => router.push("/joys-and-concerns")}
           size={30}
           className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
         />
-      </a>
+      
       <MdOndemandVideo
         onClick={() => router.push("/livestream")}
         size={30}

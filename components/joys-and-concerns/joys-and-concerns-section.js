@@ -4,8 +4,8 @@ import AboutView from "./about-view/about-view";
 import BoardView from "./board-view/board-view";
 import SectionHeading from "../ui/section-heading";
 const JoysAndConcernsSection = () => {
-  const [aboutView, setAboutView] = useState(true);
-  const [boardView, setBoardView] = useState(false);
+  const [aboutView, setAboutView] = useState(false);
+  const [boardView, setBoardView] = useState(true);
 
   const showAbout = () => {
     setAboutView(true);
