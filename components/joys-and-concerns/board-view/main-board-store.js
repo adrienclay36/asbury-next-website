@@ -5,7 +5,7 @@ import { supabase } from '../../../supabase-client';
 
 
 const TABLE = "prayers";
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 let isInit = true;
 export const FrontPrayerContext = createContext({
     posts: [],
@@ -60,7 +60,6 @@ const FrontPrayerContextProvider = (props) => {
 
   useEffect(() => {
     if(newPost) {
-      console.log(newPost);
       setPosts(prevPosts => {
         return [newPost, ...prevPosts];
       })
@@ -135,7 +134,6 @@ const FrontPrayerContextProvider = (props) => {
         notifications,
         postdate: new Date(),
       }
-      console.log(newPost);
       const response = await addItemToTable(TABLE, newPost);
       setPosting(false);
       return response;

@@ -99,7 +99,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
             <FaSadTear size={30} className="text-blue-900" />
           )}
         </div>
-        <button onClick={() => router.push(`/joys-and-concerns/${formatAuthor}/${id}`)} className="p-4 font-semibold text-seaFoam-500 hover:underline">
+        <button onClick={() => router.push(`/joys-and-concerns/${formatAuthor}/${id}`)} className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline">
           View Replies
         </button>
       </div>
