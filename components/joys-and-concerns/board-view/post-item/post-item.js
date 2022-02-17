@@ -64,7 +64,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
   return (
     <>
       <div
-        className={`${styles.init} container w-full lg:w-3/6 md:w-5/6 border-2 px-10 pt-10 mt-12 rounded-lg shadow-md`}
+        className={`${styles.init} container w-full lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
       >
         <div className="flex flex-1 justify-start items-center ">
           <Image
