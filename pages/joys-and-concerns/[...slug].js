@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../../supabase-client";
 import Layout from "../../components/layout/layout";
 import FrontPrayerContextProvider from "../../components/joys-and-concerns/board-view/main-board-store";
@@ -6,32 +6,68 @@ import SectionHeading from "../../components/ui/section-heading";
 import IndividualPost from "../../components/joys-and-concerns/board-view/individual-post/individual-post";
 import { useRouter } from "next/router";
 import CommentList from "../../components/joys-and-concerns/board-view/comment-list/comment-list";
+import PageLoading from "../../components/PageLoading/PageLoading";
 const IndividualPrayer = (props) => {
-  const { id, author, postcontent, likes, posttype, postdate } = props.post;
+  const [post, setPost] = useState();
   const router = useRouter();
+
+  let postID;
+  if (router.query.slug) {
+    postID = router.query.slug[1];
+  }
+
+  const getPost = async () => {
+    if (postID) {
+      const { data, error } = await supabase
+        .from("prayers")
+        .select()
+        .match({ id: postID });
+      console.log(data);
+      setPost(data[0]);
+    }
+  };
+  useEffect(() => {
+    getPost();
+  }, [postID]);
+
+  if (!post) {
+    return (
+      <Layout title="Asbury UMC">
+        <SectionHeading title="Joys & Concerns">
+          <PageLoading />
+        </SectionHeading>
+      </Layout>
+    );
+  }
+
   return (
     <FrontPrayerContextProvider>
       <Layout
-        title={author}
+        title={post.author}
         description={
-          postcontent.length > 140 ? postcontent.slice(0, 140) + "..." : postcontent
+          post.postcontent.length > 140
+            ? post.postcontent.slice(0, 140) + "..."
+            : post.postcontent
         }
       >
-        <SectionHeading title={`Post By ${author}`}>
+        <SectionHeading title={`Post by ${post.author}`}>
           <div className="flex flex-1 justify-center items-center">
-            <button className="px-4 py-2 bg-seaFoam-600 rounded-md shadow-md text-white" onClick={() => router.push("/joys-and-concerns")}>
+            <button
+              className="px-4 py-2 bg-seaFoam-600 rounded-md shadow-md text-white"
+              onClick={() => router.push("/joys-and-concerns")}
+            >
               Back To All Posts
             </button>
           </div>
           <IndividualPost
-            id={id}
-            author={author}
-            content={postcontent}
-            likes={likes}
-            type={posttype}
-            date={postdate}
+            id={post.id}
+            author={post.author}
+            content={post.postcontent}
+            likes={post.likes}
+            type={post.posttype}
+            date={post.postdate}
           />
-          <CommentList postID={id}/>
+          <CommentList postID={post.id} />
         </SectionHeading>
       </Layout>
     </FrontPrayerContextProvider>
@@ -40,27 +76,27 @@ const IndividualPrayer = (props) => {
 
 export default IndividualPrayer;
 
-export const getStaticPaths = async () => {
-  const { data } = await supabase.from("prayers").select();
+// export const getStaticPaths = async () => {
+//   const { data } = await supabase.from("prayers").select();
 
-  const paths = data.map((item) => ({
-    params: { slug: [item.author, item.id.toString()] },
-  }));
+//   const paths = data.map((item) => ({
+//     params: { slug: [item.author, item.id.toString()] },
+//   }));
 
-  return {
-    paths: paths,
-    fallback: "blocking",
-  };
-};
+//   return {
+//     paths: paths,
+//     fallback: "blocking",
+//   };
+// };
 
-export const getStaticProps = async (context) => {
-  const slug = context.params.slug;
-  const { data } = await supabase.from("prayers").select().eq("id", slug[1]);
+// export const getStaticProps = async (context) => {
+//   const slug = context.params.slug;
+//   const { data } = await supabase.from("prayers").select().eq("id", slug[1]);
 
-  return {
-    props: {
-      post: data[0],
-    },
-    revalidate: 1,
-  };
-};
+//   return {
+//     props: {
+//       post: data[0],
+//     },
+//     revalidate: 3600,
+//   };
+// };
