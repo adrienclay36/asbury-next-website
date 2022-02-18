@@ -36,9 +36,11 @@ const CommentList = ({ postID }) => {
 
   useEffect(() => {
     if (newComment) {
-
+      let commentCopy;
       setComments((prevComments) => {
-        return [newComment, ...prevComments];
+        commentCopy = newComment;
+        setNewComment(null);
+        return [commentCopy, ...prevComments];
       });
       setNewComment(null);
     }

@@ -59,11 +59,14 @@ const FrontPrayerContextProvider = (props) => {
 
 
   useEffect(() => {
+    let postCopy;
     if(newPost) {
       setPosts(prevPosts => {
-        return [newPost, ...prevPosts];
+        postCopy = newPost;
+        setNewPost(null);
+        return [postCopy, ...prevPosts];
       })
-      setNewPost(null);
+      
     }
   }, [newPost])
 
