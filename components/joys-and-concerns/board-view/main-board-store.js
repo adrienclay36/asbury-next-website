@@ -82,7 +82,6 @@ const FrontPrayerContextProvider = (props) => {
         const filtered = prevPosts.filter(
           (prevPost) => prevPost.id !== newPost.id
         );
-        console.log("APPENDING POST");
         return [newPost, ...filtered];
       });
     }

@@ -32,8 +32,6 @@ const CommentList = ({ postID }) => {
     if (newComment) {
       setComments((prevComments) => {
         const filtered = prevComments.filter(prevComment => prevComment.id !== newComment.id);
-        console.log("APPENDING COMMENT");
-        
         return [newComment, ...filtered];
       });
       
