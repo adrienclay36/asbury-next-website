@@ -4,6 +4,7 @@ import CommentItem from './comment-item';
 import { Collapse } from '@mantine/core';
 import NewComment from './new-comment';
 import PageLoading from '../../../PageLoading/PageLoading';
+import styles from './comment-list.module.css';
 let isInit = true;
 const CommentList = ({ postID }) => {
   const [comments, setComments] = useState([]);
@@ -25,13 +26,7 @@ const CommentList = ({ postID }) => {
 
 
   useEffect(() => {
-    
-
       getComments();
-    
-    
-    
-
   },[])
 
   useEffect(() => {
@@ -42,7 +37,7 @@ const CommentList = ({ postID }) => {
         setNewComment(null);
         return [commentCopy, ...prevComments];
       });
-      setNewComment(null);
+      
     }
   }, [newComment]);
 
@@ -69,14 +64,20 @@ const CommentList = ({ postID }) => {
       </div>
 
       <Collapse in={open}>
-        <NewComment setOpen={setOpen} postID={postID}/>
+        <NewComment setOpen={setOpen} postID={postID} />
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (
           <CommentItem key={comment.id} comment={comment} />
         ))}
-        {loadingComments && <PageLoading/>}
-      {comments.length === 0 && !loadingComments && <p className="text-center my-12 text-lg font-semibold text-gray-400">No Comments Yet.. Add One Now!</p>}
+      {/* {loadingComments && <PageLoading/>} */}
+      {comments.length === 0 && !loadingComments && (
+        <p
+          className={`${styles.init} text-center my-12 text-lg font-semibold text-gray-400`}
+        >
+          No Comments Yet.. Add One Now!
+        </p>
+      )}
     </>
   );
 }

@@ -4,7 +4,7 @@ import NewPrayerForm from "./new-prayer-form";
 import { Collapse } from "@mantine/core";
 import { FrontPrayerContext } from "./main-board-store";
 import PageLoading from '../../PageLoading/PageLoading';
-import PreviewCommentsList from './preview-comments/preview-comment-list';
+import styles from './board-view.module.css';
 const BoardView = () => {
   const [open, setOpen] = useState(false);
   const prayerContext = useContext(FrontPrayerContext);
@@ -21,20 +21,31 @@ const BoardView = () => {
         </button>
       </div>
 
-
-
-
       <Collapse in={open}>
         <NewPrayerForm setOpen={setOpen} />
       </Collapse>
 
       <div className="container flex flex-col flex-1 justify-center items-center">
-        {prayerContext.loading && <PageLoading/>}
-        {prayerContext.posts.length > 0 && prayerContext.posts.map(post => (
-          <PostItem key={post.id} id={post.id} author={post.author} title={post.title} date={post.postdate} content={post.postcontent} likes={post.likes} type={post.posttype}/>
-        ))}
-        {prayerContext.pageLoading && <PageLoading/>}
-        {!prayerContext.hasMore && <p className="mt-12 font-bold text-gray-500">No More Posts...</p>}
+        {prayerContext.loading && <PageLoading />}
+        {prayerContext.posts.length > 0 &&
+          prayerContext.posts.map((post) => (
+            <PostItem
+              key={post.id}
+              id={post.id}
+              author={post.author}
+              title={post.title}
+              date={post.postdate}
+              content={post.postcontent}
+              likes={post.likes}
+              type={post.posttype}
+            />
+          ))}
+        {prayerContext.pageLoading && <PageLoading />}
+        {!prayerContext.hasMore && !prayerContext.pageLoading && (
+          <p className={`${styles.init} mt-12 font-bold text-gray-500`}>
+            No More Posts...
+          </p>
+        )}
       </div>
     </>
   );
