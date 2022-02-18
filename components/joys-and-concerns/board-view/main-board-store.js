@@ -36,6 +36,7 @@ const FrontPrayerContextProvider = (props) => {
 
         setLoading(true);
       }
+      
       const data = await getPagedDataByDate(pageNumber, PAGE_SIZE, TABLE, "postdate");
       
       setPosts(prevPosts => {
@@ -52,6 +53,14 @@ const FrontPrayerContextProvider = (props) => {
     setTotalPages(totalPages);
   };
 
+  const refreshPosts = async () => {
+    setLoading(true);
+    setPosts([]);
+    const data = await getPagedDataByDate(0, PAGE_SIZE, TABLE, "postdate");
+    setPosts(data);
+    setLoading(false);
+  }
+
 
   useEffect(() => {
     initTotalPages();
@@ -59,14 +68,11 @@ const FrontPrayerContextProvider = (props) => {
 
 
   useEffect(() => {
-    let postCopy;
     if(newPost) {
       setPosts(prevPosts => {
-        postCopy = newPost;
-        setNewPost(null);
-        return [postCopy, ...prevPosts];
+        return [newPost, ...prevPosts];
       })
-      
+      setNewPost(null);
     }
   }, [newPost])
 
@@ -75,11 +81,8 @@ const FrontPrayerContextProvider = (props) => {
   }, [pageNumber])
 
   useEffect(() => {
-    if(!posting) {
-      const prayerSub = supabase.from('prayers').on('INSERT', (payload) => setNewPost(payload.new)).subscribe();
+      const prayerSub = supabase.from('prayers').on('INSERT', () => refreshPosts()).subscribe();
       return () => supabase.removeSubscription(prayerSub);
-    }
-    
   }, []);
 
 

@@ -40,7 +40,6 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
   const getCommentCount = async () => {
     const { data, count } = await supabase.from('comments').select('postid', { count: 'exact'}).match({postid: id});
     setCommentCount(count);
-    console.log(count);
   }
 
   useEffect(() => {
