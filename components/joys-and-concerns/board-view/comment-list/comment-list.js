@@ -20,8 +20,10 @@ const CommentList = ({ postID }) => {
 
 
   useEffect(() => {
+    if(!posting){
 
-    getComments();
+      getComments();
+    }
     
 
   },[])

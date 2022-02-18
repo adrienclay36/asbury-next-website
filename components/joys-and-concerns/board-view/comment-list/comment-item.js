@@ -4,9 +4,7 @@ import styles from './comment-item.module.css'
 const CommentItem = ({ comment }) => {
   const [readMore, setReadMore] = useState(false);
   const { author, commentcontent, postdate } = comment;
-  const formatDate = new Date(
-    postdate.replace(/-/g, "/").replace(/T.+/, "")
-  ).toLocaleDateString("en-US");
+  const formatDate = new Date(comment.postdate).toLocaleDateString("en-US");
 
   const longContent = (
     <>

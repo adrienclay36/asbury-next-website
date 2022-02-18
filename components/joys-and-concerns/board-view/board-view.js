@@ -4,6 +4,7 @@ import NewPrayerForm from "./new-prayer-form";
 import { Collapse } from "@mantine/core";
 import { FrontPrayerContext } from "./main-board-store";
 import PageLoading from '../../PageLoading/PageLoading';
+import PreviewCommentsList from './preview-comments/preview-comment-list';
 const BoardView = () => {
   const [open, setOpen] = useState(false);
   const prayerContext = useContext(FrontPrayerContext);
