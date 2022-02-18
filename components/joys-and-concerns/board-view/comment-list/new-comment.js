@@ -45,6 +45,7 @@ const NewComment = ({setOpen, postID}) => {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             maxLength="100"
+            required
           />
         </div>
         <div className="flex flex-col flex-1 mb-4">
@@ -60,6 +61,7 @@ const NewComment = ({setOpen, postID}) => {
             onChange={(e) => setContent(e.target.value)}
             maxLength="1000"
             rows="5"
+            required
           />
         </div>
         <div className="text-left">

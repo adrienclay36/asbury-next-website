@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react'
-import { supabase } from '../../../../supabase-client';
-import CommentItem from './comment-item';
-import { Collapse } from '@mantine/core';
-import NewComment from './new-comment';
+import React, { useEffect, useState } from "react";
+import { supabase } from "../../../../supabase-client";
+import CommentItem from "./comment-item";
+import { Collapse } from "@mantine/core";
+import NewComment from "./new-comment";
+let isInitial = true;
 const CommentList = ({ postID }) => {
   const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
@@ -11,26 +12,26 @@ const CommentList = ({ postID }) => {
   const [loadingComments, setLoadingComments] = useState(false);
 
   const getComments = async () => {
-    const { data } = await supabase.from('comments').select().match({postid: postID}).order('id', {ascending: false}).limit(3);
-    if(data.length > 0) {
-
+    const { data } = await supabase
+      .from("comments")
+      .select()
+      .match({ postid: postID })
+      .order("id", { ascending: false })
+      .limit(3);
+    if (data.length > 0) {
       setComments(data);
+      isInitial = false;
     }
-  }
-
+  };
 
   useEffect(() => {
-    if(!posting){
-
+    if (!posting && isInitial) {
       getComments();
     }
-    
-
-  },[])
+  }, []);
 
   useEffect(() => {
     if (newComment) {
-
       setComments((prevComments) => {
         return [newComment, ...prevComments];
       });
@@ -48,7 +49,6 @@ const CommentList = ({ postID }) => {
     }
   }, []);
 
-
   return (
     <>
       <div className="text-center my-12">
@@ -61,15 +61,19 @@ const CommentList = ({ postID }) => {
       </div>
 
       <Collapse in={open}>
-        <NewComment setOpen={setOpen} postID={postID}/>
+        <NewComment setOpen={setOpen} postID={postID} />
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (
           <CommentItem key={comment.id} comment={comment} />
         ))}
-      {comments.length === 0 && <p className="text-center my-12 text-lg font-semibold text-gray-400">No Comments Yet.. Add One Now!</p>}
+      {comments.length === 0 && (
+        <p className="text-center my-12 text-lg font-semibold text-gray-400">
+          No Comments Yet.. Add One Now!
+        </p>
+      )}
     </>
   );
-}
+};
 
-export default CommentList
+export default CommentList;
