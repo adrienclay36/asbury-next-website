@@ -12,6 +12,7 @@ export const FrontPrayerContext = createContext({
     fetchPosts: () => {},
     addPost: (name, email, type, content) => {},
     incrementLike: (postID) => {},
+    setNewPost: () => {},
     pageNumber: 0,
     loading: false,
     hasMore: false,
@@ -28,6 +29,7 @@ const FrontPrayerContextProvider = (props) => {
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [pageLoading, setPageLoading] = useState(false);
+    const [navigating, setNavigating] = useState(false);
     const [newPost, setNewPost] = useState();
 
 
@@ -36,7 +38,6 @@ const FrontPrayerContextProvider = (props) => {
 
         setLoading(true);
       }
-      
       const data = await getPagedDataByDate(pageNumber, PAGE_SIZE, TABLE, "postdate");
       
       setPosts(prevPosts => {
@@ -53,36 +54,34 @@ const FrontPrayerContextProvider = (props) => {
     setTotalPages(totalPages);
   };
 
-  const refreshPosts = async () => {
-    setLoading(true);
-    setPosts([]);
-    const data = await getPagedDataByDate(0, PAGE_SIZE, TABLE, "postdate");
-    setPosts(data);
-    setLoading(false);
-  }
-
 
   useEffect(() => {
     initTotalPages();
   }, []);
 
 
-  useEffect(() => {
-    if(newPost) {
-      setPosts(prevPosts => {
-        return [newPost, ...prevPosts];
-      })
-      setNewPost(null);
-    }
-  }, [newPost])
 
+
+  // Get posts for page 0 on initial load and all pageNumber changes after.
   useEffect(() => {
     getPosts();
   }, [pageNumber])
 
+
+
   useEffect(() => {
-      const prayerSub = supabase.from('prayers').on('INSERT', () => refreshPosts()).subscribe();
-      return () => supabase.removeSubscription(prayerSub);
+    if(newPost) {
+      setPosts((prevPosts) => {
+        setNewPost(null);
+        return [newPost, ...prevPosts];
+      })
+    }
+  }, [newPost])
+
+
+
+  useEffect(() => {
+      const postSub = supabase.from('prayers').on('INSERT', (payload) => setNewPost(payload.new)).subscribe();
   }, []);
 
 
@@ -153,8 +152,6 @@ const FrontPrayerContextProvider = (props) => {
 
 
 
-
-
     const contextValue = {
         posts: posts,
         loading: loading,
@@ -164,6 +161,7 @@ const FrontPrayerContextProvider = (props) => {
         pageNumber: pageNumber,
         addPost: addPost,
         incrementLike: incrementLike,
+        setNewPost: setNewPost,
     }
   return (
     <FrontPrayerContext.Provider value={contextValue}>

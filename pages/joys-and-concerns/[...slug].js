@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { supabase } from "../../supabase-client";
 import Layout from "../../components/layout/layout";
 import FrontPrayerContextProvider from "../../components/joys-and-concerns/board-view/main-board-store";
@@ -7,9 +7,11 @@ import IndividualPost from "../../components/joys-and-concerns/board-view/indivi
 import { useRouter } from "next/router";
 import CommentList from "../../components/joys-and-concerns/board-view/comment-list/comment-list";
 import PageLoading from "../../components/PageLoading/PageLoading";
+import { FrontPrayerContext } from "../../components/joys-and-concerns/board-view/main-board-store";
 const IndividualPrayer = (props) => {
   const [post, setPost] = useState();
   const router = useRouter();
+  const prayerContext = useContext(FrontPrayerContext);
 
   let postID;
   if (router.query.slug) {
@@ -22,7 +24,6 @@ const IndividualPrayer = (props) => {
         .from("prayers")
         .select()
         .match({ id: postID });
-      console.log(data);
       setPost(data[0]);
     }
   };
@@ -40,6 +41,11 @@ const IndividualPrayer = (props) => {
     );
   }
 
+
+  const navigate = () => {
+    router.push("/joys-and-concerns");
+  }
+
   return (
     <FrontPrayerContextProvider>
       <Layout
@@ -54,7 +60,7 @@ const IndividualPrayer = (props) => {
           <div className="flex flex-1 justify-center items-center">
             <button
               className="px-4 py-2 bg-seaFoam-600 rounded-md shadow-md text-white"
-              onClick={() => router.push("/joys-and-concerns")}
+              onClick={navigate}
             >
               Back To All Posts
             </button>
