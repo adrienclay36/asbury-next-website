@@ -55,7 +55,7 @@ const IndividualPrayer = (props) => {
             : post.postcontent
         }
       >
-        <SectionHeading title={`Post by ${post.author}`}>
+        <SectionHeading title={`Joys & Concerns`}>
           <div className="flex flex-1 justify-center items-center">
             <button
               className="px-4 py-2 bg-seaFoam-600 rounded-md shadow-md text-white"
