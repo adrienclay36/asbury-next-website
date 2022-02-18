@@ -75,7 +75,6 @@ const FrontPrayerContextProvider = (props) => {
       
       setPosts((prevPosts) => {
         const filtered = prevPosts.filter(prevPost => prevPost.id !== newPost.id);
-        setNewPost(null);
         return [newPost, ...filtered];
       })
     }
