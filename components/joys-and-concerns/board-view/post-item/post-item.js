@@ -5,14 +5,13 @@ import { BiHappyBeaming } from 'react-icons/bi';
 import styles from './post-item.module.css';
 import { FrontPrayerContext } from '../main-board-store';
 import { useRouter } from 'next/router';
+import PreviewCommentsList from '../preview-comments/preview-comment-list';
 const PostItem = ({ id, author, date, content, likes, type}) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const formatDate = new Date(
-    date.replace(/-/g, "/").replace(/T.+/, "")
-  ).toLocaleDateString("en-US");
+  const formatDate = new Date(date).toLocaleDateString("en-US", {timeZone:"America/Denver"});
   const prayerContext = useContext(FrontPrayerContext);
   const router = useRouter();
 
@@ -64,7 +63,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
   return (
     <>
       <div
-        className={`${styles.init} container w-full lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
+        className={`${styles.init} bg-gray-100 z-10 container w-full lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
       >
         <div className="flex flex-1 justify-start items-center ">
           <Image
@@ -91,7 +90,9 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
               />
             )}
             {liked && <FaHeart size={30} className="mr-4 text-red-800" />}
-            <p className={`${clicked ? styles.like : ''} text-lg`}>{liveLikes}</p>
+            <p className={`${clicked ? styles.like : ""} text-lg`}>
+              {liveLikes}
+            </p>
           </div>
           {type === "joy" ? (
             <BiHappyBeaming size={35} className="text-green-700" />
@@ -99,10 +100,16 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
             <FaSadTear size={30} className="text-blue-900" />
           )}
         </div>
-        <button onClick={() => router.push(`/joys-and-concerns/${formatAuthor}/${id}`)} className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline">
+        <button
+          onClick={() =>
+            router.push(`/joys-and-concerns/${formatAuthor}/${id}`)
+          }
+          className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
+        >
           View Replies
         </button>
       </div>
+
     </>
   );
 }

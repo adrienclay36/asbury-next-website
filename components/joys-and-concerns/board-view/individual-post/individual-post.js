@@ -10,7 +10,7 @@ const IndividualPost = ({ id, author, date, content, likes, type}) => {
   const [liveLikes, setLiveLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const formatDate = new Date(date).toLocaleDateString("en-US");
+  const formatDate = new Date(date).toLocaleDateString("en-US", {timeZone: "America/Denver"});
   const prayerContext = useContext(FrontPrayerContext);
   const router = useRouter();
 

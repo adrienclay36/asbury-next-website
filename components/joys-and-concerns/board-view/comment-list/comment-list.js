@@ -11,7 +11,7 @@ const CommentList = ({ postID }) => {
   const [loadingComments, setLoadingComments] = useState(false);
 
   const getComments = async () => {
-    const { data } = await supabase.from('comments').select().match({postid: postID}).order('id', {ascending: false});
+    const { data } = await supabase.from('comments').select().match({postid: postID}).order('id', {ascending: false}).limit(3);
     if(data.length > 0) {
 
       setComments(data);
