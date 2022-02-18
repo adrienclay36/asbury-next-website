@@ -32,9 +32,10 @@ const CommentList = ({ postID }) => {
   useEffect(() => {
     if (newComment) {
       setComments((prevComments) => {
+        const filtered = prevComments.filter(prevComment => prevComment.id !== newComment.id);
         console.log("APPENDING COMMENT");
         setNewComment(null);
-        return [newComment, ...prevComments];
+        return [newComment, ...filtered];
       });
       
     }

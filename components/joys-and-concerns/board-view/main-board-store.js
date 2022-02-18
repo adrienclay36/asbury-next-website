@@ -72,17 +72,21 @@ const FrontPrayerContextProvider = (props) => {
   useEffect(() => {
     if(newPost) {
       console.log("APPENDING POST");
+      
       setPosts((prevPosts) => {
+        const filtered = prevPosts.filter(prevPost => prevPost.id !== newPost.id);
         setNewPost(null);
-        return [newPost, ...prevPosts];
+        return [newPost, ...filtered];
       })
     }
+
   }, [newPost])
 
 
 
   useEffect(() => {
       const postSub = supabase.from('prayers').on('INSERT', (payload) => setNewPost(payload.new)).subscribe();
+      return () => supabase.removeSubscription(postSub);
   }, []);
 
 
