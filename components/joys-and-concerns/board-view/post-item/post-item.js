@@ -6,11 +6,13 @@ import styles from './post-item.module.css';
 import { FrontPrayerContext } from '../main-board-store';
 import { useRouter } from 'next/router';
 import PreviewCommentsList from '../preview-comments/preview-comment-list';
+import { supabase } from '../../../../supabase-client';
 const PostItem = ({ id, author, date, content, likes, type}) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [commentCount, setCommentCount] = useState(false);
   const formatDate = new Date(date).toLocaleDateString("en-US", {timeZone:"America/Denver"});
   const prayerContext = useContext(FrontPrayerContext);
   const router = useRouter();
@@ -35,10 +37,17 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
 
   }
 
+  const getCommentCount = async () => {
+    const { data, count } = await supabase.from('comments').select('postid', { count: 'exact'}).match({postid: id});
+    setCommentCount(count);
+    console.log(count);
+  }
+
   useEffect(() => {
     if(localStorage.getItem(id)) {
       setLiked(true);
     }
+    getCommentCount();
   }, [])
 
 
@@ -106,7 +115,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
           }
           className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
         >
-          View Replies
+          View Replies ({commentCount && commentCount})
         </button>
       </div>
 
