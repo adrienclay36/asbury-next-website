@@ -50,7 +50,7 @@ const FrontPrayerContextProvider = (props) => {
       setLoading(false);
       setPageLoading(false);
       isInit = false;
-    }, [pageNumber])
+    }, [pageNumber]);
 
 
     const initTotalPages = async () => {
@@ -71,10 +71,7 @@ const FrontPrayerContextProvider = (props) => {
   // Get posts for page 0 on initial load and all pageNumber changes after.
   useEffect(() => {
     getPosts();
-    
-  }, [pageNumber, getPosts])
-
-
+  }, [getPosts]);
 
   useEffect(() => {
     if (newPost) {
@@ -85,16 +82,16 @@ const FrontPrayerContextProvider = (props) => {
         return [newPost, ...filtered];
       });
     }
-
     return () => setNewPost(null);
   }, [newPost]);
 
-
-
   useEffect(() => {
-      const postSub = supabase.from('prayers').on('INSERT', (payload) => setNewPost(payload.new)).subscribe();
-      return () => supabase.removeSubscription(postSub);
-  }, [changed]);
+    const postSub = supabase
+      .from("prayers")
+      .on("INSERT", (payload) => setNewPost(payload.new))
+      .subscribe();
+    return () => supabase.removeSubscription(postSub);
+  }, []);
 
 
 
