@@ -71,7 +71,7 @@ const FrontPrayerContextProvider = (props) => {
   // Get posts for page 0 on initial load and all pageNumber changes after.
   useEffect(() => {
     getPosts();
-  }, [getPosts]);
+  }, [pageNumber, getPosts]);
 
   useEffect(() => {
     if (newPost) {
