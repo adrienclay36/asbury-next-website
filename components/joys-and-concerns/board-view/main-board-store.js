@@ -85,7 +85,7 @@ const FrontPrayerContextProvider = (props) => {
 
   useEffect(() => {
       const postSub = supabase.from('prayers').on('INSERT', (payload) => setNewPost(payload.new)).subscribe();
-      return () => supabase.removeSubscription(postSub);
+     
   }, []);
 
 
