@@ -3,6 +3,7 @@ import { supabase } from '../../../../supabase-client';
 import CommentItem from './comment-item';
 import { Collapse } from '@mantine/core';
 import NewComment from './new-comment';
+import PageLoading from '../../../PageLoading/PageLoading';
 let isInit = true;
 const CommentList = ({ postID }) => {
   const [comments, setComments] = useState([]);
@@ -12,20 +13,22 @@ const CommentList = ({ postID }) => {
   const [loadingComments, setLoadingComments] = useState(false);
 
   const getComments = async () => {
+    setLoadingComments(true);
     const { data } = await supabase.from('comments').select().match({postid: postID}).order('id', {ascending: false});
     if(data.length > 0) {
 
       setComments(data);
     }
     isInit = false;
+    setLoadingComments(false);
   }
 
 
   useEffect(() => {
-    if(isInit) {
+    
 
       getComments();
-    }
+    
     
     
 
@@ -70,7 +73,8 @@ const CommentList = ({ postID }) => {
         comments.map((comment) => (
           <CommentItem key={comment.id} comment={comment} />
         ))}
-      {comments.length === 0 && <p className="text-center my-12 text-lg font-semibold text-gray-400">No Comments Yet.. Add One Now!</p>}
+        {loadingComments && <PageLoading/>}
+      {comments.length === 0 && !loadingComments && <p className="text-center my-12 text-lg font-semibold text-gray-400">No Comments Yet.. Add One Now!</p>}
     </>
   );
 }
