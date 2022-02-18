@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import { supabase } from '../../../../supabase-client';
 import CommentItem from './comment-item';
 import { Collapse } from '@mantine/core';
@@ -9,11 +9,10 @@ let isInit = true;
 const CommentList = ({ postID }) => {
   const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
-  const [posting, setPosting] = useState(false);
   const [newComment, setNewComment] = useState(null);
   const [loadingComments, setLoadingComments] = useState(false);
 
-  const getComments = async () => {
+  const getComments = useCallback(async () => {
     setLoadingComments(true);
     const { data } = await supabase.from('comments').select().match({postid: postID}).order('id', {ascending: false});
     if(data.length > 0) {
@@ -22,23 +21,24 @@ const CommentList = ({ postID }) => {
     }
     isInit = false;
     setLoadingComments(false);
-  }
+  }, [postID])
 
 
   useEffect(() => {
       getComments();
-  },[])
+  },[getComments])
 
   useEffect(() => {
     if (newComment) {
       setComments((prevComments) => {
         const filtered = prevComments.filter(prevComment => prevComment.id !== newComment.id);
         console.log("APPENDING COMMENT");
-        setNewComment(null);
+        
         return [newComment, ...filtered];
       });
       
     }
+    return () => setNewComment(null);
   }, [newComment]);
 
   useEffect(() => {

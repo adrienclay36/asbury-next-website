@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {
   getQueriedData,
@@ -33,7 +33,7 @@ const MainBlogProvider = (props) => {
   const [noData, setNoData] = useState(false);
   const [query, setQuery] = useState("");
 
-  const getPosts = async () => {
+  const getPosts = useCallback(async () => {
     setNoData(false);
     setLoading(true);
     setPosts([]);
@@ -47,7 +47,7 @@ const MainBlogProvider = (props) => {
     setPosts(data);
     setLoading(false);
     isInitial = false;
-  };
+  }, [pageNumber]);
 
   const initTotalPages = async () => {
     const totalPages = await getTotalPages(PAGE_SIZE, TABLE);
@@ -60,15 +60,15 @@ const MainBlogProvider = (props) => {
 
   useEffect(() => {
     getPosts();
-  }, [pageNumber]);
+  }, [pageNumber, getPosts]);
 
-  const callQueryFunction = async () => {
+  const callQueryFunction = useCallback(async () => {
     setLoading(true);
     setPosts([]);
     const { data, status } = await getQueriedData(
       TABLE,
       query,
-      "search_blog_ts"
+      "search_blog_fixed_ts"
     );
 
     setPosts(data);
@@ -78,7 +78,7 @@ const MainBlogProvider = (props) => {
       setNoData(false);
     }
     setLoading(false);
-  };
+  }, [query]);
 
   useEffect(() => {
     // Don't run side effect on initial render
@@ -98,7 +98,7 @@ const MainBlogProvider = (props) => {
         clearTimeout(timeout);
       };
     }
-  }, [query]);
+  }, [query, callQueryFunction, getPosts]);
 
   const increasePage = () => {
     setPageNumber(Math.min(totalPages - 1, pageNumber + 1));

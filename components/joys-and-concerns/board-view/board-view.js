@@ -12,6 +12,7 @@ const BoardView = () => {
 
   return (
     <>
+    
       <div className="text-center mt-12">
         <button
           onClick={() => setOpen(!open)}

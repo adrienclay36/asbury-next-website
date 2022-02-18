@@ -1,4 +1,4 @@
-import React, {createContext, useState, useEffect} from 'react'
+import React, {createContext, useState, useEffect, useCallback} from 'react'
 import axios from 'axios';
 import { addItemToTable, getPagedDataByDate, getTotalPages, getPagedDataByID } from '../../../supabase-util';
 import { supabase } from '../../../supabase-client';
@@ -29,11 +29,15 @@ const FrontPrayerContextProvider = (props) => {
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [pageLoading, setPageLoading] = useState(false);
-    const [navigating, setNavigating] = useState(false);
+    const [changed, setChanged] = useState(false);
     const [newPost, setNewPost] = useState();
 
+    const toggleChange = () => {
+      setChanged(!changed);
+    }
 
-    const getPosts = async () => {
+
+    const getPosts = useCallback(async () => {
       if(isInit){
 
         setLoading(true);
@@ -46,12 +50,12 @@ const FrontPrayerContextProvider = (props) => {
       setLoading(false);
       setPageLoading(false);
       isInit = false;
-    }
+    }, [pageNumber])
 
 
     const initTotalPages = async () => {
-    const totalPages = await getTotalPages(PAGE_SIZE, TABLE);
-    setTotalPages(totalPages);
+    const initPages = await getTotalPages(PAGE_SIZE, TABLE);
+    setTotalPages(initPages);
   };
 
 
@@ -59,34 +63,39 @@ const FrontPrayerContextProvider = (props) => {
     initTotalPages();
   }, []);
 
+  
+
 
 
 
   // Get posts for page 0 on initial load and all pageNumber changes after.
   useEffect(() => {
     getPosts();
-  }, [pageNumber])
+    
+  }, [pageNumber, getPosts])
 
 
 
   useEffect(() => {
-    if(newPost) {
-      console.log("APPENDING POST");
-      
+    if (newPost) {
       setPosts((prevPosts) => {
-        const filtered = prevPosts.filter(prevPost => prevPost.id !== newPost.id);
+        const filtered = prevPosts.filter(
+          (prevPost) => prevPost.id !== newPost.id
+        );
+        console.log("APPENDING POST");
         return [newPost, ...filtered];
-      })
+      });
     }
 
-  }, [newPost])
+    return () => setNewPost(null);
+  }, [newPost]);
 
 
 
   useEffect(() => {
       const postSub = supabase.from('prayers').on('INSERT', (payload) => setNewPost(payload.new)).subscribe();
-     
-  }, []);
+      return () => supabase.removeSubscription(postSub);
+  }, [changed]);
 
 
 
@@ -134,7 +143,7 @@ const FrontPrayerContextProvider = (props) => {
       if(!type) {
         inputType = "joy"
       }
-      const newPost = {
+      const postToAdd = {
         author: name,
         email,
         posttype: inputType,
@@ -143,8 +152,9 @@ const FrontPrayerContextProvider = (props) => {
         notifications,
         postdate: new Date(),
       }
-      const response = await addItemToTable(TABLE, newPost);
+      const response = await addItemToTable(TABLE, postToAdd);
       setPosting(false);
+      toggleChange();
       return response;
     }
 
@@ -172,6 +182,6 @@ const FrontPrayerContextProvider = (props) => {
       {props.children}
     </FrontPrayerContext.Provider>
   )
-}
+};
 
 export default FrontPrayerContextProvider;

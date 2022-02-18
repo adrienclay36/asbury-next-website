@@ -7,6 +7,7 @@ const BlogPostItem = ({ id, title, author, date, content, image, i }) => {
     .replace(/([a-z])([A-Z])/g, "$1-$2")
     .replace(/\s+/g, "-").replace("---", "-")
     .toLowerCase();
+    
   const router = useRouter();
   return (
     <div className={styles[`post-animation-${i}`]}>
