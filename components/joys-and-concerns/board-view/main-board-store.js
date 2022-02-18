@@ -71,6 +71,7 @@ const FrontPrayerContextProvider = (props) => {
 
   useEffect(() => {
     if(newPost) {
+      console.log("APPENDING POST");
       setPosts((prevPosts) => {
         setNewPost(null);
         return [newPost, ...prevPosts];
