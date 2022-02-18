@@ -47,7 +47,6 @@ const IndividualPrayer = (props) => {
   }
 
   return (
-    <FrontPrayerContextProvider>
       <Layout
         title={post.author}
         description={
@@ -76,7 +75,6 @@ const IndividualPrayer = (props) => {
           <CommentList postID={post.id} />
         </SectionHeading>
       </Layout>
-    </FrontPrayerContextProvider>
   );
 };
 
