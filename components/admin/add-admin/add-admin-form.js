@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./add-admin-form.module.css";
 import { supabase } from "../../../supabase-client";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
+import { Checkbox } from '@mantine/core';
+
 const AddAdminForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,6 +11,11 @@ const AddAdminForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [tooManyRequests, setTooManyRequests] = useState(false);
+  const [masterChecked, setMasterChecked] = useState(false);
+  const libraryRef =  useRef();
+  const blogRef = useRef();
+  const inviteRef = useRef();
+  const masterRef=  useRef();
 
   useEffect(() => {
       if(tooManyRequests) {
@@ -43,11 +50,37 @@ const AddAdminForm = () => {
           return;
       }
     } 
+    let permissions = [];
+    if(blogRef.current.checked) {
+      permissions.push("blog");
+    }
+    if(libraryRef.current.checked) {
+      permissions.push("library");
+    }
+    if(inviteRef.current.checked) {
+      permissions.push("invite");
+    }
+    if(masterRef.current.checked) {
+      permissions.push("master");
+    }
+
+    const { data } = await supabase.from('users').select().match({email: email});
+    
+    if(data) {
+      const userInfo = data[0];
+      const { data: success, error: submitError } = await supabase
+        .from("users").update({permissions: permissions, role: 'admin'}).match({id: userInfo.id});
+      console.log(submitError);
+    };
 
     setSubmitting(false);
     setSuccess(true);
     setEmail('');
     setPassword('');
+    inviteRef.current.checked = false;
+    blogRef.current.checked = false;
+    libraryRef.current.checked = false;
+    masterRef.current.checked = false;
   };
 
   const emailChangeHandler = (e) => {
@@ -66,6 +99,10 @@ const AddAdminForm = () => {
         setTooManyRequests(false);
     }
   };
+
+  const toggleMaster = (e) => {
+    setMasterChecked(e.target.checked);
+  }
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -105,7 +142,7 @@ const AddAdminForm = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                placeholder="Password"
+                placeholder="Temporary Password"
                 required
                 className={
                   invalid || tooManyRequests
@@ -113,6 +150,15 @@ const AddAdminForm = () => {
                     : styles.password
                 }
               />
+            </div>
+          </div>
+          <div>
+            <p className="text-center">I want this user to be able to:</p>
+            <div className="checkboxes mt-4">
+              <Checkbox className="mb-2" onChange={toggleMaster} id="masterRef" ref={masterRef} label="Have full admin privilges" />
+              <Checkbox disabled={masterChecked} className="mb-2" id="blogRef" ref={blogRef} label="Edit The Blog" />
+              <Checkbox disabled={masterChecked} className="mb-2" id="libraryRef" ref={libraryRef} label="Make changes in the Library" />
+              <Checkbox disabled={masterChecked} className="mb-2" id="inviteRef" ref={inviteRef} label="Invite Other Admins" />
             </div>
           </div>
 

@@ -37,7 +37,7 @@ const AdminNavbar = (props) => {
           props.marginTop && "sm:mt-12"
         }`}
       >
-        <Link href="/" passHref>
+        <Link href="/admin" passHref>
           <div className={`py-1 ${props.invertImage && "invert"}`}>
             <Image
               className={`max-h-16 py-1 cursor-pointer`}

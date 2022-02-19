@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   BsPencilSquare,
@@ -7,7 +7,7 @@ import {
   BsToggleOn,
 } from "react-icons/bs";
 import { LibraryContext } from './library-admin-store';
-const BookItem = ({ book }) => {
+const BookItem = ({ book, libraryPermissions }) => {
   const [available, setAvailable] = useState(book.availability);
   const libraryContext = useContext(LibraryContext);
   const router = useRouter();
@@ -42,7 +42,7 @@ const BookItem = ({ book }) => {
           </div>
           <div></div>
           <div>
-            <div>
+            {libraryPermissions && <div>
               <button
               onClick={toggleAvailableHandler}
                 className={`px-4 py-2 mx-1 mb-2 lg:mb-0 ${available ? 'bg-green-800' : 'bg-transparent border-2 border-gray-400'} text-white rounded-lg ${available ? 'hover:bg-green-900' : 'hover:bg-gray-200'}`}
@@ -67,7 +67,7 @@ const BookItem = ({ book }) => {
                   className="text-white"
                 />
               </button>
-            </div>
+            </div>}
           </div>
         </div>
       </div>

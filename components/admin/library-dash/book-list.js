@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { LibraryContext } from "./library-admin-store";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsX } from "react-icons/bs";
 import PageLoading from "../../PageLoading/PageLoading";
 import BookItem from "./book-item";
 import styles from "./book-list.module.css";
-import axios from 'axios';
+import { UserContext } from '../../../store/user-context';
 import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
@@ -14,8 +14,12 @@ import {
 
 const BookList = () => {
   const libraryContext = useContext(LibraryContext);
+  const userContext = useContext(UserContext);
   const [query, setQuery] = useState("");
   const [allBooks, setAllBooks] = useState([]);
+
+
+  
 
   const provideQuery = (e) => {
     setQuery(e.target.value);
@@ -27,11 +31,6 @@ const BookList = () => {
     libraryContext.setNoData(false);
     libraryContext.getBooks();
   };
-
-  const retrieveBooks = async () => {
-    const response = await axios.get("/api/library/all");
-    setAllBooks(response.data.books);
-  }
 
 
   const decreasePageHandler = () => {
@@ -90,8 +89,8 @@ const BookList = () => {
             No Data found for that query...
           </h1>
         )}
-        {libraryContext.books.map((book) => (
-          <BookItem key={book.id} id={book.id} book={book} />
+        {!userContext.loading && libraryContext.books.map((book) => (
+          <BookItem key={book.id} id={book.id} book={book} libraryPermissions={userContext.libraryPermissions} />
         ))}
       </div>
 

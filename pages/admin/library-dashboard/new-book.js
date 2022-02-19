@@ -3,6 +3,7 @@ import LibraryProvider from "../../../components/admin/library-dash/library-admi
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import NewBookForm from "../../../components/admin/library-dash/new-book/new-book-form";
 import { supabase } from "../../../supabase-client";
+import { getPermissions } from "../../../supabase-util";
 const NewBook = () => {
 
   return (
@@ -17,15 +18,6 @@ const NewBook = () => {
 export default NewBook;
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { user } = await supabase.auth.api.getUserByCookie(req);
-  if (!user) {
-    return {
-      props: {},
-      redirect: { destination: "/admin" },
-    };
-  }
-  return {
-    props: { user },
-  };
+  return getPermissions(req, ['master', 'library'])
 };
 

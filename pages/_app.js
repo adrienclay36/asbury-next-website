@@ -1,77 +1,77 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
 
-import { useEffect, useState } from 'react';
-import { polyfill } from 'smoothscroll-polyfill';
-import { useRouter } from 'next/router';
-import { supabase } from '../supabase-client';
-import Head from 'next/head';
-import NextNProgress from 'nextjs-progressbar';
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "../store/user-context";
+import UserContextProvider from "../store/user-context";
+import { polyfill } from "smoothscroll-polyfill";
+import { useRouter } from "next/router";
+import { supabase } from "../supabase-client";
+import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
 function MyApp({ Component, pageProps }) {
+  // const [authenticatedState, setAuthenticatedState] =
+  //   useState("not-authenticated");
+  // const [accessToken, setAccessToken] = useState(null);
 
-  const [authenticatedState, setAuthenticatedState] =
-    useState("not-authenticated");
-  const [accessToken, setAccessToken] = useState(null);
+  // const router = useRouter();
 
-  const router = useRouter();
+  // const handleAuthChange = async (event, session) => {
+  //   await fetch("/api/auth", {
+  //     method: "POST",
+  //     headers: new Headers({ "Content-Type": "application/json" }),
+  //     credentials: "same-origin",
+  //     body: JSON.stringify({ event, session }),
+  //   });
+  // };
 
-  const handleAuthChange = async (event, session) => {
-    await fetch("/api/auth", {
-      method: "POST",
-      headers: new Headers({ "Content-Type": "application/json" }),
-      credentials: "same-origin",
-      body: JSON.stringify({ event, session }),
-    });
-  };
+  // const checkUser = async () => {
+  //   const user = await supabase.auth.user();
+  //   if (user) {
+  //     setAuthenticatedState("authenticated");
+  //   }
+  // };
 
-  const checkUser = async () => {
-    const user = await supabase.auth.user();
-    if (user) {
-      setAuthenticatedState("authenticated");
-    }
-  };
+  // useEffect(() => {
 
-  useEffect(() => {
-    
-    
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        handleAuthChange(event, session);
-        if (event === "SIGNED_IN") {
-          setAuthenticatedState("authenticated");
-          return;
-        }
-        if (event === "SIGNED_OUT") {
-          setAuthenticatedState("not-authenticated");
-          return;
-        }
-        if(event === "PASSWORD_RECOVERY") {
-          const hash = window.location.hash.substring(1);
-          const query = new URLSearchParams(hash);
-          const token = query.get("access_token");
-          setAuthenticatedState('authenticated');
-          router.push(`/admin/password-recovery?token=${token}`);
-          return;
-        }
-        if(event === "USER_DELETED") {
-          setAuthenticatedState('not-autenticated');
-          router.push("/admin");
-        }
-      }
-    );
+  //   const { data: authListener } = supabase.auth.onAuthStateChange(
+  //     (event, session) => {
+  //       handleAuthChange(event, session);
+  //       if (event === "SIGNED_IN") {
+  //         setAuthenticatedState("authenticated");
+  //         return;
+  //       }
+  //       if (event === "SIGNED_OUT") {
+  //         setAuthenticatedState("not-authenticated");
+  //         return;
+  //       }
+  //       if(event === "PASSWORD_RECOVERY") {
+  //         const hash = window.location.hash.substring(1);
+  //         const query = new URLSearchParams(hash);
+  //         const token = query.get("access_token");
+  //         setAuthenticatedState('authenticated');
+  //         router.push(`/admin/password-recovery?token=${token}`);
+  //         return;
+  //       }
+  //       if(event === "USER_DELETED") {
+  //         setAuthenticatedState('not-autenticated');
+  //         router.push("/admin");
+  //       }
+  //     }
+  //   );
 
-    checkUser();
-    return () => {
-      authListener.unsubscribe();
-    };
-  }, []);
-  
+  //   checkUser();
+  //   return () => {
+  //     authListener.unsubscribe();
+  //   };
+  // }, []);
+
   useEffect(() => {
     polyfill();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -84,9 +84,11 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
       <NextNProgress height={4} color={"#899e9c"} />
-      <Component {...pageProps} />
+      <UserContextProvider>
+        <Component {...pageProps} />
+      </UserContextProvider>
     </>
   );
 }
 
-export default MyApp
+export default MyApp;

@@ -3,14 +3,16 @@ import BlogList from './blog-list';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BlogContext } from './blog-store';
 import { useRouter } from 'next/router';
+import { UserContext } from '../../../store/user-context';
 
 const BlogOperations = () => {
     const blogContext = useContext(BlogContext);
+    const userContext = useContext(UserContext);
     const router = useRouter();
 
   return (
     <div className="container my-12">
-      <div className="flex justify-center items-center w-full lg:w-1/6 md:w-1/6 mx-auto">
+      {userContext.blogPermissions && <div className="flex justify-center items-center w-full lg:w-1/6 md:w-1/6 mx-auto">
         <button
           onClick={() => router.push("/admin/blog-dashboard/new-post")}
           className="flex flex-1 justify-center items-center px-7 py-2 bg-green-600 text-white font-semibold uppercase rounded-lg"
@@ -20,7 +22,7 @@ const BlogOperations = () => {
             Add Post
           </span>
         </button>
-      </div>
+      </div>}
 
       <BlogList />
     </div>

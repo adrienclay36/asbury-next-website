@@ -4,7 +4,7 @@ import { IoMdExit } from 'react-icons/io';
 import { BlogContext } from "./blog-store";
 import { useRouter } from 'next/router';
 import Link from "next/link";
-const BlogItem = ({ post }) => {
+const BlogItem = ({ post, permitted }) => {
   const blogContext = useContext(BlogContext);
   const router = useRouter();
 
@@ -49,18 +49,18 @@ const BlogItem = ({ post }) => {
           </button>
           </a>
         </Link>
-        <button
+        {permitted && <button
           onClick={() => router.push(`/admin/blog-dashboard/${post.id}`)}
           className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
         >
           <BsPencilSquare className="text-white" />
-        </button>
-        <button
+        </button>}
+        {permitted && <button
           onClick={deletePostHandler}
           className="px-4 py-2 mx-1 my-4 lg:my-0 md:my-0 bg-red-600 rounded-lg hover:bg-red-800"
         >
           <BsTrash className="text-white" />
-        </button>
+        </button>}
       </div>
     </div>
   );

@@ -3,11 +3,9 @@ import { useRouter } from 'next/router';
 import AdminLayout from '../../components/admin/admin-layout/admin-layout';
 import WelcomeDash from '../../components/admin/welcome-dash/welcome-dash';
 import { supabase } from '../../supabase-client';
+import { checkAdmin } from '../../supabase-util';
 
 const AdminDashboard = ({ user }) => {
-   
-
-    
 
   return (
      <AdminLayout>
@@ -20,14 +18,6 @@ export default AdminDashboard;
 
 
 export const getServerSideProps = async ( { req, res } ) => {
-    const { user } = await supabase.auth.api.getUserByCookie(req);
-    if(!user) {
-        return {
-            props: {},
-            redirect: { destination: "/admin"}
-        }
-    }
-    return {
-        props: { user }
-    }
+    const authStatus = await checkAdmin(req);
+    return authStatus;
 }

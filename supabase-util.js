@@ -132,4 +132,71 @@ export const getSignedUrl = async (bucket, filename) => {
   return signedURL;
 }
 
-/* PRAYER POSTS SPECIFIC HELPERS */
+
+
+
+/* AUTH FUNCTIONS */
+
+
+export const checkAdmin = async (req) => {
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+  if (!user) {
+    return {
+      props: {},
+      redirect: { destination: "/admin" },
+    };
+  }
+
+   const { data, error } = await supabase
+     .from("users")
+     .select()
+     .match({ id: user.id });
+   let userInfo;
+   if (data) {
+     userInfo = data[0];
+     if (!user || userInfo.role !== "admin") {
+       return {
+         props: {},
+         redirect: { destination: "/" },
+       };
+     }
+   }
+
+   return {
+     props: { user },
+   };
+   
+}
+
+export const getPermissions = async (req, permissionSet) => {
+
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+  if (!user) {
+    return {
+      props: {},
+      redirect: { destination: "/admin" },
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .match({ id: user.id });
+  let userInfo;
+  if (data) {
+    userInfo = data[0];
+    const permitted = userInfo.permissions.some((permission) => permissionSet.includes(permission));
+
+    if (!user || !permitted) {
+      return {
+        props: {},
+        redirect: { destination: "/admin/admin-dashboard" },
+      };
+    }
+  }
+
+  return {
+    props: { user },
+  };
+
+}

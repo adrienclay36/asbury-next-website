@@ -1,6 +1,8 @@
-import React from 'react';
-import WelcomeItem from './welcome-item';
+import React, { useContext } from "react";
+import WelcomeItem from "./welcome-item";
+import { UserContext } from "../../../store/user-context";
 const WelcomeDash = () => {
+  const userContext = useContext(UserContext);
   return (
     <div className="container">
       <div className="flex flex-1 justify-center items-center">
@@ -27,12 +29,12 @@ const WelcomeDash = () => {
           href="/admin/worship-service-dashboard"
           buttonText="Go to Service Dashboard"
         />
-        <WelcomeItem
+        {userContext.invitePermissions && <WelcomeItem
           title="Add An Administrator"
           description="Add an administrator via email by giving them an email and a temporary password."
           href="/admin/add-admin"
           buttonText="Add Administrator"
-        />
+        />}
         <WelcomeItem
           title="Change Your Password"
           description="Change your admin login password"

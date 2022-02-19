@@ -5,9 +5,12 @@ import { BsX } from "react-icons/bs";
 import { BlogContext } from "./blog-store";
 import PageLoading from '../../PageLoading/PageLoading';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
+import { UserContext } from "../../../store/user-context";
 const BlogList = () => {
   const [query, setQuery] = useState("");
   const blogContext = useContext(BlogContext);
+  const userContext = useContext(UserContext);
+  
 
   const provideQuery = (e) => {
     setQuery(e.target.value);
@@ -79,7 +82,7 @@ const BlogList = () => {
           </h1>
         )}
         {blogContext.posts.map((post) => (
-          <BlogItem key={post.id} post={post} />
+          <BlogItem key={post.id} post={post} permitted={userContext.blogPermissions}/>
         ))}
       </div>
 

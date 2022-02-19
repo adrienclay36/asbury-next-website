@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import BookEditForm from '../../../components/admin/library-dash/book-edit-form/book-edit-form';
 import PageLoading from '../../../components/PageLoading/PageLoading';
 import { supabase } from '../../../supabase-client';
-import { getItemById } from '../../../supabase-util';
-import axios from 'axios';
+import { getPermissions, getItemById } from '../../../supabase-util';
+const table = "books";
 const EditBook = (props) => {
     const router = useRouter();
     const libraryContext = useContext(LibraryContext)
@@ -16,7 +16,7 @@ const EditBook = (props) => {
     
     
     const getBook = async () => {
-        const book = await getItemById(props.table, bookID);
+        const book = await getItemById(table, bookID);
         setBook(book[0]);
     }
 
@@ -40,15 +40,5 @@ const EditBook = (props) => {
 export default EditBook;
 
 export const getServerSideProps = async ({ req, res }) => {
-  const { user } = await supabase.auth.api.getUserByCookie(req);
-  const table = 'books';
-  if (!user) {
-    return {
-      props: {},
-      redirect: { destination: "/admin" },
-    };
-  }
-  return {
-    props: { user, table },
-  };
+  return getPermissions(req, ['library', 'master']);
 };

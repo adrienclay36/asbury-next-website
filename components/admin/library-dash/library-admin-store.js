@@ -57,6 +57,12 @@ const LibraryProvider = (props) => {
   const [query, setQuery] = useState("");
   const [modifying, setModifying] = useState(false);
   const [book, setBook] = useState({});
+  const [user, setUser] = useState();
+
+
+  const getUser = async () => {
+    
+  }
 
   const getBooks = async () => {
     setNoData(false);
