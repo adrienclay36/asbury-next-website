@@ -11,7 +11,7 @@ export default Admin;
 
 
 export const getServerSideProps = async ({req, res}) => {
-  const { user } = await supabase.auth.api.getUserByCookie(req);
+  const { user, error } = await supabase.auth.api.getUserByCookie(req);
   if (user) {
     return {
       props: {},

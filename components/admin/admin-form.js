@@ -23,7 +23,7 @@ const AdminForm = () => {
         e.preventDefault();
         setLoggingIn(true);
         if(email && password) {
-          const {error, data } = await supabase.auth.signIn({email, password});
+          const { data, error } = await supabase.auth.signIn({email, password});
           userContext.checkUser();
           if(data){
             // Immediate redirect causes the SSR authentication on /admin/admin-dashboard to miss the cookie, and hangs the redirect.
