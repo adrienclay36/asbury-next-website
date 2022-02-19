@@ -9,6 +9,8 @@ export const UserContext = createContext({
     libraryPermissions: false,
     blogPermissions: false,
     invitePermissions: false,
+    role: '',
+    checkUser: () => {},
 })
 
 const UserContextProvider = (props) => {
@@ -18,6 +20,7 @@ const UserContextProvider = (props) => {
     const [libraryPermissions, setLibraryPermissions] = useState(false);
     const [blogPermissions, setBlogPermissions] = useState(false);
     const [invitePermissions, setInvitePermissions] = useState(false);
+    const [role, setRole] = useState('');
 
     const router = useRouter();
 
@@ -35,7 +38,7 @@ const UserContextProvider = (props) => {
       if(data) {
         const userInfo = data[0];
         setPermissions(userInfo.permissions);
-        
+        setRole(userInfo.role);
 
       }
     }
@@ -106,6 +109,8 @@ const UserContextProvider = (props) => {
         libraryPermissions: libraryPermissions,
         blogPermissions,
         invitePermissions,
+        checkUser: checkUser,
+        role,
     }
 
   return (

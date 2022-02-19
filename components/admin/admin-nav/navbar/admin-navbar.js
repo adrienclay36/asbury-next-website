@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AdminMobileNav from './admin-mobile-nav';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -8,16 +8,19 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 import { supabase } from '../../../../supabase-client';
 import DualRingLoader from '../../../dual-ring-loader/DualRingLoader';
+import { UserContext } from '../../../../store/user-context';
 const AdminNavbar = (props) => {
   const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [isInitial, setIsInitial] = useState(true);
     const [loggingOut, setLoggingOut] = useState(false);
+    const userContext = useContext(UserContext);
 
     const logoutHandler = async (e) => {
       setLoggingOut(true);
       e.preventDefault();
       await supabase.auth.signOut();
+      await userContext.checkUser();
       setTimeout(() => {
         router.replace("/admin");
       }, 500)

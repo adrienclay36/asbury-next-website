@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
 import styles from './admin-form.module.css';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';
-
+import { UserContext } from '../../store/user-context';
+import Link from 'next/link';
 const AdminForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const AdminForm = () => {
     const [error, setError] = useState(false);
     const [emailSignIn, setEmailSignIn] = useState(false);
     const [loggingIn, setLoggingIn] = useState(false);
+    const userContext = useContext(UserContext);
 
 
 
@@ -22,7 +24,7 @@ const AdminForm = () => {
         setLoggingIn(true);
         if(email && password) {
           const {error, data } = await supabase.auth.signIn({email, password});
-
+          userContext.checkUser();
           if(data){
             // Immediate redirect causes the SSR authentication on /admin/admin-dashboard to miss the cookie, and hangs the redirect.
             setTimeout(() => {
@@ -142,6 +144,9 @@ const AdminForm = () => {
               {loggingIn ? <DualRingLoader /> : "Sign In"}
             </button>
           </div>
+          <Link href="/" passHref>
+          <p className="text-center font-semibold text-gray-400 hover:underline cursor-pointer">Back To Main Website</p>
+          </Link>
           {emailSignIn && (
             <div className="text-center">
               <p className="text-semibold text-green-700 mt-10">
