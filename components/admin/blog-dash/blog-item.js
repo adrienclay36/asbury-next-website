@@ -41,7 +41,7 @@ const BlogItem = ({ post, permitted }) => {
           </h1>
         </div>
       </div>
-      <div>
+      <div className="mt-4 lg:mt-0 md:mt-0">
         <Link href={`/blog/${post.id}/${formatTitle}`} passHref>
           <a target="_blank" rel="noreferrer">
           <button className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-cyan-700 text-white rounded-lg hover:bg-cyan-900">

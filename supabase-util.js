@@ -163,7 +163,7 @@ export const checkAdmin = async (req) => {
    }
 
    return {
-     props: { user },
+     props: { user, userInfo },
    };
    
 }

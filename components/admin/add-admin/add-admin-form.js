@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./add-admin-form.module.css";
 import { supabase } from "../../../supabase-client";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
-import { Checkbox } from '@mantine/core';
+import { Checkbox } from "@mantine/core";
 
 const AddAdminForm = () => {
   const [email, setEmail] = useState("");
@@ -12,22 +12,24 @@ const AddAdminForm = () => {
   const [success, setSuccess] = useState(false);
   const [tooManyRequests, setTooManyRequests] = useState(false);
   const [masterChecked, setMasterChecked] = useState(false);
-  const libraryRef =  useRef();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const libraryRef = useRef();
   const blogRef = useRef();
   const inviteRef = useRef();
-  const masterRef=  useRef();
+  const masterRef = useRef();
 
   useEffect(() => {
-      if(tooManyRequests) {
-          const timeout = setTimeout(() => {
-              setTooManyRequests(false);
-          }, 3000)
+    if (tooManyRequests) {
+      const timeout = setTimeout(() => {
+        setTooManyRequests(false);
+      }, 3000);
 
-          return () => {
-              clearTimeout(timeout);
-          }
-      }
-  },[tooManyRequests])
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [tooManyRequests]);
 
   const addAdmin = async (e) => {
     e.preventDefault();
@@ -43,40 +45,52 @@ const AddAdminForm = () => {
         setSuccess(false);
         return;
       }
-      if(error.status === 429) {
-          setSubmitting(false);
-          setTooManyRequests(true);
-          setSuccess(false);
-          return;
+      if (error.status === 429) {
+        setSubmitting(false);
+        setTooManyRequests(true);
+        setSuccess(false);
+        return;
       }
-    } 
+    }
     let permissions = [];
-    if(blogRef.current.checked) {
+    if (blogRef.current.checked) {
       permissions.push("blog");
     }
-    if(libraryRef.current.checked) {
+    if (libraryRef.current.checked) {
       permissions.push("library");
     }
-    if(inviteRef.current.checked) {
+    if (inviteRef.current.checked) {
       permissions.push("invite");
     }
-    if(masterRef.current.checked) {
+    if (masterRef.current.checked) {
       permissions.push("master");
     }
 
-    const { data } = await supabase.from('users').select().match({email: email});
-    
-    if(data) {
+    const { data } = await supabase
+      .from("users")
+      .select()
+      .match({ email: email });
+
+    if (data) {
       const userInfo = data[0];
       const { data: success, error: submitError } = await supabase
-        .from("users").update({permissions: permissions, role: 'admin'}).match({id: userInfo.id});
+        .from("users")
+        .update({
+          permissions: permissions,
+          role: "admin",
+          first_name: firstName,
+          last_name: lastName,
+        })
+        .match({ id: userInfo.id });
       console.log(submitError);
-    };
+    }
 
     setSubmitting(false);
     setSuccess(true);
-    setEmail('');
-    setPassword('');
+    setEmail("");
+    setPassword("");
+    setFirstName("");
+    setLastName("");
     inviteRef.current.checked = false;
     blogRef.current.checked = false;
     libraryRef.current.checked = false;
@@ -93,16 +107,15 @@ const AddAdminForm = () => {
 
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
-    if(invalid || tooManyRequests){
-
-        setInvalid(false);
-        setTooManyRequests(false);
+    if (invalid || tooManyRequests) {
+      setInvalid(false);
+      setTooManyRequests(false);
     }
   };
 
   const toggleMaster = (e) => {
     setMasterChecked(e.target.checked);
-  }
+  };
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -112,53 +125,113 @@ const AddAdminForm = () => {
         </h2>
         <form className="mt-8 space-y-6" onSubmit={addAdmin}>
           <input type="hidden" name="remember" value="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                value={email}
-                onChange={emailChangeHandler}
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="Email address"
-                className={
-                  invalid || tooManyRequests ? styles.emailError : styles.email
-                }
-              />
+          <div className="p-4 border-2 rounded-md bg-white">
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
+                <label htmlFor="firstName" className="sr-only">
+                  First Name
+                </label>
+                <input
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  placeholder="New Admin First Name"
+                  required
+                  className={
+                    "appearance-none mb-4 rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-seaFoam-500 focus:border-seaFoam-500 focus:z-10 sm:text-sm"
+                  }
+                />
+                <label htmlFor="lastName" className="sr-only">
+                  Last Name
+                </label>
+                <input
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  placeholder="New Admin Last Name"
+                  required
+                  className={
+                    "appearance-none mb-4 rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-seaFoam-500 focus:border-seaFoam-500 focus:z-10 sm:text-sm"
+                  }
+                />
+              </div>
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  value={email}
+                  onChange={emailChangeHandler}
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="Email address"
+                  className={
+                    invalid || tooManyRequests
+                      ? styles.emailError
+                      : styles.email
+                  }
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  value={password}
+                  onChange={passwordChangeHandler}
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Temporary Password"
+                  required
+                  className={
+                    invalid || tooManyRequests
+                      ? styles.passError
+                      : styles.password
+                  }
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                value={password}
-                onChange={passwordChangeHandler}
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                placeholder="Temporary Password"
-                required
-                className={
-                  invalid || tooManyRequests
-                    ? styles.passError
-                    : styles.password
-                }
-              />
-            </div>
-          </div>
-          <div>
-            <p className="text-center">I want this user to be able to:</p>
-            <div className="checkboxes mt-4">
-              <Checkbox className="mb-2" onChange={toggleMaster} id="masterRef" ref={masterRef} label="Have full admin privilges" />
-              <Checkbox disabled={masterChecked} className="mb-2" id="blogRef" ref={blogRef} label="Edit The Blog" />
-              <Checkbox disabled={masterChecked} className="mb-2" id="libraryRef" ref={libraryRef} label="Make changes in the Library" />
-              <Checkbox disabled={masterChecked} className="mb-2" id="inviteRef" ref={inviteRef} label="Invite Other Admins" />
+            <div className="my-12">
+              <p className="text-center mt-4">I want this user to be able to:</p>
+              <div className="checkboxes mt-4">
+                <Checkbox
+                  className="mb-2"
+                  onChange={toggleMaster}
+                  id="masterRef"
+                  ref={masterRef}
+                  label="Have full admin privilges"
+                />
+                <Checkbox
+                  disabled={masterChecked}
+                  className="mb-2"
+                  id="blogRef"
+                  ref={blogRef}
+                  label="Edit The Blog"
+                />
+                <Checkbox
+                  disabled={masterChecked}
+                  className="mb-2"
+                  id="libraryRef"
+                  ref={libraryRef}
+                  label="Make changes in the Library"
+                />
+                <Checkbox
+                  disabled={masterChecked}
+                  className="mb-2"
+                  id="inviteRef"
+                  ref={inviteRef}
+                  label="Invite Other Admins"
+                />
+              </div>
             </div>
           </div>
 

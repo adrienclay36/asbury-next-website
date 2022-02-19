@@ -11,6 +11,8 @@ export const UserContext = createContext({
     invitePermissions: false,
     role: '',
     checkUser: () => {},
+    firstName: '',
+    lastName: '',
 })
 
 const UserContextProvider = (props) => {
@@ -21,6 +23,8 @@ const UserContextProvider = (props) => {
     const [blogPermissions, setBlogPermissions] = useState(false);
     const [invitePermissions, setInvitePermissions] = useState(false);
     const [role, setRole] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const router = useRouter();
 
@@ -39,6 +43,8 @@ const UserContextProvider = (props) => {
         const userInfo = data[0];
         setPermissions(userInfo.permissions);
         setRole(userInfo.role);
+        setFirstName(userInfo.first_name);
+        setLastName(userInfo.last_name);
 
       }
     }
@@ -111,6 +117,8 @@ const UserContextProvider = (props) => {
         invitePermissions,
         checkUser: checkUser,
         role,
+        firstName,
+        lastName,
     }
 
   return (

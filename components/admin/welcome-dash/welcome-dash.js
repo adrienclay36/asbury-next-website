@@ -1,15 +1,21 @@
 import React, { useContext } from "react";
 import WelcomeItem from "./welcome-item";
 import { UserContext } from "../../../store/user-context";
-const WelcomeDash = () => {
+import styles from './welcome-dash.module.css';
+const WelcomeDash = ({ firstName }) => {
   const userContext = useContext(UserContext);
   return (
-    <div className="container">
-      <div className="flex flex-1 justify-center items-center">
+    <div className={`${styles.fade} container`}>
+      <div>
         <h1 className="mt-12 text-2xl lg:text-4xl font-extrabold text-center">
+          Hi there, {firstName}
+        </h1>
+        <h1 className="mt-12 text-xl lg:text-2xl font-extrabold text-center">
           Welcome To Your Asbury Admin Dashboard
         </h1>
       </div>
+  
+
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-12">
         <WelcomeItem
           title="Blog Operations"
@@ -29,12 +35,14 @@ const WelcomeDash = () => {
           href="/admin/worship-service-dashboard"
           buttonText="Go to Service Dashboard"
         />
-        {userContext.invitePermissions && <WelcomeItem
-          title="Add An Administrator"
-          description="Add an administrator via email by giving them an email and a temporary password."
-          href="/admin/add-admin"
-          buttonText="Add Administrator"
-        />}
+        {userContext.invitePermissions && (
+          <WelcomeItem
+            title="Add An Administrator"
+            description="Add an administrator via email by giving them an email and a temporary password."
+            href="/admin/add-admin"
+            buttonText="Add Administrator"
+          />
+        )}
         <WelcomeItem
           title="Change Your Password"
           description="Change your admin login password"

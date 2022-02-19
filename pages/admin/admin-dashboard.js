@@ -5,11 +5,10 @@ import WelcomeDash from '../../components/admin/welcome-dash/welcome-dash';
 import { supabase } from '../../supabase-client';
 import { checkAdmin } from '../../supabase-util';
 
-const AdminDashboard = ({ user }) => {
-
+const AdminDashboard = ({ user, userInfo }) => {
   return (
      <AdminLayout>
-         <WelcomeDash/>
+         <WelcomeDash firstName={userInfo.first_name}/>
      </AdminLayout>
   );
 };

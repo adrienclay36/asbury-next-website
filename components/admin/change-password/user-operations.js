@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './user-operations.module.css';
 import { supabase } from '../../../supabase-client';
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
-const UserOperations = ({ user }) => {
+const UserOperations = ({ user, userInfo }) => {
     const [password, setPassword] = useState('');
     const [tooShort, setTooShort] = useState(false);
     const [submitting, setSubmitting] = useState(false);
@@ -36,8 +36,11 @@ const UserOperations = ({ user }) => {
     }
   return (
     <div>
-      <p className="text-lg font-semibold text-center">
-        Current User: {user.email}
+      <p className="text-lg font-semibold text-center my-6">
+        Current User: {userInfo.first_name} {userInfo.last_name}
+      </p>
+      <p className="text-lg font-semibold text-center my-6">
+        Email: {user.email}
       </p>
       <div className="container w-11/12 lg:w-1/6 md:w-1/6">
         <form className="mt-8 space-y-6" onSubmit={changePassword}>
@@ -88,8 +91,9 @@ const UserOperations = ({ user }) => {
               Password Must Be More than Six Characters
             </p>
           )}
-          {success && <p className="text-center text-green-800">
-              Password Changed</p>}
+          {success && (
+            <p className="text-center text-green-800">Password Changed</p>
+          )}
         </form>
       </div>
     </div>
