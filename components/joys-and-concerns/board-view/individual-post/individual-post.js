@@ -1,35 +1,28 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { FaRegHeart, FaHeart, FaSadTear } from 'react-icons/fa';
 import { BiHappyBeaming } from 'react-icons/bi';
 import styles from './individual-post.module.css';
-import { FrontPrayerContext } from '../main-board-store';
-import { useRouter } from 'next/router';
+import { supabase } from '../../../../supabase-client';
 const IndividualPost = ({ id, author, date, content, likes, type}) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
   const [clicked, setClicked] = useState(false);
   const formatDate = new Date(date).toLocaleDateString("en-US", {timeZone: "America/Denver"});
-  const prayerContext = useContext(FrontPrayerContext);
-  const router = useRouter();
-
-  const formatAuthor = author
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/\s+/g, "-")
-    .replace("---", "-")
-    .toLowerCase();
 
 
 
-  const incrementLikeHandler = () => {
+  const incrementLikeHandler = async () => {
     if(localStorage.getItem(id)) {
       return;
     }
     setLiked(true);
-    prayerContext.incrementLike(id);
     setLiveLikes(liveLikes+1);
     setClicked(true);
+    const { data, error } = await supabase.rpc("increment_like", {
+      postid: id,
+    });
     localStorage.setItem(id, 1);
 
   }
