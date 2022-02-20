@@ -8,7 +8,8 @@ import { FrontPrayerContext } from '../main-board-store';
 import { useRouter } from 'next/router';
 import { UserContext } from '../../../../store/user-context';
 import { supabase } from '../../../../supabase-client';
-
+import { Tooltip } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 const PostItem = ({ id, author, date, content, likes, type}) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
@@ -19,6 +20,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
   const prayerContext = useContext(FrontPrayerContext);
   const userContext = useContext(UserContext);
   const router = useRouter();
+  const disableTooltip = useMediaQuery('(max-width: 900px)')
 
   const formatAuthor = author
     .replace(/([a-z])([A-Z])/g, "$1-$2")
@@ -87,9 +89,6 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
       <div
         className={`${styles.init} bg-gray-100 z-10 container w-full lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
       >
-        {userContext.role === "admin" && userContext.socialPermissions && <div className="flex flex-1 justify-end items-center">
-          <BsX size={30} className="cursor-pointer" onClick={deletePostHandler}/>
-        </div>}
         <div className="flex flex-1 justify-start items-center ">
           <Image
             src="/images/default-2.png"
@@ -125,16 +124,24 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
             <FaSadTear size={30} className="text-blue-900" />
           )}
         </div>
-        <button
-          onClick={() =>
-            router.push(`/joys-and-concerns/${formatAuthor}/${id}`)
-          }
-          className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
-        >
-          View Replies ({commentCount ? commentCount : 0})
-        </button>
-      </div>
+        <div className="flex flex-1 justify-between items-center">
+          <button
+            onClick={() =>
+              router.push(`/joys-and-concerns/${formatAuthor}/${id}`)
+            }
+            className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
+          >
+            View Replies ({commentCount ? commentCount : 0})
+          </button>
+          {userContext.role === "admin" && userContext.socialPermissions && (
+            <Tooltip disabled={disableTooltip} label="Delete this post if it violates community guidelines" position="bottom" placement="start">
 
+              <button onClick={deletePostHandler} className="cursor-pointer hover:underline text-seaFoam-500 font-semibold">Delete Post</button>
+            </Tooltip>
+           
+          )}
+        </div>
+      </div>
     </>
   );
 }

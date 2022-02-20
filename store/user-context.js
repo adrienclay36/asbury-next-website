@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { supabase } from '../supabase-client';
 import { useRouter } from 'next/router';
+import { getSignedUrl } from '../supabase-util';
 const TABLE_NAME = 'users';
 export const UserContext = createContext({
     user: null,
@@ -15,12 +16,14 @@ export const UserContext = createContext({
     logOutHandler: () => {},
     firstName: '',
     lastName: '',
+    title: '',
+    avatarURL: '',
 })
 
 const UserContextProvider = (props) => {
     const [userValue, setUserValue] = useState();
     const [permissions, setPermissions] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [libraryPermissions, setLibraryPermissions] = useState(false);
     const [blogPermissions, setBlogPermissions] = useState(false);
     const [invitePermissions, setInvitePermissions] = useState(false);
@@ -28,6 +31,8 @@ const UserContextProvider = (props) => {
     const [role, setRole] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [title, setTitle] = useState('');
+    const [avatarURL, setAvatarURL] = useState('');
 
     const router = useRouter();
 
@@ -48,7 +53,11 @@ const UserContextProvider = (props) => {
         setRole(userInfo.role);
         setFirstName(userInfo.first_name);
         setLastName(userInfo.last_name);
-
+        setTitle(userInfo.title);
+        const userImage = await getSignedUrl('avatars', `${userInfo.id}/${userInfo.id}_avatar.jpg`)
+        setAvatarURL(userImage ? userImage : '/images/default-2.png');
+        
+        setLoading(false);
       }
     }
     const checkUser = async () => {
@@ -86,7 +95,7 @@ const UserContextProvider = (props) => {
     }, [permissions]);
 
     useEffect(() => {
-      setLoading(true);
+      
       const { data: authListener } = supabase.auth.onAuthStateChange(
         (event, session) => {
           handleAuthChange(event, session);
@@ -114,7 +123,7 @@ const UserContextProvider = (props) => {
       );
 
       checkUser();
-      setLoading(false);
+      
       return () => {
         authListener.unsubscribe();
       };
@@ -134,6 +143,8 @@ const UserContextProvider = (props) => {
         role,
         firstName,
         lastName,
+        title,
+        avatarURL,
     }
 
   return (

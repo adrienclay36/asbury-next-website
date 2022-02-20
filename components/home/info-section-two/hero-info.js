@@ -5,7 +5,7 @@ const HeroInfo = () => {
   return (
     <div className={styles["hero-image"]}>
       <div className={styles["hero-text"]}>
-        <h1 className="text-5xl lg:text-8xl md:text-7xl text-center text-white font-bold mb-12">
+        <h1 className="text-3xl lg:text-8xl md:text-7xl text-center text-white font-bold mb-12">
           <span className={`${styles.clip} bg-clip-text text-transparent`}>
             Traditional Service
           </span>{" "}
@@ -21,7 +21,7 @@ const HeroInfo = () => {
           </div>
 
           <div
-            className={`${styles.clip} flex flex-1 flex-col lg:flex-row md:flex-row justify-center items-center bg-clip-text text-transparent`}
+            className={`${styles.clipTwo} flex flex-1 flex-col lg:flex-row md:flex-row justify-center items-center bg-clip-text text-transparent`}
           >
             <p className="m-4 text-xl lg:text-2xl md:text-2xl font-bold">
               8:00AM

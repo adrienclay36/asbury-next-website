@@ -1,12 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './user-operations.module.css';
 import { supabase } from '../../../supabase-client';
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
+import { Popover } from '@mantine/core';
+import AlertButton from '../../ui/alert-button/alert-button';
 const UserOperations = ({ user, userInfo }) => {
     const [password, setPassword] = useState('');
     const [tooShort, setTooShort] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
+
+
+    useEffect(() => {
+      if(success) {
+        const timeout = setTimeout(() => {
+          setSuccess(false);
+        }, 3000)
+
+        return () => clearTimeout(timeout);
+      }
+    }, [success])
 
     const passwordChangeHandler = (e) => {
         setPassword(e.target.value);
@@ -63,37 +76,19 @@ const UserOperations = ({ user, userInfo }) => {
               />
             </div>
           </div>
+          <div className="text-center">
 
-          <button
-            disabled={submitting ? true : false}
-            type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
-          >
-            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              <svg
-                className="h-5 w-5 text-emerald-600 group-hover:text-emerald-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-            {submitting ? <DualRingLoader /> : "Change Password"}
-          </button>
+          <AlertButton type="success" onClick={changePassword} buttonText={"Change Password"} open={success} loadingAction={submitting} popoverText={"Successfully Changed Password!"}/>
+          </div>
+
           {tooShort && (
             <p className="text-center text-red-800">
               Password Must Be More than Six Characters
             </p>
           )}
-          {success && (
+          {/* {success && (
             <p className="text-center text-green-800">Password Changed</p>
-          )}
+          )} */}
         </form>
       </div>
     </div>

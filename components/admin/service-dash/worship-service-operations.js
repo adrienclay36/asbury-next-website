@@ -4,6 +4,7 @@ import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import HRThin from "../../ui/HRThin";
 import { getSignedUrl } from "../../../supabase-util";
 import { useRouter } from "next/router";
+import AlertButton from "../../ui/alert-button/alert-button";
 const WorshipServiceOperations = () => {
   const [file, setFile] = useState("");
   const [loading, setLoading] = useState(false);
@@ -100,16 +101,10 @@ const WorshipServiceOperations = () => {
             required
           />
           <div>
-            <button
-              type="submit"
-              className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mb-2w-full"
-              disabled={loading ? true : false}
-            >
-              {!loading ? "Upload Program" : <DualRingLoader />}
-            </button>
-            {success && (
+            <AlertButton type="success" popoverText="Successfully Uploaded Program!" buttonText="Upload Program" open={success} loadingAction={loading}/>
+            {/* {success && (
               <p className="text-green-700 text-lg">Program Uploaded!</p>
-            )}
+            )} */}
           </div>
         </form>
         <button

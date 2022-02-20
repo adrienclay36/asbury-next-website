@@ -48,10 +48,10 @@ const WelcomeDash = ({ firstName }) => {
           />
         )}
         <WelcomeItem
-          title="Change Your Password"
-          description="Change your admin login password"
-          href="/admin/change-password"
-          buttonText="Change Password"
+          title="Edit Your Profile"
+          description="Update your profile picture, your title, and change passwords."
+          href="/admin/admin-profile"
+          buttonText="View Profile"
         />
       </div>
     </div>

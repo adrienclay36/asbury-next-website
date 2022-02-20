@@ -14,6 +14,7 @@ const AddAdminForm = () => {
   const [masterChecked, setMasterChecked] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [title, setTitle] = useState("");
   const libraryRef = useRef();
   const blogRef = useRef();
   const inviteRef = useRef();
@@ -85,6 +86,7 @@ const AddAdminForm = () => {
           role: "admin",
           first_name: firstName,
           last_name: lastName,
+          title: title,
         })
         .match({ id: userInfo.id });
       console.log(submitError);
@@ -164,7 +166,28 @@ const AddAdminForm = () => {
                   }
                 />
               </div>
+
               <div>
+
+              <label htmlFor="title" className="sr-only">
+                Title
+              </label>
+              <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Title (eg. Webmaster, Librarian)"
+                required
+                className={
+                  "appearance-none mb-4 rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-seaFoam-500 focus:border-seaFoam-500 focus:z-10 sm:text-sm"
+                }
+                />
+                </div>
+              <div>
+
+
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>

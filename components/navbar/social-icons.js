@@ -7,29 +7,32 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { UserContext } from "../../store/user-context";
 import { Tooltip } from "@mantine/core";
+import { useMediaQuery } from '@mantine/hooks';
 import styles from "./social-icons.module.css";
 const SocialIcons = ({ textColor, textHover }) => {
+  const disableTooltip = useMediaQuery('(max-width: 900px)')
   const userContext = useContext(UserContext);
   const router = useRouter();
   return (
     <div className=" container flex justify-end mt-4">
       {userContext.role === "admin" && (
         <Tooltip
-          label="User Profile"
+        disabled={disableTooltip}
+          label="Admin Dashboard"
           position="bottom"
           placement="start"
           withArrow
         >
-          <FaRegUserCircle
+          {userContext.avatarURL ? <img onClick={() => router.push("/admin/admin-dashboard")} className={`${styles.fade} cursor-pointer h-8 w-8 mr-3 mt-0.5 object-cover rounded-full`} src={userContext.avatarURL} title={userContext.firstName} /> : <FaRegUserCircle
             size={30}
             onClick={() => router.push("/admin/admin-dashboard")}
             className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-          />
+          />}
         </Tooltip>
       )}
 
       {userContext.role === "admin" && (
-        <Tooltip label="Sign Out" position="bottom" placement="start" withArrow>
+        <Tooltip label="Sign Out" position="bottom" placement="start" withArrow disabled={disableTooltip}>
           <AiOutlineLogout
             size={29}
             onClick={() => userContext.logOutHandler()}
@@ -41,7 +44,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         label="Visit Facebook"
         position="bottom"
         placement="start"
-        withArrow
+        withArrow disabled={disableTooltip}
       >
         <a
           href="https://www.facebook.com/AsburyABQ"
@@ -55,7 +58,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         </a>
       </Tooltip>
 
-      <Tooltip label="Joys & Concerns" position="bottom" placement="start" withArrow>
+      <Tooltip label="Joys & Concerns" position="bottom" placement="start" withArrow disabled={disableTooltip}>
         <ImBubble
           onClick={() => router.push("/joys-and-concerns")}
           size={30}
@@ -63,7 +66,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         />
       </Tooltip>
 
-      <Tooltip label="Live Stream" position="bottom" placement="start" withArrow>
+      <Tooltip label="Live Stream" position="bottom" placement="start" withArrow disabled={disableTooltip}>
 
       <MdOndemandVideo
         onClick={() => router.push("/livestream")}
@@ -72,7 +75,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         />
         </Tooltip>
 
-        <Tooltip label="Contact Us" position="bottom" placement="start" withArrow>
+        <Tooltip label="Contact Us" position="bottom" placement="start" withArrow disabled={disableTooltip} >
 
       <BsFillEnvelopeFill
         onClick={() => router.push("/contact")}
