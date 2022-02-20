@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { supabase } from '../supabase-client';
 import { useRouter } from 'next/router';
-import { getSignedUrl } from '../supabase-util';
+import { getPublicUrl, getSignedUrl } from '../supabase-util';
 const TABLE_NAME = 'users';
 export const UserContext = createContext({
     user: null,
@@ -54,7 +54,7 @@ const UserContextProvider = (props) => {
         setFirstName(userInfo.first_name);
         setLastName(userInfo.last_name);
         setTitle(userInfo.title);
-        const userImage = await getSignedUrl('avatars', `${userInfo.id}/${userInfo.id}_avatar.jpg`)
+        const userImage = await getPublicUrl('avatars', `${userInfo.id}_avatar.jpg`)
         setAvatarURL(userImage ? userImage : '/images/default-2.png');
         
         setLoading(false);

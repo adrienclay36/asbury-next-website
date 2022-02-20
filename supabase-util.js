@@ -23,7 +23,8 @@ export const getPagedDataByDate = async (page, size, table, dateColumn) => {
   const { data } = await supabase
     .from(table)
     .select()
-    .order(dateColumn, { ascending: false }).order('id', { ascending: false})
+    .order(dateColumn, { ascending: false })
+    .order("id", { ascending: false })
     .range(from, to - 1);
 
   return data;
@@ -95,7 +96,10 @@ export const addItemToTable = async (table, object) => {
 
 export const deleteItemFromTable = async (table, id) => {
   try {
-    const {data, error} = await supabase.from(table).delete().match({ id: id });
+    const { data, error } = await supabase
+      .from(table)
+      .delete()
+      .match({ id: id });
     return { status: "ok", error: "None" };
   } catch (err) {
     return { status: "error", error: err.message };
@@ -104,72 +108,47 @@ export const deleteItemFromTable = async (table, id) => {
 
 export const updateItemInTable = async (table, id, object) => {
   try {
-    await supabase.from(table).update(object).match({id: id});
+    await supabase.from(table).update(object).match({ id: id });
     return { status: "ok", error: "None" };
   } catch (err) {
     return { status: "error", error: err.message };
   }
-}
-
+};
 
 export const toggleBooleanValue = async (table, id, column) => {
   try {
-    const { data } = await supabase.from(table).select(column).match({id: id});
-    const originalValue = data[0][column]
-    await supabase.from(table).update({ availability: !originalValue }).match({ id: id });
+    const { data } = await supabase
+      .from(table)
+      .select(column)
+      .match({ id: id });
+    const originalValue = data[0][column];
+    await supabase
+      .from(table)
+      .update({ availability: !originalValue })
+      .match({ id: id });
     return { status: "ok", error: "None" };
   } catch (err) {
     return { status: "error", error: err.message };
   }
-}
-
+};
 
 export const getSignedUrl = async (bucket, filename) => {
-
   const { signedURL, error } = await supabase.storage
     .from(bucket)
     .createSignedUrl(filename, 60);
   return signedURL;
-}
+};
 
 
-
+export const getPublicUrl = async (bucket, filename) => {
+  const { publicURL, error } = await supabase.storage
+    .from(bucket).getPublicUrl(filename);
+  return publicURL;
+};
 
 /* AUTH FUNCTIONS */
 
-
 export const checkAdmin = async (req) => {
-  const { user } = await supabase.auth.api.getUserByCookie(req);
-  if (!user) {
-    return {
-      props: {},
-      redirect: { destination: "/admin" },
-    };
-  }
-
-   const { data, error } = await supabase
-     .from("users")
-     .select()
-     .match({ id: user.id });
-   let userInfo;
-   if (data) {
-     userInfo = data[0];
-     if (!user || userInfo.role !== "admin") {
-       return {
-         props: {},
-         redirect: { destination: "/" },
-       };
-     }
-   }
-
-   return {
-     props: { user, userInfo },
-   };
-   
-}
-
-export const getPermissions = async (req, permissionSet) => {
-
   const { user } = await supabase.auth.api.getUserByCookie(req);
   if (!user) {
     return {
@@ -185,7 +164,38 @@ export const getPermissions = async (req, permissionSet) => {
   let userInfo;
   if (data) {
     userInfo = data[0];
-    const permitted = userInfo.permissions.some((permission) => permissionSet.includes(permission));
+    if (!user || userInfo.role !== "admin") {
+      return {
+        props: {},
+        redirect: { destination: "/" },
+      };
+    }
+  }
+
+  return {
+    props: { user, userInfo },
+  };
+};
+
+export const getPermissions = async (req, permissionSet) => {
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+  if (!user) {
+    return {
+      props: {},
+      redirect: { destination: "/admin" },
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .match({ id: user.id });
+  let userInfo;
+  if (data) {
+    userInfo = data[0];
+    const permitted = userInfo.permissions.some((permission) =>
+      permissionSet.includes(permission)
+    );
 
     if (!user || !permitted) {
       return {
@@ -198,5 +208,17 @@ export const getPermissions = async (req, permissionSet) => {
   return {
     props: { user },
   };
+};
 
-}
+export const getUser = async (id) => {
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .match({ id: id });
+
+  let userInfo;
+  if (data) {
+    userInfo = data[0];
+    return userInfo;
+  }
+};

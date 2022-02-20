@@ -5,6 +5,7 @@ import { Collapse } from '@mantine/core';
 import NewComment from './new-comment';
 import { UserContext } from '../../../../store/user-context';
 import styles from './comment-list.module.css';
+import NewUserComment from './new-user-comment.js';
 let isInit = true;
 const CommentList = ({ postID }) => {
   const [comments, setComments] = useState([]);
@@ -77,13 +78,12 @@ const CommentList = ({ postID }) => {
       </div>
 
       <Collapse in={open}>
-        <NewComment setOpen={setOpen} postID={postID} />
+        {userContext.role === "admin" ? <NewUserComment setOpen={setOpen} postID={postID}/> : <NewComment setOpen={setOpen} postID={postID} />}
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (
           <CommentItem key={comment.id} id={comment.id} comment={comment} />
         ))}
-      {/* {loadingComments && <PageLoading/>} */}
       {comments.length === 0 && !loadingComments && (
         <p
           className={`${styles.init} text-center my-12 text-lg font-semibold text-gray-400`}

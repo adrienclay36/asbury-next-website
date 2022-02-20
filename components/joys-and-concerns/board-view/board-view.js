@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PostItem from "./post-item/post-item";
 import NewPrayerForm from "./new-prayer-form";
+import NewUserPrayer from "./new-user-prayer";
 import { Collapse, Skeleton } from "@mantine/core";
 import { FrontPrayerContext } from "./main-board-store";
 import { UserContext } from "../../../store/user-context";
@@ -46,7 +47,11 @@ const BoardView = () => {
       </div>
 
       <Collapse in={open}>
-        <NewPrayerForm setOpen={setOpen} />
+        {userContext.role === "admin" ? (
+          <NewUserPrayer setOpen={setOpen} />
+        ) : (
+          <NewPrayerForm setOpen={setOpen} />
+        )}
       </Collapse>
 
       <div className="container flex flex-col flex-1 justify-center items-center">
@@ -62,6 +67,7 @@ const BoardView = () => {
               content={post.postcontent}
               likes={post.likes}
               type={post.posttype}
+              user_id={post.user_id}
             />
           ))}
         {prayerContext.pageLoading && <PageLoading />}

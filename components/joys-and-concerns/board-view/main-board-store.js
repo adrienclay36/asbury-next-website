@@ -11,6 +11,7 @@ export const FrontPrayerContext = createContext({
     posts: [],
     fetchPosts: () => {},
     addPost: (name, email, type, content) => {},
+    addUserPost: (type, content, user_id) => {},
     deletePost: (id) => {},
     incrementLike: (postID) => {},
     setPayload: () => {},
@@ -177,6 +178,26 @@ const FrontPrayerContextProvider = (props) => {
     }
 
 
+    const addUserPost = async (type, content, user_id) => {
+      setPosting(true);
+
+      let inputType = type;
+      if (!type) {
+        inputType = "joy";
+      }
+      const postToAdd = {
+        posttype: inputType,
+        postcontent: content,
+        postdate: new Date(),
+        user_id: user_id,
+      };
+      const response = await addItemToTable(TABLE, postToAdd);
+      setPosting(false);
+      toggleChange();
+      return response;
+    };
+
+
     const deletePost = async (id) => {
       const response = await deleteItemFromTable(TABLE, id);
       // setPosts(prevPosts => {
@@ -196,6 +217,7 @@ const FrontPrayerContextProvider = (props) => {
         posting: posting,
         pageNumber: pageNumber,
         addPost: addPost,
+        addUserPost: addUserPost,
         deletePost: deletePost,
         incrementLike: incrementLike,
         setPayload: setPayload,

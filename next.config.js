@@ -15,10 +15,13 @@ const withTM = require("next-transpile-modules")([
 module.exports = withTM({
   reactStrictMode: true,
   images: {
-    domains: ["https://images.unsplash.com"],
+    domains: [
+      "images.unsplash.com",
+      "jmnsjblfovgbschcmyzc.supabase.co",
+    ],
   },
   i18n: {
-    locales: ['en-US'],
-    defaultLocale: 'en-US',
-  }
+    locales: ["en-US"],
+    defaultLocale: "en-US",
+  },
 });
