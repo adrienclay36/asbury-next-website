@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect, useCallback} from 'react'
 import axios from 'axios';
-import { addItemToTable, getPagedDataByDate, getTotalPages, getPagedDataByID } from '../../../supabase-util';
+import { addItemToTable, getPagedDataByDate, getTotalPages, getPagedDataByID, deleteItemFromTable } from '../../../supabase-util';
 import { supabase } from '../../../supabase-client';
 
 
@@ -11,6 +11,7 @@ export const FrontPrayerContext = createContext({
     posts: [],
     fetchPosts: () => {},
     addPost: (name, email, type, content) => {},
+    deletePost: (id) => {},
     incrementLike: (postID) => {},
     setNewPost: () => {},
     pageNumber: 0,
@@ -161,6 +162,16 @@ const FrontPrayerContextProvider = (props) => {
     }
 
 
+    const deletePost = async (id) => {
+      const response = await deleteItemFromTable(TABLE, id);
+      setPosts(prevPosts => {
+        const filtered = prevPosts.filter(post => post.id !== id);
+        return filtered;
+      })
+      console.log(response);
+    }
+
+
 
     const contextValue = {
         posts: posts,
@@ -170,6 +181,7 @@ const FrontPrayerContextProvider = (props) => {
         posting: posting,
         pageNumber: pageNumber,
         addPost: addPost,
+        deletePost: deletePost,
         incrementLike: incrementLike,
         setNewPost: setNewPost,
     }

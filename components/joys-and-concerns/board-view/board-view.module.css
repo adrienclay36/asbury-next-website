@@ -24,3 +24,17 @@
 .init {
     animation: slideUp 1s ease;
 }
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.fade {
+    animation: fadeIn 1s ease-in;
+}

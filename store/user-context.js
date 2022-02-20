@@ -9,6 +9,7 @@ export const UserContext = createContext({
     libraryPermissions: false,
     blogPermissions: false,
     invitePermissions: false,
+    socialPermissions: false,
     role: '',
     checkUser: () => {},
     firstName: '',
@@ -22,6 +23,7 @@ const UserContextProvider = (props) => {
     const [libraryPermissions, setLibraryPermissions] = useState(false);
     const [blogPermissions, setBlogPermissions] = useState(false);
     const [invitePermissions, setInvitePermissions] = useState(false);
+    const [socialPermissions, setSocialPermissions] = useState(false);
     const [role, setRole] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -69,6 +71,9 @@ const UserContextProvider = (props) => {
 
         const invite = permissions.some((role) => ['invite', 'master'].includes(role));
         setInvitePermissions(invite);
+
+        const social = permissions.some((role) => ['social', 'master'].includes(role));
+        setSocialPermissions(social);
       }
     }, [permissions]);
 
@@ -110,11 +115,12 @@ const UserContextProvider = (props) => {
 
     const contextValue = {
         user: userValue,
-        permissions: permissions,
-        loading: loading,
-        libraryPermissions: libraryPermissions,
+        permissions,
+        loading,
+        libraryPermissions,
         blogPermissions,
         invitePermissions,
+        socialPermissions,
         checkUser: checkUser,
         role,
         firstName,

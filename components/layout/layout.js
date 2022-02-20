@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Footer from '../footer/footer';
+
 import NavHeroCondensed from '../navbar-condensed/navhero-condensed';
 const Layout = (props) => {
   return (

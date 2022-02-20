@@ -3,16 +3,38 @@ import PostItem from "./post-item/post-item";
 import NewPrayerForm from "./new-prayer-form";
 import { Collapse } from "@mantine/core";
 import { FrontPrayerContext } from "./main-board-store";
-import PageLoading from '../../PageLoading/PageLoading';
-import styles from './board-view.module.css';
+import { UserContext } from "../../../store/user-context";
+import PageLoading from "../../PageLoading/PageLoading";
+import styles from "./board-view.module.css";
+import { useRouter } from "next/router";
 const BoardView = () => {
   const [open, setOpen] = useState(false);
   const prayerContext = useContext(FrontPrayerContext);
-  
+  const userContext = useContext(UserContext);
+  const router = useRouter();
+
+  const adminMessage = (
+    <div
+      className={`${styles.init} text-center p-10 mt-4 shadow-md border-2 w-11/12 lg:w-2/6 md:w-2/6 mx-auto`}
+    >
+      <p>Welcome, {userContext.firstName}</p>
+      <p>
+        You are a moderator of this board. You will only see the moderator
+        controls if you are logged in. You can find more controls in the admin
+        dashboard
+      </p>
+      <button
+        onClick={() => router.push("/admin/admin-dashboard")}
+        className="px-3 py-2 bg-emerald-900 text-white rounded-lg mt-4"
+      >
+        Go To Admin Dashboard
+      </button>
+    </div>
+  );
 
   return (
     <>
-    
+      {userContext.socialPermissions && adminMessage}
       <div className="text-center mt-12">
         <button
           onClick={() => setOpen(!open)}

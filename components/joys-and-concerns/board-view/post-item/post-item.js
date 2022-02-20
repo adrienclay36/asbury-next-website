@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Image from 'next/image'
 import { FaRegHeart, FaHeart, FaSadTear } from 'react-icons/fa';
+import { BsX } from 'react-icons/bs';
 import { BiHappyBeaming } from 'react-icons/bi';
 import styles from './post-item.module.css';
 import { FrontPrayerContext } from '../main-board-store';
 import { useRouter } from 'next/router';
-import PreviewCommentsList from '../preview-comments/preview-comment-list';
+import { UserContext } from '../../../../store/user-context';
 import { supabase } from '../../../../supabase-client';
+
 const PostItem = ({ id, author, date, content, likes, type}) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
@@ -15,6 +17,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
   const [commentCount, setCommentCount] = useState(false);
   const formatDate = new Date(date).toLocaleDateString("en-US", {timeZone:"America/Denver"});
   const prayerContext = useContext(FrontPrayerContext);
+  const userContext = useContext(UserContext);
   const router = useRouter();
 
   const formatAuthor = author
@@ -68,11 +71,25 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
     {content}
     </p>
   )
+
+
+  const deletePostHandler = async () => {
+    const confirmation = confirm("Are you sure you want to delete this post? This cannot be undone");
+    if(confirmation) {
+      prayerContext.deletePost(id);
+    }
+  }
+
+
+  
   return (
     <>
       <div
         className={`${styles.init} bg-gray-100 z-10 container w-full lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
       >
+        {userContext.role === "admin" && userContext.socialPermissions && <div className="flex flex-1 justify-end items-center">
+          <BsX size={30} className="cursor-pointer" onClick={deletePostHandler}/>
+        </div>}
         <div className="flex flex-1 justify-start items-center ">
           <Image
             src="/images/default-2.png"
@@ -114,7 +131,7 @@ const PostItem = ({ id, author, date, content, likes, type}) => {
           }
           className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
         >
-          View Replies ({commentCount && commentCount})
+          View Replies ({commentCount ? commentCount : 0})
         </button>
       </div>
 
