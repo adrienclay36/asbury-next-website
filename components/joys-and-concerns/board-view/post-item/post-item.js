@@ -48,6 +48,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
       "avatars",
       `${userInfo.id}_avatar.jpg`
       );
+      
       setAvatarURL(userImage ? userImage : "/images/default-2.png");
       
       setLoadingUser(false);
@@ -71,20 +72,20 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     localStorage.setItem(id, 1);
   };
 
-  const getCommentCount = async () => {
+  const getCommentCount = useCallback(async () => {
     const { data, count } = await supabase
       .from("comments")
       .select("postid", { count: "exact" })
       .match({ postid: id });
     setCommentCount(count);
-  };
+  },[id]);
 
   useEffect(() => {
     if (localStorage.getItem(id)) {
       setLiked(true);
     }
     getCommentCount();
-  }, []);
+  }, [getCommentCount, id]);
 
   const longContent = (
     <>

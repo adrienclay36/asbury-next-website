@@ -5,8 +5,11 @@ import { HiOutlinePhotograph } from 'react-icons/hi';
 import Dropzone from 'react-dropzone';
 import SkeletonPost from '../../joys-and-concerns/board-view/post-item/skeleton-post';
 import Image from 'next/image';
-import { Modal } from '@mantine/core';
-import { LoadingOverlay } from '@mantine/core';
+import { Modal, Skeleton } from '@mantine/core';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+
+
+import { Loader } from '@mantine/core';
 import { supabase } from '../../../supabase-client';
 const AdminProfileCard = ({ user }) => {
   const [success, setSuccess] = useState(false);
@@ -32,66 +35,75 @@ const AdminProfileCard = ({ user }) => {
       }
 
       setLoading(false)
+      userContext.checkUser();
   }
-  
+  if(userContext.loading) {
+    return <SkeletonPost/>
+  }
   
   return (
     <>
-    <Modal centered opened={success} onClose={() => setSuccess(false)}>
-      <p>Your Profile picture has been updated successfully! This make take a while to show up everywhere.</p>
-    </Modal>
-      {userContext.loading && <SkeletonPost />}
-      {
-      
-      !userContext.loading && (
-        <div className="flex flex-1 flex-col justify-center p-10 items-center w-11/12 lg:w-2/6 md:w-4/6 border-2 rounded-lg shadow-md mx-auto my-12">
-          <div>
-            <Image
-            loading="eager"
-            key={userContext.user.id}
-              height={200}
-              width={200}
-              className="rounded-full object-cover shadow-lg"
-              src={userContext.avatarURL}
-              alt={userContext.firstName}
-            />
-            <p className="mt-4 font-extrabold text-center">
-              {userContext.firstName} {userContext.lastName}
-            </p>
-            <p className="font-semibold text-seaFoam-500 text-center">
-              {userContext.title}
-            </p>
-          </div>
+      <Modal centered opened={success} onClose={() => setSuccess(false)}>
+        <div className="flex flex-1 flex-col justify-center items-center text-center">
 
-          <div className="my-4">
-            <p className="font-semibold text-center mb-6 uppercase">
-              Permissions:
-            </p>
-            <ul className="text-center">
-              {userContext.blogPermissions && (
-                <li>
-                  <p className="font-semibold mb-1">Edit The Blog</p>
-                </li>
-              )}
-              {userContext.socialPermissions && (
-                <li>
-                  <p className="font-semibold mb-1">
-                    Moderate Social Media Posts
-                  </p>
-                </li>
-              )}
-              {userContext.libraryPermissions && (
-                <li>
-                  <p className="font-semibold mb-1">Curate the Library</p>
-                </li>
-              )}
-              {userContext.invitePermissions && (
-                <li>
-                  <p className="font-semibold mb-1">Invite Other Moderators</p>
-                </li>
-              )}
-            </ul>
-          </div>
+        <AiOutlineCheckCircle size={75} className="text-emerald-700 mb-12"/>
+        <p className="font-semibold text-lg">
+          Your Profile picture has been updated successfully! This make take a
+          while to show up everywhere.
+        </p>
+        </div>
+      </Modal>
+
+      <div className="flex flex-1 flex-col justify-center p-10 items-center w-11/12 lg:w-2/6 md:w-4/6 border-2 rounded-lg shadow-md mx-auto my-12">
+        <div>
+          <Image
+            loading="lazy"
+            key={userContext.user.id}
+            height={200}
+            width={200}
+            className="rounded-full object-cover shadow-lg"
+            src={userContext.avatarURL}
+            alt={userContext.firstName}
+          />
+          <p className="mt-4 font-extrabold text-center">
+            {userContext.firstName} {userContext.lastName}
+          </p>
+          <p className="font-semibold text-seaFoam-500 text-center">
+            {userContext.title}
+          </p>
+        </div>
+
+        <div className="my-4">
+          <p className="font-semibold text-center mb-6 uppercase">
+            Permissions:
+          </p>
+          <ul className="text-center">
+            {userContext.blogPermissions && (
+              <li>
+                <p className="font-semibold mb-1">Edit The Blog</p>
+              </li>
+            )}
+            {userContext.socialPermissions && (
+              <li>
+                <p className="font-semibold mb-1">
+                  Moderate Social Media Posts
+                </p>
+              </li>
+            )}
+            {userContext.libraryPermissions && (
+              <li>
+                <p className="font-semibold mb-1">Curate the Library</p>
+              </li>
+            )}
+            {userContext.invitePermissions && (
+              <li>
+                <p className="font-semibold mb-1">Invite Other Moderators</p>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        {!loading && (
           <Dropzone onDrop={(files) => uploadPhoto(files)}>
             {({ getRootProps, getInputProps }) => (
               <section className="p-10 border-2 rounded-lg flex flex-1 justify-center items-center w-full mx-auto">
@@ -102,8 +114,9 @@ const AdminProfileCard = ({ user }) => {
               </section>
             )}
           </Dropzone>
-        </div>
-      )}
+        )}
+        {loading && <Loader color="dark" size="lg" variant="dots" />}
+      </div>
     </>
   );
 }

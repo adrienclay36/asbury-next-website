@@ -45,6 +45,7 @@ const UserContextProvider = (props) => {
       });
     };
     
+    
     const getPermissions = async (user) => {
       const {data,  error} = await supabase.from(TABLE_NAME).select().match({id: user.id});
       if(data) {
@@ -54,8 +55,17 @@ const UserContextProvider = (props) => {
         setFirstName(userInfo.first_name);
         setLastName(userInfo.last_name);
         setTitle(userInfo.title);
-        const userImage = await getPublicUrl('avatars', `${userInfo.id}_avatar.jpg`)
-        setAvatarURL(userImage ? userImage : '/images/default-2.png');
+        const { data: fileData, error: fileError } = await supabase.storage
+          .from("avatars")
+          .list();
+
+        const hasImage = fileData.filter(file => file.name === `${userInfo.id}_avatar.jpg`);
+        if(hasImage.length > 0) {
+          const publicURL = await getPublicUrl('avatars', `${userInfo.id}_avatar.jpg`)
+          setAvatarURL(publicURL ? publicURL : '/images/default-2.png');
+        } else {
+          setAvatarURL('/images/default-2.png');
+        }
         
         setLoading(false);
       }
