@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import PostItem from "./post-item/post-item";
 import NewPrayerForm from "./new-prayer-form";
-import { Collapse } from "@mantine/core";
+import { Collapse, Skeleton } from "@mantine/core";
 import { FrontPrayerContext } from "./main-board-store";
 import { UserContext } from "../../../store/user-context";
 import PageLoading from "../../PageLoading/PageLoading";
 import styles from "./board-view.module.css";
 import { useRouter } from "next/router";
+import SkeletonPost from "./post-item/skeleton-post";
 const BoardView = () => {
   const [open, setOpen] = useState(false);
   const prayerContext = useContext(FrontPrayerContext);
@@ -49,7 +50,7 @@ const BoardView = () => {
       </Collapse>
 
       <div className="container flex flex-col flex-1 justify-center items-center">
-        {prayerContext.loading && <PageLoading />}
+        {prayerContext.loading && <SkeletonPost />}
         {prayerContext.posts.length > 0 &&
           prayerContext.posts.map((post) => (
             <PostItem
