@@ -15,7 +15,7 @@ const SocialIcons = ({ textColor, textHover }) => {
   const userContext = useContext(UserContext);
   const router = useRouter();
   return (
-    <div className=" container flex justify-end mt-4">
+    <div className="container flex flex-wrap justify-end items-center mt-4 h-16">
       {userContext.role === "admin" && (
         <Tooltip
           disabled={disableTooltip}
@@ -25,10 +25,11 @@ const SocialIcons = ({ textColor, textHover }) => {
           withArrow
         >
           {userContext.avatarURL ? (
-            <div className="mr-3">
+            <div className="mr-4 mt-2">
               <Image
-                height={35}
-                width={35}
+                height={30}
+                width={30}
+                alt={userContext.firstName}
                 priority
                 onClick={() => router.push("/admin/admin-dashboard")}
                 className={`${styles.fade} cursor-pointer object-cover rounded-full`}
