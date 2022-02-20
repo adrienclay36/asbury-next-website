@@ -11,6 +11,7 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 import { Loader } from '@mantine/core';
 import { supabase } from '../../../supabase-client';
+import { updateItemInTable } from '../../../supabase-util';
 const AdminProfileCard = ({ user }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,9 @@ const AdminProfileCard = ({ user }) => {
       if(!photoError) {
         setSuccess(true);
       }
+
+    const response = await updateItemInTable('users', userContext.user.id, {avatar_url: `${userContext.user.id}_avatar.jpg`})
+    
 
       setLoading(false)
       userContext.checkUser();

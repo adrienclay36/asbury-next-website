@@ -10,7 +10,7 @@ import { UserContext } from "../../../../store/user-context";
 import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { getUser, getSignedUrl, getPublicUrl } from "../../../../supabase-util";
+import { getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../../../supabase-util";
 import SkeletonPost from "./skeleton-post";
 const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   const [readMore, setReadMore] = useState(false);
@@ -44,9 +44,9 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     setLoadingUser(true);
     const userInfo = await getUser(user_id);
     setUser(userInfo);
-    const userImage = await getPublicUrl(
+    const userImage = await downloadImage(
       "avatars",
-      `${userInfo.id}_avatar.jpg`
+      userInfo.avatar_url
       );
       
       setAvatarURL(userImage ? userImage : "/images/default-2.png");

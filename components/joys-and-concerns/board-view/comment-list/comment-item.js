@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from "react";
 import Image from "next/image";
 import styles from './comment-item.module.css'
 import { UserContext } from "../../../../store/user-context";
-import { deleteItemFromTable, getUser, getSignedUrl, getPublicUrl } from "../../../../supabase-util";
+import { deleteItemFromTable, getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../../../supabase-util";
 import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
@@ -23,9 +23,9 @@ const CommentItem = ({ comment, id}) => {
   const getUserHandler = async () => {
     setLoading(true);
     const userInfo = await getUser(userID);
-    const userImage = await getPublicUrl(
+    const userImage = await downloadImage(
       "avatars",
-      `${userInfo.id}_avatar.jpg`
+      userInfo.avatar_url
     );
     setAvatarURL(userImage);
     setUser(userInfo);
@@ -90,7 +90,7 @@ const CommentItem = ({ comment, id}) => {
             priority
               src={avatarURL}
               alt={user.first_name}
-              className={`${styles.init}object-cover rounded-full`}
+              className={`${styles.init} object-cover rounded-full`}
             />
           ) : (
             <Image

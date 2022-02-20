@@ -222,3 +222,16 @@ export const getUser = async (id) => {
     return userInfo;
   }
 };
+
+export const downloadImage = async (bucket, path) => {
+  try {
+    const {data, error} = await supabase.storage.from(bucket).download(path);
+    if(error) {
+      throw error
+    }
+    const url = URL.createObjectURL(data);
+    return url;
+  } catch (error) {
+    console.log("Error downloading image: ", error.message);
+  }
+}

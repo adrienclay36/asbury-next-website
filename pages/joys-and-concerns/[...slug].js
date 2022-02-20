@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import CommentList from "../../components/joys-and-concerns/board-view/comment-list/comment-list";
 import PageLoading from "../../components/PageLoading/PageLoading";
 import { FrontPrayerContext } from "../../components/joys-and-concerns/board-view/main-board-store";
-import { getUser, getSignedUrl, getPublicUrl } from "../../supabase-util";
+import { getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../supabase-util";
 import SkeletonPost from "../../components/joys-and-concerns/board-view/post-item/skeleton-post";
 import UserIndividualPost from "../../components/joys-and-concerns/board-view/individual-post/user-individual-post";
 const IndividualPrayer = (props) => {
@@ -36,9 +36,9 @@ const IndividualPrayer = (props) => {
 
       if (fetchedPost.user_id) {
         const userInfo = await getUser(fetchedPost.user_id);
-        const userImage = await getPublicUrl(
+        const userImage = await downloadImage(
           "avatars",
-          `${userInfo.id}_avatar.jpg`
+          userInfo.avatar_url
         );
         setUser(userInfo);
         setUserPost(fetchedPost);
