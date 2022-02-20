@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import WelcomeItem from "./welcome-item";
 import { UserContext } from "../../../store/user-context";
 import styles from './welcome-dash.module.css';
+import Link from "next/link";
 const WelcomeDash = ({ firstName }) => {
   const userContext = useContext(UserContext);
   return (
@@ -13,6 +14,9 @@ const WelcomeDash = ({ firstName }) => {
         <h1 className="mt-12 text-xl lg:text-2xl font-extrabold text-center">
           Welcome To Your Asbury Admin Dashboard
         </h1>
+        <Link href="/" passHref>
+          <p className="mt-10 text-lg lg:text-xl font-extrabold text-center cursor-pointer hover:underline">Visit The Main Website</p>
+        </Link>
       </div>
   
 

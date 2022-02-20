@@ -1,16 +1,18 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, {useEffect, useState, useCallback, useContext} from 'react'
 import { supabase } from '../../../../supabase-client';
 import CommentItem from './comment-item';
 import { Collapse } from '@mantine/core';
 import NewComment from './new-comment';
-import PageLoading from '../../../PageLoading/PageLoading';
+import { UserContext } from '../../../../store/user-context';
 import styles from './comment-list.module.css';
 let isInit = true;
 const CommentList = ({ postID }) => {
   const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
-  const [newComment, setNewComment] = useState(null);
+  const [payload, setPayload] = useState(null);
   const [loadingComments, setLoadingComments] = useState(false);
+  const userContext = useContext(UserContext);
+  const prayerContext = useContext(UserContext);
 
   const getComments = useCallback(async () => {
     setLoadingComments(true);
@@ -29,21 +31,34 @@ const CommentList = ({ postID }) => {
   },[getComments])
 
   useEffect(() => {
-    if (newComment) {
-      setComments((prevComments) => {
-        const filtered = prevComments.filter(prevComment => prevComment.id !== newComment.id);
-        return [newComment, ...filtered];
-      });
+    if (payload) {
+      if (payload.eventType === "INSERT") {
+        setComments((prevComments) => {
+          const filtered = prevComments.filter(
+            (prevComment) => prevComment.id !== payload.new.id
+          );
+          return [payload.new, ...filtered];
+        });
+      }
+
+      if(payload.eventType === "DELETE") {
+        setComments(prevComments => {
+          const filtered = prevComments.filter(comment => comment.id !== payload.old.id);
+          return filtered;
+        })
+      }
       
     }
-    return () => setNewComment(null);
-  }, [newComment]);
+
+
+    return () => setPayload(null);
+  }, [payload]);
 
   useEffect(() => {
 
       const commentSub = supabase
         .from("comments")
-        .on("INSERT", (payload) => setNewComment(payload.new))
+        .on("*", (payloadItem) => setPayload(payloadItem))
         .subscribe();
       return () => supabase.removeSubscription(commentSub);
     
@@ -66,7 +81,7 @@ const CommentList = ({ postID }) => {
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} />
+          <CommentItem key={comment.id} id={comment.id} comment={comment} />
         ))}
       {/* {loadingComments && <PageLoading/>} */}
       {comments.length === 0 && !loadingComments && (

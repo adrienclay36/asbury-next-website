@@ -18,6 +18,7 @@ const AddAdminForm = () => {
   const blogRef = useRef();
   const inviteRef = useRef();
   const masterRef = useRef();
+  const socialRef = useRef();
 
   useEffect(() => {
     if (tooManyRequests) {
@@ -53,6 +54,10 @@ const AddAdminForm = () => {
       }
     }
     let permissions = [];
+
+    if(socialRef.current.checked) {
+      permissions.push('social');
+    }
     if (blogRef.current.checked) {
       permissions.push("blog");
     }
@@ -201,7 +206,9 @@ const AddAdminForm = () => {
               </div>
             </div>
             <div className="my-12">
-              <p className="text-center mt-4">I want this user to be able to:</p>
+              <p className="text-center mt-4">
+                I want this user to be able to:
+              </p>
               <div className="checkboxes mt-4">
                 <Checkbox
                   className="mb-2"
@@ -222,7 +229,7 @@ const AddAdminForm = () => {
                   className="mb-2"
                   id="libraryRef"
                   ref={libraryRef}
-                  label="Make changes in the Library"
+                  label="Make Library Changes"
                 />
                 <Checkbox
                   disabled={masterChecked}
@@ -230,6 +237,13 @@ const AddAdminForm = () => {
                   id="inviteRef"
                   ref={inviteRef}
                   label="Invite Other Admins"
+                />
+                <Checkbox
+                  disabled={masterChecked}
+                  className="mb-2"
+                  id="socialRef"
+                  ref={socialRef}
+                  label="Moderate Joys & Concerns Posts"
                 />
               </div>
             </div>

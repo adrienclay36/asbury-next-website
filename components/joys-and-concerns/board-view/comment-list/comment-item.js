@@ -1,10 +1,19 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import Image from "next/image";
 import styles from './comment-item.module.css'
-const CommentItem = ({ comment }) => {
+import { UserContext } from "../../../../store/user-context";
+import { deleteItemFromTable } from "../../../../supabase-util";
+import { supabase } from "../../../../supabase-client";
+const CommentItem = ({ comment, id}) => {
   const [readMore, setReadMore] = useState(false);
+  const userContext = useContext(UserContext);
   const { author, commentcontent, postdate } = comment;
   const formatDate = new Date(comment.postdate).toLocaleDateString("en-US");
+
+
+  const deleteCommentHandler = async () => {
+    const response = await deleteItemFromTable('comments', id);
+  }
 
   const longContent = (
     <>
@@ -27,6 +36,11 @@ const CommentItem = ({ comment }) => {
     <div
       className={`container ${styles.init} flex flex-1 flex-col border-2 my-4 p-6 lg:p-10 md:p-10 rounded-lg shadow-md w-11/12 lg:w-2/6 md:w-2/6 mx-auto`}
     >
+      {userContext.socialPermissions && userContext.role === "admin" && (
+        <div className="flex flex-1 justify-end items-center">
+          <button onClick={deleteCommentHandler} className="text-gray-400 hover:underline">Delete Comment</button>
+        </div>
+      )}
       <div className="flex flex-1 justify-start items-center">
         <div className="flex flex-1 justify-start items-center">
           <Image
@@ -41,9 +55,8 @@ const CommentItem = ({ comment }) => {
           <p className="text-seaFoam-400 font-semibold">{formatDate}</p>
         </div>
       </div>
-     
-        {commentcontent.length > 140 ? longContent : regularContent}
-    
+
+      {commentcontent.length > 140 ? longContent : regularContent}
     </div>
   );
 };

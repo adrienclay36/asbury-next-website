@@ -12,6 +12,7 @@ export const UserContext = createContext({
     socialPermissions: false,
     role: '',
     checkUser: () => {},
+    logOutHandler: () => {},
     firstName: '',
     lastName: '',
 })
@@ -57,6 +58,13 @@ const UserContextProvider = (props) => {
         getPermissions(user);
       }
     };
+
+    const logOutHandler = async () => {
+      const { data, error} = await supabase.auth.signOut();
+      console.log(data, error);
+      await checkUser();
+      router.reload();
+    }
 
 
     useEffect(() => {
@@ -122,6 +130,7 @@ const UserContextProvider = (props) => {
         invitePermissions,
         socialPermissions,
         checkUser: checkUser,
+        logOutHandler: logOutHandler,
         role,
         firstName,
         lastName,

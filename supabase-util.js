@@ -95,7 +95,7 @@ export const addItemToTable = async (table, object) => {
 
 export const deleteItemFromTable = async (table, id) => {
   try {
-    await supabase.from(table).delete().match({ id: id });
+    const {data, error} = await supabase.from(table).delete().match({ id: id });
     return { status: "ok", error: "None" };
   } catch (err) {
     return { status: "error", error: err.message };

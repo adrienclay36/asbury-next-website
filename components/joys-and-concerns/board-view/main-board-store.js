@@ -13,7 +13,7 @@ export const FrontPrayerContext = createContext({
     addPost: (name, email, type, content) => {},
     deletePost: (id) => {},
     incrementLike: (postID) => {},
-    setNewPost: () => {},
+    setPayload: () => {},
     pageNumber: 0,
     loading: false,
     hasMore: false,
@@ -31,7 +31,7 @@ const FrontPrayerContextProvider = (props) => {
     const [hasMore, setHasMore] = useState(true);
     const [pageLoading, setPageLoading] = useState(false);
     const [changed, setChanged] = useState(false);
-    const [newPost, setNewPost] = useState();
+    const [payload, setPayload] = useState();
 
     const toggleChange = () => {
       setChanged(!changed);
@@ -75,21 +75,36 @@ const FrontPrayerContextProvider = (props) => {
   }, [pageNumber, getPosts]);
 
   useEffect(() => {
-    if (newPost) {
-      setPosts((prevPosts) => {
-        const filtered = prevPosts.filter(
-          (prevPost) => prevPost.id !== newPost.id
-        );
-        return [newPost, ...filtered];
-      });
+
+
+    if(payload){
+
+      
+      if (payload.eventType === "INSERT") {
+        setPosts((prevPosts) => {
+          const filtered = prevPosts.filter(
+            (prevPost) => prevPost.id !== payload.new.id
+          );
+          return [payload.new, ...filtered];
+        });
+      }
+
+      if(payload.eventType === "DELETE") {
+        setPosts(prevPosts => {
+          const filtered = prevPosts.filter(post => post.id !== payload.old.id);
+          return filtered;
+        })
+      }
+
+
     }
-    return () => setNewPost(null);
-  }, [newPost]);
+    return () => setPayload(null);
+  }, [payload]);
 
   useEffect(() => {
     const postSub = supabase
       .from("prayers")
-      .on("INSERT", (payload) => setNewPost(payload.new))
+      .on("*", (payloadItem) => setPayload(payloadItem))
       .subscribe();
     return () => supabase.removeSubscription(postSub);
   }, []);
@@ -164,10 +179,10 @@ const FrontPrayerContextProvider = (props) => {
 
     const deletePost = async (id) => {
       const response = await deleteItemFromTable(TABLE, id);
-      setPosts(prevPosts => {
-        const filtered = prevPosts.filter(post => post.id !== id);
-        return filtered;
-      })
+      // setPosts(prevPosts => {
+      //   const filtered = prevPosts.filter(post => post.id !== id);
+      //   return filtered;
+      // })
       console.log(response);
     }
 
@@ -183,7 +198,7 @@ const FrontPrayerContextProvider = (props) => {
         addPost: addPost,
         deletePost: deletePost,
         incrementLike: incrementLike,
-        setNewPost: setNewPost,
+        setPayload: setPayload,
     }
   return (
     <FrontPrayerContext.Provider value={contextValue}>
