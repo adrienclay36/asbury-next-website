@@ -23,11 +23,16 @@ const CommentItem = ({ comment, id}) => {
   const getUserHandler = async () => {
     setLoading(true);
     const userInfo = await getUser(userID);
-    const userImage = await downloadImage(
-      "avatars",
-      userInfo.avatar_url
-    );
-    setAvatarURL(userImage);
+    if(userInfo.avatar_url === "/images/default-2.png") {
+      setAvatarURL('/images/default-2.png');
+    } else {
+
+      const userImage = await downloadImage(
+        "avatars",
+        userInfo.avatar_url
+      );
+      setAvatarURL(userImage);
+    }
     setUser(userInfo);
     setLoading(false);
   }

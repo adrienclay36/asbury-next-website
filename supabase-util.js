@@ -87,7 +87,7 @@ export const getAllItems = async (table) => {
 
 export const addItemToTable = async (table, object) => {
   try {
-    await supabase.from(table).insert([object]);
+    const { data, error } = await supabase.from(table).insert([object]);
     return { status: "ok", error: "None" };
   } catch (err) {
     return { status: "error", error: err.message };

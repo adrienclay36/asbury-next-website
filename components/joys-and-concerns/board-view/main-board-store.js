@@ -166,6 +166,7 @@ const FrontPrayerContextProvider = (props) => {
         postdate: new Date(),
       }
       const response = await addItemToTable(TABLE, postToAdd);
+      
       setPosting(false);
       toggleChange();
       return response;

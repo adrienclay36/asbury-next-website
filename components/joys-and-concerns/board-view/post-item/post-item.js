@@ -49,6 +49,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
       userInfo.avatar_url
       );
       
+      
       setAvatarURL(userImage ? userImage : "/images/default-2.png");
       
       setLoadingUser(false);
