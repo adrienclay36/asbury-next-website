@@ -10,7 +10,7 @@ import { UserContext } from "../../../../store/user-context";
 import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../../../supabase-util";
+import useGetUser from '../../../../hooks/useGetUser';
 import SkeletonPost from "./skeleton-post";
 const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   const [readMore, setReadMore] = useState(false);
@@ -18,9 +18,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   const [liked, setLiked] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [commentCount, setCommentCount] = useState(false);
-  const [user, setUser] = useState();
-  const [loadingUser, setLoadingUser] = useState(false);
-  const [avatarURL, setAvatarURL] = useState("");
+
   const formatDate = new Date(date).toLocaleDateString("en-US", {
     timeZone: "America/Denver",
   });
@@ -40,27 +38,11 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     formatAuthor = "administrator";
   }
 
-  const getUserHandler = useCallback(async () => {
-    setLoadingUser(true);
-    const userInfo = await getUser(user_id);
-    setUser(userInfo);
-    const userImage = await downloadImage(
-      "avatars",
-      userInfo.avatar_url
-      );
-      
-      
-      setAvatarURL(userImage ? userImage : "/images/default-2.png");
-      
-      setLoadingUser(false);
-      
-  }, [user_id]);
 
-  useEffect(() => {
-    if (user_id) {
-      getUserHandler();
-    }
-  }, [user_id, getUserHandler]);
+  // If there's a user get the user
+  const { user, avatarURL, loadingUser } = useGetUser(user_id);
+
+  
 
   const incrementLikeHandler = () => {
     if (localStorage.getItem(id)) {

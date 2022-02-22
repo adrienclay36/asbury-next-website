@@ -8,41 +8,19 @@ import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import SkeletonPost from "../post-item/skeleton-post";
 import SkeletonComment from "../../../ui/skeleton-comment";
+import useGetUser from "../../../../hooks/useGetUser";
 const CommentItem = ({ comment, id}) => {
   const [readMore, setReadMore] = useState(false);
   const [userID, setUserID] = useState(comment.user_id);
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState();
-  const [avatarURL, setAvatarURL] = useState('');
+
   const userContext = useContext(UserContext);
   let { author, commentcontent, postdate } = comment;
   const formatDate = new Date(comment.postdate).toLocaleDateString("en-US");
   const disableTooltip = useMediaQuery('(max-width: 900px)')
 
 
-  const getUserHandler = async () => {
-    setLoading(true);
-    const userInfo = await getUser(userID);
-    if(userInfo.avatar_url === "/images/default-2.png") {
-      setAvatarURL('/images/default-2.png');
-    } else {
-
-      const userImage = await downloadImage(
-        "avatars",
-        userInfo.avatar_url
-      );
-      setAvatarURL(userImage);
-    }
-    setUser(userInfo);
-    setLoading(false);
-  }
   
-  useEffect(() => {
-    if(userID) {
-      getUserHandler();
-    }
-  }, [userID])
-  
+  const { user, avatarURL, loadingUser} = useGetUser(comment.user_id);
 
 
   const deleteCommentHandler = async () => {
@@ -73,11 +51,10 @@ const CommentItem = ({ comment, id}) => {
 
 
 
-  if(loading) {
+  if(loadingUser) {
     return (
       <div
       >
-
         <SkeletonComment/>
       </div>
     );
