@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import styles from "./blog-post-item.module.css";
 const BlogPostItem = ({ id, title, author, date, content, image, i }) => {
+  console.log(date);
   const formatDate = new Date(date.replace(/-/g, "/").replace(/T.+/, "")).toLocaleDateString("en-US");
   const formatTitle = title
     .replace(/([a-z])([A-Z])/g, "$1-$2")

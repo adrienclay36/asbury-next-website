@@ -117,7 +117,7 @@ const AdminBlogProvider = (props) => {
       image,
       author,
       postcontent: content,
-      postdate: new Date(),
+      postdate: new Date().toLocaleDateString('en-US', { timeZone: 'America/Denver'}),
     }
     console.log(newPost.postdate);
     await addItemToTable(TABLE, newPost);
