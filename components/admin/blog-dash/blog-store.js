@@ -110,7 +110,7 @@ const AdminBlogProvider = (props) => {
   
 
 
-  const addPost = async (title, image, author, content) => {
+  const addPost = async (title, image, author, content, user_id) => {
 
     const newPost = {
       title,
@@ -118,8 +118,8 @@ const AdminBlogProvider = (props) => {
       author,
       postcontent: content,
       postdate: new Date().toLocaleDateString('en-US', { timeZone: 'America/Denver'}),
+      user_id,
     }
-    console.log(newPost.postdate);
     await addItemToTable(TABLE, newPost);
   }
 

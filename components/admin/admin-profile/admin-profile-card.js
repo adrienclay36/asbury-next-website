@@ -3,7 +3,7 @@ import { UserContext } from '../../../store/user-context';
 import { useRouter } from 'next/router';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 import Dropzone from 'react-dropzone';
-import SkeletonPost from '../../joys-and-concerns/board-view/post-item/skeleton-post';
+import SkeletonPost from '../../ui/skeleton-post';
 import Image from 'next/image';
 import { Modal, Skeleton } from '@mantine/core';
 import { AiOutlineCheckCircle } from 'react-icons/ai';

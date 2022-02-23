@@ -11,7 +11,7 @@ import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import useGetUser from '../../../../hooks/useGetUser';
-import SkeletonPost from "./skeleton-post";
+import SkeletonPost from "../../../ui/skeleton-post";
 const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);

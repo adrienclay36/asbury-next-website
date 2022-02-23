@@ -9,7 +9,7 @@ import CommentList from "../../components/joys-and-concerns/board-view/comment-l
 import PageLoading from "../../components/PageLoading/PageLoading";
 import { FrontPrayerContext } from "../../components/joys-and-concerns/board-view/main-board-store";
 import { getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../supabase-util";
-import SkeletonPost from "../../components/joys-and-concerns/board-view/post-item/skeleton-post";
+import SkeletonPost from "../../components/ui/skeleton-post";
 import UserIndividualPost from "../../components/joys-and-concerns/board-view/individual-post/user-individual-post";
 const IndividualPrayer = (props) => {
   const [post, setPost] = useState();

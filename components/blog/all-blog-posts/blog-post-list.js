@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import BlogPostItem from "./blog-post-item";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsPower, BsX } from "react-icons/bs";
-import PageLoading from "../../PageLoading/PageLoading";
+import SkeletonGrid from './skeleton-grid';
 import styles from "./blog-post-list.module.css";
 import { MainBlogContext } from "../blog-store-main";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
@@ -72,7 +72,7 @@ const BlogPostList = ({ posts }) => {
           <MdOutlineArrowForwardIos />
         </button>
       </div>
-      {blogContext.loading && <PageLoading />}
+      {blogContext.loading && <SkeletonGrid />}
       {blogContext.noData && (
         <h1 className="text-lg text-center mt-4 font-semibold">
           No posts found...
@@ -88,6 +88,7 @@ const BlogPostList = ({ posts }) => {
             date={post.postdate}
             content={post.postcontent}
             image={post.image}
+            userID={post.user_id}
             i={index}
           />
         ))}

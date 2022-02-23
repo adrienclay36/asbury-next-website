@@ -15,7 +15,7 @@ const SocialIcons = ({ textColor, textHover }) => {
   const userContext = useContext(UserContext);
   const router = useRouter();
   return (
-    <div className="container flex flex-wrap justify-end items-center mt-4 h-16">
+    <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
       {userContext.role === "admin" && (
         <Tooltip
           disabled={disableTooltip}

@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import PageLoading from "../../../PageLoading/PageLoading";
+import LibrarySkeletonGrid from "./library-skeleton-grid";
 import BookListItem from "./book-list-item";
 import styles from './book-list-view.module.css';
 import { LibraryMainContext } from "../../library-store-main";
+
 const BookListView = () => {
   const libraryContext = useContext(LibraryMainContext)
   
@@ -19,7 +21,7 @@ const BookListView = () => {
       </div>
 
       <div className={`${styles.scroll} border-2`}>
-        {libraryContext.loading && <PageLoading />}
+        {libraryContext.loading && <LibrarySkeletonGrid />}
         {libraryContext.noData && <h1 className="text-lg text-center mt-4 font-semibold">No Data for that query...</h1>}
         {libraryContext.books.map((book) => (
           <BookListItem key={book.id} book={book} />

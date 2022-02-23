@@ -62,13 +62,13 @@ const BlogList = () => {
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
           onClick={decreasePageHandler}
-          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+          className="p-2 mx-4 rounded-lg bg-emerald-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowBackIos />
         </button>
         <button
           onClick={increasePageHandler}
-          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+          className="p-2 mx-4 rounded-lg bg-emerald-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowForwardIos />
         </button>
@@ -89,13 +89,13 @@ const BlogList = () => {
       <div className="flex flex-1 p-4 justify-between items-center container">
         <button
           onClick={decreasePageHandler}
-          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+          className="p-2 mx-4 rounded-lg bg-emerald-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowBackIos />
         </button>
         <button
           onClick={increasePageHandler}
-          className="p-2 mx-4 rounded-lg bg-green-600 text-white hover:bg-green-900"
+          className="p-2 mx-4 rounded-lg bg-emerald-600 text-white hover:bg-green-900"
         >
           <MdOutlineArrowForwardIos />
         </button>

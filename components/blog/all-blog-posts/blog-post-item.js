@@ -1,14 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { getUser, downloadImage } from "../../../supabase-util";
+import Image from "next/image";
 import styles from "./blog-post-item.module.css";
-const BlogPostItem = ({ id, title, author, date, content, image, i }) => {
-  console.log(date);
-  const formatDate = new Date(date.replace(/-/g, "/").replace(/T.+/, "")).toLocaleDateString("en-US");
+const BlogPostItem = ({
+  id,
+  title,
+  author,
+  date,
+  content,
+  image,
+  userID,
+  i,
+}) => {
+  const [avatarURL, setAvatarURL] = useState('');
+  const formatDate = new Date(
+    date.replace(/-/g, "/").replace(/T.+/, "")
+  ).toLocaleDateString("en-US");
   const formatTitle = title
     .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/\s+/g, "-").replace("---", "-")
+    .replace(/\s+/g, "-")
+    .replace("---", "-")
     .toLowerCase();
-    
+
+  const getAvatar = async () => {
+    try{
+      const avatarURL = await downloadImage('avatars', `${userID}_avatar.jpg`)
+      if(avatarURL) {
+        setAvatarURL(avatarURL);
+      } else {
+        avatarURL('default-2.png');
+      }
+
+    } catch(error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getAvatar();
+  }, [])
+
   const router = useRouter();
   return (
     <div className={styles[`post-animation-${i}`]}>
@@ -21,12 +53,21 @@ const BlogPostItem = ({ id, title, author, date, content, image, i }) => {
             </h1>
           </div>
           <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-between items-center mt-3">
-            <p className="px-10 mt-2 font-semibold text-seaFoam-400">
-              {author}
-            </p>
-            <h1 className="uppercase font-semibold text-seaFoam-500 px-6">
+            <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-center lg:justify-start md:justify-start mb-4 lg:mb-0 md:mb-0 px-10 mt-2 items-center">
+              <Image
+              src={avatarURL ? avatarURL : '/images/default-2.png'}
+              alt={'Admin'}
+              width={25}
+              height={25}
+              className="object-cover rounded-full"
+              />
+              <p className="ml-0 lg:ml-4 md:ml-4 mt-4 lg:mt-0 md:mt-0 font-semibold text-seaFoam-400">
+                {author}
+              </p>
+            </div>
+            <p className="uppercase font-semibold text-seaFoam-500 px-6">
               {formatDate}
-            </h1>
+            </p>
           </div>
         </div>
         <div className="h-0.5 w-3/6 rounded-lg bg-gray-200 mx-auto my-5"></div>

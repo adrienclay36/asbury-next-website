@@ -12,25 +12,25 @@ const Footer = () => {
   return (
     <footer className="py-8 bg-gray-100">
       <div className="container flex flex-col items-center">
-        <div className="flex gap-10 my-12 md:mt-0">
+        <div className="flex gap-10 mt-12 md:mt-0">
           <SocialIcons
             textColor="text-seaFoam-500"
             textHover={"text-seaFoam-800"}
           />
         </div>
-        <div className="flex flex-1 flex-wrap items-center justify-center md:justify-start gap-12">
-          <ul className="flex flex-col lg:flex-row justify-end text-black text-center uppercase gap-12 text-md">
+        {/* <div className="flex flex-1 flex-wrap items-center justify-center md:justify-start gap-12">
+          <ul className="flex flex-col lg:flex-row justify-end text-black text-center uppercase gap-12">
             {navLinks.map((link) => {
               return (
                 <Link key={link.text} href={link.href} passHref>
-                  <li className="lg:mb-6 cursor-pointer tracking-widest hover:text-seaFoam-400">
+                  <li className="lg:mb-6 md:mb-6 mb-0 cursor-pointer tracking-widest hover:text-seaFoam-400">
                     {link.text}
                   </li>
                 </Link>
               );
             })}
           </ul>
-        </div>
+        </div> */}
         <div className="my-6 mt-12 lg:mt-4">
           <button onClick={() => router.push("/")}>
             <Image
@@ -51,7 +51,9 @@ const Footer = () => {
             10000 Candelaria Rd NE, Albuquerque, NM 87112
           </p>
           <Link href="/admin" passHref>
-            <p className="text-center mt-5 text-gray-400 text-xs cursor-pointer underline">Admin</p>
+            <p className="text-center mt-5 text-gray-400 text-xs cursor-pointer underline">
+              Admin
+            </p>
           </Link>
         </div>
       </div>

@@ -33,7 +33,7 @@ const Hero = () => {
             glory of God.
           </p>
           <div id="action-buttons" className="mt-12">
-            <MainButton onClick={() => router.push("/welcome")} margin={"mx-4"}>About</MainButton>
+            <MainButton onClick={() => router.push("/welcome")} margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}>About</MainButton>
             <MainButton onClick={() => router.push("/worship")} margin={"mx-4"}>Worship</MainButton>
           </div>
         </div>

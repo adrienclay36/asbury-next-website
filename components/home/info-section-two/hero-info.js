@@ -21,13 +21,13 @@ const HeroInfo = () => {
           </div>
 
           <div
-            className={`${styles.clipTwo} flex flex-1 flex-col lg:flex-row md:flex-row justify-center items-center bg-clip-text text-transparent`}
+            className={`flex flex-1 flex-col lg:flex-row md:flex-row justify-center items-center`}
           >
-            <p className="m-4 text-xl lg:text-2xl md:text-2xl font-bold">
+            <p className="m-4 text-xl lg:text-2xl md:text-2xl font-semibold">
               8:00AM
             </p>
             <p>&</p>
-            <p className="m-4 text-xl lg:text-2xl md:text-2xl font-bold">
+            <p className="m-4 text-xl lg:text-2xl md:text-2xl font-semibold">
               11:00AM
             </p>
           </div>

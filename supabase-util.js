@@ -210,7 +210,21 @@ export const getPermissions = async (req, permissionSet) => {
   };
 };
 
-export const getUser = async (id) => {
+export const getUser = async (id, column) => {
+
+  if(column) {
+    const { data, error } = await supabase
+      .from("users")
+      .select(column)
+      .match({ id: id });
+
+    let userInfo;
+    if (data) {
+      userInfo = data[0];
+      return userInfo;
+    }
+  }
+
   const { data, error } = await supabase
     .from("users")
     .select()

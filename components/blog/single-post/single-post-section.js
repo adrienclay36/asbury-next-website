@@ -1,13 +1,15 @@
-import React from 'react';
-import SectionHeading from '../../ui/section-heading';
-import { useRouter } from 'next/router';
-import HRThin from '../../ui/HRThin';
-const SinglePostSection = ({ post }) => {
+import React from "react";
+import SectionHeading from "../../ui/section-heading";
+import { useRouter } from "next/router";
+import HRThin from "../../ui/HRThin";
+import Image from "next/image";
+import styles from "./single-post-section.module.css";
+const SinglePostSection = ({ post, avatarURL }) => {
   const { title, image, author, postcontent, postdate } = post;
   const formatDate = new Date(
     postdate.replace(/-/g, "/").replace(/T.+/, "")
   ).toLocaleDateString("en-US");
-    const router = useRouter();
+  const router = useRouter();
   return (
     <SectionHeading title="Blog">
       <div className="container lg:w-3/6 lg:w-4/6 mx-auto w-full my-12">
@@ -16,10 +18,24 @@ const SinglePostSection = ({ post }) => {
 
       <div className="w-5/6 lg:w-3/6 mx-auto flex flex-1 flex-col lg:flex-row md:flex-row justify-between items-center text-center lg:text-left md:text-left">
         <div>
-          <h1 className="font-semibold uppercase text-xl my-4">{title}</h1>
-          <h1 className="font-semibold uppercase text-lg text-seaFoam-700">
-            {author}
-          </h1>
+          {avatarURL ? (
+            <Image
+              src={avatarURL}
+              height={50}
+              width={50}
+              className={`${styles.init} object-cover rounded-full`}
+              alt={author}
+            />
+          ) : (
+            <div style={{ height: "55px" }}></div>
+          )}
+
+          <div>
+            <h1 className="font-semibold uppercase text-xl my-4">{title}</h1>
+            <h1 className="font-semibold uppercase text-lg text-seaFoam-700">
+              {author}
+            </h1>
+          </div>
         </div>
         <div>
           <h1 className="font-semibold uppercase text-seaFoam-600">
@@ -27,10 +43,9 @@ const SinglePostSection = ({ post }) => {
           </h1>
         </div>
       </div>
-      
-      <div className="flex justify-center items-center">
 
-      <HRThin/>
+      <div className="flex justify-center items-center">
+        <HRThin />
       </div>
 
       <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg text-center lg:text-left md:text-left">

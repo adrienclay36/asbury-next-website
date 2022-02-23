@@ -8,7 +8,7 @@ import { UserContext } from "../../../store/user-context";
 import PageLoading from "../../PageLoading/PageLoading";
 import styles from "./board-view.module.css";
 import { useRouter } from "next/router";
-import SkeletonPost from "./post-item/skeleton-post";
+import SkeletonPost from "../../ui/skeleton-post";
 const BoardView = () => {
   const [open, setOpen] = useState(false);
   const prayerContext = useContext(FrontPrayerContext);

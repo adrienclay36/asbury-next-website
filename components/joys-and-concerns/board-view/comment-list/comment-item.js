@@ -6,7 +6,6 @@ import { deleteItemFromTable, getUser, getSignedUrl, getPublicUrl, downloadImage
 import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import SkeletonPost from "../post-item/skeleton-post";
 import SkeletonComment from "../../../ui/skeleton-comment";
 import useGetUser from "../../../../hooks/useGetUser";
 const CommentItem = ({ comment, id}) => {
