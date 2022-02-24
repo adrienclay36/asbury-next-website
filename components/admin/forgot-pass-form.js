@@ -51,7 +51,7 @@ const ForgotPasswordForm = () => {
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <UIModal
         type="success"
-        message="An email has been sent containing instructions to reset your password!"
+        message="An email has been sent containing instructions for resetting your password!"
         opened={success}
         onClose={() => setSuccess(false)}
       />
