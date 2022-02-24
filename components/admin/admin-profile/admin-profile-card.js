@@ -8,7 +8,6 @@ import Image from 'next/image';
 import { Modal, Skeleton } from '@mantine/core';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
-
 import { Loader } from '@mantine/core';
 import { supabase } from '../../../supabase-client';
 import { updateItemInTable } from '../../../supabase-util';
@@ -122,6 +121,9 @@ const AdminProfileCard = ({ user }) => {
           </Dropzone>
         )}
         {loading && <Loader color="dark" size="lg" variant="dots" />}
+
+
+        <button onClick={() => router.push("/admin/change-password")} className="mt-12 font-semibold text-gray-500 hover:underline">Change Your Password</button>
       </div>
     </>
   );
