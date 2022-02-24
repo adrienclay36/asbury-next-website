@@ -5,7 +5,10 @@ import { supabase } from '../../supabase-client';
 import styles from './admin-form.module.css';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 import { UserContext } from '../../store/user-context';
+import { Modal } from '@mantine/core';
+import { BiErrorCircle } from 'react-icons/bi';
 import Link from 'next/link';
+import UIModal from '../ui/modal/UIModal';
 const AdminForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -13,6 +16,7 @@ const AdminForm = () => {
     const [error, setError] = useState(false);
     const [emailSignIn, setEmailSignIn] = useState(false);
     const [loggingIn, setLoggingIn] = useState(false);
+    const [modalError, setModalError] = useState(false);
     const userContext = useContext(UserContext);
 
 
@@ -27,11 +31,12 @@ const AdminForm = () => {
           userContext.checkUser();
           if(data){
             // Immediate redirect causes the SSR authentication on /admin/admin-dashboard to miss the cookie, and hangs the redirect.
-            setTimeout(() => {
-              router.push("/admin/admin-dashboard");
-            }, 500);
+            // setTimeout(() => {
+            //   router.push("/admin/admin-dashboard");
+            // }, 500);
           } else {
             setError(true);
+            setModalError(true);
             setLoggingIn(false);
           }
 
@@ -56,6 +61,15 @@ const AdminForm = () => {
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <UIModal
+      opened={modalError}
+      onClose={() => setModalError(false)}
+        type="error"
+        message="Please check your credentials and try again. If the issue persists,
+            try resetting your password."
+        actionText="Reset Now"
+        href="/admin/forgot-password"
+      />
       <div className="max-w-md w-full space-y-8">
         <div className="flex justify-center items-center">
           <Image
@@ -145,7 +159,9 @@ const AdminForm = () => {
             </button>
           </div>
           <Link href="/" passHref>
-          <p className="text-center font-semibold text-gray-400 hover:underline cursor-pointer">Back To Main Website</p>
+            <p className="text-center font-semibold text-gray-400 hover:underline cursor-pointer">
+              Back To Main Website
+            </p>
           </Link>
           {emailSignIn && (
             <div className="text-center">
@@ -155,14 +171,14 @@ const AdminForm = () => {
             </div>
           )}
 
-          {error && (
+          {/* {error && (
             <div className="text-center">
               <p className="text-semibold text-red-700 mt-10">
                 Please check your credentials and try again. If the issue
                 persists, try resetting your password
               </p>
             </div>
-          )}
+          )} */}
         </form>
       </div>
     </div>

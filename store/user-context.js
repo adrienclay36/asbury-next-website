@@ -108,6 +108,7 @@ const UserContextProvider = (props) => {
       (event, session) => {
         handleAuthChange(event, session);
         if (event === "SIGNED_IN") {
+          router.push("/admin/admin-dashboard")
           return;
         }
         if (event === "SIGNED_OUT") {

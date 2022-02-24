@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
+import UIModal from '../ui/modal/UIModal';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';
 
 const ForgotPasswordForm = () => {
@@ -30,6 +31,9 @@ const ForgotPasswordForm = () => {
         if(email) {
             try {
                 const { data, error } = await supabase.auth.api.resetPasswordForEmail(email);
+                if(error) {
+                  throw new Error
+                }
                 setSuccess(true);
                 setSending(false);
                 setTimeout(() => {
@@ -38,18 +42,32 @@ const ForgotPasswordForm = () => {
                 return;
             } catch(err) {
                 setError(true);
+                setSuccess(false);
+                setSending(false);
             }
         }
     }
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <UIModal
+        type="success"
+        message="An email has been sent containing instructions to reset your password!"
+        opened={success}
+        onClose={() => setSuccess(false)}
+      />
+      <UIModal
+        type="error"
+        message="Sorry, we couldn't find that email in our records.."
+        opened={error}
+        onClose={() => setError(false)}
+      />
       <div className="max-w-md w-full space-y-8">
         <div className="flex justify-center items-center">
           <Image
             width={154}
             height={64}
             className="h-12 w-auto"
-            src="/images/AsburyLogoFull.png"
+            src="/images/UMCLeft.png"
             alt="Workflow"
           />
         </div>
@@ -75,45 +93,35 @@ const ForgotPasswordForm = () => {
               />
             </div>
           </div>
-          {error && (
-            <div className="text-center">
-              <p className="text-semibold text-lg text-red-600">
-                Sorry, that email doesn&apos;t exist in our records...
-              </p>
-            </div>
-          )}
+        
 
-          {success && (
-            <div className="text-center">
-              <p className="text-semibold text-lg text-green-700">
-                An e-mail was sent containing instructions for resetting your password.
-              </p>
+          
+
+          {!success && (
+            <div>
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <svg
+                    className="h-5 w-5 text-emerald-600 group-hover:text-emerald-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+                {sending ? <DualRingLoader /> : "Reset Password"}
+              </button>
             </div>
           )}
-          
-          {!success && <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-emerald-600 group-hover:text-emerald-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-              {sending ? <DualRingLoader/> : "Reset Password"}
-            </button>
-          </div>}
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <button

@@ -2,7 +2,7 @@ import React from "react";
 import StaffCard from "./staff-card";
 const StaffSection = () => {
   return (
-    <section id="features" className="bg-gray-100 py-12">
+    <section id="staff" className="bg-gray-100 py-12">
       <div className="text-center text-seaFoam-500">
         <h1 className="text-4xl mt-8 uppercase tracking-widest">STAFF</h1>
       </div>

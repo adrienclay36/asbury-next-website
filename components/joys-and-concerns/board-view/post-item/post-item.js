@@ -42,6 +42,15 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   // If there's a user get the user
   const { user, avatarURL, loadingUser } = useGetUser(user_id);
 
+
+  const goToPost = () => {
+    if(user) {
+      router.push(`/joys-and-concerns/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}/${id}`);
+    } else {
+      router.push(`/joys-and-concerns/${formatAuthor}/${id}`);
+    }
+  }
+
   
 
   const incrementLikeHandler = () => {
@@ -160,9 +169,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
         </div>
         <div className="flex flex-1 justify-between items-center">
           <button
-            onClick={() =>
-              router.push(`/joys-and-concerns/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}/${id}`)
-            }
+            onClick={goToPost}
             className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
           >
             View Replies ({commentCount ? commentCount : 0})

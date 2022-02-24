@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { supabase } from '../../supabase-client';
 import { useRouter } from 'next/router';
 import DualRingLoader from '../dual-ring-loader/DualRingLoader';
+import UIModal from '../ui/modal/UIModal';
 const ResetPasswordForm = ({ token }) => {
     const [sending, setSending] = useState(false);
     const [error, setError] = useState(false);
@@ -23,7 +24,7 @@ const ResetPasswordForm = ({ token }) => {
 
             setTimeout(()=>{
                 router.push("/admin/admin-dashboard");
-            }, 3000)
+            }, 5000)
         }
 
         if(error) {
@@ -31,21 +32,33 @@ const ResetPasswordForm = ({ token }) => {
           setSending(false);
           setTimeout(()=>{
             router.push("/")
-          }, 3000)
+          }, 5000)
         }
 
 
     }
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <UIModal
+      type="success"
+      opened={success}
+      onClose={() => setSuccess(false)}
+      message="Your password has been reset!"
+      />
+      <UIModal
+      type="error"
+      opened={error}
+      onClose={() => setError(false)}
+      message="You do not have the required credentials to visit this page. Redirecting to the home page now..."
+      />
       <div className="max-w-md w-full space-y-8">
         <div className="flex justify-center items-center">
           <Image
             width={154}
             height={64}
             className="h-12 w-auto"
-            src="/images/AsburyLogoFull.png"
-            alt="Workflow"
+            src="/images/UMCLeft.png"
+            alt="AsburyUMC"
           />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -71,21 +84,7 @@ const ResetPasswordForm = ({ token }) => {
               />
             </div>
           </div>
-          {error && (
-            <div className="text-center">
-              <p className="text-semibold text-lg text-red-600">
-                You do not have the correct access permissions to be here. Redirecting to main page...
-              </p>
-            </div>
-          )}
-
-          {success && (
-            <div className="text-center">
-              <p className="text-semibold text-lg text-green-700">
-                Your password has been reset! Redirecting to admin dashboard...
-              </p>
-            </div>
-          )}
+          
           {!success && (
             <div>
               <button
