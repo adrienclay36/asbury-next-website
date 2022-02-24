@@ -18,6 +18,7 @@ export const UserContext = createContext({
   lastName: "",
   title: "",
   avatarURL: "",
+  avatarPath: "",
 });
 
 const UserContextProvider = (props) => {
@@ -33,6 +34,7 @@ const UserContextProvider = (props) => {
   const [lastName, setLastName] = useState("");
   const [title, setTitle] = useState("");
   const [avatarURL, setAvatarURL] = useState("");
+  const [avatarPath, setAvatarPath] = useState('');
 
   const router = useRouter();
 
@@ -59,6 +61,7 @@ const UserContextProvider = (props) => {
       setTitle(userInfo.title);
 
       const url = await downloadImage("avatars", userInfo.avatar_url);
+      setAvatarPath(userInfo.avatar_url);
       setAvatarURL(url);
 
       setLoading(false);
@@ -149,6 +152,7 @@ const UserContextProvider = (props) => {
     lastName,
     title,
     avatarURL,
+    avatarPath,
   };
 
   return (

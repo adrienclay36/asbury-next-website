@@ -1,63 +1,88 @@
-import React, { useContext, useState } from 'react'
-import { UserContext } from '../../../store/user-context';
-import { useRouter } from 'next/router';
-import { HiOutlinePhotograph } from 'react-icons/hi';
-import Dropzone from 'react-dropzone';
-import SkeletonPost from '../../ui/skeleton-post';
-import Image from 'next/image';
-import { Modal, Skeleton } from '@mantine/core';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
-
-import { Loader } from '@mantine/core';
-import { supabase } from '../../../supabase-client';
-import { updateItemInTable } from '../../../supabase-util';
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../../store/user-context";
+import { useRouter } from "next/router";
+import { HiOutlinePhotograph } from "react-icons/hi";
+import Dropzone from "react-dropzone";
+import SkeletonPost from "../../ui/skeleton-post";
+import Image from "next/image";
+import { Modal, Skeleton } from "@mantine/core";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import UIModal from '../../ui/modal/UIModal';
+import { Loader } from "@mantine/core";
+import { supabase } from "../../../supabase-client";
+import { updateItemInTable } from "../../../supabase-util";
 const AdminProfileCard = ({ user }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [wrongType, setWrongType] = useState(false);
   const userContext = useContext(UserContext);
   const router = useRouter();
 
-
   const uploadPhoto = async (files) => {
     setLoading(true);
-    
-    try{
-      const { data, error } = await supabase.storage.from("avatars").remove([userContext.avatarURL])
+    const imageFile = files[0];
 
-    } catch(err) {
-      console.log(err.message);
-    }
-    console.log(files[0].name);
-
-    const { data: photoData, error: photoError} = await supabase.storage
-      .from("avatars")
-      .upload(files[0].name, files[0]);
-      if(!photoError) {
-        setSuccess(true);
+    if (imageFile.type === "image/jpeg" || imageFile.type === "image/png") {
+      if (userContext.avatarPath !== "default-2.png") {
+        try {
+          const { data, error } = await supabase.storage
+            .from("avatars")
+            .remove([`${userContext.avatarPath}`]);
+          if (error) throw Error;
+        } catch (err) {
+          console.log(err.message);
+        }
       }
+      try {
+        const { data: photoData, error: photoError } = await supabase.storage
+          .from("avatars")
+          .upload(imageFile.name, imageFile);
+        if (photoError) {
+          console.log(photoError);
+          throw new Error();
+        }
+        setSuccess(true);
+      } catch (error) {
+        console.log(error);
+      }
+      const response = await updateItemInTable("users", userContext.user.id, {
+        avatar_url: files[0].name,
+      });
+    } else {
+      console.log("Wrong Type");
+      setWrongType(true);
+      setLoading(false);
+      return;
+    }
 
-    const response = await updateItemInTable('users', userContext.user.id, {avatar_url: files[0].name})
-    
 
-      setLoading(false)
-      userContext.checkUser();
+    setLoading(false);
+    userContext.checkUser();
+  };
+  if (userContext.loading) {
+    return <SkeletonPost />;
   }
-  if(userContext.loading) {
-    return <SkeletonPost/>
-  }
-  
+
   return (
     <>
       <Modal centered opened={success} onClose={() => setSuccess(false)}>
         <div className="flex flex-1 flex-col justify-center items-center text-center">
-
-        <AiOutlineCheckCircle size={75} className="text-emerald-700 mb-12"/>
-        <p className="font-semibold text-lg">
-          Your Profile picture has been updated successfully! This make take a
-          while to show up everywhere.
-        </p>
+          <AiOutlineCheckCircle size={75} className="text-emerald-700 mb-12" />
+          <p className="font-semibold text-lg">
+            Your Profile picture has been updated successfully! This make take a
+            while to show up everywhere.
+          </p>
         </div>
       </Modal>
+
+      <UIModal
+      centerModal={true}
+      opened={wrongType}
+      onClose={() => setWrongType(false)}
+      type="error"
+      message="Profile pictures must be a JPEG (.jpg) or PNG (.png)"
+      
+      />
 
       <div className="flex flex-1 flex-col justify-center p-10 items-center w-11/12 lg:w-2/6 md:w-4/6 border-2 rounded-lg shadow-md mx-auto my-12">
         <div>
@@ -122,11 +147,15 @@ const AdminProfileCard = ({ user }) => {
         )}
         {loading && <Loader color="dark" size="lg" variant="dots" />}
 
-
-        <button onClick={() => router.push("/admin/change-password")} className="mt-12 font-semibold text-gray-500 hover:underline">Change Your Password</button>
+        <button
+          onClick={() => router.push("/admin/change-password")}
+          className="mt-12 font-semibold text-gray-500 hover:underline"
+        >
+          Change Your Password
+        </button>
       </div>
     </>
   );
-}
+};
 
-export default AdminProfileCard
+export default AdminProfileCard;
