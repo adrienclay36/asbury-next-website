@@ -3,6 +3,7 @@ import styles from "./add-admin-form.module.css";
 import { supabase } from "../../../supabase-client";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import { Checkbox } from "@mantine/core";
+import { Switch } from "@mantine/core";
 import { Modal } from "@mantine/core";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
@@ -242,35 +243,35 @@ const AddAdminForm = () => {
                   I want this user to be able to:
                 </p>
                 <div className="checkboxes mt-4">
-                  <Checkbox
+                  <Switch
                     className="mb-2"
                     onChange={toggleMaster}
                     id="masterRef"
                     ref={masterRef}
                     label="Have full admin privilges"
                   />
-                  <Checkbox
+                  <Switch
                     disabled={masterChecked}
                     className="mb-2"
                     id="blogRef"
                     ref={blogRef}
                     label="Edit The Blog"
                   />
-                  <Checkbox
+                  <Switch
                     disabled={masterChecked}
                     className="mb-2"
                     id="libraryRef"
                     ref={libraryRef}
                     label="Make Library Changes"
                   />
-                  <Checkbox
+                  <Switch
                     disabled={masterChecked}
                     className="mb-2"
                     id="inviteRef"
                     ref={inviteRef}
                     label="Invite Other Admins"
                   />
-                  <Checkbox
+                  <Switch
                     disabled={masterChecked}
                     className="mb-2"
                     id="socialRef"

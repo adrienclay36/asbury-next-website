@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Switch } from '@mantine/core';
 import {
   BsPencilSquare,
   BsTrash,
@@ -40,28 +41,19 @@ const BookItem = ({ book, libraryPermissions }) => {
             <h1>{book.authorcode}</h1>
             <h1 className={available ? availableClass : checkedOut}>{available ? "Available" : "Checked Out"}</h1>
           </div>
-          <div></div>
+          
           <div>
-            {libraryPermissions && <div>
-              <button
-              onClick={toggleAvailableHandler}
-                className={`px-4 py-2 mx-1 mb-2 lg:mb-0 ${available ? 'bg-green-800' : 'bg-transparent border-2 border-gray-400'} text-white rounded-lg ${available ? 'hover:bg-green-900' : 'hover:bg-gray-200'}`}
-              >
-                {available ? (
-                  <BsToggleOn className="text-white" />
-                ) : (
-                  <BsToggleOff className="text-gray-400" />
-                )}
-              </button>
+            {libraryPermissions && <div className="flex flex-1 justify-between items-center mt-4 lg:mt-0 md:mt-0">
+              <Switch className="mx-1" value={available} checked={available} onChange={toggleAvailableHandler} />
               <button
                 onClick={() =>
                   router.push(`/admin/library-dashboard/${book.id}`)
                 }
-                className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
+                className="px-4 py-2 mx-1 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
               >
                 <BsPencilSquare className="text-white" />
               </button>
-              <button className="px-4 py-2 mx-1 my-4 lg:my-0 md:my-0 bg-red-600 rounded-lg hover:bg-red-800">
+              <button className="px-4 mx-1 py-2 mx-1 bg-red-600 rounded-lg hover:bg-red-800">
                 <BsTrash
                   onClick={deleteBookHandler}
                   className="text-white"
