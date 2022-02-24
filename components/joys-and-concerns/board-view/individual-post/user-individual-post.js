@@ -32,23 +32,8 @@ const UserIndividualPost = ({ id, user, avatarURL, content, likes, type, date })
     if (localStorage.getItem(id)) {
       setLiked(true);
     }
-  }, []);
+  }, [id]);
 
-  const longContent = (
-    <>
-      <p>
-        {!readMore && content.slice(0, 140) + "..."}
-        {readMore && content}
-      </p>
-
-      <button
-        className="mt-2 font-semibold text-gray-500 hover:underline"
-        onClick={() => setReadMore(!readMore)}
-      >
-        {readMore ? "Hide" : "Read More"}
-      </button>
-    </>
-  );
 
   const regularContent = <p>{content}</p>;
   return (

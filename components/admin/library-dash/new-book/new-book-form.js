@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { LibraryContext } from "../library-admin-store";
+import { LoadingOverlay } from "@mantine/core";
 import DualRingLoader from "../../../dual-ring-loader/DualRingLoader";
+import styles from './new-book-form.module.css';
 const NewBookForm = () => {
   const libraryContext = useContext(LibraryContext);
   const [title, setTitle] = useState("");
@@ -45,15 +47,60 @@ const NewBookForm = () => {
           Back To All Books
         </button>
       </div>
-      <div className="container w-11/12 lg:w-3/6 mt-12 p-4 border-2 rounded-lg shadow-md mb-40">
+      <div className="container w-11/12 lg:w-3/6 mt-12 p-4 border-2 rounded-lg shadow-md mb-40 relative">
+        <LoadingOverlay
+          visible={adding}
+        />
         <form onSubmit={addBookHandler}>
+          <div className="flex flex-1 flex-col mb-8">
+            <label htmlFor="deweyNumber" className="text-lg mb-2 font-semibold">
+              Dewey Number
+            </label>
+            <input
+              onChange={(e) => setDeweyNumber(e.target.value)}
+              className={styles.input}
+              id="deweyNumber"
+              type="text"
+              value={deweyNumber}
+              maxLength="140"
+              required
+            />
+          </div>
+          <div className="flex flex-1 flex-col mb-8">
+            <label htmlFor="authorCode" className="text-lg mb-2 font-semibold">
+              Author Code
+            </label>
+            <input
+              onChange={(e) => setAuthorCode(e.target.value)}
+              className={styles.input}
+              id="authorCode"
+              type="text"
+              value={authorCode}
+              maxLength="140"
+              required
+            />
+          </div>
+          <div className="flex flex-1 flex-col mb-8">
+            <label htmlFor="author" className="text-lg mb-2 font-semibold">
+              Author
+            </label>
+            <input
+              onChange={(e) => setAuthor(e.target.value)}
+              className={styles.input}
+              id="author"
+              type="text"
+              value={author}
+              maxLength="140"
+              required
+            />
+          </div>
           <div className="flex flex-1 flex-col mb-8">
             <label htmlFor="title" className="text-lg mb-2 font-semibold">
               Title
             </label>
             <input
               onChange={(e) => setTitle(e.target.value)}
-              className="p-2"
+              className={styles.input}
               id="title"
               type="text"
               value={title}
@@ -68,7 +115,7 @@ const NewBookForm = () => {
             </label>
             <input
               onChange={(e) => setSubject(e.target.value)}
-              className="p-2"
+              className={styles.input}
               id="subject"
               type="text"
               value={subject}
@@ -77,50 +124,8 @@ const NewBookForm = () => {
             />
           </div>
 
-          <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="author" className="text-lg mb-2 font-semibold">
-              Author
-            </label>
-            <input
-              onChange={(e) => setAuthor(e.target.value)}
-              className="p-2"
-              id="author"
-              type="text"
-              value={author}
-              maxLength="140"
-              required
-            />
-          </div>
 
-          <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="authorCode" className="text-lg mb-2 font-semibold">
-              Author Code
-            </label>
-            <input
-              onChange={(e) => setAuthorCode(e.target.value)}
-              className="p-2"
-              id="authorCode"
-              type="text"
-              value={authorCode}
-              maxLength="140"
-              required
-            />
-          </div>
 
-          <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="deweyNumber" className="text-lg mb-2 font-semibold">
-              Dewey Number
-            </label>
-            <input
-              onChange={(e) => setDeweyNumber(e.target.value)}
-              className="p-2"
-              id="deweyNumber"
-              type="text"
-              value={deweyNumber}
-              maxLength="140"
-              required
-            />
-          </div>
 
           <div
             className="flex flex-1 flex-row mb-4"

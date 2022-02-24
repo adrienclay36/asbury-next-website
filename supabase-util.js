@@ -18,6 +18,19 @@ export const getPagedData = async (page, size, table) => {
   return data;
 };
 
+export const getPagedBookData = async (page, size, table) => {
+  let { from, to } = getPagination(page, size);
+  const { data, error } = await supabase
+    .from(table)
+    .select()
+    .order("deweynumber", { ascending: true })
+    .range(from, to - 1);
+
+
+
+  return data;
+};
+
 export const getPagedDataByDate = async (page, size, table, dateColumn) => {
   let { from, to } = getPagination(page, size);
   const { data } = await supabase

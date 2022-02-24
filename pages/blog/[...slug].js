@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { downloadImage, getUser } from '../../supabase-util';
 import Layout from '../../components/layout/layout';
 import SinglePostSection from '../../components/blog/single-post/single-post-section';
 import { supabase } from '../../supabase-client';
 import useGetUser from '../../hooks/useGetUser';
+import useGetImage from '../../hooks/useGetImage';
 const SinglePost = (props) => {
     const [post, setPost] = useState(props.post);
-   const { user, avatarURL, loadingUser } = useGetUser(props.post.user_id);
+   
+    
+    const { avatarURL, loadingAvatar } = useGetImage(props.avatar_url);
+
     
 
   return (
@@ -37,12 +41,15 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
     const slug = context.params.slug;
     const { data } = await supabase.from("posts").select().eq("id", slug[0]);
+    const userInfo = await getUser(data[0].user_id);
+
 
 
 
     return {
         props: {
             post: data[0],
+            avatar_url: userInfo.avatar_url,
         },
         revalidate: 3600,
     }

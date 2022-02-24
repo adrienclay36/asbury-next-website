@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getUser, downloadImage } from "../../../supabase-util";
+import useGetUser from '../../../hooks/useGetUser'
 import Image from "next/image";
 import styles from "./blog-post-item.module.css";
+import SkeletonPost from "../../ui/skeleton-post";
 const BlogPostItem = ({
   id,
   title,
@@ -13,7 +15,7 @@ const BlogPostItem = ({
   userID,
   i,
 }) => {
-  const [avatarURL, setAvatarURL] = useState('');
+  const router = useRouter();
   const formatDate = new Date(
     date.replace(/-/g, "/").replace(/T.+/, "")
   ).toLocaleDateString("en-US");
@@ -23,25 +25,16 @@ const BlogPostItem = ({
     .replace("---", "-")
     .toLowerCase();
 
-  const getAvatar = async () => {
-    try{
-      const avatarURL = await downloadImage('avatars', `${userID}_avatar.jpg`)
-      if(avatarURL) {
-        setAvatarURL(avatarURL);
-      } else {
-        avatarURL('default-2.png');
-      }
+  const { user, avatarURL, loadingUser} = useGetUser(userID);
 
-    } catch(error) {
-      console.log(error.message);
-    }
+
+  if(!avatarURL) {
+    return <SkeletonPost width={'w-full'}/>
   }
 
-  useEffect(() => {
-    getAvatar();
-  }, [])
+ 
 
-  const router = useRouter();
+
   return (
     <div className={styles[`post-animation-${i}`]}>
       <div className={`border-2 shadow-lg w-11/12 lg:w-full md:w-full mx-auto`}>

@@ -21,21 +21,23 @@ const AdminProfileCard = ({ user }) => {
 
   const uploadPhoto = async (files) => {
     setLoading(true);
+    
     try{
-      const { data, error } = await supabase.storage.from("avatars").remove([`${userContext.user.id}_avatar.jpg`])
+      const { data, error } = await supabase.storage.from("avatars").remove([userContext.avatarURL])
 
     } catch(err) {
       console.log(err.message);
     }
+    console.log(files[0].name);
 
     const { data: photoData, error: photoError} = await supabase.storage
       .from("avatars")
-      .upload(`${userContext.user.id}_avatar.jpg`, files[0]);
+      .upload(files[0].name, files[0]);
       if(!photoError) {
         setSuccess(true);
       }
 
-    const response = await updateItemInTable('users', userContext.user.id, {avatar_url: `${userContext.user.id}_avatar.jpg`})
+    const response = await updateItemInTable('users', userContext.user.id, {avatar_url: files[0].name})
     
 
       setLoading(false)
