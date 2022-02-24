@@ -1,22 +1,32 @@
-import React from 'react';
-import SectionHeading from '../ui/section-heading';
-import InfoDropdown from '../ui/info-dropdown/info-dropdown';
+import React from "react";
+import SectionHeading from "../ui/section-heading";
+import InfoDropdown from "../ui/info-dropdown/info-dropdown";
+import { useRouter } from "next/router";
 const WelcomeSection = () => {
+  const router = useRouter();
   return (
     <SectionHeading title="Welcome" subheading="Who We Are">
-        <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
-
-      {info.map((item) => {
-        return <InfoDropdown key={item.title} title={item.title} content={item.content}/>
-      })}
-        </div>
-      </SectionHeading>
-
-  )};
+      <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
+        {info.map((item) => {
+          return (
+            <InfoDropdown
+              key={item.title}
+              title={item.title}
+              content={item.content}
+            />
+          );
+        })}
+      </div>
+      <div className="text-center mt-12">
+        <button onClick={() => router.push("/worship")} className="text-center uppercase px-4 py-3 bg-seaFoam-600 text-white rounded-lg">
+          View Worship Times
+        </button>
+      </div>
+    </SectionHeading>
+  );
+};
 
 export default WelcomeSection;
-
-
 
 export const info = [
   {

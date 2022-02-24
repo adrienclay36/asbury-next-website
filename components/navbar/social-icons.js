@@ -30,7 +30,6 @@ const SocialIcons = ({ textColor, textHover }) => {
                 height={30}
                 width={30}
                 alt={userContext.firstName}
-                priority
                 onClick={() => router.push("/admin/admin-dashboard")}
                 className={`${styles.fade} cursor-pointer object-cover rounded-full`}
                 src={userContext.avatarURL}
