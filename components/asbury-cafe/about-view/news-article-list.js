@@ -17,8 +17,8 @@ export default NewsArticleList
 
 export const newsInfo = [
   {
-    title: "Asbury Cafe donates $52K to 12 charities",
-    author: "ABQJournal News Staff",
+    title: "Asbury Cafe Donates $52K To 12 Charities",
+    author: "Albuquerque Journal",
     date: "10/20/2016",
     image:
       "https://d21yqjvcoayho7.cloudfront.net/wp-content/uploads/2016/10/20/c02_jd_21oct_assbury-e1477029509814-400x366.jpg",
@@ -30,7 +30,7 @@ export const newsInfo = [
   },
   {
     title: "Asbury Cafe Raises $45K",
-    author: "ABQJournal News Staff",
+    author: "Albuquerque Journal",
     date: "10/5/2012",
     image: "/images/pie-cafe.jpg",
     authorImage:
@@ -40,8 +40,8 @@ export const newsInfo = [
     href: "https://www.abqjournal.com/136100/asbury-cafe-raises-45k.html",
   },
   {
-    title: "Asbury Cafe celebrates 50 years of fair pie sales",
-    author: "ABQJournal News Staff",
+    title: "Asbury Cafe Celebrates 50 Years Of Fair Pie Sales",
+    author: "Albuquerque Journal",
     date: "9/10/2010",
     image: "https://i.prcdn.co/img?regionKey=oAFXBTONDnwVzHMVQusvrA%3d%3d",
     authorImage:

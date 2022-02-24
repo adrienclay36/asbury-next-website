@@ -2,7 +2,7 @@ import React from 'react'
 
 const ScheduleView = () => {
   return (
-    <div className="text-center">ScheduleView</div>
+    <div className="text-center">Coming Soon</div>
   )
 }
 
