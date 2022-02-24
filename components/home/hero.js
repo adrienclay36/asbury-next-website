@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Navbar from '../navbar/navbar';
 import styles from './hero.module.css';
@@ -10,10 +10,12 @@ import MainButton from '../ui/main-button';
 
 const Hero = () => {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
 
   const onOpen = () => {
-    return null;
+    setOpen(!open);
+    console.log("toggling open");
   }
 
 
@@ -22,9 +24,18 @@ const Hero = () => {
     <section className={styles.fadeIn}>
       <div className={`${styles.heroImage}`}>
         <div className="pt-4">
-          <Navbar textColor="text-white" invertImage={true} home={true} onOpen={onOpen} />
+          <Navbar
+            textColor="text-white"
+            invertImage={true}
+            home={true}
+            onOpen={onOpen}
+          />
         </div>
-        <div className="text-center mt-16">
+        <div
+          className={`${
+            !open ? styles.fadeIn : styles.fadeOut
+          } text-center mt-16`}
+        >
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
             romans 15:7
           </h1>
@@ -33,14 +44,27 @@ const Hero = () => {
             glory of God.
           </p>
           <div id="action-buttons" className="mt-12">
-            <MainButton onClick={() => router.push("/welcome")} margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}>About</MainButton>
-            <MainButton onClick={() => router.push("/worship")} margin={"mx-4"}>Worship</MainButton>
+            <MainButton
+              onClick={() => router.push("/welcome")}
+              margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}
+            >
+              About
+            </MainButton>
+            <MainButton onClick={() => router.push("/worship")} margin={"mx-4"}>
+              Worship
+            </MainButton>
           </div>
         </div>
         <div className="flex flex-1 justify-center mt-12">
-          <button onClick={() => {document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>
+          <button
+            onClick={() => {
+              document
+                .getElementById("features")
+                .scrollIntoView({ behavior: "smooth" });
+            }}
+          >
             <HiChevronDoubleDown
-              className={`text-white opacity-70 cursor-pointer hover:text-seaFoam-300 ${styles.chevron}`}
+              className={`text-white opacity-70 cursor-pointer hover:text-seaFoam-300 ${styles.chevron} ${!open ? styles.fadeIn : styles.fadeOut}`}
               size={50}
             />
           </button>

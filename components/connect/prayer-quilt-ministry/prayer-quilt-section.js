@@ -38,7 +38,7 @@ const PrayerQuiltSection = () => {
           <AiOutlineCalendar className="my-12 text-seaFoam-700" size={150} />
         }
         title={"Prayer Quilt Meetings"}
-        content={"The prayer quilt ministry meets Tuesday mornings 9:30 am and the 2nd Thursday of the month at 7:00 pm in the Hospitality room for fellowship and group quilting activities. Check the Church Calendar for notes."}
+        content={"The prayer quilt ministry meets Tuesday mornings at 9:30 AM in the Hospitality room for fellowship and group quilting activities. Check the Church Calendar for notes."}
       />
     </SectionHeading>
   );

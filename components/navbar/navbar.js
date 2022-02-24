@@ -15,9 +15,9 @@ const Navbar = (props) => {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
         setIsInitial(false);
-        if(!props.home){
-          props.onOpen();
-        }
+        
+        props.onOpen();
+        
 
     }
   return (
@@ -34,12 +34,12 @@ const Navbar = (props) => {
           </div>
         </Link>
         <ul
-          className={`hidden sm:flex flex-1 justify-end items-center gap-10 uppercase text-sm mt-2 text-semibold ${props.textColor}`}
+          className={`hidden sm:flex flex-1 justify-end items-center gap-6 lg:gap-10 md:gap-6 uppercase text-sm mt-2 text-semibold ${props.textColor}`}
         >
           {navLinks.map((link) => {
             return (
               <Link key={link.text} href={link.href} passHref>
-                <li className="mb-2 cursor-pointer tracking-widest hover:text-slate-200">
+                <li className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center">
                   {link.text}
                 </li>
               </Link>
@@ -56,7 +56,7 @@ const Navbar = (props) => {
           />
         </div>
       </nav>
-      <div className="sm:hidden">
+      <div className="sm:hidden md:block lg:block">
         <MobileNav
           textColor={props.textColor}
           isOpen={isOpen}
@@ -96,6 +96,10 @@ export const navLinks = [
   {
     text: "Library",
     href: "/library",
+  },
+  {
+    text: "Asbury Cafe",
+    href: "/asbury-cafe",
   },
   {
     text: "Joys & Concerns",

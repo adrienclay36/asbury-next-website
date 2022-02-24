@@ -173,9 +173,12 @@ const FrontPrayerContextProvider = (props) => {
     }
 
     const incrementLike = async (postID) => {
+      
       const { data, error } = await supabase.rpc("increment_like", {
-        postid: postID,
+        post_id: postID,
       });
+      
+      
     }
 
 

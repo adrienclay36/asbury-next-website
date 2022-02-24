@@ -1,15 +1,32 @@
-import React from 'react';
-import SectionHeading from '../ui/section-heading';
-import InfoDropdown from '../ui/info-dropdown/info-dropdown';
-import SquareCard from '../ui/square-card/square-card';
+import React from "react";
+import SectionHeading from "../ui/section-heading";
+import InfoDropdown from "../ui/info-dropdown/info-dropdown";
+import SquareCard from "../ui/square-card/square-card";
+import InfoCardVertical from "../ui/info-card-vertical";
+import { GiPieSlice } from "react-icons/gi";
+import { useRouter } from "next/router";
 const ConnectSection = () => {
+  const router = useRouter();
   return (
     <SectionHeading title="Connect">
-      <SquareCard
+      {/* <SquareCard
         title="Get Involved"
         subtitle="At Asbury"
         content1="We offer many ways to study the word of God, gearing classes towards all-ages. Please contact the office for specific schedule information."
-      />
+      /> */}
+
+      <div className="text-center container">
+        <p className="text-xl lg:text-3xl md:text-2xl mb-6 uppercase">
+          Get involved
+        </p>
+        <p className="w-11/12 lg:w-3/6 md:w-3/6 mx-auto text-lg lg:text-xl md:text-xl mb-20">
+          We offer many ways to study the word of God, gearing classes towards
+          all-ages. Please contact the office for specific schedule information.
+        </p>
+      </div>
+      
+
+      
       <div className="container grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 items-start">
         <InfoDropdown
           title="United Methodist Women"

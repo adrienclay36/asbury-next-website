@@ -21,7 +21,7 @@ const IndividualPost = ({ id, author, date, content, likes, type}) => {
     setLiveLikes(liveLikes+1);
     setClicked(true);
     const { data, error } = await supabase.rpc("increment_like", {
-      postid: id,
+      post_id: id,
     });
     localStorage.setItem(id, 1);
 

@@ -40,4 +40,24 @@
 
 .fadeIn {
   animation: fadeInRegular .75s ease;
+  animation-fill-mode: forwards;
+}
+
+.fadeInHeaders { 
+  animation: fadeInRegular 1s ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 1s ease;
+  animation-fill-mode: forwards;
 }

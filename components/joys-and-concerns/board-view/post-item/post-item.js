@@ -161,7 +161,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
         <div className="flex flex-1 justify-between items-center">
           <button
             onClick={() =>
-              router.push(`/joys-and-concerns/${formatAuthor}/${id}`)
+              router.push(`/joys-and-concerns/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}/${id}`)
             }
             className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
           >
