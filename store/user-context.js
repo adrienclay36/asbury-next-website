@@ -62,7 +62,6 @@ const UserContextProvider = (props) => {
         setFirstName(googleArray[0]);
         setLastName(googleArray[1])
         if(googleArray[0] !== userInfo.first_name || googleArray[1] !== userInfo.last_name){
-          console.log("User table outdated");
           const {data, error} = await updateItemInTable(TABLE_NAME, user.id, { first_name: googleArray[0], last_name: googleArray[1]});
         }
       } else {

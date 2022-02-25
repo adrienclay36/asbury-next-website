@@ -56,7 +56,7 @@ export default function Home(props) {
                 }
                 className="text-gray-500 font-semibold hover:underline text-center"
               >
-                Add one Now
+                Add One Now
               </button>
             </div>
           </>
