@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import styles from './contact-form.module.css';
 const ContactForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ const ContactForm = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               id="name"
-              className="p-2 w-11/12 mb-4 focus:outline-none active:outline-none"
+              className="appearance-none mb-4 rounded-md relative block w-full lg:w-11/12 md:w-11/12 px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-seaFoam-500 focus:border-seaFoam-500 focus:z-10 sm:text-sm"
               type="text"
               required
               placeholder="Full Name"
@@ -39,7 +39,7 @@ const ContactForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email"
-              className="p-2 w-full focus:outline-none active:outline-none"
+              className={styles.input}
               type="email"
               required
               placeholder="Email Address"
@@ -55,7 +55,7 @@ const ContactForm = () => {
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             id="subject"
-            className="p-2 w-full mb-4 focus:outline-none active:outline-none"
+            className={styles.input}
             type="text"
             required
             placeholder="Subject Line"
@@ -70,16 +70,20 @@ const ContactForm = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             id="content"
-            className="p-2 w-full focus:outline-none active:outline-none"
+            className={styles.input}
             type="text"
             required
-            placeholder="Subject Line"
+            placeholder="Enter your message here."
             rows="10"
           />
         </div>
         <div className="text-center">
-
-        <button type="submit" className="mt-6 px-3 py-2 bg-seaFoam-600 rounded-lg text-white font-semibold text-center shadow-lg">Send Message</button>
+          <button
+            type="submit"
+            className="mt-6 px-3 py-2 bg-seaFoam-600 rounded-lg text-white font-semibold text-center shadow-lg"
+          >
+            Send Message
+          </button>
         </div>
       </form>
     </div>

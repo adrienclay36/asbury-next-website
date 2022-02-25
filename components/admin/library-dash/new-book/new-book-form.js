@@ -33,6 +33,7 @@ const NewBookForm = () => {
 
   const optionChange = (e) => {
     setAvailability(e.target.value);
+    console.log(e.target.value);
   }
 
 

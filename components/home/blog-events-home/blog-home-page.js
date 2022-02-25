@@ -13,7 +13,7 @@ const BlogHomePage = ({ posts }) => {
         {!posts && <PageLoading/>}
         {posts && <ul>
           {posts.map((post, index) => (
-            <BlogItem key={post.id} id={post.id} title={post.title} content={post.postcontent} author={post.author} date={post.postdate} index={index} />
+            <BlogItem key={post.id} user_id={post.user_id} id={post.id} title={post.title} content={post.postcontent} author={post.author} date={post.postdate} index={index} />
           ))}
         </ul>}
         
