@@ -78,7 +78,7 @@ const CommentList = ({ postID }) => {
       </div>
 
       <Collapse in={open}>
-        {userContext.role === "admin" ? <NewUserComment setOpen={setOpen} postID={postID}/> : <NewComment setOpen={setOpen} postID={postID} />}
+        {userContext.role === "admin" || userContext.role === "user" ? <NewUserComment setOpen={setOpen} postID={postID}/> : <NewComment setOpen={setOpen} postID={postID} />}
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (

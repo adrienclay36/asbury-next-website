@@ -47,7 +47,7 @@ const BoardView = () => {
       </div>
 
       <Collapse in={open}>
-        {userContext.role === "admin" ? (
+        {userContext.role === "admin" || userContext.role == "user" ? (
           <NewUserPrayer setOpen={setOpen} />
         ) : (
           <NewPrayerForm setOpen={setOpen} />

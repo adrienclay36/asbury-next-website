@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 import { useRouter } from "next/router";
-import { downloadImage, getPublicUrl, getSignedUrl } from "../supabase-util";
+import { downloadImage, getPublicUrl, getSignedUrl, updateItemInTable } from "../supabase-util";
 const TABLE_NAME = "users";
 export const UserContext = createContext({
   user: null,
@@ -14,6 +14,8 @@ export const UserContext = createContext({
   role: "",
   checkUser: () => {},
   logOutHandler: () => {},
+  signInWithGoogle: () => {},
+  signUpHandler: (email, password, inputFirstName, inputLastName) => {},
   firstName: "",
   lastName: "",
   title: "",
@@ -54,7 +56,11 @@ const UserContextProvider = (props) => {
       .match({ id: user.id });
     if (data) {
       const userInfo = data[0];
-      setPermissions(userInfo.permissions);
+      if(permissions){
+        setPermissions(userInfo.permissions);
+      } else {
+        setPermissions(null);
+      }
       setRole(userInfo.role);
       setFirstName(userInfo.first_name);
       setLastName(userInfo.last_name);
@@ -82,25 +88,74 @@ const UserContextProvider = (props) => {
     router.reload();
   };
 
+  const signInHandler = async (email, password) => {
+    const { data, error } = await supabase.auth.signIn({ email, password })
+    await checkUser();
+  }
+
+  const signInWithGoogle = async () => {
+    const { user, session, error } = await supabase.auth.signIn({
+      provider: 'google',
+    }, { redirectTo: "http://localhost:3000"});
+
+  }
+
+  const signUpHandler = async (email, password, inputFirstName, inputLastName) => {
+    const { data: existingUser, error:noUser } = await supabase.from('users').select().match({email});
+    if(existingUser.length > 0){
+      return { status: "duplicate" };
+    }
+    const { user, session, error } = await supabase.auth.signUp({ email, password });
+
+    if(error) {
+      return { status: "error", error};
+    }
+
+      const { data } = await supabase
+        .from("users")
+        .select()
+        .match({ email: email });
+
+      if (data) {
+        const userInfo = data[0];
+        const { data: successData, error: submitError } = await supabase
+          .from("users")
+          .update({
+            first_name: inputFirstName,
+            last_name: inputLastName,
+          })
+          .match({ id: userInfo.id });
+        if (submitError) {
+          return { status: "error", submitError };
+        } else {
+          return { status: "ok" };
+        }
+      }
+
+
+
+    
+}
+
   useEffect(() => {
-    if (permissions.length > 0) {
-      const librarian = permissions.some((role) =>
-        ["library", "master"].includes(role)
+    if (permissions) {
+      const librarian = permissions.some((userRole) =>
+        ["library", "master"].includes(userRole)
       );
       setLibraryPermissions(librarian);
 
-      const blog = permissions.some((role) =>
-        ["blog", "master"].includes(role)
+      const blog = permissions.some((userRole) =>
+        ["blog", "master"].includes(userRole)
       );
       setBlogPermissions(blog);
 
-      const invite = permissions.some((role) =>
-        ["invite", "master"].includes(role)
+      const invite = permissions.some((userRole) =>
+        ["invite", "master"].includes(userRole)
       );
       setInvitePermissions(invite);
 
-      const social = permissions.some((role) =>
-        ["social", "master"].includes(role)
+      const social = permissions.some((userRole) =>
+        ["social", "master"].includes(userRole)
       );
       setSocialPermissions(social);
     }
@@ -115,6 +170,9 @@ const UserContextProvider = (props) => {
         }
         if (event === "SIGNED_OUT") {
           return;
+        }
+        if(event === "USER_DELETED") {
+          logOutHandler();
         }
         if (event === "PASSWORD_RECOVERY") {
           const hash = window.location.hash.substring(1);
@@ -147,6 +205,8 @@ const UserContextProvider = (props) => {
     socialPermissions,
     checkUser: checkUser,
     logOutHandler: logOutHandler,
+    signInWithGoogle,
+    signUpHandler,
     role,
     firstName,
     lastName,

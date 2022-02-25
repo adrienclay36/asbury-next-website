@@ -3,7 +3,7 @@ import { Modal } from '@mantine/core';
 import { BiErrorCircle } from 'react-icons/bi';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal}) => {
+const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal, icon=null}) => {
     const router = useRouter();
   return (
     <Modal centered={centerModal} opened={opened} onClose={onClose}>
@@ -16,6 +16,7 @@ const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal
           <AiOutlineCheckCircle size={75} className="text-emerald-700 mb-12" />
         )}
         <p className="font-semibold text-lg mb-4">{message}</p>
+        {icon}
         {actionText && (
           <button
             onClick={() => router.push(href)}

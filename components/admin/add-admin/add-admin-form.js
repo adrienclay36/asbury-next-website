@@ -82,7 +82,7 @@ const AddAdminForm = () => {
 
     if (data) {
       const userInfo = data[0];
-      const { data: success, error: submitError } = await supabase
+      const { data: successData, error: submitError } = await supabase
         .from("users")
         .update({
           permissions: permissions,

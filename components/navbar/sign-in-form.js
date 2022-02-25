@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextInput, PasswordInput, Button } from "@mantine/core";
 import { AiOutlineLogin } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { UserContext } from "../../store/user-context";
 import Link from 'next/link';
-const SignInForm = ({ signInHandler, error, resetError }) => {
+import GoogleButton from 'react-google-button';
+
+const SignInForm = ({ signInHandler, error, resetError, toggleSignUp }) => {
   const [authenticating, setAuthenticating] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const userContext = useContext(UserContext);
 
   const callSignIn = async (e) => {
     e.preventDefault();
@@ -36,14 +40,14 @@ const SignInForm = ({ signInHandler, error, resetError }) => {
       </h1>
       <form onSubmit={callSignIn}>
         <TextInput
-          className="mb-8"
+          className="mb-4"
           label="Email"
           description="Enter The Email You Used to Sign Up"
           required
           value={email}
           type="email"
           onChange={emailChangeHandler}
-          autoComplete
+          autoComplete="true"
           error={error}
         />
         <PasswordInput
@@ -53,7 +57,7 @@ const SignInForm = ({ signInHandler, error, resetError }) => {
           value={password}
           error={error ? error : ""}
         />
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 mb-6">
           <Button
             type="submit"
             loading={authenticating}
@@ -64,12 +68,17 @@ const SignInForm = ({ signInHandler, error, resetError }) => {
             Sign In
           </Button>
         </div>
+        <div className="flex flex-1 justify-center items-center">
+
+          <GoogleButton onClick={() => userContext.signInWithGoogle()}/>
+
+        </div>
       </form>
       <div className="text-center mt-4">
         <p>Don&apos;t Have An Account?</p>
-        <Link href="/sign-up" passHref>
-        <p className="text-gray-600 hover:underline cursor-pointer font-semibold mt-4">Sign Up Now</p>
-        </Link>
+        
+        <button onClick={() => toggleSignUp()} className="text-gray-600 hover:underline cursor-pointer font-semibold mt-4">Sign Up Now</button>
+        
       </div>
     </div>
   );

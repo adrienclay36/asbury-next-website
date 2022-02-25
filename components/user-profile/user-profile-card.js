@@ -1,56 +1,53 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../../../store/user-context";
+import { UserContext } from "../../store/user-context";
 import { useRouter } from "next/router";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import Dropzone from "react-dropzone";
-import SkeletonPost from "../../ui/skeleton-post";
+import SkeletonPost from "../ui/skeleton-post";
 import Image from "next/image";
 import { Modal, PasswordInput, Button } from "@mantine/core";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import UIModal from '../../ui/modal/UIModal';
+import UIModal from "../ui/modal/UIModal";
 import { Loader } from "@mantine/core";
-import { supabase } from "../../../supabase-client";
-import { updateItemInTable } from "../../../supabase-util";
-import { FiKey } from 'react-icons/fi'
-const AdminProfileCard = ({ user }) => {
+import { supabase } from "../../supabase-client";
+import { updateItemInTable } from "../../supabase-util";
+import { FiKey } from "react-icons/fi";
+const UserProfileCard = ({ user }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [wrongType, setWrongType] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const userContext = useContext(UserContext);
   const router = useRouter();
 
-
   const changePasswordHandler = async () => {
-    setError('');
+    setError("");
     setSubmitting(true);
-    if(password) {
-      try{
-        const { data, error } = await supabase.auth.update({password});
-        if(error) {
-          throw new Error
+    if (password) {
+      try {
+        const { data, error } = await supabase.auth.update({ password });
+        if (error) {
+          throw new Error();
         }
         setChangePassword(false);
         setSubmitting(false);
         setPasswordSuccess(true);
-        setPassword('');
-
-      } catch(error) {
-        setError('Invalid Password - Must be 6 Characters in Length');
+        setPassword("");
+      } catch (error) {
+        setError("Invalid Password - Must be 6 Characters in Length");
         setSubmitting(false);
       }
     }
-  }
+  };
 
   const uploadPhoto = async (files) => {
     setLoading(true);
     const imageFile = files[0];
-    const newAvatarPath = `${userContext.user.id}/${imageFile.name}`
-    
+    const newAvatarPath = `${userContext.user.id}/${imageFile.name}`;
 
     if (imageFile.type === "image/jpeg" || imageFile.type === "image/png") {
       if (userContext.avatarPath !== "default-2.png") {
@@ -85,7 +82,6 @@ const AdminProfileCard = ({ user }) => {
       return;
     }
 
-
     setLoading(false);
     userContext.checkUser();
   };
@@ -113,7 +109,11 @@ const AdminProfileCard = ({ user }) => {
         message="Profile pictures must be a JPEG (.jpg) or PNG (.png)"
       />
 
-      <Modal centered opened={changePassword} onClose={() => setChangePassword(false)}>
+      <Modal
+        centered
+        opened={changePassword}
+        onClose={() => setChangePassword(false)}
+      >
         <PasswordInput
           id="password"
           label="New Password"
@@ -137,16 +137,16 @@ const AdminProfileCard = ({ user }) => {
         </div>
       </Modal>
 
-      <UIModal 
-      type="success"
-      message="Password Changed!"
-      centerModal={true}
-      opened={passwordSuccess}
-      onClose={() => setPasswordSuccess(false)}
+      <UIModal
+        type="success"
+        message="Password Changed!"
+        centerModal={true}
+        opened={passwordSuccess}
+        onClose={() => setPasswordSuccess(false)}
       />
 
       <div className="flex flex-1 flex-col justify-center p-10 items-center w-11/12 lg:w-2/6 md:w-4/6 border-2 rounded-lg shadow-md mx-auto my-12">
-        <div>
+        <div className="mb-8">
           <Image
             loading="lazy"
             key={userContext.user.id}
@@ -164,35 +164,6 @@ const AdminProfileCard = ({ user }) => {
           </p>
         </div>
 
-        <div className="my-4">
-          <p className="font-semibold text-center mb-6 uppercase">
-            Permissions:
-          </p>
-          <ul className="text-center">
-            {userContext.blogPermissions && (
-              <li>
-                <p className="font-semibold mb-1">Edit The Blog</p>
-              </li>
-            )}
-            {userContext.socialPermissions && (
-              <li>
-                <p className="font-semibold mb-1">
-                  Moderate Social Media Posts
-                </p>
-              </li>
-            )}
-            {userContext.libraryPermissions && (
-              <li>
-                <p className="font-semibold mb-1">Curate the Library</p>
-              </li>
-            )}
-            {userContext.invitePermissions && (
-              <li>
-                <p className="font-semibold mb-1">Invite Other Moderators</p>
-              </li>
-            )}
-          </ul>
-        </div>
 
         {!loading && (
           <Dropzone onDrop={(files) => uploadPhoto(files)}>
@@ -219,4 +190,4 @@ const AdminProfileCard = ({ user }) => {
   );
 };
 
-export default AdminProfileCard;
+export default UserProfileCard;

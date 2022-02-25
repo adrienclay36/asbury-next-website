@@ -22,7 +22,7 @@ const AdminNavbar = (props) => {
       await supabase.auth.signOut();
       await userContext.checkUser();
       setTimeout(() => {
-        router.replace("/admin");
+        router.reload("/admin");
       }, 500)
       
     }
