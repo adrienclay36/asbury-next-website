@@ -10,12 +10,14 @@ import { supabase } from "../supabase-client";
 import { UserContext } from "../store/user-context";
 import { Dialog } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { useRouter } from "next/router";
 export default function Home(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
   const [userWelcome, setUserWelcome] = useState(false);
   const userContext = useContext(UserContext);
   const disableNotifications = useMediaQuery("(max-width: 900px)");
+  const router = useRouter();
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -33,16 +35,30 @@ export default function Home(props) {
   return (
     <div className="font-primaryFont">
       {/* Priority load hero image for home page */}
-      <Dialog withCloseButton opened={userWelcome} onClose={() => setUserWelcome(false)}>
+      <Dialog
+        withCloseButton
+        opened={userWelcome}
+        onClose={() => setUserWelcome(false)}
+      >
         {userContext.avatarPath === "default-2.png" ? (
           <>
-          <p className="text-center my-2">
-            We noticed you haven&apos;t added a profile picture..
-          </p>
-          <div className="text-center">
-            
-          <button className="text-gray-500 font-semibold hover:underline text-center">Add one Now</button>
-          </div>
+            <p className="text-center my-2">
+              We noticed you haven&apos;t added a profile picture..
+            </p>
+            <div className="text-center">
+              <button
+                onClick={() =>
+                  router.push(
+                    `/profile/${
+                      userContext.user.id
+                    }/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                  )
+                }
+                className="text-gray-500 font-semibold hover:underline text-center"
+              >
+                Add one Now
+              </button>
+            </div>
           </>
         ) : (
           <p className="text-seaFoam-600 text-xl text-center">

@@ -14,7 +14,7 @@ const UserProfilePage = ({ user }) => {
     }
   },[userContext.user, router])
   return (
-    <Layout title={`${user.first_name} ${user.last_name}`}>
+    <Layout title={`${userContext.firstName} ${userContext.lastName}`}>
         <UserProfileCard user={user}/>
     </Layout>
   )

@@ -37,6 +37,7 @@ const UserContextProvider = (props) => {
   const [title, setTitle] = useState("");
   const [avatarURL, setAvatarURL] = useState("");
   const [avatarPath, setAvatarPath] = useState('');
+  const [googleUser, setGoogleUser] = useState(false);
 
   const router = useRouter();
 
@@ -56,14 +57,25 @@ const UserContextProvider = (props) => {
       .match({ id: user.id });
     if (data) {
       const userInfo = data[0];
+      if(user.app_metadata.provider === 'google') {
+        const googleArray = user.user_metadata.full_name.split(' ')
+        setFirstName(googleArray[0]);
+        setLastName(googleArray[1])
+        if(googleArray[0] !== userInfo.first_name || googleArray[1] !== userInfo.last_name){
+          console.log("User table outdated");
+          const {data, error} = await updateItemInTable(TABLE_NAME, user.id, { first_name: googleArray[0], last_name: googleArray[1]});
+        }
+      } else {
+
+        setFirstName(userInfo.first_name);
+        setLastName(userInfo.last_name);
+      }
       if(permissions){
         setPermissions(userInfo.permissions);
       } else {
         setPermissions(null);
       }
       setRole(userInfo.role);
-      setFirstName(userInfo.first_name);
-      setLastName(userInfo.last_name);
       setTitle(userInfo.title);
 
       const url = await downloadImage("avatars", userInfo.avatar_url);
@@ -76,7 +88,11 @@ const UserContextProvider = (props) => {
   const checkUser = async () => {
     const user = await supabase.auth.user();
     if (user) {
+      
       setUserValue(user);
+      if(user.app_metadata.provider === 'google') {
+        setGoogleUser(true);
+      }
       getPermissions(user);
     }
   };
