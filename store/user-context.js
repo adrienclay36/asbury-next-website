@@ -23,6 +23,10 @@ export const UserContext = createContext({
   avatarPath: "",
 });
 
+
+// const REDIRECT_URL = "http://localhost:3000";
+const REDIRECT_URL = "https://asbury-next-website.vercel.app/";
+
 const UserContextProvider = (props) => {
   const [userValue, setUserValue] = useState();
   const [permissions, setPermissions] = useState([]);
@@ -111,7 +115,7 @@ const UserContextProvider = (props) => {
   const signInWithGoogle = async () => {
     const { user, session, error } = await supabase.auth.signIn({
       provider: 'google',
-    }, { redirectTo: "http://localhost:3000"});
+    }, { redirectTo: REDIRECT_URL});
 
   }
 
