@@ -24,8 +24,8 @@ export const UserContext = createContext({
 });
 
 
-// const REDIRECT_URL = "http://localhost:3000";
-const REDIRECT_URL = "https://asbury-next-website.vercel.app/";
+const REDIRECT_URL = "http://localhost:3000";
+// const REDIRECT_URL = "https://asbury-next-website.vercel.app/";
 
 const UserContextProvider = (props) => {
   const [userValue, setUserValue] = useState();
@@ -61,7 +61,6 @@ const UserContextProvider = (props) => {
       .match({ id: user.id });
     if (data) {
       const userInfo = data[0];
-      console.log(userInfo);
       if(user.app_metadata.provider === 'google') {
         const googleArray = user.user_metadata.full_name.split(' ')
         setFirstName(googleArray[0]);
@@ -116,7 +115,7 @@ const UserContextProvider = (props) => {
   const signInWithGoogle = async () => {
     const { user, session, error } = await supabase.auth.signIn({
       provider: 'google',
-    }, { redirectTo: REDIRECT_URL});
+    });
 
   }
 
