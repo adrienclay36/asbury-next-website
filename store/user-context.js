@@ -61,6 +61,7 @@ const UserContextProvider = (props) => {
       .match({ id: user.id });
     if (data) {
       const userInfo = data[0];
+      console.log(userInfo);
       if(user.app_metadata.provider === 'google') {
         const googleArray = user.user_metadata.full_name.split(' ')
         setFirstName(googleArray[0]);
