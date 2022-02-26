@@ -1,11 +1,8 @@
 import "../styles/globals.css";
 
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../store/user-context";
+import { useEffect } from "react";
 import UserContextProvider from "../store/user-context";
 import { polyfill } from "smoothscroll-polyfill";
-import { useRouter } from "next/router";
-import { supabase } from "../supabase-client";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
 import "@fullcalendar/common/main.css";

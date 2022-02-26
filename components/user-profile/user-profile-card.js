@@ -269,11 +269,6 @@ const UserProfileCard = ({ user }) => {
             Remove Profile Picture
           </button>
         )}
-
-        <button onClick={() => router.push("/giving/donation-plan")} className="mt-12 font-semibold text-gray-500 hover:underline">
-          Manage Donations Or Set Up a Donation Plan
-        </button>
-
         {!userContext.googleUser && <button
           onClick={() => setChangePassword(true)}
           className="mt-12 font-semibold text-gray-500 hover:underline"

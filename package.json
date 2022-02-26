@@ -21,10 +21,13 @@
     "@mantine/hooks": "^3.6.8",
     "@mantine/next": "^3.6.8",
     "@radix-ui/react-icons": "^1.1.0",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.23.0",
     "@supabase/supabase-js": "^1.30.0",
     "axios": "^0.25.0",
     "firebase": "^9.6.6",
     "ical": "^0.8.0",
+    "micro": "^9.3.4",
     "mongodb": "^4.3.1",
     "nanoid": "^3.3.0",
     "next": "^12.1.0",
@@ -37,7 +40,8 @@
     "react-google-button": "^0.7.2",
     "react-icons": "^4.3.1",
     "react-player": "^2.9.0",
-    "smoothscroll-polyfill": "^0.4.4"
+    "smoothscroll-polyfill": "^0.4.4",
+    "stripe": "^8.205.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
