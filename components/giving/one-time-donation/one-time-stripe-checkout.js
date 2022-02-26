@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  useElements,
+  useStripe,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
 import { Button, Select, TextInput } from "@mantine/core";
 import axios from "axios";
 import { states } from "../../../states";
 import { BsCreditCard2Front } from 'react-icons/bs';
+
 const OneTimeStripeCheckout = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -108,9 +114,9 @@ const OneTimeStripeCheckout = () => {
             clearable
           />
         </div>
-      </div>
-      <div className="w-11/12 mx-auto lg:w-2/6 md:w-2/6 p-10 border-2 mt-12 mb-4">
+      <div className="w-full">
         <CardElement />
+      </div>
       </div>
       <div className="text-center w-11/12 lg:w-2/6 md:w-2/6 mx-auto">
         <Button

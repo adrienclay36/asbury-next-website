@@ -28,7 +28,7 @@ const SocialIcons = ({ textColor, textHover }) => {
   const [welcomed, setWelcomed] = useState(false);
 
   useEffect(() => {
-    if (userContext.firstName) {
+    if (userContext.firstName && router.pathname === "/") {
       const timeout = setTimeout(() => {
         setUserWelcome(true);
       }, 2000);
@@ -37,15 +37,14 @@ const SocialIcons = ({ textColor, textHover }) => {
   }, [userContext.firstName]);
 
   useEffect(() => {
-    if (userWelcome && !welcomed && router.pathname === "/") {
+    if (userWelcome && router.pathname === "/") {
       const userTimeout = setTimeout(() => {
         setUserWelcome(false);
-        setWelcomed(true);
       }, 5000);
 
       return () => clearTimeout(userTimeout);
     }
-  }, [userWelcome, welcomed, router.pathname]);
+  }, [userWelcome, router.pathname]);
 
 
   useEffect(() => {
