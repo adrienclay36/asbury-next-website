@@ -21,6 +21,7 @@ export const UserContext = createContext({
   title: "",
   avatarURL: "",
   avatarPath: "",
+  googleUser: false,
 });
 
 
@@ -229,6 +230,7 @@ const UserContextProvider = (props) => {
     title,
     avatarURL,
     avatarPath,
+    googleUser,
   };
 
   return (

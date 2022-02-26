@@ -5,13 +5,16 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import Dropzone from "react-dropzone";
 import SkeletonPost from "../ui/skeleton-post";
 import Image from "next/image";
-import { Modal, PasswordInput, Button } from "@mantine/core";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import { Modal, PasswordInput, Button, TextInput, Loader } from "@mantine/core";
+import { AiOutlineCheckCircle, AiOutlineEdit } from "react-icons/ai";
 import UIModal from "../ui/modal/UIModal";
-import { Loader } from "@mantine/core";
+import { RiUserSettingsFill } from 'react-icons/ri';
 import { supabase } from "../../supabase-client";
 import { updateItemInTable } from "../../supabase-util";
 import { FiKey } from "react-icons/fi";
+import { FaEdit } from "react-icons/fa";
+import { GearIcon } from '@radix-ui/react-icons';
+
 const UserProfileCard = ({ user }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,6 +24,9 @@ const UserProfileCard = ({ user }) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [editName, setEditName] = useState(false);
+  const [firstName, setFirstName] = useState(user.first_name);
+  const [lastName, setLastName] = useState(user.last_name);
   const userContext = useContext(UserContext);
   const router = useRouter();
 
@@ -112,6 +118,19 @@ const UserProfileCard = ({ user }) => {
   }
 
 
+  const updateNameHandler = async (e) => {
+    setSubmitting(true);
+    e.preventDefault();
+    if(firstName && lastName) {
+      const response = await updateItemInTable('users', userContext.user.id, { first_name: firstName, last_name: lastName });
+      console.log(response);
+      userContext.checkUser();
+      setSubmitting(false);
+      setEditName(false);
+    }
+  }
+
+
   
 
   return (
@@ -170,10 +189,44 @@ const UserProfileCard = ({ user }) => {
         onClose={() => setPasswordSuccess(false)}
       />
 
+      <Modal
+        opened={editName}
+        onClose={() => setEditName(false)}
+        centered
+        title={"Edit Username"}
+      >
+        <div>
+          <form onSubmit={updateNameHandler}>
+            <TextInput
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              id="firstName"
+              label="First Name"
+              required
+            />
+            <TextInput
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              id="lastName"
+              label="Last Name"
+              required
+            />
+            <Button
+              type="submit"
+              loading={submitting}
+              variant="filled"
+              leftIcon={<GearIcon size={20} />}
+              className="text-white bg-emerald-900 hover:bg-emerald-800 w-full mt-6"
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </Modal>
+
       <div className="flex flex-1 flex-col justify-center p-10 items-center w-11/12 lg:w-2/6 md:w-4/6 border-2 rounded-lg shadow-md mx-auto my-12">
         <div className="mb-8">
           <Image
-            loading="lazy"
             key={userContext.user.id}
             height={200}
             width={200}
@@ -181,14 +234,22 @@ const UserProfileCard = ({ user }) => {
             src={userContext.avatarURL}
             alt={userContext.firstName}
           />
-          <p className="mt-4 font-extrabold text-center">
-            {userContext.firstName} {userContext.lastName}
-          </p>
+          <div className="flex flex-1 justify-center items-center mt-4">
+            <p className="font-extrabold text-center mx-4">
+              {userContext.firstName} {userContext.lastName}
+            </p>
+            {!userContext.googleUser && (
+              <FaEdit
+                onClick={() => setEditName(true)}
+                className="text-gray-400 cursor-pointer"
+                size={20}
+              />
+            )}
+          </div>
           <p className="font-semibold text-seaFoam-500 text-center">
             {userContext.title}
           </p>
         </div>
-
 
         {!loading && (
           <Dropzone onDrop={(files) => uploadPhoto(files)}>
@@ -203,7 +264,14 @@ const UserProfileCard = ({ user }) => {
           </Dropzone>
         )}
         {loading && <Loader color="dark" size="lg" variant="dots" />}
-        {userContext.avatarPath !== 'default-2.png' && <button onClick={removePhoto} className="text-red-800 hover:underline mt-4 font-semibold cursor-pointer">Remove Profile Picture</button>}
+        {userContext.avatarPath !== "default-2.png" && (
+          <button
+            onClick={removePhoto}
+            className="text-red-800 hover:underline mt-4 font-semibold cursor-pointer"
+          >
+            Remove Profile Picture
+          </button>
+        )}
 
         <button
           onClick={() => setChangePassword(true)}
@@ -211,6 +279,8 @@ const UserProfileCard = ({ user }) => {
         >
           Change Your Password
         </button>
+
+        {userContext.googleUser && <p className="text-sm text-center my-4 font-semibold">Your name was provided to us from your Google Account. You can get edit your name in your Google Account settings.</p>}
       </div>
     </>
   );
