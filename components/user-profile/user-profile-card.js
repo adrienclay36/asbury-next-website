@@ -270,12 +270,16 @@ const UserProfileCard = ({ user }) => {
           </button>
         )}
 
-        <button
+        <button onClick={() => router.push("/giving/donation-plan")} className="mt-12 font-semibold text-gray-500 hover:underline">
+          Manage Donations Or Set Up a Donation Plan
+        </button>
+
+        {!userContext.googleUser && <button
           onClick={() => setChangePassword(true)}
           className="mt-12 font-semibold text-gray-500 hover:underline"
         >
           Change Your Password
-        </button>
+        </button>}
 
         {userContext.googleUser && <p className="text-sm text-center my-4 font-semibold">Your name was provided to us from your Google Account. You can get edit your name in your Google Account settings.</p>}
       </div>

@@ -41,7 +41,7 @@ const SocialIcons = ({ textColor, textHover }) => {
       const userTimeout = setTimeout(() => {
         setUserWelcome(false);
         setWelcomed(true);
-      }, 3000);
+      }, 5000);
 
       return () => clearTimeout(userTimeout);
     }
@@ -159,6 +159,7 @@ const SocialIcons = ({ textColor, textHover }) => {
           opened={userWelcome}
           disabled={mobileWelcomeTooltip}
           label={`Welcome, ${userContext.firstName}`}
+          transitionDuration={500}
           placement="start"
           position="bottom"
           withArrow
@@ -203,6 +204,7 @@ const SocialIcons = ({ textColor, textHover }) => {
           opened={userWelcome}
           disabled={mobileWelcomeTooltip}
           label={`Welcome, ${userContext.firstName}`}
+          transitionDuration={500}
           placement="start"
           position="bottom"
           withArrow
