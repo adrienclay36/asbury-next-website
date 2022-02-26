@@ -12,7 +12,7 @@ const SinglePostSection = ({ post, avatarURL }) => {
   const router = useRouter();
   return (
     <SectionHeading title="Blog">
-      <div className="container lg:w-3/6 lg:w-4/6 mx-auto w-full my-12">
+      <div className="container md:w-4/6 lg:w-4/6 mx-auto w-full my-12">
         <img className="object-cover w-full h-96" src={image} />
       </div>
 

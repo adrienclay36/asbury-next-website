@@ -8,11 +8,11 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { UserContext } from "../../store/user-context";
 import { Loader, Tooltip, Modal, Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { supabase } from '../../supabase-client';
+import { supabase } from "../../supabase-client";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
 import SignInForm from "./sign-in-form";
-import UIModal from '../ui/modal/UIModal';
+import UIModal from "../ui/modal/UIModal";
 import SignUpForm from "./sign-up-form";
 const SocialIcons = ({ textColor, textHover }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
@@ -22,84 +22,103 @@ const SocialIcons = ({ textColor, textHover }) => {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [userWelcome, setUserWelcome] = useState(false);
-
+  const [signUpReminder, setSignUpReminder] = useState(false);
+  const [welcomed, setWelcomed] = useState(false);
 
   useEffect(() => {
-    if(userContext.firstName) {
+    if (userContext.firstName) {
       const timeout = setTimeout(() => {
-        setUserWelcome(true)
+        setUserWelcome(true);
       }, 2000);
       return () => clearTimeout(timeout);
     }
-
-  }, [userContext.firstName])
-
+  }, [userContext.firstName]);
 
   useEffect(() => {
-    if(userWelcome) {
+    if (userWelcome && !welcomed && router.pathname === "/") {
       const userTimeout = setTimeout(() => {
         setUserWelcome(false);
-      }, 3000)
+        setWelcomed(true);
+      }, 3000);
 
       return () => clearTimeout(userTimeout);
     }
-  }, [userWelcome])
+  }, [userWelcome, welcomed, router.pathname]);
 
-  
+
   useEffect(() => {
-    if(success) {
+    if(!userContext.user && router.pathname === "/") {
+      const reminderTimeout = setTimeout(() => {
+        setSignUpReminder(true)
+      }, 2000);
+      return () => clearTimeout(reminderTimeout);
+    }
+  }, [userContext.user, router.pathname])
+
+  useEffect(() => {
+    if(signUpReminder) {
+      const clearReminder = setTimeout(() => {
+        setSignUpReminder(false);
+      }, 5000);
+
+      return () => clearTimeout(clearReminder);
+    }
+  }, [signUpReminder])
+
+  useEffect(() => {
+    if (success) {
       const timeout = setTimeout(() => {
         setSuccess(false);
-      }, 2000)
+      }, 2000);
 
       return () => {
         clearTimeout(timeout);
-      }
+      };
     }
-  }, [success])
+  }, [success]);
 
   const signInHandler = async (email, password) => {
-    
-    if(email && password) {
+    if (email && password) {
       try {
-        const { data, error } = await supabase.auth.signIn({ email, password })
-        if(error) {
-          throw new Error
+        const { data, error } = await supabase.auth.signIn({ email, password });
+        if (error) {
+          throw new Error();
         }
         setShowSignIn(false);
         setSuccess(true);
-        
-
-      } catch(error) {
-        setError('Invalid Credentials');
+      } catch (error) {
+        setError("Invalid Credentials");
       }
     } else {
-      setError('Both Fields Required');
+      setError("Both Fields Required");
     }
-  }
+  };
 
   const resetError = () => {
-    setError('');
-  }
+    setError("");
+  };
 
   const toggleSignUp = () => {
     setShowSignIn(!showSignIn);
     setShowSignUp(!showSignUp);
-  }
+  };
 
   return (
     <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
-
-
       {/* SIGN UP DRAWER */}
 
-      <Drawer size={"60%"} opened={showSignUp} onClose={() => setShowSignUp(false)} title="Sign Up" padding="xl" position="top">
-        <SignUpForm setShowSignUp={setShowSignUp}/>
+      <Drawer
+        size={"60%"}
+        opened={showSignUp}
+        onClose={() => setShowSignUp(false)}
+        title="Sign Up"
+        padding="xl"
+        position="top"
+      >
+        <SignUpForm setShowSignUp={setShowSignUp} />
       </Drawer>
-
-
 
       {/* SIGN IN MODALS */}
       <Modal centered opened={showSignIn} onClose={() => setShowSignIn(false)}>
@@ -119,89 +138,108 @@ const SocialIcons = ({ textColor, textHover }) => {
         onClose={() => setSuccess(false)}
       />
       {!userContext.user && (
-        <Tooltip
-          label="Sign In"
-          position="bottom"
-          placement="start"
-          withArrow
-          disabled={disableTooltip}
-        >
-          <AiOutlineLogin
-            size={30}
-            onClick={() => setShowSignIn(true)}
-            className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-          />
+        <Tooltip opened={signUpReminder && !showSignIn && !showSignUp} transitionDuration={500} label="Sign In/Sign Up!" position="bottom" placement="start" withArrow>
+          <Tooltip
+            label="Sign In"
+            position="bottom"
+            placement="start"
+            withArrow
+            disabled={disableTooltip}
+          >
+            <AiOutlineLogin
+              size={32}
+              onClick={() => setShowSignIn(true)}
+              className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
+            />
+          </Tooltip>
         </Tooltip>
       )}
       {userContext.role === "user" && (
-        <Tooltip opened={userWelcome} disabled={mobileWelcomeTooltip} label={`Welcome, ${userContext.firstName}`} placement="start" position="bottom" withArrow>
-
         <Tooltip
-          disabled={disableTooltip}
-          label="Your Profile"
-          position="bottom"
+          opened={userWelcome}
+          disabled={mobileWelcomeTooltip}
+          label={`Welcome, ${userContext.firstName}`}
           placement="start"
+          position="bottom"
           withArrow
         >
-          
-          {userContext.avatarURL ? (
-            <div className="mr-4 mt-2">
-              <Image
-                height={30}
-                width={30}
-                alt={userContext.firstName}
-                onClick={() => router.push(`/profile/${userContext.user.id}/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`)}
-                className={`${styles.fade} cursor-pointer object-cover rounded-full`}
-                src={userContext.avatarURL}
-                title={userContext.firstName}
+          <Tooltip
+            disabled={disableTooltip}
+            label="Your Profile"
+            position="bottom"
+            placement="start"
+            withArrow
+          >
+            {userContext.avatarURL ? (
+              <div className="mr-4 mt-2">
+                <Image
+                  height={30}
+                  width={30}
+                  alt={userContext.firstName}
+                  onClick={() =>
+                    router.push(
+                      `/profile/${
+                        userContext.user.id
+                      }/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                    )
+                  }
+                  className={`${styles.fade} cursor-pointer object-cover rounded-full`}
+                  src={userContext.avatarURL}
+                  title={userContext.firstName}
+                />
+              </div>
+            ) : (
+              <FaRegUserCircle
+                size={30}
+                onClick={() => router.push("/admin/admin-dashboard")}
+                className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
               />
-            </div>
-          ) : (
-            <FaRegUserCircle
-            size={30}
-            onClick={() => router.push("/admin/admin-dashboard")}
-            className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-            />
             )}
+          </Tooltip>
         </Tooltip>
-            </Tooltip>
       )}
       {userContext.role === "admin" && (
-        <Tooltip opened={userWelcome} disabled={mobileWelcomeTooltip} label={`Welcome, ${userContext.firstName}`} placement="start" position="bottom" withArrow>
-
         <Tooltip
-          disabled={disableTooltip}
-          label="Admin Dashboard"
-          position="bottom"
+          opened={userWelcome}
+          disabled={mobileWelcomeTooltip}
+          label={`Welcome, ${userContext.firstName}`}
           placement="start"
+          position="bottom"
           withArrow
         >
-          {userContext.avatarURL ? (
-            <div className="mr-4 mt-2">
-              <Image
-                height={30}
-                width={30}
-                alt={userContext.firstName}
+          <Tooltip
+            disabled={disableTooltip}
+            label="Admin Dashboard"
+            position="bottom"
+            placement="start"
+            withArrow
+          >
+            {userContext.avatarURL ? (
+              <div className="mr-4 mt-2">
+                <Image
+                  height={30}
+                  width={30}
+                  alt={userContext.firstName}
+                  onClick={() => router.push("/admin/admin-dashboard")}
+                  className={`${styles.fade} cursor-pointer object-cover rounded-full`}
+                  src={userContext.avatarURL}
+                  title={userContext.firstName}
+                />
+              </div>
+            ) : (
+              <FaRegUserCircle
+                size={30}
                 onClick={() => router.push("/admin/admin-dashboard")}
-                className={`${styles.fade} cursor-pointer object-cover rounded-full`}
-                src={userContext.avatarURL}
-                title={userContext.firstName}
+                className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
               />
-            </div>
-          ) : (
-            <FaRegUserCircle
-            size={30}
-              onClick={() => router.push("/admin/admin-dashboard")}
-              className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-            />
-          )}
+            )}
+          </Tooltip>
         </Tooltip>
-      </Tooltip>
       )}
 
       {userContext.user && (
         <Tooltip
-        label="Sign Out"
+          label="Sign Out"
           position="bottom"
           placement="start"
           withArrow

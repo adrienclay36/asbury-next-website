@@ -32,6 +32,17 @@ export default function Home(props) {
     }
   }, [userContext.user, disableNotifications]);
 
+
+  useEffect(() => {
+    if(userWelcome) {
+      const closeWelcome = setTimeout(() => {
+        setUserWelcome(false);
+      }, 3000);
+
+      return () => clearTimeout(closeWelcome);
+    }
+  }, [userWelcome])
+
   return (
     <div className="font-primaryFont">
       {/* Priority load hero image for home page */}
