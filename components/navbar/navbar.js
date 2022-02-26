@@ -14,6 +14,7 @@ import { RiWomenLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { GiSewingNeedle } from 'react-icons/gi';
 import { BsFillPeopleFill } from "react-icons/bs";
+import { Burger } from '@mantine/core';
 import SubMenu from "./sub-menu";
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,13 +70,14 @@ const Navbar = (props) => {
           })}
         </ul>
         <div className="flex sm:hidden flex-1 justify-end mr-3">
-          <AiOutlineMenu
+          {/* <AiOutlineMenu
             className={`p-1 ${isOpen && styles["rotate-open"]} ${
               !isOpen && !isInitial && styles["rotate-close"]
             } ${props.textColor}`}
             onClick={toggleMenu}
             size={40}
-          />
+          /> */}
+          <Burger size={30} opened={isOpen} color="white" onClick={toggleMenu} />
         </div>
       </nav>
       <div className="sm:hidden md:block lg:block">

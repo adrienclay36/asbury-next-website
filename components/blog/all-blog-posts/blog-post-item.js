@@ -54,11 +54,11 @@ const BlogPostItem = ({
               height={25}
               className="object-cover rounded-full"
               />
-              <p className="ml-0 lg:ml-4 md:ml-4 mt-4 lg:mt-0 md:mt-0 font-semibold text-seaFoam-400">
+              <p className="ml-0 lg:ml-4 md:ml-4 mt-4 lg:mt-0 md:mt-0 font-semibold text-seaFoam-600">
                 {author}
               </p>
             </div>
-            <p className="uppercase font-semibold text-seaFoam-500 px-6">
+            <p className="uppercase font-semibold text-seaFoam-400 px-6 text-sm lg:text-md md:text-md">
               {formatDate}
             </p>
           </div>

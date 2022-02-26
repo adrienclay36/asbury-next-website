@@ -1,10 +1,9 @@
 import React from "react";
 import SectionHeading from "../ui/section-heading";
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
-import SquareCard from "../ui/square-card/square-card";
-import InfoCardVertical from "../ui/info-card-vertical";
-import { GiPieSlice } from "react-icons/gi";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { Accordion } from "@mantine/core";
 const ConnectSection = () => {
   const router = useRouter();
   return (
@@ -24,10 +23,8 @@ const ConnectSection = () => {
           all-ages. Please contact the office for specific schedule information.
         </p>
       </div>
-      
 
-      
-      <div className="container grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 items-start">
+      <div className="container grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 items-start gap-4">
         <InfoDropdown
           title="United Methodist Women"
           content="The organized unit of United Methodist Women shall be a community of women whose PURPOSE is to know God and to experience freedom as whole persons through Jesus Christ; to develop a creative, supportive fellowship; and to expand concepts of mission through participation in the global ministries of the church."
@@ -42,6 +39,7 @@ const ConnectSection = () => {
           href={"/connect/prayer-quilt-ministry"}
           external={false}
         />
+        
       </div>
     </SectionHeading>
   );

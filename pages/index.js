@@ -30,7 +30,7 @@ export default function Home(props) {
 
       return () => clearTimeout(timeout);
     }
-  }, [userContext.user]);
+  }, [userContext.user, disableNotifications]);
 
   return (
     <div className="font-primaryFont">

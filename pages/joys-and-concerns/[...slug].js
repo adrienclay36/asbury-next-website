@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { supabase } from "../../supabase-client";
 import Layout from "../../components/layout/layout";
-import FrontPrayerContextProvider from "../../components/joys-and-concerns/board-view/main-board-store";
 import SectionHeading from "../../components/ui/section-heading";
 import IndividualPost from "../../components/joys-and-concerns/board-view/individual-post/individual-post";
 import { useRouter } from "next/router";
 import CommentList from "../../components/joys-and-concerns/board-view/comment-list/comment-list";
-import PageLoading from "../../components/PageLoading/PageLoading";
 import { FrontPrayerContext } from "../../components/joys-and-concerns/board-view/main-board-store";
-import { getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../supabase-util";
+import { getUser, downloadImage } from "../../supabase-util";
 import SkeletonPost from "../../components/ui/skeleton-post";
 import UserIndividualPost from "../../components/joys-and-concerns/board-view/individual-post/user-individual-post";
 const IndividualPrayer = (props) => {

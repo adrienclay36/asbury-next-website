@@ -16,12 +16,36 @@ import UIModal from '../ui/modal/UIModal';
 import SignUpForm from "./sign-up-form";
 const SocialIcons = ({ textColor, textHover }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
+  const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
   const userContext = useContext(UserContext);
   const router = useRouter();
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [userWelcome, setUserWelcome] = useState(false);
+
+
+  useEffect(() => {
+    if(userContext.firstName) {
+      const timeout = setTimeout(() => {
+        setUserWelcome(true)
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+
+  }, [userContext.firstName])
+
+
+  useEffect(() => {
+    if(userWelcome) {
+      const userTimeout = setTimeout(() => {
+        setUserWelcome(false);
+      }, 3000)
+
+      return () => clearTimeout(userTimeout);
+    }
+  }, [userWelcome])
 
   
   useEffect(() => {
@@ -110,6 +134,8 @@ const SocialIcons = ({ textColor, textHover }) => {
         </Tooltip>
       )}
       {userContext.role === "user" && (
+        <Tooltip opened={userWelcome} disabled={mobileWelcomeTooltip} label={`Welcome, ${userContext.firstName}`} placement="start" position="bottom" withArrow>
+
         <Tooltip
           disabled={disableTooltip}
           label="Your Profile"
@@ -117,6 +143,7 @@ const SocialIcons = ({ textColor, textHover }) => {
           placement="start"
           withArrow
         >
+          
           {userContext.avatarURL ? (
             <div className="mr-4 mt-2">
               <Image
@@ -131,14 +158,17 @@ const SocialIcons = ({ textColor, textHover }) => {
             </div>
           ) : (
             <FaRegUserCircle
-              size={30}
-              onClick={() => router.push("/admin/admin-dashboard")}
-              className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
+            size={30}
+            onClick={() => router.push("/admin/admin-dashboard")}
+            className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
             />
-          )}
+            )}
         </Tooltip>
+            </Tooltip>
       )}
       {userContext.role === "admin" && (
+        <Tooltip opened={userWelcome} disabled={mobileWelcomeTooltip} label={`Welcome, ${userContext.firstName}`} placement="start" position="bottom" withArrow>
+
         <Tooltip
           disabled={disableTooltip}
           label="Admin Dashboard"
@@ -160,17 +190,18 @@ const SocialIcons = ({ textColor, textHover }) => {
             </div>
           ) : (
             <FaRegUserCircle
-              size={30}
+            size={30}
               onClick={() => router.push("/admin/admin-dashboard")}
               className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
             />
           )}
         </Tooltip>
+      </Tooltip>
       )}
 
       {userContext.user && (
         <Tooltip
-          label="Sign Out"
+        label="Sign Out"
           position="bottom"
           placement="start"
           withArrow
