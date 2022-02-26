@@ -29,15 +29,15 @@ const UserProfileCard = ({ user }) => {
     setSubmitting(true);
     if (password) {
       try {
-        const { data, error } = await supabase.auth.update({ password });
-        if (error) {
+        const { data, error: passError } = await supabase.auth.update({ password });
+        if (passError) {
           throw new Error();
         }
         setChangePassword(false);
         setSubmitting(false);
         setPasswordSuccess(true);
         setPassword("");
-      } catch (error) {
+      } catch (err) {
         setError("Invalid Password - Must be 6 Characters in Length");
         setSubmitting(false);
       }
@@ -52,10 +52,10 @@ const UserProfileCard = ({ user }) => {
     if (imageFile.type === "image/jpeg" || imageFile.type === "image/png") {
       if (userContext.avatarPath !== "default-2.png") {
         try {
-          const { data, error } = await supabase.storage
+          const { data, error: uploadError } = await supabase.storage
             .from("avatars")
             .remove([userContext.avatarPath]);
-          if (error) throw Error;
+          if (uploadError) throw Error;
         } catch (err) {
           console.log(err.message);
         }
@@ -88,6 +88,31 @@ const UserProfileCard = ({ user }) => {
   if (userContext.loading) {
     return <SkeletonPost />;
   }
+
+
+  const removePhoto = async () => {
+    setLoading(true);
+    const newAvatarUrl = 'default-2.png';
+    if (userContext.avatarPath !== "default-2.png") {
+      try {
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .remove([userContext.avatarPath]);
+        if (error) throw Error;
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+
+    const response = await updateItemInTable('users', userContext.user.id, { avatar_url: newAvatarUrl });
+
+    userContext.checkUser();
+    setLoading(false);
+
+  }
+
+
+  
 
   return (
     <>
@@ -178,6 +203,7 @@ const UserProfileCard = ({ user }) => {
           </Dropzone>
         )}
         {loading && <Loader color="dark" size="lg" variant="dots" />}
+        {userContext.avatarPath !== 'default-2.png' && <button onClick={removePhoto} className="text-red-800 hover:underline mt-4 font-semibold cursor-pointer">Remove Profile Picture</button>}
 
         <button
           onClick={() => setChangePassword(true)}

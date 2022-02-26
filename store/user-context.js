@@ -102,6 +102,7 @@ const UserContextProvider = (props) => {
 
   const logOutHandler = async () => {
     const { data, error } = await supabase.auth.signOut();
+    router.reload();
   };
 
   const signInHandler = async (email, password) => {
@@ -185,12 +186,12 @@ const UserContextProvider = (props) => {
           checkUser();
         }
         if (event === "SIGNED_OUT") {
-          router.reload();
+          checkUser();
           return;
         }
         if(event === "USER_DELETED") {
           checkUser();
-          logOutHandler();
+          router.reload();
           return;
         }
         if (event === "PASSWORD_RECOVERY") {

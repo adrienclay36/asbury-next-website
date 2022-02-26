@@ -190,6 +190,27 @@ export const checkAdmin = async (req) => {
   };
 };
 
+
+export const checkUser = async (req) => {
+
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+
+  if(!user) {
+    return { 
+      props: {},
+      redirect: {destination: '/'},
+    }
+  }
+  const userInfo = await getUser(user.id);
+
+  return {
+    props: { user: userInfo },
+  };
+
+  
+
+}
+
 export const getPermissions = async (req, permissionSet) => {
   const { user } = await supabase.auth.api.getUserByCookie(req);
   if (!user) {
