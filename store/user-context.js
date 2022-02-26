@@ -181,10 +181,8 @@ const UserContextProvider = (props) => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         handleAuthChange(event, session);
-        console.log(event);
         if (event === "SIGNED_IN") {
           checkUser();
-          return;
         }
         if (event === "SIGNED_OUT") {
           router.reload();
@@ -201,7 +199,6 @@ const UserContextProvider = (props) => {
           const token = query.get("access_token");
 
           router.push(`/admin/password-recovery?token=${token}`);
-          return;
         }
       }
     );
