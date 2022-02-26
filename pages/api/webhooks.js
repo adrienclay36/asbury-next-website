@@ -25,8 +25,6 @@ export default async function webhookHandler(req, res) {
             console.log("Webhook error: ", error.message);
             return res.status(400).send("Webhook error: ", error.message);
         }
-
-        console.log('event', event);
         res.status(200).send();
     }
 }

@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { TextInput } from "@mantine/core";
+import { Button, Select, TextInput } from "@mantine/core";
 import axios from "axios";
+import { states } from "../../../states";
+import { BsCreditCard2Front } from 'react-icons/bs';
 const OneTimeStripeCheckout = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [address, setAddress] = useState({
     city: "",
-    state: "",
     line1: "",
     postal_code: "",
   });
+  const [state, setState] = useState();
   const elements = useElements();
   const stripe = useStripe();
 
-
   const handlePayment = async (e) => {
     e.preventDefault();
-    const { data:clientSecret} = await axios.post('/api/payment-intents', {
+    setSubmitting(true);
+    const { data: clientSecret } = await axios.post("/api/payment-intents", {
       amount: 100, // this is in cents
     });
 
@@ -27,10 +30,10 @@ const OneTimeStripeCheckout = () => {
       address: {
         city: address.city,
         line1: address.line1,
-        state: address.state,
+        state: state,
         postal_code: address.postal_code,
-      }
-    }
+      },
+    };
 
     const cardElement = elements.getElement(CardElement);
 
@@ -38,23 +41,28 @@ const OneTimeStripeCheckout = () => {
       type: "card",
       card: cardElement,
       billing_details: billingDetails,
-      
-    })
+    });
 
     const confirmCardPayment = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethodReq.paymentMethod.id,
-    })
-    console.log(confirmCardPayment);
-  }
+    });
+    setSubmitting(false);
+    setName('');
+    setEmail('');
+    setAddress({city: '', line1: '', postal_code: ''});
+    setState('');
+  };
   return (
     <form onSubmit={handlePayment}>
-      <div className="w-11/12 lg:w-2/6 md:w-2/6 mx-auto p-10 border-2 mt-12">
+      <div className="container w-11/12 lg:w-3/12 md:w-3/12 mx-auto p-10 border-2 mt-12 rounded-lg bg-white">
+        <div className="mb-4">Customer Information</div>
         <div className="mb-4">
           <TextInput
-            label="Name On Card"
+            label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            placeholder="Full Name"
           />
         </div>
         <div className="mb-4">
@@ -64,6 +72,7 @@ const OneTimeStripeCheckout = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             type="email"
+            placeholder="Enter Your Email"
           />
         </div>
 
@@ -73,6 +82,7 @@ const OneTimeStripeCheckout = () => {
             value={address.line1}
             onChange={(e) => setAddress({ ...address, line1: e.target.value })}
             required
+            placeholder="1234 First St. NE"
           />
         </div>
         <div className="mb-4">
@@ -81,23 +91,38 @@ const OneTimeStripeCheckout = () => {
             value={address.city}
             onChange={(e) => setAddress({ ...address, city: e.target.value })}
             required
+            placeholder="Albuquerque"
           />
         </div>
         <div className="mb-4">
-          <TextInput
+          <Select
             label="State"
-            value={address.state}
-            onChange={(e) => setAddress({ ...address, state: e.target.value })}
+            value={state}
+            onChange={setState}
+            data={states}
+            searchable
+            placeholder="Start Typing to Search"
             required
+            nothingFound="No State With That Name.."
+            dropdownPosition="bottom"
+            clearable
           />
         </div>
       </div>
       <div className="w-11/12 mx-auto lg:w-2/6 md:w-2/6 p-10 border-2 mt-12 mb-4">
         <CardElement />
       </div>
-      <div className="text-center">
-
-      <button type="submit" className="px-4 py-2 text-white uppercase bg-seaFoam-600 rounded-lg">Donate</button>
+      <div className="text-center w-11/12 lg:w-2/6 md:w-2/6 mx-auto">
+        <Button
+          type="submit"
+          loading={submitting}
+          variant="filled"
+          leftIcon={<BsCreditCard2Front size={20} />}
+          className="text-white bg-emerald-900 hover:bg-emerald-800 w-full"
+        >
+          
+          Donate
+        </Button>
       </div>
     </form>
   );

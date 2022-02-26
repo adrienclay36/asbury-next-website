@@ -3,12 +3,9 @@ import MobileNav from "./mobile-nav";
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./navbar.module.css";
-import { AiOutlineMenu } from "react-icons/ai";
 import SocialIcons from "./social-icons";
-import Image from "next/image";
 import LogoUnited from "../logo/LogoUnited";
 import { CgCross } from "react-icons/cg";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaChild } from 'react-icons/fa';
 import { RiWomenLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
@@ -70,13 +67,6 @@ const Navbar = (props) => {
           })}
         </ul>
         <div className="flex sm:hidden flex-1 justify-end mr-3">
-          {/* <AiOutlineMenu
-            className={`p-1 ${isOpen && styles["rotate-open"]} ${
-              !isOpen && !isInitial && styles["rotate-close"]
-            } ${props.textColor}`}
-            onClick={toggleMenu}
-            size={40}
-          /> */}
           <Burger size={30} opened={isOpen} color="white" onClick={toggleMenu} />
         </div>
       </nav>
@@ -102,11 +92,6 @@ export const navLinks = [
     subNav: true,
     size: "md",
     items: [
-      // {
-      //   title: "About",
-      //   href: "/welcome",
-      //   icon: <AiOutlineInfoCircle size={20} />,
-      // },
       {
         title: "Worship",
         href: "/worship",
