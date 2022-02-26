@@ -91,9 +91,6 @@ const UserProfileCard = ({ user }) => {
     setLoading(false);
     userContext.checkUser();
   };
-  if (userContext.loading) {
-    return <SkeletonPost />;
-  }
 
 
   const removePhoto = async () => {
