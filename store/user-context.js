@@ -102,9 +102,6 @@ const UserContextProvider = (props) => {
 
   const logOutHandler = async () => {
     const { data, error } = await supabase.auth.signOut();
-    console.log(data, error);
-    await checkUser();
-    router.reload();
   };
 
   const signInHandler = async (email, password) => {
@@ -184,14 +181,19 @@ const UserContextProvider = (props) => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         handleAuthChange(event, session);
+        console.log(event);
         if (event === "SIGNED_IN") {
+          checkUser();
           return;
         }
         if (event === "SIGNED_OUT") {
+          router.reload();
           return;
         }
         if(event === "USER_DELETED") {
+          checkUser();
           logOutHandler();
+          return;
         }
         if (event === "PASSWORD_RECOVERY") {
           const hash = window.location.hash.substring(1);
@@ -200,9 +202,6 @@ const UserContextProvider = (props) => {
 
           router.push(`/admin/password-recovery?token=${token}`);
           return;
-        }
-        if (event === "USER_DELETED") {
-          logOutHandler();
         }
       }
     );

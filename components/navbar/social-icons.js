@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { BsFacebook, BsFillEnvelopeFill } from "react-icons/bs";
 import { MdOndemandVideo } from "react-icons/md";
 import { useRouter } from "next/router";
@@ -22,7 +22,19 @@ const SocialIcons = ({ textColor, textHover }) => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+
   
+  useEffect(() => {
+    if(success) {
+      const timeout = setTimeout(() => {
+        setSuccess(false);
+      }, 2000)
+
+      return () => {
+        clearTimeout(timeout);
+      }
+    }
+  }, [success])
 
   const signInHandler = async (email, password) => {
     
@@ -32,12 +44,9 @@ const SocialIcons = ({ textColor, textHover }) => {
         if(error) {
           throw new Error
         }
-        console.log(data, error);
         setShowSignIn(false);
         setSuccess(true);
-        setTimeout(() => {
-          router.reload();
-        }, 2000)
+        
 
       } catch(error) {
         setError('Invalid Credentials');
@@ -84,7 +93,6 @@ const SocialIcons = ({ textColor, textHover }) => {
         message="Successfully signed in!"
         opened={success}
         onClose={() => setSuccess(false)}
-        icon={<Loader variant="oval" color="darkgreen" />}
       />
       {!userContext.user && (
         <Tooltip
