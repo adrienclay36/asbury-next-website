@@ -251,10 +251,10 @@ const UserProfileCard = ({ user }) => {
         {!loading && (
           <Dropzone onDrop={(files) => uploadPhoto(files)}>
             {({ getRootProps, getInputProps }) => (
-              <section className="p-10 border-2 rounded-lg flex flex-1 justify-center items-center w-full mx-auto">
+              <section className="p-10 border-2 border-dashed rounded-lg flex flex-1 justify-center items-center w-full mx-auto">
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <HiOutlinePhotograph size={50} />
+                  <p className="font-bold text-gray-500">Drag and Drop or Click Here To Add A Photo!</p>
                 </div>
               </section>
             )}

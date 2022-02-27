@@ -4,6 +4,8 @@ import OneTimeStripeCheckout from "../../components/giving/one-time-donation/one
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import DonationSection from "../../components/giving/one-time-donation/donation-section";
+import SkeletonPost from '../../components/ui/skeleton-post';
 const DonationPlanHome = () => {
   const [publishableKey, setPublishableKey] = useState();
 
@@ -19,7 +21,7 @@ const DonationPlanHome = () => {
   if (!publishableKey) {
     return (
       <Layout title="One Time Donation">
-        <p>Loading...</p>
+        <SkeletonPost/>
       </Layout>
     );
   }
@@ -29,7 +31,7 @@ const DonationPlanHome = () => {
   return (
     <Elements stripe={stripe}>
       <Layout title="One Time Donation">
-        <OneTimeStripeCheckout />
+        <DonationSection/>
       </Layout>
     </Elements>
   );

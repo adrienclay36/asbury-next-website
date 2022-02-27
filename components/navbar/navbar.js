@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { GiSewingNeedle } from 'react-icons/gi';
 import { BsFillPeopleFill } from "react-icons/bs";
 import { Burger } from '@mantine/core';
+import { BsPaypal } from "react-icons/bs";
+import { FaStripeS } from "react-icons/fa";
 import SubMenu from "./sub-menu";
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,6 +123,20 @@ export const navLinks = [
   {
     text: "Giving",
     href: "/giving",
+    subNav: true,
+    size: "xs",
+    items : [
+      {
+        title: "PayPal",
+        href: "https://www.paypal.com",
+        icon: <BsPaypal size={18}/>
+      },
+      {
+        title: "Stripe",
+        href: "/giving/one-time-donation",
+        icon: <FaStripeS size={18}/>
+      }
+    ]
   },
   {
     text: "Connect",

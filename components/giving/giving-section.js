@@ -3,6 +3,7 @@ import SectionHeading from "../ui/section-heading";
 
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
 import SquareCard from "../ui/square-card/square-card";
+import GivingDropdown from "../ui/info-dropdown/giving-dropdown.js";
 
 const GivingSection = () => {
   return (
@@ -17,7 +18,14 @@ const GivingSection = () => {
         content2="In addition to donating in person during our Sunday worship services,
           you can also give in the following ways:"
       />
+
+
       <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
+
+        <GivingDropdown/>
+
+
+        
         {givingItems.map((item) => (
           <InfoDropdown
             key={item.title}
@@ -37,14 +45,7 @@ export default GivingSection;
 
 
 export const givingItems = [
-  {
-    title: "Online Giving",
-    content:
-      "Make an online donation, or set up recurring donations, via our secure PayPal merchant account by clicking below.",
-    buttonText: "Paypal",
-    href: "https://www.paypal.com",
-    external: true,
-  },
+  
   {
     title: "Automated Giving",
     content:

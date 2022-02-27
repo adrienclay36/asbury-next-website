@@ -6,7 +6,7 @@ import { ImBubble } from "react-icons/im";
 import { AiOutlineLogout, AiOutlineLogin } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { UserContext } from "../../store/user-context";
-import { Loader, Tooltip, Modal, Drawer } from "@mantine/core";
+import { Tooltip, Modal, Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { supabase } from "../../supabase-client";
 import Image from "next/image";
@@ -34,7 +34,7 @@ const SocialIcons = ({ textColor, textHover }) => {
       }, 2000);
       return () => clearTimeout(timeout);
     }
-  }, [userContext.firstName]);
+  }, [userContext.firstName, router.pathname]);
 
   useEffect(() => {
     if (userWelcome && router.pathname === "/") {

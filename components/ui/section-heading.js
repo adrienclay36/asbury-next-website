@@ -10,7 +10,7 @@ const SectionHeading = (props) => {
       </div>}
 
       <div className="text-center text-seaFoam-500">
-        <h1 className="text-4xl mt-12 uppercase tracking-widest">{props.subheading || null}</h1>
+        <h1 className="text-md lg:text-4xl md:text-2xl mt-12 uppercase tracking-widest">{props.subheading || null}</h1>
       </div>
       {props.children}
     </section>
