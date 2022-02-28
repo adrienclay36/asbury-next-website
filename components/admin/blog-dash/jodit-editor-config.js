@@ -4,26 +4,26 @@ import dynamic from "next/dynamic";
 const importJodit = () => import("jodit-react");
 
 const joditConfig = {
-  triggerChangeEvent: true,
-  enableDragAndDropFileToEditor: true,
   removeButtons: [
     "table",
     "fullsize",
     "highlight",
     "font",
-    "fontsize",
-    "fillColor",
   ],
 };
 
 const JoditEditor = dynamic(importJodit, { ssr: false });
 
 const JoditEditorConfig = ({ content, setContent }) => {
+  const handleChange = (newContent) => {
+    setContent(newContent);
+    console.log(newContent.slice(0,100) + "...");
+  }
   return (
     <JoditEditor
       config={joditConfig}
       value={content}
-      onBlur={(newContent) => setContent(newContent)}
+      onBlur={(newContent) => handleChange(newContent)}
     />
   );
 }

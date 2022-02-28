@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
 import { LoadingOverlay } from '@mantine/core'
 import JoditEditorConfig from './jodit-editor-config';
+import MantineEditor from './MantineEditor';
 const NewPostForm = () => {
     const router = useRouter();
     const [title, setTitle] = useState('');
@@ -26,6 +27,7 @@ const NewPostForm = () => {
         e.preventDefault();
         if(!title || !userContext.firstName || !userContext.lastName || !content) {
             setError(true);
+            setAdding(false);
             return;
         }
         const author = `${userContext.firstName} ${userContext.lastName}`
@@ -97,6 +99,8 @@ const NewPostForm = () => {
               required
             /> */}
             <JoditEditorConfig content={content} setContent={setContent} />
+            {/* <MantineEditor content={content} setContent={setContent}/> */}
+
           </div>
           <button
             disabled={adding ? true : false}
