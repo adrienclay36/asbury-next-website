@@ -3,6 +3,7 @@ import Link from "next/link";
 import useGetUser from '../../../hooks/useGetUser';
 import LibrarySkeleton from '../../library/book-view/book-list/library-skeleton';
 import Image from "next/image";
+import parse from 'html-react-parser';
 const BlogItem = ({ id, title, author, content, date, index, user_id }) => {
   const formatTitle = title
     .replace(/([a-z])([A-Z])/g, "$1-$2")
@@ -41,9 +42,9 @@ const BlogItem = ({ id, title, author, content, date, index, user_id }) => {
       <p className="lg:ml-4 md:ml-4 font-semibold text-gray-600">{author}</p>
       </div>
       <Link href={`/blog/${id}/${formatTitle}`} passHref>
-      <p className="lg:ml-4 md:ml-4 text-gray-500 w-full cursor-pointer">
-        {content.length > 100 ? content.slice(0, 200) + "..." : content}
-      </p>
+      <div className="lg:ml-4 md:ml-4 text-gray-500 w-full cursor-pointer">
+        {content.length > 100 ? parse(content.slice(0, 200)) : content}.....
+      </div>
       </Link>
       <Link href={`/blog/${id}/${formatTitle}`} passHref>
         <p className="lg:ml-4 md:ml-4 my-2 text-seaFoam-500 cursor-pointer">Read More</p>

@@ -12,3 +12,15 @@ html {
     @apply bg-gray-100;
 }
 
+iframe {
+    width: 80%!important;
+    height: 600px;
+    margin: auto;
+}
+
+@media (max-width: 900px) {
+    iframe {
+        height: 400px;
+    }
+}
+

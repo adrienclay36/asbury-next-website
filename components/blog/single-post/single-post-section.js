@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import HRThin from "../../ui/HRThin";
 import Image from "next/image";
 import styles from "./single-post-section.module.css";
+import parse from 'html-react-parser';
 const SinglePostSection = ({ post, avatarURL }) => {
   const { title, image, author, postcontent, postdate } = post;
   const formatDate = new Date(
@@ -49,7 +50,7 @@ const SinglePostSection = ({ post, avatarURL }) => {
       </div>
 
       <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg text-center lg:text-left md:text-left">
-        <p className="whitespace-pre-line">{postcontent}</p>
+        <p className="whitespace-pre-line">{parse(postcontent)}</p>
       </div>
 
       <div className="text-center mt-12">

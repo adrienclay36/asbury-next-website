@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SectionHeading from '../ui/section-heading'
-import ReactPlayer from 'react-player';
+import parse from 'html-react-parser';
 import { supabase } from '../../supabase-client';
 const LivestreamSection = () => {
     const [source, setSource] = useState('');
@@ -18,16 +18,8 @@ const LivestreamSection = () => {
   return (
     <SectionHeading title="Livestream">
       {source && (
-        <div className="flex flex-1 justify-center items-center">
-          <iframe
-            src={source}
-            width="560"
-            height="314"
-            className=""
-            scrolling="no"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            allowFullScreen={true}
-          ></iframe>
+        <div className="flex flex-1 justify-center items-center w-full lg:w-3/6 md:w-3/6 mx-auto">
+          {parse(source)}
         </div>
       )}
 

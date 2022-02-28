@@ -4,6 +4,8 @@ import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import HRThin from "../../ui/HRThin";
 import { getSignedUrl } from "../../../supabase-util";
 import { useRouter } from "next/router";
+import { BsCameraVideo } from "react-icons/bs";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 import AlertButton from "../../ui/alert-button/alert-button";
 const WorshipServiceOperations = () => {
   const [file, setFile] = useState("");
@@ -13,6 +15,7 @@ const WorshipServiceOperations = () => {
   const [liveLink, setLiveLink] = useState("");
   const [settingLink, setSettingLink] = useState(false);
   const [removingLink, setRemovingLink] = useState(false);
+  const [linkSuccess, setLinkSuccess] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,7 +28,17 @@ const WorshipServiceOperations = () => {
         clearTimeout(timeout);
       };
     }
-  }, [success]);
+
+    if (linkSuccess) {
+      const timeout = setTimeout(() => {
+        setLinkSuccess(false);
+      }, 5000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [success, linkSuccess]);
 
   const handleFile = async (e) => {
     e.preventDefault();
@@ -64,27 +77,26 @@ const WorshipServiceOperations = () => {
     e.preventDefault();
     setSettingLink(true);
     const { data } = await supabase.from("live_source").select();
-    if(data.length > 0) {
-        const idToDrop = data[0].id;
-        await supabase.from('live_source').delete().match({id: idToDrop});
+    if (data.length > 0) {
+      const idToDrop = data[0].id;
+      await supabase.from("live_source").delete().match({ id: idToDrop });
     }
-    await supabase.from('live_source').insert({ source: liveLink });
-    setLiveLink('');
+    await supabase.from("live_source").insert({ source: liveLink });
+    setLiveLink("");
     setSettingLink(false);
+    setLinkSuccess(true);
   };
 
   const removeCurrent = async (e) => {
-      e.preventDefault();
-      setRemovingLink(true);
-      const { data } = await supabase.from("live_source").select();
-      if (data.length > 0) {
-        const idToDrop = data[0].id;
-        await supabase.from("live_source").delete().match({ id: idToDrop });
-      }
-      setRemovingLink(false);
-  }
-
-
+    e.preventDefault();
+    setRemovingLink(true);
+    const { data } = await supabase.from("live_source").select();
+    if (data.length > 0) {
+      const idToDrop = data[0].id;
+      await supabase.from("live_source").delete().match({ id: idToDrop });
+    }
+    setRemovingLink(false);
+  };
 
   return (
     <div className="container grid sm:grid-cols-1 lg:grid-cols-2 md:grid-cols-2 mt-24">
@@ -101,10 +113,14 @@ const WorshipServiceOperations = () => {
             required
           />
           <div>
-            <AlertButton type="success" popoverText="Successfully Uploaded Program!" buttonText="Upload Program" open={success} loadingAction={loading}/>
-            {/* {success && (
-              <p className="text-green-700 text-lg">Program Uploaded!</p>
-            )} */}
+            <AlertButton
+              type="success"
+              popoverText="Successfully Uploaded Program!"
+              buttonText="Upload Program"
+              open={success}
+              loadingAction={loading}
+              icon={<HiOutlineDocumentAdd size={20} />}
+            />
           </div>
         </form>
         <button
@@ -123,7 +139,7 @@ const WorshipServiceOperations = () => {
         </h1>
         <HRThin />
         <form onSubmit={updateLiveLinkHandler}>
-          <input
+          <textarea
             type="text"
             className="px-2 mb-16 w-full"
             required
@@ -131,13 +147,16 @@ const WorshipServiceOperations = () => {
             onChange={(e) => setLiveLink(e.target.value)}
             placeholder={"Facebook Live Link"}
           />
-          <button
-            type="submit"
-            className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mt-8 w-full"
-            disabled={settingLink ? true : false}
-          >
-            {!settingLink ? "Update Link" : <DualRingLoader />}
-          </button>
+          <div className="text-center w-full">
+            <AlertButton
+              type="success"
+              popoverText="Successfully Set The Live Stream!"
+              buttonText="Update Livestream"
+              open={linkSuccess}
+              loadingAction={settingLink}
+              icon={<BsCameraVideo size={20} />}
+            />
+          </div>
         </form>
         <button
           className="bg-emerald-900 px-4 py-2 rounded-lg text-white uppercase mt-8 w-4/6"

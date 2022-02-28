@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+
 import { useRouter } from "next/router";
 import { getUser, downloadImage } from "../../../supabase-util";
 import useGetUser from '../../../hooks/useGetUser'
 import Image from "next/image";
 import styles from "./blog-post-item.module.css";
 import SkeletonPost from "../../ui/skeleton-post";
+import parse from 'html-react-parser';
 const BlogPostItem = ({
   id,
   title,
@@ -31,6 +33,11 @@ const BlogPostItem = ({
   if(!avatarURL) {
     return <SkeletonPost width={'w-full'}/>
   }
+    
+
+  
+
+  
 
  
 
@@ -65,7 +72,8 @@ const BlogPostItem = ({
         </div>
         <div className="h-0.5 w-3/6 rounded-lg bg-gray-200 mx-auto my-5"></div>
         <div className="px-10 pb-5">
-          <p>{content.length > 50 ? content.slice(0, 100) + "..." : content}</p>
+          {content.length > 50 && parse(content.slice(0, 150))}
+          {content.length < 50 && parse(content)}
         </div>
         <div className="flex justify-center lg:justify-end md:justify-end items-center p-4">
           <button

@@ -4,6 +4,7 @@ import { IoMdExit } from 'react-icons/io';
 import { BlogContext } from "./blog-store";
 import { useRouter } from 'next/router';
 import Link from "next/link";
+import parse from 'html-react-parser';
 const BlogItem = ({ post, permitted }) => {
   const blogContext = useContext(BlogContext);
   const router = useRouter();
