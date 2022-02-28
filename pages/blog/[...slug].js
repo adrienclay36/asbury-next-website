@@ -51,7 +51,7 @@ export const getStaticProps = async (context) => {
             post: data[0],
             avatar_url: userInfo.avatar_url,
         },
-        revalidate: 3600,
+        revalidate: 10,
     }
 
 }
