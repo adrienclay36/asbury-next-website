@@ -11,6 +11,7 @@ const SinglePostSection = ({ post, avatarURL }) => {
     postdate.replace(/-/g, "/").replace(/T.+/, "")
   ).toLocaleDateString("en-US");
   const router = useRouter();
+  console.log(parse(postcontent));
   return (
     <SectionHeading title="Blog">
       <div className="container md:w-4/6 lg:w-4/6 mx-auto w-full my-12">
@@ -49,8 +50,8 @@ const SinglePostSection = ({ post, avatarURL }) => {
         <HRThin />
       </div>
 
-      <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg text-center lg:text-left md:text-left">
-        <p className="whitespace-pre-line">{parse(postcontent)}</p>
+      <div className="container mt-12 leading-loose w-11/12 lg:w-4/6 text-lg text-center lg:text-left md:text-left whitespace-pre-line">
+        {parse(postcontent)}
       </div>
 
       <div className="text-center mt-12">

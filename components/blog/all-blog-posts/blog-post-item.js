@@ -33,7 +33,23 @@ const BlogPostItem = ({
   if(!avatarURL) {
     return <SkeletonPost width={'w-full'}/>
   }
-    
+
+
+  const getPreviewText = (content) => {
+
+    if(content.length < 150) {
+      const firstCutoff = content.indexOf("</p>");
+      const previewText = content.slice(0, firstCutoff + 4);
+      return previewText;
+    }
+
+    if(content.length > 150) {
+      const slicedContent = content.slice(0, 150) + '...</p>'
+      return slicedContent;
+    }
+
+  }
+
 
   
 
@@ -72,7 +88,7 @@ const BlogPostItem = ({
         </div>
         <div className="h-0.5 w-3/6 rounded-lg bg-gray-200 mx-auto my-5"></div>
         <div className="px-10 pb-5">
-          {content.length > 50 && parse(content.slice(0, 150))}
+          {content.length > 50 && parse(getPreviewText(content))}
           {content.length < 50 && parse(content)}
         </div>
         <div className="flex justify-center lg:justify-end md:justify-end items-center p-4">

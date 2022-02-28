@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { BlogContext } from './blog-store';
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
-import JoditEditorConfig from './jodit-editor-config';
+import CKEditorConfig from './ck-editor-config';
 
 const PostEditForm = ({post, id }) => {
     const [title, setTitle] = useState(post.title);
@@ -91,16 +91,7 @@ const PostEditForm = ({post, id }) => {
             <label htmlFor="content" className="text-lg mb-2 font-semibold">
               Contents
             </label>
-            {/* <textarea
-            rows="15"
-            onChange={(e) => setContent(e.target.value)}
-            className="p-2"
-            id="content"
-            type="text"
-            value={content}
-            required
-            /> */}
-            <JoditEditorConfig content={content} setContent={setContent} />
+            <CKEditorConfig content={content} setContent={setContent}/>
           </div>
           <button
             disabled={updating ? true : false}

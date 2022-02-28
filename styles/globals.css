@@ -16,11 +16,34 @@ iframe {
     width: 80%!important;
     height: 600px;
     margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 900px) {
     iframe {
         height: 400px;
     }
+}
+
+
+.ck.ck-content ul,
+.ck.ck-content ul li {
+  list-style-type: inherit;
+}
+
+.ck.ck-content ul {
+  /* Default user agent stylesheet, you can change it to your needs. */
+  padding-left: 40px;
+}
+
+.ck.ck-content ol,
+.ck.ck-content ol li {
+  list-style-type: decimal;
+}
+.ck.ck-content ol {
+  /* Default user agent stylesheet, you can change it to your needs. */
+  padding-left: 40px;
 }
 

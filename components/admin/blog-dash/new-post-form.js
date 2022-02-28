@@ -1,13 +1,11 @@
 import React, { useState, useContext} from 'react';
 import { BlogContext } from './blog-store';
 import { UserContext } from '../../../store/user-context';
-import { TextInput } from '@mantine/core';
 import styles from './new-post-form.module.css';
 import { useRouter } from 'next/router';
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
 import { LoadingOverlay } from '@mantine/core'
-import JoditEditorConfig from './jodit-editor-config';
-import MantineEditor from './MantineEditor';
+import CKEditorConfig from './ck-editor-config';
 const NewPostForm = () => {
     const router = useRouter();
     const [title, setTitle] = useState('');
@@ -89,17 +87,8 @@ const NewPostForm = () => {
               Contents
             </label>
 
-            {/* <textarea
-              rows="15"
-              onChange={(e) => setContent(e.target.value)}
-              className={styles.input}
-              id="content"
-              type="text"
-              value={content}
-              required
-            /> */}
-            <JoditEditorConfig content={content} setContent={setContent} />
-            {/* <MantineEditor content={content} setContent={setContent}/> */}
+            <CKEditorConfig setContent={setContent}/>
+            
 
           </div>
           <button

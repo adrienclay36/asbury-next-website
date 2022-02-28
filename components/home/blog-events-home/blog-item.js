@@ -26,6 +26,21 @@ const BlogItem = ({ id, title, author, content, date, index, user_id }) => {
 
 
 
+    const getPreviewText = (inputContent) => {
+      if (inputContent.length < 100) {
+        const firstCutoff = inputContent.indexOf("</p>");
+        const previewText = inputContent.slice(0, firstCutoff + 4);
+        return previewText;
+      }
+
+      if (inputContent.length > 100) {
+        const slicedContent = inputContent.slice(0, 150) + "...</p>";
+        return slicedContent;
+      }
+    };
+
+
+
   return (
     <li
       className={`${
@@ -43,7 +58,7 @@ const BlogItem = ({ id, title, author, content, date, index, user_id }) => {
       </div>
       <Link href={`/blog/${id}/${formatTitle}`} passHref>
       <div className="lg:ml-4 md:ml-4 text-gray-500 w-full cursor-pointer">
-        {content.length > 100 ? parse(content.slice(0, 200)) : content}.....
+        {parse(getPreviewText(content))}
       </div>
       </Link>
       <Link href={`/blog/${id}/${formatTitle}`} passHref>
