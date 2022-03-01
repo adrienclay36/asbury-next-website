@@ -11,7 +11,6 @@ const SinglePostSection = ({ post, avatarURL }) => {
     postdate.replace(/-/g, "/").replace(/T.+/, "")
   ).toLocaleDateString("en-US");
   const router = useRouter();
-  console.log(parse(postcontent));
   return (
     <SectionHeading title="Blog">
       <div className="container md:w-4/6 lg:w-4/6 mx-auto w-full my-12">
