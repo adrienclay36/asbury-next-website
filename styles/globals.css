@@ -50,4 +50,9 @@ iframe {
 figure { 
   margin: auto;
 }
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
