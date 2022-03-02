@@ -1,20 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import SectionHeading from '../ui/section-heading'
 import parse from 'html-react-parser';
+import VideoSkeleton from './video-skeleton';
 import { supabase } from '../../supabase-client';
-const LivestreamSection = () => {
-    const [source, setSource] = useState('');
 
-    const getSource = async () => {
-        const { data } = await supabase.from('live_source').select();
-        if(data.length > 0) {
-            setSource(data[0].source);
-        }
+const LivestreamSection = () => {
+  const [source, setSource] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const getSource = async () => {
+    setLoading(true);
+    const { data } = await supabase.from('live_source').select();
+    if (data.length > 0) {
+      setSource(data[0].source);
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
-    
-    useEffect(() => {
-        getSource();
-    },[])
+  }
+
+  useEffect(() => {
+    getSource();
+  }, [])
+
+
+  if (loading) {
+    return (
+      <SectionHeading title="Livestream">
+        <div className="w-11/12 lg:w-2/6 md:w-2/6 mx-auto">
+
+          <VideoSkeleton/>
+        </div>
+        
+      </SectionHeading>
+    )
+
+  }
   return (
     <SectionHeading title="Livestream">
       {source && (
