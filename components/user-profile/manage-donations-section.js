@@ -1,7 +1,8 @@
 import React from 'react'
 import SectionHeading from '../ui/section-heading'
 import { BsCreditCard2Front } from 'react-icons/bs';
-import { BiHistory } from 'react-icons/gr';
+import { GrTransaction } from 'react-icons/gr';
+import { FaSlidersH, FaMapMarkedAlt } from 'react-icons/fa';
 const ManageDonationsSection = () => {
   return (
     <SectionHeading title="Donations" >
@@ -13,11 +14,17 @@ const ManageDonationsSection = () => {
           <li className="hover:underline cursor-pointer">Set Up Recurring Donations</li>
           </div>
           <div className="flex flex-1 justify-center items-center">
-            <BiHistory className="mr-2 cursor-pointer text-seaFoam-600" size={20}/>
+            <GrTransaction className="mr-2 cursor-pointer text-seaFoam-600" size={20}/>
           <li className="hover:underline cursor-pointer">View Your Transaction History</li>
           </div>
+          <div className="flex flex-1 justify-center items-center">
+            <FaSlidersH className="mr-2 cursor-pointer text-seaFoam-600" size={20}/>
           <li className="hover:underline cursor-pointer">View All Available Plans</li>
-          <li className="hover:underline cursor-pointer">View All Available Plans</li>
+          </div>
+          <div className="flex flex-1 justify-center items-center">
+            <FaMapMarkedAlt className="mr-2 cursor-pointer text-seaFoam-600" size={20}/>
+          <li className="hover:underline cursor-pointer">View Your {new Date().getFullYear()} Roadmap</li>
+          </div>
         </ul>
       </div>
     </SectionHeading>
