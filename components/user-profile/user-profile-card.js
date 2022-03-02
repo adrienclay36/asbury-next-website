@@ -17,6 +17,7 @@ import { GearIcon } from '@radix-ui/react-icons';
 import SectionHeading from "../ui/section-heading";
 
 const UserProfileCard = ({ user }) => {
+  const userContext = useContext(UserContext);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [wrongType, setWrongType] = useState(false);
@@ -26,9 +27,8 @@ const UserProfileCard = ({ user }) => {
   const [error, setError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [editName, setEditName] = useState(false);
-  const [firstName, setFirstName] = useState(user.first_name);
-  const [lastName, setLastName] = useState(user.last_name);
-  const userContext = useContext(UserContext);
+  const [firstName, setFirstName] = useState(userContext.firstName);
+  const [lastName, setLastName] = useState(userContext.lastName);
   const router = useRouter();
 
   const changePasswordHandler = async () => {

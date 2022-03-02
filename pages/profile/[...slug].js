@@ -11,15 +11,7 @@ import SkeletonProfile from "../../components/ui/skeleton-profile";
 const UserProfilePage = () => {
   const router = useRouter();
   const userContext = useContext(UserContext);
-  const [ID, setID] = useState(null);
 
-  const { user, avatarURL, loadingAvatar } = useGetUser(ID);
-
-  useEffect(() => {
-    if (router.query.slug) {
-      setID(router.query.slug[0]);
-    }
-  }, [router.query.slug]);
 
   useEffect(() => {
     if (!userContext.user) {
@@ -27,7 +19,7 @@ const UserProfilePage = () => {
     }
   }, [userContext.user, router]);
 
-  if (!user || !ID || userContext.loading) {
+  if (userContext.loading) {
     return (
       <Layout title="Loading Profile">
         <SkeletonProfile />
@@ -37,7 +29,7 @@ const UserProfilePage = () => {
 
   return (
     <Layout title={`${userContext.firstName} ${userContext.lastName}`}>
-      <UserProfileCard user={user} />
+      <UserProfileCard />
       <ManageDonationsSection/>
     </Layout>
   );

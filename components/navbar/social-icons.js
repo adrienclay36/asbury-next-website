@@ -178,9 +178,7 @@ const SocialIcons = ({ textColor, textHover }) => {
                   alt={userContext.firstName}
                   onClick={() =>
                     router.push(
-                      `/profile/${
-                        userContext.user.id
-                      }/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                      `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
                     )
                   }
                   className={`${styles.fade} cursor-pointer object-cover rounded-full`}
