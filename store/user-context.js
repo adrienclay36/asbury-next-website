@@ -22,6 +22,8 @@ export const UserContext = createContext({
   avatarURL: "",
   avatarPath: "",
   googleUser: false,
+  recurringSubscription: false,
+  setNewSubscription: (amount) => {},
 });
 
 
@@ -43,6 +45,7 @@ const UserContextProvider = (props) => {
   const [avatarURL, setAvatarURL] = useState("");
   const [avatarPath, setAvatarPath] = useState('');
   const [googleUser, setGoogleUser] = useState(false);
+  const [recurringSubscription, setRecurringSubscription] = useState(false);
 
   const router = useRouter();
 
@@ -73,6 +76,9 @@ const UserContextProvider = (props) => {
 
         setFirstName(userInfo.first_name);
         setLastName(userInfo.last_name);
+        if(userInfo.recurring_subscription) {
+          setRecurringSubscription(true);
+        } 
       }
       if(permissions){
         setPermissions(userInfo.permissions);
@@ -117,6 +123,20 @@ const UserContextProvider = (props) => {
     });
 
   }
+
+  const setNewSubscription = async (amount) => {
+    const user = await supabase.auth.user();
+    if (user) {
+      const { data, error } = await supabase
+        .from("users")
+        .update({ recurring_subscription: true, amount: amount })
+        .match({ id: user.id });
+
+        if(error) {
+          console.log(error);
+        }
+    }
+  };
 
   const signUpHandler = async (email, password, inputFirstName, inputLastName) => {
     const { data: existingUser, error:noUser } = await supabase.from('users').select().match({email});
@@ -231,6 +251,8 @@ const UserContextProvider = (props) => {
     avatarURL,
     avatarPath,
     googleUser,
+    recurringSubscription,
+    setNewSubscription,
   };
 
   return (

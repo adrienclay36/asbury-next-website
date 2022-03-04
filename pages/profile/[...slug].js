@@ -6,7 +6,7 @@ import UserProfileCard from "../../components/user-profile/user-profile-card";
 import { useRouter } from "next/router";
 import { UserContext } from "../../store/user-context";
 import useGetUser from "../../hooks/useGetUser";
-import ManageDonationsSection from "../../components/user-profile/manage-donations-section";
+import FinancialManagementSection from '../../components/user-profile/financial-management-section';
 import SkeletonProfile from "../../components/ui/skeleton-profile";
 const UserProfilePage = () => {
   const router = useRouter();
@@ -30,7 +30,7 @@ const UserProfilePage = () => {
   return (
     <Layout title={`${userContext.firstName} ${userContext.lastName}`}>
       <UserProfileCard />
-      <ManageDonationsSection/>
+      <FinancialManagementSection/>
     </Layout>
   );
 };

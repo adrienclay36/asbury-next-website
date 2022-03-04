@@ -2,13 +2,14 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SK);
 
 
-export default async (req, res) => {
+const handler = async (req, res) => {
     if (req.method === 'POST') {
-        const { paymentMethodId } = JSON.parse(req.body);
+        const { paymentMethodId } = req.body;
 
         try { 
             const customer = await stripe.customers.create({
                 payment_method: paymentMethodId,
+                name: req.body.name,
                 phone: req.body.phone,
                 email: req.body.email,
                 invoice_settings: {
@@ -19,7 +20,7 @@ export default async (req, res) => {
 
             const subscription = await stripe.subscriptions.create({
                 customer: customer.id,
-                items: [{ plan: "your_plan_id_here" }],
+                items: [{ price: req.body.price }],
                 expand: ["latest_invoice.payment_intent"]
               });
 
@@ -40,3 +41,5 @@ export default async (req, res) => {
         res.status(405).end("Method Not Allowed");
     }
 }
+
+export default handler;

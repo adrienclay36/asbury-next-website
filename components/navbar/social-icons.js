@@ -137,7 +137,14 @@ const SocialIcons = ({ textColor, textHover }) => {
         onClose={() => setSuccess(false)}
       />
       {!userContext.user && (
-        <Tooltip opened={signUpReminder && !showSignIn && !showSignUp} transitionDuration={500} label="Sign In/Sign Up!" position="bottom" placement="start" withArrow>
+        <Tooltip
+          opened={signUpReminder && !showSignIn && !showSignUp}
+          transitionDuration={500}
+          label="Sign In/Sign Up!"
+          position="bottom"
+          placement="start"
+          withArrow
+        >
           <Tooltip
             label="Sign In"
             position="bottom"
@@ -153,7 +160,7 @@ const SocialIcons = ({ textColor, textHover }) => {
           </Tooltip>
         </Tooltip>
       )}
-      {userContext.role === "user" && (
+      {userContext.user && (
         <Tooltip
           opened={userWelcome}
           disabled={mobileWelcomeTooltip}
@@ -196,45 +203,7 @@ const SocialIcons = ({ textColor, textHover }) => {
           </Tooltip>
         </Tooltip>
       )}
-      {userContext.role === "admin" && (
-        <Tooltip
-          opened={userWelcome}
-          disabled={mobileWelcomeTooltip}
-          label={`Welcome, ${userContext.firstName}`}
-          transitionDuration={500}
-          placement="start"
-          position="bottom"
-          withArrow
-        >
-          <Tooltip
-            disabled={disableTooltip}
-            label="Admin Dashboard"
-            position="bottom"
-            placement="start"
-            withArrow
-          >
-            {userContext.avatarURL ? (
-              <div className="mr-4 mt-2">
-                <Image
-                  height={30}
-                  width={30}
-                  alt={userContext.firstName}
-                  onClick={() => router.push("/admin/admin-dashboard")}
-                  className={`${styles.fade} cursor-pointer object-cover rounded-full`}
-                  src={userContext.avatarURL}
-                  title={userContext.firstName}
-                />
-              </div>
-            ) : (
-              <FaRegUserCircle
-                size={30}
-                onClick={() => router.push("/admin/admin-dashboard")}
-                className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-              />
-            )}
-          </Tooltip>
-        </Tooltip>
-      )}
+      
 
       {userContext.user && (
         <Tooltip

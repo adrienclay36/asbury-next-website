@@ -15,6 +15,7 @@ import { FiKey } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 import { GearIcon } from '@radix-ui/react-icons';
 import SectionHeading from "../ui/section-heading";
+import Link from "next/link";
 
 const UserProfileCard = ({ user }) => {
   const userContext = useContext(UserContext);
@@ -278,6 +279,9 @@ const UserProfileCard = ({ user }) => {
           >
           Change Your Password
         </button>}
+        {userContext.role === 'admin' && <Link href="/admin/admin-dashboard" passHref>
+          <p className="font-semibold font-gray-500 cursor-pointer hover:underline">Visit The Admin Dashboard</p>
+        </Link>}
 
         {userContext.googleUser && <p className="text-sm text-center my-4 font-semibold">Your name was provided to us from your Google Account. You can get edit your name in your Google Account settings.</p>}
       </div>

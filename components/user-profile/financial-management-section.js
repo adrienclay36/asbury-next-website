@@ -5,7 +5,7 @@ import { GrTransaction } from 'react-icons/gr';
 import { FaSlidersH, FaMapMarkedAlt } from 'react-icons/fa';
 import { UserContext } from '../../store/user-context';
 import Link from 'next/link';
-const ManageDonationsSection = () => {
+const FinancialManagementSection = () => {
   const userContext = useContext(UserContext);
   return (
     <SectionHeading title="Donations" >
@@ -15,7 +15,7 @@ const ManageDonationsSection = () => {
           <Link href={`/profile/manage-donations/`} passHref>
           <div className="flex flex-1 justify-center items-center">
             <BsCreditCard2Front className="mr-2 cursor-pointer text-seaFoam-600" size={20}/>
-          <li className="hover:underline cursor-pointer">Set Up Recurring Donations</li>
+          <li className="hover:underline cursor-pointer">{userContext.recurringSubscription ? 'Manage Your Subscription' : 'Set Up Recurring Donations'}</li>
           </div>
           </Link>
           <div className="flex flex-1 justify-center items-center">
@@ -36,4 +36,4 @@ const ManageDonationsSection = () => {
   )
 }
 
-export default ManageDonationsSection
+export default FinancialManagementSection

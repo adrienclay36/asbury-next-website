@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/layout";
-import OneTimeStripeCheckout from "../../components/giving/one-time-donation/one-time-stripe-checkout";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";

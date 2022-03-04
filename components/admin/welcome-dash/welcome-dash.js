@@ -50,7 +50,7 @@ const WelcomeDash = ({ firstName }) => {
         <WelcomeItem
           title="Edit Your Profile"
           description="Update your profile picture, your title, and change passwords."
-          href="/admin/admin-profile"
+          href={`/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`}
           buttonText="View Profile"
         />
       </div>
