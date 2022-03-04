@@ -16,19 +16,12 @@ const handler = async (req, res) => {
                     default_payment_method: paymentMethodId,
                 }
             });
-            console.log(`Create-Customer: Successfully created cusomter: ${JSON.stringify(customer)}`)
 
             const subscription = await stripe.subscriptions.create({
                 customer: customer.id,
                 items: [{ price: req.body.price }],
                 expand: ["latest_invoice.payment_intent"]
               });
-
-              console.log(
-                `create-customer:: Successfully created subscription: ${JSON.stringify(
-                  subscription
-                )}`
-              );
               res.status(200).json(subscription);
 
 

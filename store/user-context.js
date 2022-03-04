@@ -124,18 +124,19 @@ const UserContextProvider = (props) => {
 
   }
 
-  const setNewSubscription = async (amount) => {
+  const setNewSubscription = async (amount, subscriptionID) => {
     const user = await supabase.auth.user();
     if (user) {
       const { data, error } = await supabase
         .from("users")
-        .update({ recurring_subscription: true, amount: amount })
+        .update({ recurring_subscription: true, amount: amount, subscription_id: subscriptionID })
         .match({ id: user.id });
 
         if(error) {
           console.log(error);
         }
     }
+    checkUser();
   };
 
   const signUpHandler = async (email, password, inputFirstName, inputLastName) => {

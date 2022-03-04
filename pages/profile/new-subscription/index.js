@@ -3,7 +3,7 @@ import Layout from '../../../components/layout/layout';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import ManageDonationsSection from '../../../components/user-profile/subscriptions/manage-donations-section';
+import NewSubscription from "../../../components/user-profile/subscriptions/new-subscription";
 import SkeletonPost from "../../../components/ui/skeleton-post";
 import { UserContext } from "../../../store/user-context";
 import { useRouter } from "next/router";
@@ -39,8 +39,8 @@ const ManageDonationsHome = () => {
 
   return (
     <Elements stripe={stripe}>
-      <Layout title="Manage Recurring Donations">
-        <ManageDonationsSection />
+      <Layout title="New Recurring Donation">
+        <NewSubscription />
       </Layout>
     </Elements>
   );

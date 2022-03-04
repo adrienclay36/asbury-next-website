@@ -104,9 +104,10 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
   const handleSubscription = async (subscription, paymentMethodId) => {
     const { latest_invoice } = subscription;
     const { payment_intent } = latest_invoice;
-
+    
     if (payment_intent) {
-      const { client_secret, status } = payment_intent;
+      const { client_secret, status, customer } = payment_intent;
+
 
       if (status === "requires_action") {
         const confirmCardPayment = await stripe.confirmCardPayment(
@@ -124,7 +125,8 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
       } else {
         setSuccess(true);
         setSubmitting(false);
-        checkoutSuccess();
+        
+        checkoutSuccess(subscription.id);
       }
     }
   };
