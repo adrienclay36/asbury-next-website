@@ -196,14 +196,17 @@ const SocialIcons = ({ textColor, textHover }) => {
             ) : (
               <FaRegUserCircle
                 size={30}
-                onClick={() => router.push("/admin/admin-dashboard")}
+                onClick={() =>
+                  router.push(
+                    `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                  )
+                }
                 className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
               />
             )}
           </Tooltip>
         </Tooltip>
       )}
-      
 
       {userContext.user && (
         <Tooltip

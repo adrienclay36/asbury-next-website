@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import PlanCard from './plan-card'
 import { Modal, Button, Select } from '@mantine/core';
 import { BsCreditCard2Front } from 'react-icons/bs';
 import HRThin from '../../ui/HRThin';
@@ -28,23 +27,29 @@ const NewSubscriptionSection = () => {
       setLoadingPlans(false);
     }
 
-    const checkoutSuccess = (subscriptionID) => {
+    const checkoutSuccess = (customerID) => {
       setCheckingOut(false);
       setSuccess(true);
-      userContext.setNewSubscription(selectedPlan.unit_amount / 100, subscriptionID);
+      userContext.setNewSubscription(customerID);
     }
 
 
     useEffect(() => {
-      if(!userContext.user || userContext.recurringSubscription) {
-        router.push("/profile/manage-subscription");
-        return;
+      if(!userContext.user || userContext.customerID) {
+        const timeout = setTimeout(() => {
+          router.push(`/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`);
+        }, 3000)
+        return () => clearTimeout(timeout);
       }
       getPlans();
-    },[userContext.user, userContext.recurringSubscription, router])
+    },[userContext.user, userContext.customerID, router, userContext.firstName, userContext.lastName])
 
     if(loadingPlans) {
-      return <SkeletonPost/>
+      return (
+        <div className="w-11/12 mx-auto">
+          <SkeletonPost />
+        </div>
+      );
     }
     const checkOutWithPlan = () => {
       if(selectedAmount){
@@ -66,6 +71,7 @@ const NewSubscriptionSection = () => {
         <PlanCheckoutForm
           checkoutSuccess={checkoutSuccess}
           selectedPlan={selectedPlan}
+          setCheckingOut={setCheckingOut}
         />
       </Modal>
       <UIModal

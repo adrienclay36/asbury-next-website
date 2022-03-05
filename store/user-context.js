@@ -1,7 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 import { useRouter } from "next/router";
-import { downloadImage, getPublicUrl, getSignedUrl, updateItemInTable } from "../supabase-util";
+import {
+  downloadImage,
+  getPublicUrl,
+  getSignedUrl,
+  updateItemInTable,
+} from "../supabase-util";
 const TABLE_NAME = "users";
 export const UserContext = createContext({
   user: null,
@@ -24,8 +29,12 @@ export const UserContext = createContext({
   googleUser: false,
   recurringSubscription: false,
   setNewSubscription: (amount) => {},
+  cancelSubscription: () => {},
+  subscriptionAmount: null,
+  subscriptionID: "",
+  customerID: "",
+  setCustomerID: () => {},
 });
-
 
 const REDIRECT_URL = "http://localhost:3000";
 // const REDIRECT_URL = "https://asbury-next-website.vercel.app/";
@@ -43,9 +52,12 @@ const UserContextProvider = (props) => {
   const [lastName, setLastName] = useState("");
   const [title, setTitle] = useState("");
   const [avatarURL, setAvatarURL] = useState("");
-  const [avatarPath, setAvatarPath] = useState('');
+  const [avatarPath, setAvatarPath] = useState("");
   const [googleUser, setGoogleUser] = useState(false);
   const [recurringSubscription, setRecurringSubscription] = useState(false);
+  const [subscriptionAmount, setSubscriptionAmount] = useState(null);
+  const [subscriptionID, setSubscriptionID] = useState("");
+  const [customerID, setCustomerID] = useState("");
 
   const router = useRouter();
 
@@ -65,22 +77,26 @@ const UserContextProvider = (props) => {
       .match({ id: user.id });
     if (data) {
       const userInfo = data[0];
-      if(user.app_metadata.provider === 'google') {
-        const googleArray = user.user_metadata.full_name.split(' ')
+      if (user.app_metadata.provider === "google") {
+        const googleArray = user.user_metadata.full_name.split(" ");
         setFirstName(googleArray[0]);
-        setLastName(googleArray[1])
-        if(googleArray[0] !== userInfo.first_name || googleArray[1] !== userInfo.last_name){
-          const {data, error} = await updateItemInTable(TABLE_NAME, user.id, { first_name: googleArray[0], last_name: googleArray[1]});
+        setLastName(googleArray[1]);
+        if (
+          googleArray[0] !== userInfo.first_name ||
+          googleArray[1] !== userInfo.last_name
+        ) {
+          const { data, error } = await updateItemInTable(TABLE_NAME, user.id, {
+            first_name: googleArray[0],
+            last_name: googleArray[1],
+          });
         }
       } else {
-
         setFirstName(userInfo.first_name);
         setLastName(userInfo.last_name);
-        if(userInfo.recurring_subscription) {
-          setRecurringSubscription(true);
-        } 
+        
       }
-      if(permissions){
+      setCustomerID(userInfo.customer_id);
+      if (permissions) {
         setPermissions(userInfo.permissions);
       } else {
         setPermissions(null);
@@ -98,9 +114,8 @@ const UserContextProvider = (props) => {
   const checkUser = async () => {
     const user = await supabase.auth.user();
     if (user) {
-      
       setUserValue(user);
-      if(user.app_metadata.provider === 'google') {
+      if (user.app_metadata.provider === "google") {
         setGoogleUser(true);
       }
       getPermissions(user);
@@ -113,68 +128,96 @@ const UserContextProvider = (props) => {
   };
 
   const signInHandler = async (email, password) => {
-    const { data, error } = await supabase.auth.signIn({ email, password })
+    const { data, error } = await supabase.auth.signIn({ email, password });
     await checkUser();
-  }
+  };
 
   const signInWithGoogle = async () => {
     const { user, session, error } = await supabase.auth.signIn({
-      provider: 'google',
+      provider: "google",
     });
+  };
 
-  }
-
-  const setNewSubscription = async (amount, subscriptionID) => {
+  const setNewSubscription = async (custID) => {
     const user = await supabase.auth.user();
     if (user) {
       const { data, error } = await supabase
         .from("users")
-        .update({ recurring_subscription: true, amount: amount, subscription_id: subscriptionID })
+        .update({
+          customer_id: custID,
+        })
         .match({ id: user.id });
 
-        if(error) {
-          console.log(error);
-        }
+      if (error) {
+        console.log(error);
+      }
     }
     checkUser();
   };
 
-  const signUpHandler = async (email, password, inputFirstName, inputLastName) => {
-    const { data: existingUser, error:noUser } = await supabase.from('users').select().match({email});
-    if(existingUser.length > 0){
+  const cancelSubscription = async () => {
+    const user = supabase.auth.user();
+    const { data, error } = await supabase
+      .from("users")
+      .update({
+        recurring_subscription: false,
+        amount: null,
+        subscription_id: null,
+      })
+      .match({ id: user.id });
+
+      if(error) {
+        console.log(error);
+      }
+      checkUser();
+      setRecurringSubscription(false);
+      setSubscriptionAmount(null);
+      setSubscriptionID(null);
+  };
+
+  const signUpHandler = async (
+    email,
+    password,
+    inputFirstName,
+    inputLastName
+  ) => {
+    const { data: existingUser, error: noUser } = await supabase
+      .from("users")
+      .select()
+      .match({ email });
+    if (existingUser.length > 0) {
       return { status: "duplicate" };
     }
-    const { user, session, error } = await supabase.auth.signUp({ email, password });
+    const { user, session, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-    if(error) {
-      return { status: "error", error};
+    if (error) {
+      return { status: "error", error };
     }
 
-      const { data } = await supabase
+    const { data } = await supabase
+      .from("users")
+      .select()
+      .match({ email: email });
+
+    if (data) {
+      const userInfo = data[0];
+      const { data: successData, error: submitError } = await supabase
         .from("users")
-        .select()
-        .match({ email: email });
-
-      if (data) {
-        const userInfo = data[0];
-        const { data: successData, error: submitError } = await supabase
-          .from("users")
-          .update({
-            first_name: inputFirstName,
-            last_name: inputLastName,
-          })
-          .match({ id: userInfo.id });
-        if (submitError) {
-          return { status: "error", submitError };
-        } else {
-          return { status: "ok" };
-        }
+        .update({
+          first_name: inputFirstName,
+          last_name: inputLastName,
+        })
+        .match({ id: userInfo.id });
+      if (submitError) {
+        return { status: "error", submitError };
+      } else {
+        return { status: "ok" };
       }
-
-
-
-    
-}
+    }
+  };
 
   useEffect(() => {
     if (permissions) {
@@ -211,7 +254,7 @@ const UserContextProvider = (props) => {
           checkUser();
           return;
         }
-        if(event === "USER_DELETED") {
+        if (event === "USER_DELETED") {
           checkUser();
           router.reload();
           return;
@@ -254,6 +297,10 @@ const UserContextProvider = (props) => {
     googleUser,
     recurringSubscription,
     setNewSubscription,
+    cancelSubscription,
+    subscriptionAmount,
+    subscriptionID,
+    customerID,
   };
 
   return (

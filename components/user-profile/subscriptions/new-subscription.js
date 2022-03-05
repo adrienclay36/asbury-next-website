@@ -5,7 +5,7 @@ import NewSubscriptionSection from './new-subscription-section';
 const NewSubscription = () => {
     const userContext = useContext(UserContext);
   return (
-      <SectionHeading title="Manage Donations">
+      <SectionHeading title="Recurring Donations">
           <NewSubscriptionSection/>
       </SectionHeading>
   )

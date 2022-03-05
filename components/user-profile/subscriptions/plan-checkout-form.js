@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import { TextInput, Button, Select, NumberInput } from "@mantine/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { BsCreditCard2Front } from "react-icons/bs";
+import { MdCancel } from 'react-icons/md';
 import { UserContext } from "../../../store/user-context";
 import { cities } from "../../../cities";
 import { states } from "../../../states";
 import axios from "axios";
-const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
+const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => {
   const userContext = useContext(UserContext);
   const [formIncomplete, setFormIncomplete] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -90,13 +91,28 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
       console.log(result.error);
       setSubmitting(false);
     } else {
-      const response = await axios.post("/api/create-customer", {
-        paymentMethodId: result.paymentMethod.id,
-        email: email,
-        name: name,
-        phone: phoneNumber.toString(),
-        price: selectedPlan.id,
-      });
+      let customerInfo
+      if(userContext.customerID)
+      {
+        customerInfo = {
+          paymentMethodId: result.paymentMethod.id,
+          email: email,
+          name: name,
+          phone: phoneNumber.toString(),
+          price: selectedPlan.id,
+          customerID: userContext.customerID,
+        };
+      } else {
+        customerInfo = {
+          paymentMethodId: result.paymentMethod.id,
+          email: email,
+          name: name,
+          phone: phoneNumber.toString(),
+          price: selectedPlan.id,
+        };
+      }
+       
+      const response = await axios.post("/api/create-customer", customerInfo);
       handleSubscription(response.data, result.paymentMethod.id);
     }
   };
@@ -126,7 +142,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
         setSuccess(true);
         setSubmitting(false);
         
-        checkoutSuccess(subscription.id);
+        checkoutSuccess(customer);
       }
     }
   };
@@ -147,6 +163,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
         <p className="text-center font-semibold text-seaFoam-600"></p>
         <div className="mb-4">
           <TextInput
+            disabled={submitting}
             label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -156,6 +173,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
         </div>
         <div className="mb-4">
           <TextInput
+            disabled={submitting}
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -167,6 +185,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
 
         <div className="mb-4">
           <NumberInput
+            disabled={submitting}
             label="Phone Number"
             value={phoneNumber}
             onChange={setPhoneNumber}
@@ -178,6 +197,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
 
         <div className="mb-4">
           <TextInput
+            disabled={submitting}
             label="Address"
             value={address.line1}
             onChange={(e) => setAddress({ ...address, line1: e.target.value })}
@@ -187,6 +207,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
         </div>
         <div className="mb-4">
           <Select
+            disabled={submitting}
             label="City"
             value={city}
             onChange={setCity}
@@ -204,6 +225,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
         </div>
         <div className="mb-4">
           <Select
+            disabled={submitting}
             label="State"
             value={state}
             onChange={setState}
@@ -218,6 +240,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
         </div>
         <div className="mb-4">
           <TextInput
+            disabled={submitting}
             label="Zip Code"
             value={address.postal_code}
             onChange={(e) =>
@@ -244,6 +267,17 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess }) => {
           className="text-white bg-emerald-900 hover:bg-emerald-800 w-full"
         >
           Donate
+        </Button>
+      </div>
+      <div className="text-center w-11/12 lg:w-2/6 md:w-2/6 mx-auto mt-6">
+        <Button
+          type="button"
+          variant="filled"
+          leftIcon={<MdCancel size={20} />}
+          className="text-white bg-red-700 hover:bg-red-800 w-full"
+          onClick={() => setCheckingOut(false)}
+        >
+          Cancel
         </Button>
       </div>
     </form>

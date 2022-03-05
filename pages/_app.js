@@ -2,6 +2,7 @@ import "../styles/globals.css";
 
 import { useEffect } from "react";
 import UserContextProvider from "../store/user-context";
+
 import { polyfill } from "smoothscroll-polyfill";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
@@ -10,7 +11,6 @@ import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
 function MyApp({ Component, pageProps }) {
-
   useEffect(() => {
     polyfill();
   }, []);
@@ -26,9 +26,11 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
       <NextNProgress height={4} color={"#899e9c"} />
-      <UserContextProvider>
-        <Component {...pageProps} />
-      </UserContextProvider>
+
+        <UserContextProvider>
+          <Component {...pageProps} />
+        </UserContextProvider>
+
     </>
   );
 }
