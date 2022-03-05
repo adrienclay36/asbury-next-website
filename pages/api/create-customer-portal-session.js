@@ -7,8 +7,8 @@ const handler = async (req, res) => {
 
     try {
       const session = await stripe.billingPortal.sessions.create({
-          customer: customerID,
-          return_url: 'http://localhost:3000/'
+        customer: customerID,
+        return_url: "https://asbury-next-website.vercel.app/",
       });
       res.status(200).json({sessionURL: session.url});
     } catch (e) {
