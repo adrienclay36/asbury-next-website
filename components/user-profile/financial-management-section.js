@@ -24,13 +24,13 @@ const FinancialManagementSection = () => {
         </h1>
         <ul className="text-center font-semibold grid sm:grid-cols-1 lg:grid-cols-2 md:grid-cols-3 w-full gap-6">
           
-            <div onClick={!userContext.customerID ? () => router.push('/profile/new-subscription') : createPortalSession} className="flex flex-1 justify-center items-center">
+            <div onClick={!userContext.recurringSubscription ? () => router.push('/profile/new-subscription') : createPortalSession} className="flex flex-1 justify-center items-center">
               <BsCreditCard2Front
                 className="mr-2 cursor-pointer text-seaFoam-600"
                 size={20}
               />
               <li className="hover:underline cursor-pointer">
-                {userContext.customerID
+                {userContext.recurringSubscription
                   ? "Manage Your Subscription"
                   : "Set Up Recurring Donations"}
               </li>

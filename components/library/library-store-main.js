@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { getPagedData, getQueriedData, getTotalPages, getPagedBookData } from "../../supabase-util";
+
+import { getQueriedData, getTotalPages, getPagedBookData } from "../../supabase-util";
 
 const PAGE_SIZE = 15;
 

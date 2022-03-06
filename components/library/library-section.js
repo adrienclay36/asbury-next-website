@@ -3,7 +3,6 @@ import SectionHeading from "../ui/section-heading";
 import AboutView from "./about-view/about-view";
 import BookView from './book-view/book-view'
 import styles from "./library-section.module.css";
-import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
 import { LibraryMainContext } from "./library-store-main";
 const LibrarySection = () => {
   const [aboutView, setAboutView] = useState(true);

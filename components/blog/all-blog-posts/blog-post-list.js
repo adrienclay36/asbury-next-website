@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import BlogPostItem from "./blog-post-item";
 import { AiOutlineSearch } from "react-icons/ai";
-import { BsPower, BsX } from "react-icons/bs";
+import { BsX } from "react-icons/bs";
 import SkeletonGrid from './skeleton-grid';
 import styles from "./blog-post-list.module.css";
 import { MainBlogContext } from "../blog-store-main";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
-const BlogPostList = ({ posts }) => {
+const BlogPostList = () => {
   const [query, setQuery] = useState('');
   const blogContext = useContext(MainBlogContext);
   

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Modal, Button, Select } from '@mantine/core';
-import { BsCreditCard2Front } from 'react-icons/bs';
+import { GiPayMoney } from 'react-icons/gi';
 import HRThin from '../../ui/HRThin';
 import PlanCheckoutForm from './plan-checkout-form';
 import axios from 'axios';
@@ -17,13 +17,16 @@ const NewSubscriptionSection = () => {
     const [checkingOut, setCheckingOut] = useState(false);
     const [selectedAmount, setSelectedAmount] = useState('');
     const [selectedPlan, setSelectedPlan] = useState();
+    const [products, setProducts] = useState();
     const [success, setSuccess] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     const getPlans = async () => {
       setLoadingPlans(true);
       const response = await axios.get('/api/get-products');
       setPlans(response.data.prices);
-      setPrices(response.data.costList);
+      setProducts(response.data.products);
+      setPrices(response.data.namesOnly);
       setLoadingPlans(false);
     }
 
@@ -35,14 +38,14 @@ const NewSubscriptionSection = () => {
 
 
     useEffect(() => {
-      if(!userContext.user || userContext.customerID) {
+      if(!userContext.user || userContext.recurringSubscription) {
         const timeout = setTimeout(() => {
           router.push(`/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`);
         }, 3000)
         return () => clearTimeout(timeout);
       }
       getPlans();
-    },[userContext.user, userContext.customerID, router, userContext.firstName, userContext.lastName])
+    },[userContext.user, userContext.recurringSubscription, router, userContext.firstName, userContext.lastName])
 
     if(loadingPlans) {
       return (
@@ -51,38 +54,26 @@ const NewSubscriptionSection = () => {
         </div>
       );
     }
-    const checkOutWithPlan = () => {
+    const checkOutWithPlan = async () => {
+      setSubmitting(true);
       if(selectedAmount){
-        const chosenPlan = plans.find(plan => plan.unit_amount === parseInt(selectedAmount) * 100);
-        setSelectedPlan(chosenPlan);
-        setCheckingOut(true);
+        const chosenProduct = products.find(product => product.name === selectedAmount);
+        const chosenPrice = plans.find(plan => plan.product === chosenProduct.id);
+        setSelectedPlan(chosenPrice);
+
+        const response = await axios.post('/api/create-checkout-session', {priceID: chosenPrice.id, userID: userContext.user.id});
+        if(response.data.sessionURL) {
+          router.push(response.data.sessionURL);
+        }
+        
       }
+      setSubmitting(false);
       setSelectedAmount(null);
     }
 
     
   return (
     <>
-      <Modal
-        centered
-        opened={checkingOut}
-        onClose={() => setCheckingOut(false)}
-      >
-        <PlanCheckoutForm
-          checkoutSuccess={checkoutSuccess}
-          selectedPlan={selectedPlan}
-          setCheckingOut={setCheckingOut}
-        />
-      </Modal>
-      <UIModal
-        centerModal={true}
-        opened={success}
-        onClose={() => setSuccess(false)}
-        type="success"
-        message={`Success! You're now subscribed to regular donations. You will be charged $${
-          selectedPlan?.unit_amount / 100
-        } today, and each month going forward until you cancel. Thank you for contributing to Asbury's mission! You can manage your new subscription in your user profile.`}
-      />
       <div className="flex flex-1 flex-col justify-center items-center border-2 shadow-md rounded-lg p-4 w-11/12 lg:w-2/6 md:w-2/6 mx-auto">
         <p className="text-lg lg:text-2xl md:text-2xl uppercase text-seaFoam-600">
           Set Up A Monthly Contribution
@@ -91,7 +82,6 @@ const NewSubscriptionSection = () => {
         <ul className="text-center font-semibold">
           <li className="mb-4 text-lg md:text-2xl lg:text-2xl">
             <Select
-
               dropdownPosition="bottom"
               styles={{
                 item: {
@@ -121,12 +111,13 @@ const NewSubscriptionSection = () => {
         <div className="text-center w-11/12 lg:w-full md:w-full mx-auto mt-6">
           <Button
             onClick={checkOutWithPlan}
+            loading={submitting}
             type="button"
             variant="filled"
-            leftIcon={<BsCreditCard2Front size={20} />}
+            leftIcon={<GiPayMoney size={20} />}
             className="text-white bg-emerald-900 hover:bg-emerald-800 w-full"
           >
-            Select This Plan
+            Begin Checkout
           </Button>
         </div>
       </div>

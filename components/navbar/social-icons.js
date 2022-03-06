@@ -182,6 +182,7 @@ const SocialIcons = ({ textColor, textHover }) => {
                 <Image
                   height={30}
                   width={30}
+                  priority
                   alt={userContext.firstName}
                   onClick={() =>
                     router.push(

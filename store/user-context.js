@@ -7,6 +7,7 @@ import {
   getSignedUrl,
   updateItemInTable,
 } from "../supabase-util";
+import axios from "axios";
 const TABLE_NAME = "users";
 export const UserContext = createContext({
   user: null,
@@ -95,7 +96,13 @@ const UserContextProvider = (props) => {
         setLastName(userInfo.last_name);
         
       }
-      setCustomerID(userInfo.customer_id);
+      if(!userInfo.customer_id) {
+        await establishCustomer(userInfo);
+      } else {
+        
+        setCustomerID(userInfo.customer_id);
+      }
+      setRecurringSubscription(userInfo.recurring_donations);
       if (permissions) {
         setPermissions(userInfo.permissions);
       } else {
@@ -138,6 +145,19 @@ const UserContextProvider = (props) => {
     });
   };
 
+
+  const establishCustomer = async (userInfo) => {
+    const formatName = `${userInfo.first_name} ${userInfo.last_name}`
+    const customerObject = {
+      name: formatName,
+      email: userInfo.email,
+      userID: userInfo.id,
+    }
+    const response = await axios.post('/api/establish-new-customer', customerObject);
+    console.log(response);
+    setCustomerID(response.data.customerID);
+  }
+
   const setNewSubscription = async (custID) => {
     const user = await supabase.auth.user();
     if (user) {
@@ -145,6 +165,7 @@ const UserContextProvider = (props) => {
         .from("users")
         .update({
           customer_id: custID,
+          recurring_donations: true,
         })
         .match({ id: user.id });
 

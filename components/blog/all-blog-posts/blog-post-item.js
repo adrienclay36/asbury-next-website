@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { useRouter } from "next/router";
-import { getUser, downloadImage } from "../../../supabase-util";
 import useGetUser from '../../../hooks/useGetUser'
 import Image from "next/image";
 import styles from "./blog-post-item.module.css";

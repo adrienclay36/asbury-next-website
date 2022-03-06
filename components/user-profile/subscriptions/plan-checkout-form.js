@@ -2,12 +2,16 @@ import React, { useContext, useState, useEffect } from "react";
 import { TextInput, Button, Select, NumberInput } from "@mantine/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { BsCreditCard2Front } from "react-icons/bs";
-import { MdCancel } from 'react-icons/md';
+import { MdCancel } from "react-icons/md";
 import { UserContext } from "../../../store/user-context";
 import { cities } from "../../../cities";
 import { states } from "../../../states";
 import axios from "axios";
-const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => {
+const PlanCheckoutForm = ({
+  selectedPlan,
+  checkoutSuccess,
+  setCheckingOut,
+}) => {
   const userContext = useContext(UserContext);
   const [formIncomplete, setFormIncomplete] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -39,6 +43,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => 
     style: {
       base: {
         fontSize: "24px",
+        backgroundColor: '#fff',
         "::placeholder": {
           color: "#566b69",
         },
@@ -91,39 +96,33 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => 
       console.log(result.error);
       setSubmitting(false);
     } else {
-      let customerInfo
-      if(userContext.customerID)
-      {
-        customerInfo = {
-          paymentMethodId: result.paymentMethod.id,
-          email: email,
-          name: name,
-          phone: phoneNumber.toString(),
-          price: selectedPlan.id,
-          customerID: userContext.customerID,
-        };
-      } else {
-        customerInfo = {
-          paymentMethodId: result.paymentMethod.id,
-          email: email,
-          name: name,
-          phone: phoneNumber.toString(),
-          price: selectedPlan.id,
-        };
+      let customerInfo;
+      customerInfo = {
+        paymentMethodId: result.paymentMethod.id,
+        email: email,
+        name: name,
+        phone: phoneNumber.toString(),
+        price: selectedPlan.id,
+      };
+
+      
+
+      if(userContext.customerID) {
+        const response = await axios.post('/api/get-existing-customer', {customerID: userContext.customerID, customerInfo})
+        handleSubscription(response.data, result.paymentMethod.id);
+      } else { 
+        const response = await axios.post("/api/create-customer", customerInfo);
+        handleSubscription(response.data, result.paymentMethod.id);
       }
-       
-      const response = await axios.post("/api/create-customer", customerInfo);
-      handleSubscription(response.data, result.paymentMethod.id);
     }
   };
 
   const handleSubscription = async (subscription, paymentMethodId) => {
     const { latest_invoice } = subscription;
     const { payment_intent } = latest_invoice;
-    
+
     if (payment_intent) {
       const { client_secret, status, customer } = payment_intent;
-
 
       if (status === "requires_action") {
         const confirmCardPayment = await stripe.confirmCardPayment(
@@ -141,7 +140,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => 
       } else {
         setSuccess(true);
         setSubmitting(false);
-        
+
         checkoutSuccess(customer);
       }
     }
@@ -153,7 +152,7 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => 
         <div className="text-center font-semibold mb-4">
           <p>Setting Up Monthly Donations For:</p>
           <p className="text-seaFoam-600 text-xl">
-            ${selectedPlan.unit_amount / 100}
+            ${selectedPlan?.unit_amount / 100}
           </p>
         </div>
         <p className="text-center font-semibold">Customer Information</p>
@@ -257,6 +256,8 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => 
           />
         </div>
       </div>
+      <div className="flex flex-1 justify-between items-center">
+
       <div className="text-center w-11/12 lg:w-2/6 md:w-2/6 mx-auto mt-6">
         <Button
           type="submit"
@@ -276,10 +277,11 @@ const PlanCheckoutForm = ({ selectedPlan, checkoutSuccess, setCheckingOut }) => 
           leftIcon={<MdCancel size={20} />}
           className="text-white bg-red-700 hover:bg-red-800 w-full"
           onClick={() => setCheckingOut(false)}
-        >
+          >
           Cancel
         </Button>
       </div>
+          </div>
     </form>
   );
 };
