@@ -1,24 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import MobileNav from "./mobile-nav";
 import Link from "next/link";
-import { useState } from "react";
 import styles from "./navbar.module.css";
 import SocialIcons from "./social-icons";
 import LogoUnited from "../logo/LogoUnited";
 import { CgCross } from "react-icons/cg";
-import { FaChild } from 'react-icons/fa';
+import { FaChild, FaStripeS } from "react-icons/fa";
 import { RiWomenLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { GiSewingNeedle } from 'react-icons/gi';
-import { BsFillPeopleFill } from "react-icons/bs";
+import { BsFillPeopleFill, BsPaypal } from "react-icons/bs";
 import { Burger } from '@mantine/core';
-import { BsPaypal } from "react-icons/bs";
-import { FaStripeS } from "react-icons/fa";
+import { useMediaQuery } from "@mantine/hooks";
 import SubMenu from "./sub-menu";
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const router = useRouter();
+  const hideLogo = useMediaQuery('(max-width: 1024px)');
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -34,13 +33,13 @@ const Navbar = (props) => {
           props.marginTop && "sm:mt-12"
         }`}
       >
-        <Link href="/" passHref>
+        {!hideLogo && <Link href="/" passHref>
           <div className={`py-1 ${props.invertImage && "invert"}`}>
             <LogoUnited />
           </div>
-        </Link>
+        </Link>}
         <ul
-          className={`hidden sm:flex flex-1 justify-end items-center gap-6 lg:gap-10 md:gap-6 uppercase text-sm mt-2 text-semibold ${props.textColor}`}
+          className={`hidden sm:flex flex-1 flex-wrap lg:flex-nowrap md:flex-wrap justify-center lg:justify-end md:justify-center items-center gap-6 lg:gap-10 md:gap-6 uppercase text-sm mt-2 text-semibold overflow-hidden ${props.textColor}`}
         >
           {navLinks.map((link) => {
             if (!link.subNav) {
