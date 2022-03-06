@@ -36,9 +36,14 @@ const OneTimeStripeCheckout = ({ amount, setSuccess, setCheckingOut, setError, s
   const handlePayment = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    let customerID = '';
+    if(userContext.customerID) {
+      customerID = userContext.customerID;
+    }
     const { data: clientSecret } = await axios.post("/api/payment-intents", {
       amount: amount * 100, // this is in cents
       email: email.toLowerCase(),
+      customerID: customerID,
     });
 
     const billingDetails = {
@@ -58,6 +63,8 @@ const OneTimeStripeCheckout = ({ amount, setSuccess, setCheckingOut, setError, s
       type: "card",
       card: cardElement,
       billing_details: billingDetails,
+      
+      
     });
     if(paymentMethodReq.error) {
       setError(true);
@@ -73,6 +80,7 @@ const OneTimeStripeCheckout = ({ amount, setSuccess, setCheckingOut, setError, s
     }
     const confirmCardPayment = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethodReq.paymentMethod.id,
+      
     });
     if(confirmCardPayment.error) {
       setError(true);

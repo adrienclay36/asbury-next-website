@@ -9,24 +9,21 @@ const TransactionHistorySection = () => {
   const userContext = useContext(UserContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [invoices, setInvoices] = useState();
-  const [noHistory, setNoHistory] = useState(false);
+  const [payments, setPayments] = useState();
+
 
   const getInvoices = useCallback(async () => {
     setLoading(true);
     const response = await axios.get(
       `/api/get-customer-invoices?customerID=${userContext.customerID}`
     );
-    console.log(response);
-    setInvoices(response.data.invoices);
+    setPayments(response.data.payments);
     setLoading(false);
   }, [userContext.customerID]);
 
   useEffect(() => {
     if (userContext.customerID) {
       getInvoices();
-    } else {
-      setNoHistory(true);
     }
   }, [userContext.customerID, router, getInvoices]);
 
@@ -49,11 +46,11 @@ const TransactionHistorySection = () => {
       </SectionHeading>
     )
   }
-  if(invoices){
+  if(payments){
 
     return (
       <SectionHeading title="Transaction History">
-        <InvoiceList invoices={invoices} />
+        <InvoiceList payments={payments} />
       </SectionHeading>
     );
   }

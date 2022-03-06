@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Modal, Button, Select } from '@mantine/core';
+import { Button, Select } from '@mantine/core';
 import { GiPayMoney } from 'react-icons/gi';
 import HRThin from '../../ui/HRThin';
-import PlanCheckoutForm from './plan-checkout-form';
 import axios from 'axios';
 import SkeletonPost from '../../ui/skeleton-post';
-import UIModal from '../../ui/modal/UIModal';
+
 import { UserContext } from '../../../store/user-context';
 import { useRouter } from 'next/router';
 const NewSubscriptionSection = () => {
@@ -14,11 +13,9 @@ const NewSubscriptionSection = () => {
     const [plans, setPlans] = useState([]);
     const [prices, setPrices] = useState([]);
     const [loadingPlans, setLoadingPlans] = useState(false);
-    const [checkingOut, setCheckingOut] = useState(false);
     const [selectedAmount, setSelectedAmount] = useState('');
     const [selectedPlan, setSelectedPlan] = useState();
     const [products, setProducts] = useState();
-    const [success, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
     const getPlans = async () => {
@@ -28,12 +25,6 @@ const NewSubscriptionSection = () => {
       setProducts(response.data.products);
       setPrices(response.data.namesOnly);
       setLoadingPlans(false);
-    }
-
-    const checkoutSuccess = (customerID) => {
-      setCheckingOut(false);
-      setSuccess(true);
-      userContext.setNewSubscription(customerID);
     }
 
 
@@ -105,7 +96,10 @@ const NewSubscriptionSection = () => {
           </li>
           <li className="mb-4 text-gray-500">USD Monthly</li>
           <li className="mb-4 text-gray-500">
-            Your Donations Help Asbury Keep It&apos;s Mission Alive
+            Your Donations Help Asbury Keep It&apos;s Mission Alive. By subscribing, Asbury&apos;s community outreach and programs can thrive.
+          </li>
+          <li className="text-seaFoam-600 font-semibold text-sm w-11/12 lg:w-4/6 md:w-4/6 mx-auto">
+            You will be able to manage, update, or cancel your subscription at any time from your user profile.
           </li>
         </ul>
         <div className="text-center w-11/12 lg:w-full md:w-full mx-auto mt-6">

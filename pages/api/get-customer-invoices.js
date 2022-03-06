@@ -7,9 +7,13 @@ export default async function handler(req, res) {
     try {
         const { customerID } = req.query;
         const invoices = await stripe.invoices.list({ customer: customerID });
+        const paymentIntents = await stripe.paymentIntents.list({
+          customer: customerID,
+        })
+        
         
 
-      res.status(200).json({invoices: invoices.data});
+      res.status(200).json({invoices: invoices.data, payments: paymentIntents.data});
     } catch (err) {
       console.log(err.message);
       res.status(500).json({ statusCode: 500, message: err.message });
