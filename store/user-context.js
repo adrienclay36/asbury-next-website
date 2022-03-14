@@ -102,7 +102,14 @@ const UserContextProvider = (props) => {
         
         setCustomerID(userInfo.customer_id);
       }
-      setRecurringSubscription(userInfo.recurring_donations);
+
+      if(userInfo.customer_id) {
+        await getSubscriptionStatus(userInfo.customer_id);
+      }
+
+
+
+      // setRecurringSubscription(userInfo.recurring_donations);
       if (permissions) {
         setPermissions(userInfo.permissions);
       } else {
@@ -158,8 +165,15 @@ const UserContextProvider = (props) => {
     setCustomerID(response.data.customerID);
   }
 
+
+
+  const getSubscriptionStatus = async (id) => {
+    const response = await axios.post("/api/get-user-subscriptions", {customerID: id});
+    setRecurringSubscription(response.data.subscribed);
+  }
+
   const setNewSubscription = async (custID) => {
-    const user = await supabase.auth.user();
+    const user = supabase.auth.user();
     if (user) {
       const { data, error } = await supabase
         .from("users")
