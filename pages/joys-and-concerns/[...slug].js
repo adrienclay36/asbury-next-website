@@ -125,7 +125,7 @@ const IndividualPrayer = (props) => {
             type={userPost.posttype}
             date={userPost.postdate}
           />
-          <CommentList postID={userPost.id} />
+          <CommentList postID={userPost.id} user={user} />
         </SectionHeading>
       </Layout>
     );

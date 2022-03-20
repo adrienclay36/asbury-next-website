@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import DualRingLoader from '../../../dual-ring-loader/DualRingLoader';
 import { addItemToTable } from '../../../../supabase-util';
 import { UserContext } from '../../../../store/user-context';
-const NewUserComment = ({setOpen, postID}) => {
+const NewUserComment = ({setOpen, postID, user}) => {
     const [author, setAuthor] = useState('');
     const [content, setContent] = useState('');
     const [posting, setPosting] = useState(false);
@@ -19,6 +19,13 @@ const NewUserComment = ({setOpen, postID}) => {
         }
 
         const { data, error } = await addItemToTable("comments", newComment);
+        // userContext.sendPushNotification(
+        //   user.id,
+        //   "New Comment!",
+        //   `${userContext.firstName} ${userContext.lastName} commented on your post!`,
+        //   postID,
+        //   "NEW_COMMENT"
+        // );
         setPosting(false);
         cancelForm();
     }

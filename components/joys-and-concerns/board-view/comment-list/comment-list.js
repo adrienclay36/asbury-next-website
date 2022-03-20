@@ -7,7 +7,7 @@ import { UserContext } from '../../../../store/user-context';
 import styles from './comment-list.module.css';
 import NewUserComment from './new-user-comment.js';
 let isInit = true;
-const CommentList = ({ postID }) => {
+const CommentList = ({ postID, user }) => {
   const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
   const [payload, setPayload] = useState(null);
@@ -78,7 +78,7 @@ const CommentList = ({ postID }) => {
       </div>
 
       <Collapse in={open}>
-        {userContext.role === "admin" || userContext.role === "user" ? <NewUserComment setOpen={setOpen} postID={postID}/> : <NewComment setOpen={setOpen} postID={postID} />}
+        {userContext.role === "admin" || userContext.role === "user" ? <NewUserComment setOpen={setOpen} user={user} postID={postID}/> : <NewComment setOpen={setOpen} postID={postID} />}
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (

@@ -35,6 +35,7 @@ export const UserContext = createContext({
   subscriptionID: "",
   customerID: "",
   setCustomerID: () => {},
+  sendPushNotification: (userID, title, body, postID, type) => {},
 });
 
 const REDIRECT_URL = "http://localhost:3000";
@@ -311,6 +312,42 @@ const UserContextProvider = (props) => {
     };
   }, []);
 
+
+
+
+
+
+
+  const sendPushNotification = async (userID, notificationTitle, body, postID, type) => {
+    if (userValue.id !== userID) {
+      const { data, error } = await supabase
+        .from("users")
+        .select()
+        .match({ id: userID });
+      const token = data[0]?.push_token;
+      
+
+      if (token) {
+        const response = await axios.post(
+          "https://exp.host/--/api/v2/push/send",
+          { title: notificationTitle, body, to: token, data: { postID, type: type } },
+          {
+            headers: {
+              'Accept': "application/json",
+              "Accept-Encoding": "gzip deflate",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        return;
+      }
+    }
+  };
+
+
+
+
   const contextValue = {
     user: userValue,
     permissions,
@@ -336,6 +373,7 @@ const UserContextProvider = (props) => {
     subscriptionAmount,
     subscriptionID,
     customerID,
+    sendPushNotification,
   };
 
   return (

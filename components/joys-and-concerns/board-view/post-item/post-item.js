@@ -10,7 +10,7 @@ import { UserContext } from "../../../../store/user-context";
 import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import useGetUser from '../../../../hooks/useGetUser';
+import useGetUser from "../../../../hooks/useGetUser";
 import SkeletonPost from "../../../ui/skeleton-post";
 const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   const [readMore, setReadMore] = useState(false);
@@ -38,20 +38,18 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     formatAuthor = "administrator";
   }
 
-
   // If there's a user get the user
   const { user, avatarURL, loadingUser } = useGetUser(user_id);
 
-
   const goToPost = () => {
-    if(user) {
-      router.push(`/joys-and-concerns/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}/${id}`);
+    if (user) {
+      router.push(
+        `/joys-and-concerns/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}/${id}`
+      );
     } else {
       router.push(`/joys-and-concerns/${formatAuthor}/${id}`);
     }
-  }
-
-  
+  };
 
   const incrementLikeHandler = () => {
     if (localStorage.getItem(id)) {
@@ -70,7 +68,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
       .select("postid", { count: "exact" })
       .match({ postid: id });
     setCommentCount(count);
-  },[id]);
+  }, [id]);
 
   useEffect(() => {
     if (localStorage.getItem(id)) {
@@ -106,8 +104,8 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     }
   };
 
-  if(loadingUser) {
-    return <SkeletonPost/>
+  if (loadingUser) {
+    return <SkeletonPost />;
   }
 
   return (
@@ -118,17 +116,16 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
         <div className="flex flex-1 justify-start items-center ">
           {avatarURL && !loadingUser ? (
             <div className={styles.init}>
-
-            <Image
-              loading="eager"
-              src={avatarURL}
-              height={60}
-              width={60}
-              alt={user.first_name}
-              className="object-cover
+              <Image
+                loading="eager"
+                src={avatarURL}
+                height={60}
+                width={60}
+                alt={user.first_name}
+                className="object-cover
               rounded-full"
               />
-              </div>
+            </div>
           ) : (
             <Image
               src={"/images/default-2.png"}
@@ -140,7 +137,13 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
           )}
 
           <div className="ml-4">
-            {user ? <p className="font-semibold">{user.first_name} {user.last_name}</p> : <p className="font-semibold">{author}</p>}
+            {user ? (
+              <p className="font-semibold">
+                {user.first_name} {user.last_name}
+              </p>
+            ) : (
+              <p className="font-semibold">{author}</p>
+            )}
             <p className="text-seaFoam-500">{formatDate}</p>
           </div>
         </div>
