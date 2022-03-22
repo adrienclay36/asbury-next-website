@@ -15,7 +15,7 @@ const SinglePost = (props) => {
 
   return (
       <Layout title={post.title} description={post.content}>
-          <SinglePostSection post={post} avatarURL={avatarURL} />
+          <SinglePostSection post={post} formatAuthor={props.formatAuthor} avatarURL={avatarURL} />
 
       </Layout>
   );
@@ -42,6 +42,7 @@ export const getStaticProps = async (context) => {
     const slug = context.params.slug;
     const { data } = await supabase.from("posts").select().eq("id", slug[0]);
     const userInfo = await getUser(data[0].user_id);
+    const formatAuthor = `${userInfo.first_name} ${userInfo.last_name}`
 
 
 
@@ -50,6 +51,7 @@ export const getStaticProps = async (context) => {
         props: {
             post: data[0],
             avatar_url: userInfo.avatar_url,
+            formatAuthor,
         },
         revalidate: 10,
     }

@@ -28,7 +28,7 @@ const BlogPostItem = ({
   const { user, avatarURL, loadingUser} = useGetUser(userID);
 
 
-  if(!avatarURL) {
+  if(!avatarURL || !user) {
     return <SkeletonPost width={'w-full'}/>
   }
 
@@ -47,6 +47,8 @@ const BlogPostItem = ({
     }
 
   }
+
+  const formatAuthor = `${user.first_name} ${user.last_name}`
 
 
   
@@ -76,7 +78,7 @@ const BlogPostItem = ({
               className="object-cover rounded-full"
               />
               <p className="ml-0 lg:ml-4 md:ml-4 mt-4 lg:mt-0 md:mt-0 font-semibold text-seaFoam-600">
-                {author}
+                {formatAuthor}
               </p>
             </div>
             <p className="uppercase font-semibold text-seaFoam-400 px-6 text-sm lg:text-md md:text-md">

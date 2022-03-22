@@ -5,7 +5,7 @@ import HRThin from "../../ui/HRThin";
 import Image from "next/image";
 import styles from "./single-post-section.module.css";
 import parse from 'html-react-parser';
-const SinglePostSection = ({ post, avatarURL }) => {
+const SinglePostSection = ({ post, avatarURL, formatAuthor }) => {
   const { title, image, author, postcontent, postdate } = post;
   const formatDate = new Date(
     postdate.replace(/-/g, "/").replace(/T.+/, "")
@@ -34,7 +34,7 @@ const SinglePostSection = ({ post, avatarURL }) => {
           <div>
             <h1 className="font-semibold uppercase text-xl my-4">{title}</h1>
             <h1 className="font-semibold uppercase text-lg text-seaFoam-700">
-              {author}
+              {formatAuthor}
             </h1>
           </div>
         </div>
