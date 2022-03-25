@@ -6,9 +6,9 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SK);
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-        const { amount } = req.body;
-        console.log(amount);
+        const { amount, customerID } = req.body;
         const session = await stripe.checkout.sessions.create({
+            customer: customerID,
           line_items: [
             {
               price_data: {
@@ -17,8 +17,12 @@ export default async function handler(req, res) {
                   name: "One Time Donation",
                 },
                 unit_amount: amount * 100,
+                
               },
+
+              description: "One Time Donation to Asbury UMC",
               quantity: 1,
+              
             },
           ],
 
