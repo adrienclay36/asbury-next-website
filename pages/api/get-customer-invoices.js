@@ -9,6 +9,7 @@ export default async function handler(req, res) {
         const invoices = await stripe.invoices.list({ customer: customerID });
         const paymentIntents = await stripe.paymentIntents.list({
           customer: customerID,
+          limit: 1000,
         })
         
         

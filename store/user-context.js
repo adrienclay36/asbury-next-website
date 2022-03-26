@@ -108,9 +108,6 @@ const UserContextProvider = (props) => {
         await getSubscriptionStatus(userInfo.customer_id);
       }
 
-
-
-      // setRecurringSubscription(userInfo.recurring_donations);
       if (permissions) {
         setPermissions(userInfo.permissions);
       } else {

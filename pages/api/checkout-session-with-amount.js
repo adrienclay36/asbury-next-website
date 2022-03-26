@@ -29,6 +29,7 @@ export default async function handler(req, res) {
           mode: "payment",
           success_url: `${WEBSITE_URL}/giving/checkout-success`,
           cancel_url: `${WEBSITE_URL}/giving/checkout-cancel`,
+          
         });
 
 

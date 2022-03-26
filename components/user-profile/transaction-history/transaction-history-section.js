@@ -17,7 +17,10 @@ const TransactionHistorySection = () => {
     const response = await axios.get(
       `/api/get-customer-invoices?customerID=${userContext.customerID}`
     );
-    setPayments(response.data.payments);
+    const filteredPayments = response.data.payments.filter(
+      (payment) => payment.status !== "requires_payment_method"
+    );
+    setPayments(filteredPayments);
     setLoading(false);
   }, [userContext.customerID]);
 
