@@ -18,7 +18,7 @@ const TransactionHistorySection = () => {
       `/api/get-customer-invoices?customerID=${userContext.customerID}`
     );
     const filteredPayments = response.data.payments.filter(
-      (payment) => payment.status !== "requires_payment_method"
+      (payment) => payment.status === "succeeded"
     );
     setPayments(filteredPayments);
     setLoading(false);
