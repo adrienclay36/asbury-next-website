@@ -37,7 +37,7 @@ const ForgotPasswordForm = () => {
                 setSuccess(true);
                 setSending(false);
                 setTimeout(() => {
-                  router.push("/admin");
+                  router.push("/");
                 }, 3000)
                 return;
             } catch(err) {
