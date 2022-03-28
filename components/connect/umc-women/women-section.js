@@ -57,7 +57,7 @@ const WomenSection = () => {
             </h1>
             <hr className="w-3/6 mx-auto" />
             <p className="text-lg p-6">
-              Meets the third Tuesday of each month at 7:15 PM.
+              Meets the third Tuesday of each month at 7:00 PM.
             </p>
           </div>
           <div>
