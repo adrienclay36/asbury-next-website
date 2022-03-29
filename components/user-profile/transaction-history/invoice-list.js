@@ -6,6 +6,7 @@ const InvoiceList = ({ invoices, payments }) => {
       {payments.map((payment) => (
         <PaymentItem
           key={payment.charges.data[0].id}
+          refund={payment.charges.data[0]?.amount_refunded}
           amount={payment.charges.data[0].amount}
           receiptEmail={payment.charges.data[0].receipt_email}
           receiptURL={payment.charges.data[0].receipt_url}

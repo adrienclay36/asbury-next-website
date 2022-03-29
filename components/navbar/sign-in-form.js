@@ -6,7 +6,7 @@ import { UserContext } from "../../store/user-context";
 import Link from 'next/link';
 import GoogleButton from 'react-google-button';
 
-const SignInForm = ({ signInHandler, error, resetError, toggleSignUp }) => {
+const SignInForm = ({ signInHandler, error, resetError, toggleSignUp, toggleForgotPassword }) => {
   const [authenticating, setAuthenticating] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -79,6 +79,9 @@ const SignInForm = ({ signInHandler, error, resetError, toggleSignUp }) => {
         
         <button onClick={() => toggleSignUp()} className="text-gray-600 hover:underline cursor-pointer font-semibold mt-4">Sign Up Now</button>
         
+      </div>
+      <div className="text-center">
+        <button onClick={toggleForgotPassword} className="text-gray-600 hover:underline cursor-pointer font-semibol mt-4">Forgot Password</button>
       </div>
     </div>
   );

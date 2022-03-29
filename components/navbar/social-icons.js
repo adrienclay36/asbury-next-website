@@ -14,6 +14,7 @@ import styles from "./social-icons.module.css";
 import SignInForm from "./sign-in-form";
 import UIModal from "../ui/modal/UIModal";
 import SignUpForm from "./sign-up-form";
+import ForgotPasswordForm from "./forgot-password-form";
 const SocialIcons = ({ textColor, textHover }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
@@ -26,6 +27,8 @@ const SocialIcons = ({ textColor, textHover }) => {
   const [userWelcome, setUserWelcome] = useState(false);
   const [signUpReminder, setSignUpReminder] = useState(false);
   const [welcomed, setWelcomed] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const [resetPassSuccess, setResetPassSuccess] = useState(false);
 
   useEffect(() => {
     if (userContext.firstName && router.pathname === "/") {
@@ -102,7 +105,33 @@ const SocialIcons = ({ textColor, textHover }) => {
   const toggleSignUp = () => {
     setShowSignIn(!showSignIn);
     setShowSignUp(!showSignUp);
+    setError("");
   };
+
+  const toggleForgotPassword = () => {
+    setShowSignIn(false);
+    setShowSignUp(false);
+    setForgotPassword(true);
+    setError("");
+  }
+
+  const resetPasswordHandler = async (email) => {
+    const { data: resetPassData, error: resetPassError } = await supabase.auth.api.resetPasswordForEmail(email);
+    if(!resetPassError) {
+      setResetPassSuccess(true);
+      setForgotPassword(false);
+    } else {
+      setError(resetPassError.message);
+    }
+   
+  }
+
+  const restartSequence = () => {
+    setShowSignIn(true);
+    setShowSignUp(false);
+    setForgotPassword(false);
+    setError("");
+  }
 
   return (
     <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
@@ -126,8 +155,19 @@ const SocialIcons = ({ textColor, textHover }) => {
           error={error}
           resetError={resetError}
           toggleSignUp={toggleSignUp}
+          toggleForgotPassword={toggleForgotPassword}
         />
       </Modal>
+
+      {/* FORGOT PASSWORD MODALS */}
+
+
+      <Modal centered opened={forgotPassword} onClose={() => setForgotPassword(false)} >
+        <ForgotPasswordForm resetError={resetError} error={error} resetPasswordHandler={resetPasswordHandler} restartSequence={restartSequence} />
+      </Modal>
+
+      <UIModal opened={resetPassSuccess} onClose={() => setResetPassSuccess(false)} centerModal={true} error={error} type="success" message="You will receive an email with further instructions for resetting your password!" />
+
       <UIModal
         centerModal={true}
         error={error}

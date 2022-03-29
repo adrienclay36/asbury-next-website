@@ -1,7 +1,9 @@
 import React from "react";
 import { BsReceiptCutoff } from "react-icons/bs";
 import { useMediaQuery } from "@mantine/hooks";
-import Link from "next/link";
+import { HiCheckCircle } from "react-icons/hi";
+import { RiCloseCircleFill } from 'react-icons/ri';
+import Link from 'next/link';
 const PaymentItem = ({
   amount,
   status,
@@ -10,61 +12,44 @@ const PaymentItem = ({
   descriptor,
   description,
   date,
+  refund,
 }) => {
-  const formatDate = new Date(date * 1000).toUTCString();
+  const formatDate = new Date(date * 1000).toDateString();
+  console.log(refund);
+  let formatAmount;
+  let formatDescription;
+  if(refund) {
+    formatAmount = `+$${amount/100}`;
+    formatDescription = "Refund";
+  } else {
+    formatAmount = `$${amount / 100}`;
+    formatDescription = descriptor === "ASBURY_METHODIST" ? "One Time Donation" : description;
+    
+  }
 
-  
-  const makeIconSmaller = useMediaQuery('(max-width: 900px)')
+ 
+
+  const makeIconSmaller = useMediaQuery("(max-width: 900px)");
   return (
-    <div className="flex flex-1 flex-col lg:flex-row md:flex-row text-center text-sm lg:text-lg md:text-md lg:text-left md:text-left justify-between items-center border-2 shadow-md rounded-md bg-white p-4 lg:p-10 md:p-10 mb-6">
-      <div>
-        <p className="mb-3">
-          <span className="font-bold text-seaFoam-900 mr-3">Amount Paid:</span>{" "}
-          ${amount / 100}
-        </p>
-        <p className="mb-3">
-          <span className="font-bold text-seaFoam-900 mr-3">Status:</span>{" "}
-          {status}
-        </p>
-        <p className="mb-3">
-          <span className="font-bold text-seaFoam-900 mr-3">
-            Receipt Email:
-          </span>{" "}
-          {receiptEmail}
-        </p>
-        <p className="mb-3">
-          <span className="font-bold text-seaFoam-900 mr-3">Description:</span>{" "}
-          {description ? description : "One Time Donation - Guest"}
-        </p>
-        <p className="mb-3">
-          <span className="font-bold text-seaFoam-900 mr-3">Date:</span>{" "}
-          {formatDate}
-        </p>
-        <p className="mb-3">
-          <span className="font-bold text-seaFoam-900 mr-3">
-            Statement Descriptor:
-          </span>{" "}
-          {descriptor}
-        </p>
+    <Link href={receiptURL} passHref>
+      <a rel="noreferrer" target="_blank">
+
+    <div className="flex flex-1 flex-col lg:flex-row md:flex-row hover:bg-gray-100 cursor-pointer text-center text-sm lg:text-lg md:text-md lg:text-left md:text-left justify-between items-center border-2 shadow-md rounded-md bg-white p-4 lg:p-10 md:p-10 mb-6">
+      <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-center lg:justify-start md:justify-start items-center">
+        {!refund ? <HiCheckCircle className="text-green-700 mb-4 lg:mb-0 md:mb-0" size={makeIconSmaller ? 30 : 50} /> : <RiCloseCircleFill size={makeIconSmaller ? 30 : 50} className="text-red-700"/>}
+        
+        <div className="ml-4">
+          <p className="font-semibold text-seaFoam-600">{formatDate}</p>
+          <p className="font-semibold">{descriptor}</p>
+          <p className="font-semibold text-seaFoam-600">{formatDescription}</p>
+        </div>
       </div>
-      {!makeIconSmaller && <div>
-        <Link href={receiptURL} passHref>
-          <a rel="noreferrer" target="_blank">
-            <BsReceiptCutoff
-              className="text-seaFoam-600 text-center cursor-pointer"
-              size={makeIconSmaller ? 45 : 75}
-            />
-          </a>
-        </Link>
-      </div>}
-      {makeIconSmaller && <div>
-        <Link href={receiptURL} passHref>
-          <a className="hover:underline font-semibold text-gray-500" rel="noreferrer" target="_blank">
-            Download Receipt
-          </a>
-        </Link>
-      </div>}
+      <div>
+        <p className="font-semibold">{formatAmount}</p>
+      </div>
     </div>
+      </a>
+    </Link>
   );
 };
 
