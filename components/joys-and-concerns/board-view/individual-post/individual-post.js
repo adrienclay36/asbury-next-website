@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
 import { FaRegHeart, FaHeart, FaSadTear } from 'react-icons/fa';
 import { BiHappyBeaming } from 'react-icons/bi';
 import styles from './individual-post.module.css';
 import { supabase } from '../../../../supabase-client';
+import { FrontPrayerContext } from '../main-board-store';
 const IndividualPost = ({ id, author, date, content, likes, type}) => {
+  const prayerContext = useContext(FrontPrayerContext);
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
@@ -15,14 +17,17 @@ const IndividualPost = ({ id, author, date, content, likes, type}) => {
 
   const incrementLikeHandler = async () => {
     if(localStorage.getItem(id)) {
+      setLiked(false);
+      setLiveLikes(liveLikes - 1);
+      setClicked(false);
+      await supabase.rpc("decrement_like", { post_id: id });
+      localStorage.removeItem(id);
       return;
     }
     setLiked(true);
     setLiveLikes(liveLikes+1);
     setClicked(true);
-    const { data, error } = await supabase.rpc("increment_like", {
-      post_id: id,
-    });
+    await supabase.rpc("increment_like", { post_id: id });
     localStorage.setItem(id, 1);
 
   }
@@ -67,7 +72,7 @@ const IndividualPost = ({ id, author, date, content, likes, type}) => {
                 size={30}
               />
             )}
-            {liked && <FaHeart size={30} className="mr-4 text-red-800" />}
+            {liked && <FaHeart onClick={incrementLikeHandler} size={30} className="mr-4 text-red-800 cursor-pointer" />}
             <p className={`${clicked ? styles.like : ''} text-lg`}>{liveLikes}</p>
           </div>
           {type === "joy" ? (

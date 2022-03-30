@@ -20,6 +20,7 @@ export const FrontPrayerContext = createContext({
     hasMore: false,
     pageLoading: false,
     posting: false,
+    decrementLike: (postID) => {},
 
 })
 
@@ -181,6 +182,15 @@ const FrontPrayerContextProvider = (props) => {
       
     }
 
+    const decrementLike = async (postID) => {
+      const { data, error } = await supabase.rpc("decrement_like", {
+        post_id: postID,
+      });
+      if(error) {
+        console.log(error);
+      }
+    }
+
 
     const addUserPost = async (type, content, user_id) => {
       setPosting(true);
@@ -224,6 +234,7 @@ const FrontPrayerContextProvider = (props) => {
         addUserPost: addUserPost,
         deletePost: deletePost,
         incrementLike: incrementLike,
+        decrementLike,
         setPayload: setPayload,
     }
   return (

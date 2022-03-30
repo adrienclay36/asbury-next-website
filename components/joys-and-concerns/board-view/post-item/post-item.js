@@ -53,6 +53,11 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
 
   const incrementLikeHandler = () => {
     if (localStorage.getItem(id)) {
+      setLiked(false);
+      setLiveLikes(liveLikes - 1);
+      setClicked(false);
+      prayerContext.decrementLike(id);
+      localStorage.removeItem(id);
       return;
     }
     setLiked(true);
@@ -159,7 +164,7 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
                 size={30}
               />
             )}
-            {liked && <FaHeart size={30} className="mr-4 text-red-800" />}
+            {liked && <FaHeart onClick={incrementLikeHandler} size={30} className="mr-4 text-red-800 cursor-pointer" />}
             <p className={`${clicked ? styles.like : ""} text-lg`}>
               {liveLikes}
             </p>

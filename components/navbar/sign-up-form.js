@@ -3,7 +3,7 @@ import { UserContext } from '../../store/user-context'
 import { TextInput, PasswordInput, Button } from '@mantine/core';
 import { AiOutlineLogin } from 'react-icons/ai';
 import UIModal from '../ui/modal/UIModal';
-const SignUpForm = ({ setShowSignUp }) => {
+const SignUpForm = ({ setShowSignUp, restartSequence }) => {
     const userContext = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -114,6 +114,7 @@ const SignUpForm = ({ setShowSignUp }) => {
           >
             Sign Up
           </Button>
+      <button onClick={restartSequence} className="hover:underline text-sm mt-2 text-gray-500 font-semibold">&larr;Back To Log In</button>
         </div>
       </form>
     </div>

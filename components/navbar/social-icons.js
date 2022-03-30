@@ -138,14 +138,14 @@ const SocialIcons = ({ textColor, textHover }) => {
       {/* SIGN UP DRAWER */}
 
       <Drawer
-        size={"60%"}
+        size={"80%"}
         opened={showSignUp}
         onClose={() => setShowSignUp(false)}
         title="Sign Up"
         padding="xl"
         position="top"
       >
-        <SignUpForm setShowSignUp={setShowSignUp} />
+        <SignUpForm restartSequence={restartSequence} setShowSignUp={setShowSignUp} />
       </Drawer>
 
       {/* SIGN IN MODALS */}
