@@ -105,7 +105,7 @@ export const navLinks = [
     href: "/admin/admin-dashboard",
   },
   {
-    text: "Blog",
+    text: "Bulletins",
     href: "/admin/blog-dashboard",
   },
   {
