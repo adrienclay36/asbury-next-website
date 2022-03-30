@@ -7,7 +7,7 @@ const BlogSection = () => {
 
 
   return (
-    <SectionHeading title="Blog">
+    <SectionHeading title="Bulletins">
       <BlogPostList />
     </SectionHeading>
   );

@@ -12,7 +12,7 @@ const SinglePostSection = ({ post, avatarURL, formatAuthor }) => {
   ).toLocaleDateString("en-US");
   const router = useRouter();
   return (
-    <SectionHeading title="Blog">
+    <SectionHeading title="Bulletins">
       <div className="container md:w-4/6 lg:w-4/6 mx-auto w-full my-12">
         <img className="object-cover w-full h-96" src={image} />
       </div>

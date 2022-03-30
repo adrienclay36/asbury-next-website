@@ -112,7 +112,7 @@ export const navLinks = [
   },
 
   {
-    text: "Blog",
+    text: "Bulletins",
     href: "/blog",
   },
   {
