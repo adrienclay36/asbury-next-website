@@ -78,7 +78,7 @@ export default function Home(props) {
         )}
       </Dialog>
       <div className={styles.heroImage} style={{ display: "none" }}>
-        <img alt="priority load" src="/images/hero.jpg" />
+        <img alt="Asbury Background" src="/images/hero.jpg" />
       </div>
       <Hero />
       <Features />

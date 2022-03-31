@@ -49,25 +49,24 @@ const SocialIcons = ({ textColor, textHover }) => {
     }
   }, [userWelcome, router.pathname]);
 
-
   useEffect(() => {
-    if(!userContext.user && router.pathname === "/") {
+    if (!userContext.user && router.pathname === "/") {
       const reminderTimeout = setTimeout(() => {
-        setSignUpReminder(true)
+        setSignUpReminder(true);
       }, 2000);
       return () => clearTimeout(reminderTimeout);
     }
-  }, [userContext.user, router.pathname])
+  }, [userContext.user, router.pathname]);
 
   useEffect(() => {
-    if(signUpReminder) {
+    if (signUpReminder) {
       const clearReminder = setTimeout(() => {
         setSignUpReminder(false);
       }, 5000);
 
       return () => clearTimeout(clearReminder);
     }
-  }, [signUpReminder])
+  }, [signUpReminder]);
 
   useEffect(() => {
     if (success) {
@@ -113,25 +112,25 @@ const SocialIcons = ({ textColor, textHover }) => {
     setShowSignUp(false);
     setForgotPassword(true);
     setError("");
-  }
+  };
 
   const resetPasswordHandler = async (email) => {
-    const { data: resetPassData, error: resetPassError } = await supabase.auth.api.resetPasswordForEmail(email);
-    if(!resetPassError) {
+    const { data: resetPassData, error: resetPassError } =
+      await supabase.auth.api.resetPasswordForEmail(email);
+    if (!resetPassError) {
       setResetPassSuccess(true);
       setForgotPassword(false);
     } else {
       setError(resetPassError.message);
     }
-   
-  }
+  };
 
   const restartSequence = () => {
     setShowSignIn(true);
     setShowSignUp(false);
     setForgotPassword(false);
     setError("");
-  }
+  };
 
   return (
     <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
@@ -145,7 +144,10 @@ const SocialIcons = ({ textColor, textHover }) => {
         padding="xl"
         position="top"
       >
-        <SignUpForm restartSequence={restartSequence} setShowSignUp={setShowSignUp} />
+        <SignUpForm
+          restartSequence={restartSequence}
+          setShowSignUp={setShowSignUp}
+        />
       </Drawer>
 
       {/* SIGN IN MODALS */}
@@ -161,12 +163,27 @@ const SocialIcons = ({ textColor, textHover }) => {
 
       {/* FORGOT PASSWORD MODALS */}
 
-
-      <Modal centered opened={forgotPassword} onClose={() => setForgotPassword(false)} >
-        <ForgotPasswordForm resetError={resetError} error={error} resetPasswordHandler={resetPasswordHandler} restartSequence={restartSequence} />
+      <Modal
+        centered
+        opened={forgotPassword}
+        onClose={() => setForgotPassword(false)}
+      >
+        <ForgotPasswordForm
+          resetError={resetError}
+          error={error}
+          resetPasswordHandler={resetPasswordHandler}
+          restartSequence={restartSequence}
+        />
       </Modal>
 
-      <UIModal opened={resetPassSuccess} onClose={() => setResetPassSuccess(false)} centerModal={true} error={error} type="success" message="You will receive an email with further instructions for resetting your password!" />
+      <UIModal
+        opened={resetPassSuccess}
+        onClose={() => setResetPassSuccess(false)}
+        centerModal={true}
+        error={error}
+        type="success"
+        message="You will receive an email with further instructions for resetting your password!"
+      />
 
       <UIModal
         centerModal={true}
@@ -220,10 +237,18 @@ const SocialIcons = ({ textColor, textHover }) => {
             {userContext.avatarURL ? (
               <div className="mr-4 mt-2">
                 <Image
+                  tabIndex={0}
                   height={30}
                   width={30}
                   priority
                   alt={userContext.firstName}
+                  onKeyDown={(e) => {
+                    if (e.code === "Enter") {
+                      router.push(
+                        `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                      );
+                    }
+                  }}
                   onClick={() =>
                     router.push(
                       `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
@@ -236,7 +261,15 @@ const SocialIcons = ({ textColor, textHover }) => {
               </div>
             ) : (
               <FaRegUserCircle
+                tabIndex={0}
                 size={30}
+                onKeyDown={(e) => {
+                  if (e.code === "Enter") {
+                    router.push(
+                      `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                    );
+                  }
+                }}
                 onClick={() =>
                   router.push(
                     `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
@@ -258,6 +291,7 @@ const SocialIcons = ({ textColor, textHover }) => {
           disabled={disableTooltip}
         >
           <AiOutlineLogout
+            tabIndex={0}
             size={30}
             onClick={() => userContext.logOutHandler()}
             className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
@@ -278,6 +312,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         >
           <BsFacebook
             size={30}
+            tabIndex={0}
             className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
           />
         </a>
@@ -291,6 +326,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         disabled={disableTooltip}
       >
         <ImBubble
+          tabIndex={0}
           onClick={() => router.push("/joys-and-concerns")}
           size={30}
           className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
@@ -305,6 +341,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         disabled={disableTooltip}
       >
         <MdOndemandVideo
+          tabIndex={0}
           onClick={() => router.push("/livestream")}
           size={30}
           className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
@@ -319,6 +356,7 @@ const SocialIcons = ({ textColor, textHover }) => {
         disabled={disableTooltip}
       >
         <BsFillEnvelopeFill
+          tabIndex={0}
           onClick={() => router.push("/contact")}
           size={30}
           className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}

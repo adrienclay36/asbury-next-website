@@ -6,18 +6,18 @@ import SocialIcons from "./social-icons";
 import LogoUnited from "../logo/LogoUnited";
 import { CgCross } from "react-icons/cg";
 import { FaChild, FaStripeS } from "react-icons/fa";
-import { RiWomenLine } from 'react-icons/ri';
-import { useRouter } from 'next/router';
-import { GiSewingNeedle } from 'react-icons/gi';
+import { RiWomenLine } from "react-icons/ri";
+import { useRouter } from "next/router";
+import { GiSewingNeedle } from "react-icons/gi";
 import { BsFillPeopleFill, BsPaypal } from "react-icons/bs";
-import { Burger } from '@mantine/core';
+import { Burger } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import SubMenu from "./sub-menu";
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const router = useRouter();
-  const hideLogo = useMediaQuery('(max-width: 1024px)');
+  const hideLogo = useMediaQuery("(max-width: 1024px)");
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -33,21 +33,25 @@ const Navbar = (props) => {
           props.marginTop && "sm:mt-12"
         }`}
       >
-        {!hideLogo && <Link href="/" passHref>
-          <div className={`py-1 ${props.invertImage && "invert"}`}>
-            <LogoUnited />
-          </div>
-        </Link>}
+        {!hideLogo && (
+          <Link href="/" passHref>
+            <div className={`py-1 ${props.invertImage && "invert"}`}>
+              <LogoUnited />
+            </div>
+          </Link>
+        )}
         <ul
           className={`hidden sm:flex flex-1 flex-wrap lg:flex-nowrap md:flex-wrap justify-center lg:justify-end md:justify-center items-center gap-6 lg:gap-10 md:gap-6 uppercase text-sm mt-2 text-semibold overflow-hidden ${props.textColor}`}
         >
-          {navLinks.map((link) => {
+          {navLinks.map((link, index) => {
             if (!link.subNav) {
               return (
                 <Link key={link.text} href={link.href} passHref>
-                  <li className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center">
-                    {link.text}
-                  </li>
+               
+                    <li tabIndex={0} className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center">
+                      {link.text}
+                    </li>
+                  
                 </Link>
               );
             }
@@ -57,7 +61,10 @@ const Navbar = (props) => {
                   size={link.size}
                   key={link.text}
                   control={
-                    <button onClick={() => router.push(link.href)} className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center uppercase">
+                    <button
+                      onClick={() => router.push(link.href)}
+                      className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center uppercase"
+                    >
                       {link.text}
                     </button>
                   }
@@ -68,7 +75,12 @@ const Navbar = (props) => {
           })}
         </ul>
         <div className="flex sm:hidden flex-1 justify-end mr-3">
-          <Burger size={30} opened={isOpen} color="white" onClick={toggleMenu} />
+          <Burger
+            size={30}
+            opened={isOpen}
+            color="white"
+            onClick={toggleMenu}
+          />
         </div>
       </nav>
       <div className="sm:hidden md:block lg:block">
@@ -124,18 +136,18 @@ export const navLinks = [
     href: "/giving",
     subNav: true,
     size: "xs",
-    items : [
+    items: [
       {
         title: "PayPal",
         href: "https://www.paypal.com",
-        icon: <BsPaypal size={18}/>
+        icon: <BsPaypal size={18} />,
       },
       {
         title: "Stripe",
         href: "/giving/one-time-donation",
-        icon: <FaStripeS size={18}/>
-      }
-    ]
+        icon: <FaStripeS size={18} />,
+      },
+    ],
   },
   {
     text: "Connect",
