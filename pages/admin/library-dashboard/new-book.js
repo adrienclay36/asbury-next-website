@@ -1,8 +1,7 @@
 import React from "react";
-import LibraryProvider from "../../../components/admin/library-dash/library-admin-store";
+import LibraryProvider from "../../../store/library-store";
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import NewBookForm from "../../../components/admin/library-dash/new-book/new-book-form";
-import { supabase } from "../../../supabase-client";
 import { getPermissions } from "../../../supabase-util";
 const NewBook = () => {
 

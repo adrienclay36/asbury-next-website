@@ -22,10 +22,10 @@ const WelcomeDash = ({ firstName }) => {
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-12">
         <WelcomeItem
-          title="Blog Operations"
-          description="Create, update, and delete posts on the blog."
-          href="/admin/blog-dashboard"
-          buttonText="Go to Blog Dashboard"
+          title="Bulletins"
+          description="Create, update, and delete posts on the bulletins board."
+          href="/admin/bulletins-dashboard"
+          buttonText="Go to Bulletins Dashboard"
         />
         <WelcomeItem
           title="Librarian"
@@ -47,12 +47,6 @@ const WelcomeDash = ({ firstName }) => {
             buttonText="Add Administrator"
           />
         )}
-        <WelcomeItem
-          title="Edit Your Profile"
-          description="Update your profile picture, your title, and change passwords."
-          href={`/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`}
-          buttonText="View Profile"
-        />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import BlogItem from "./blog-item";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsX } from "react-icons/bs";
-import { BlogContext } from "./blog-store";
+import { BlogContext } from "../../../store/blog-store";
 import PageLoading from '../../PageLoading/PageLoading';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import { UserContext } from "../../../store/user-context";

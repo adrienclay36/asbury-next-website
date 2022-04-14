@@ -8,7 +8,6 @@ import parse from 'html-react-parser';
 const BlogPostItem = ({
   id,
   title,
-  author,
   date,
   content,
   image,
@@ -33,29 +32,22 @@ const BlogPostItem = ({
   }
 
 
-  const getPreviewText = (content) => {
+  const getPreviewText = (inputContent) => {
 
-    if(content.length < 150) {
-      const firstCutoff = content.indexOf("</p>");
-      const previewText = content.slice(0, firstCutoff + 4);
+    if(inputContent.length < 150) {
+      const firstCutoff = inputContent.indexOf("</p>");
+      const previewText = inputContent.slice(0, firstCutoff + 4);
       return previewText;
     }
 
-    if(content.length > 150) {
-      const slicedContent = content.slice(0, 150) + '...</p>'
+    if(inputContent.length > 150) {
+      const slicedContent = inputContent.slice(0, 150) + '...</p>'
       return slicedContent;
     }
 
   }
 
   const formatAuthor = `${user.first_name} ${user.last_name}`
-
-
-  
-
-  
-
- 
 
 
   return (

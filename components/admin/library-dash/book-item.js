@@ -1,13 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Switch } from '@mantine/core';
 import {
   BsPencilSquare,
   BsTrash,
-  BsToggleOff,
-  BsToggleOn,
 } from "react-icons/bs";
-import { LibraryContext } from './library-admin-store';
+import { LibraryContext } from '../../../store/library-store';
 const BookItem = ({ book, libraryPermissions }) => {
   const [available, setAvailable] = useState(book.availability);
   const libraryContext = useContext(LibraryContext);

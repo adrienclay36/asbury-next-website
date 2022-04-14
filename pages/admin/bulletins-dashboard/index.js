@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import BlogOperations from "../../../components/admin/blog-dash/blog-operations";
-import { useRouter } from "next/router";
-import AdminBlogProvider from "../../../components/admin/blog-dash/blog-store";
-import { supabase } from "../../../supabase-client";
+import BulletinProvider from "../../../store/blog-store";
 import { checkAdmin } from "../../../supabase-util";
-
 const BlogDashboard = () => {
-
-  
-  
-
   return (
-    <AdminBlogProvider>
+    <BulletinProvider>
       <AdminLayout>
         <BlogOperations />
       </AdminLayout>
-    </AdminBlogProvider>
+    </BulletinProvider>
   );
 };
-
 
 export default BlogDashboard;
 

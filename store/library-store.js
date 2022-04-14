@@ -8,7 +8,7 @@ import {
   deleteItemFromTable,
   updateItemInTable,
   toggleBooleanValue
-} from "../../../supabase-util";
+} from "../supabase-util";
 const PAGE_SIZE = 15;
 const TABLE = "books";
 export const LibraryContext = React.createContext({

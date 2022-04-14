@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import LibrarySkeletonGrid from "./library-skeleton-grid";
 import BookListItem from "./book-list-item";
 import styles from './book-list-view.module.css';
-import { LibraryMainContext } from "../../library-store-main";
+import { LibraryContext } from "../../../../store/library-store";
 
 const BookListView = () => {
-  const libraryContext = useContext(LibraryMainContext)
+  const libraryContext = useContext(LibraryContext)
 
   return (
     <div>

@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminLayout from '../../../components/admin/admin-layout/admin-layout';
-import LibraryProvider, { LibraryContext } from '../../../components/admin/library-dash/library-admin-store';
+import LibraryProvider from '../../../store/library-store';
 import { useRouter } from 'next/router';
 import BookEditForm from '../../../components/admin/library-dash/book-edit-form/book-edit-form';
 import PageLoading from '../../../components/PageLoading/PageLoading';
-import { supabase } from '../../../supabase-client';
 import { getPermissions, getItemById } from '../../../supabase-util';
 const table = "books";
-const EditBook = (props) => {
+const EditBook = () => {
     const router = useRouter();
-    const libraryContext = useContext(LibraryContext)
     const bookID = router.query.bookID;
     const [book, setBook] = useState();
 

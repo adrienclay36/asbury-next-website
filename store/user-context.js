@@ -29,8 +29,6 @@ export const UserContext = createContext({
   avatarPath: "",
   googleUser: false,
   recurringSubscription: false,
-  setNewSubscription: (amount) => {},
-  cancelSubscription: () => {},
   subscriptionAmount: null,
   subscriptionID: "",
   customerID: "",
@@ -170,43 +168,7 @@ const UserContextProvider = (props) => {
     setRecurringSubscription(response.data.subscribed);
   }
 
-  const setNewSubscription = async (custID) => {
-    const user = supabase.auth.user();
-    if (user) {
-      const { data, error } = await supabase
-        .from("users")
-        .update({
-          customer_id: custID,
-          recurring_donations: true,
-        })
-        .match({ id: user.id });
-
-      if (error) {
-        console.log(error);
-      }
-    }
-    checkUser();
-  };
-
-  const cancelSubscription = async () => {
-    const user = supabase.auth.user();
-    const { data, error } = await supabase
-      .from("users")
-      .update({
-        recurring_subscription: false,
-        amount: null,
-        subscription_id: null,
-      })
-      .match({ id: user.id });
-
-      if(error) {
-        console.log(error);
-      }
-      checkUser();
-      setRecurringSubscription(false);
-      setSubscriptionAmount(null);
-      setSubscriptionID(null);
-  };
+ 
 
   const signUpHandler = async (
     email,
@@ -237,6 +199,7 @@ const UserContextProvider = (props) => {
 
     if (data) {
       const userInfo = data[0];
+      
       const { data: successData, error: submitError } = await supabase
         .from("users")
         .update({
@@ -282,6 +245,7 @@ const UserContextProvider = (props) => {
         handleAuthChange(event, session);
         if (event === "SIGNED_IN") {
           checkUser();
+          return;
         }
         if (event === "SIGNED_OUT") {
           checkUser();
@@ -365,8 +329,6 @@ const UserContextProvider = (props) => {
     avatarPath,
     googleUser,
     recurringSubscription,
-    setNewSubscription,
-    cancelSubscription,
     subscriptionAmount,
     subscriptionID,
     customerID,

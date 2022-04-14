@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import PageLoading from "../../../components/PageLoading/PageLoading";
 import PostEditForm from "../../../components/admin/blog-dash/post-edit-form";
-import AdminBlogProvider from "../../../components/admin/blog-dash/blog-store";
+import BulletinProvider from "../../../store/blog-store";
 import { supabase } from "../../../supabase-client";
 import { getItemById } from "../../../supabase-util";
 import { getPermissions } from "../../../supabase-util";
@@ -12,8 +12,6 @@ const EditPost = () => {
   const [post, setPost] = useState();
   const router = useRouter();
   const postID = router.query.postID;
-
-  
 
   const getPost = async () => {
     const post = await getItemById(table, postID);
@@ -27,18 +25,17 @@ const EditPost = () => {
   }, [postID]);
 
   return (
-    <AdminBlogProvider>
+    <BulletinProvider>
       <AdminLayout>
         {!post && <PageLoading />}
         {post && <PostEditForm post={post} id={post.id} />}
       </AdminLayout>
-    </AdminBlogProvider>
+    </BulletinProvider>
   );
 };
 
 export default EditPost;
 
-
 export const getServerSideProps = async ({ req, res }) => {
-  return getPermissions(req, ['blog', 'master']);
+  return getPermissions(req, ["blog", "master"]);
 };

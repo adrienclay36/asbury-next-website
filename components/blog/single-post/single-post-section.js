@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import HRThin from "../../ui/HRThin";
 import Image from "next/image";
 import styles from "./single-post-section.module.css";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 const SinglePostSection = ({ post, avatarURL, formatAuthor }) => {
   const { title, image, author, postcontent, postdate } = post;
   const formatDate = new Date(

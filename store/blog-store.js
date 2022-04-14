@@ -1,12 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  getQueriedData,
-  getTotalPages,
   getPagedDataByDate,
-} from "../../supabase-util";
+  getTotalPages,
+  getQueriedData,
+  addItemToTable,
+  deleteItemFromTable,
+  updateItemInTable,
+} from "../supabase-util";
+import { supabase } from "../supabase-client";
 
-export const MainBlogContext = React.createContext({
+const PAGE_SIZE = 6;
+const TABLE = "posts";
+export const BlogContext = React.createContext({
   posts: [],
   pageNumber: 0,
   totalPages: 0,
@@ -18,14 +24,13 @@ export const MainBlogContext = React.createContext({
   setQuery: () => {},
   getPosts: () => {},
   setNoData: () => {},
+  deletePost: (id) => {},
+  addPost: (title, image, author, content) => {},
+  updatePost: (id, title, image, author, content) => {},
 });
 
 let isInitial = true;
-
-const PAGE_SIZE = 6;
-const TABLE = "posts";
-
-const MainBlogProvider = (props) => {
+const BulletinProvider = (props) => {
   const [posts, setPosts] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -33,7 +38,7 @@ const MainBlogProvider = (props) => {
   const [noData, setNoData] = useState(false);
   const [query, setQuery] = useState("");
 
-  const getPosts = useCallback(async () => {
+  const getPosts = async () => {
     setNoData(false);
     setLoading(true);
     setPosts([]);
@@ -47,7 +52,7 @@ const MainBlogProvider = (props) => {
     setPosts(data);
     setLoading(false);
     isInitial = false;
-  }, [pageNumber]);
+  };
 
   const initTotalPages = async () => {
     const totalPages = await getTotalPages(PAGE_SIZE, TABLE);
@@ -60,15 +65,15 @@ const MainBlogProvider = (props) => {
 
   useEffect(() => {
     getPosts();
-  }, [pageNumber, getPosts]);
+  }, [pageNumber]);
 
-  const callQueryFunction = useCallback(async () => {
+  const callQueryFunction = async () => {
     setLoading(true);
     setPosts([]);
     const { data, status } = await getQueriedData(
       TABLE,
       query,
-      "search_blog_fixed_ts"
+      "search_blog_rpc"
     );
 
     setPosts(data);
@@ -78,7 +83,7 @@ const MainBlogProvider = (props) => {
       setNoData(false);
     }
     setLoading(false);
-  }, [query]);
+  };
 
   useEffect(() => {
     // Don't run side effect on initial render
@@ -98,13 +103,47 @@ const MainBlogProvider = (props) => {
         clearTimeout(timeout);
       };
     }
-  }, [query, callQueryFunction, getPosts]);
+  }, [query]);
 
   const increasePage = () => {
     setPageNumber(Math.min(totalPages - 1, pageNumber + 1));
   };
   const decreasePage = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
+  };
+
+  const addPost = async (title, image, author, content, user_id) => {
+    const newPost = {
+      title,
+      image,
+      author,
+      postcontent: content,
+      postdate: new Date().toLocaleDateString("en-US", {
+        timeZone: "America/Denver",
+      }),
+      user_id,
+    };
+    await addItemToTable(TABLE, newPost);
+  };
+
+  const deletePost = async (id) => {
+    await deleteItemFromTable(TABLE, id);
+    if (query) {
+      await callQueryFunction();
+    } else {
+      getPosts();
+      initTotalPages();
+    }
+  };
+
+  const updatePost = async (id, title, image, author, content) => {
+    const postData = {
+      title: title,
+      author: author,
+      image: image,
+      postcontent: content,
+    };
+    const response = await updateItemInTable(TABLE, id, postData);
   };
 
   const contextValue = {
@@ -118,13 +157,16 @@ const MainBlogProvider = (props) => {
     getPosts: getPosts,
     noData: noData,
     setNoData: setNoData,
+    deletePost: deletePost,
+    addPost: addPost,
+    updatePost: updatePost,
   };
 
   return (
-    <MainBlogContext.Provider value={contextValue}>
+    <BlogContext.Provider value={contextValue}>
       {props.children}
-    </MainBlogContext.Provider>
+    </BlogContext.Provider>
   );
 };
 
-export default MainBlogProvider;
+export default BulletinProvider;

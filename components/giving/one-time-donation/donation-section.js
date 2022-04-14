@@ -69,7 +69,7 @@ const DonationSection = () => {
             onClose={() => setSuccess(false)}
             actionText={'View Transaction History'}
             href="/profile/transaction-history"
-            message={`As always, thank you ${userContext.firstName}. You will receive an email containing a receipt for this transaction! You can also view and downloda your receipt by visiting your transaction history in your user profile`}
+            message={`As always, thank you ${userContext.firstName}. You will receive an email containing a receipt for this transaction! You can also view and download your receipt by visiting your transaction history in your user profile`}
           />
         )}
         <UIModal

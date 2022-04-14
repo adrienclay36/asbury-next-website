@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./add-admin-form.module.css";
 import { supabase } from "../../../supabase-client";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
-import { Checkbox } from "@mantine/core";
-import { Switch } from "@mantine/core";
-import { Modal } from "@mantine/core";
+import { Switch, Modal } from "@mantine/core";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 const AddAdminForm = () => {

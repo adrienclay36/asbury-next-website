@@ -113,6 +113,18 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     return <SkeletonPost />;
   }
 
+  const joyLabel = (
+    <div className="bg-teal-600 px-4 py-1 rounded-full flex justify-center items-center ">
+      <p className="text-white font-semibold">Joy</p>
+    </div>
+  );
+
+  const concernLabel = (
+    <div className="bg-cyan-700 px-4 py-1 rounded-full flex justify-center items-center ">
+      <p className="text-white font-semibold">Concern</p>
+    </div>
+  );
+
   return (
     <>
       <div
@@ -170,9 +182,9 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
             </p>
           </div>
           {type === "joy" ? (
-            <BiHappyBeaming size={35} className="text-green-700" />
+            joyLabel
           ) : (
-            <FaSadTear size={30} className="text-blue-900" />
+            concernLabel
           )}
         </div>
         <div className="flex flex-1 justify-between items-center">
@@ -182,22 +194,25 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
           >
             View Replies ({commentCount ? commentCount : 0})
           </button>
+        </div>
+        
           {userContext.role === "admin" && userContext.socialPermissions && (
+            <div className="px-4 pb-2 flex flex-1 justify-center items-center">
             <Tooltip
               disabled={disableTooltip}
               label="Delete this post if it violates community guidelines"
               position="bottom"
-              placement="start"
-            >
+              placement="center"
+              >
               <button
                 onClick={deletePostHandler}
                 className="cursor-pointer hover:underline text-seaFoam-500 font-semibold"
-              >
-                Delete Post
+                >
+                Admin: Delete Post
               </button>
             </Tooltip>
+                </div>
           )}
-        </div>
       </div>
     </>
   );

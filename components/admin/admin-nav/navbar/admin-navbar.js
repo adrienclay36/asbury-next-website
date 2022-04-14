@@ -1,38 +1,35 @@
-import React, { useContext } from 'react';
-import AdminMobileNav from './admin-mobile-nav';
-import Link from 'next/link';
-import { useState } from 'react';
-import styles from './navbar.module.css';
-import { AiOutlineMenu } from 'react-icons/ai';
+import React, { useContext } from "react";
+import AdminMobileNav from "./admin-mobile-nav";
+import Link from "next/link";
+import { useState } from "react";
+import styles from "./navbar.module.css";
+import { AiOutlineMenu } from "react-icons/ai";
 import Image from "next/image";
-import { useRouter } from 'next/router';
-import { supabase } from '../../../../supabase-client';
-import DualRingLoader from '../../../dual-ring-loader/DualRingLoader';
-import { UserContext } from '../../../../store/user-context';
+import { useRouter } from "next/router";
+import { supabase } from "../../../../supabase-client";
+import DualRingLoader from "../../../dual-ring-loader/DualRingLoader";
+import { UserContext } from "../../../../store/user-context";
 const AdminNavbar = (props) => {
   const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
-    const [isInitial, setIsInitial] = useState(true);
-    const [loggingOut, setLoggingOut] = useState(false);
-    const userContext = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isInitial, setIsInitial] = useState(true);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const userContext = useContext(UserContext);
 
-    const logoutHandler = async (e) => {
-      setLoggingOut(true);
-      e.preventDefault();
-      await supabase.auth.signOut();
-      await userContext.checkUser();
-      setTimeout(() => {
-        router.reload("/admin");
-      }, 500)
-      
-    }
+  const logoutHandler = async (e) => {
+    setLoggingOut(true);
+    e.preventDefault();
+    await supabase.auth.signOut();
+    await userContext.checkUser();
+    setTimeout(() => {
+      router.reload("/admin");
+    }, 500);
+  };
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-        setIsInitial(false);
-        
-
-    }
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    setIsInitial(false);
+  };
   return (
     <div>
       <nav
@@ -69,7 +66,7 @@ const AdminNavbar = (props) => {
             disabled={loggingOut ? true : false}
             className="mb-2 cursor-pointer tracking-widest text-lg w-36 hover:bg-emerald-800 uppercase px-3 py-2 bg-emerald-900 rounded-lg shadow-md text-white"
           >
-            {loggingOut ? <DualRingLoader/> : 'Logout'}
+            {loggingOut ? <DualRingLoader /> : "Logout"}
           </button>
         </ul>
         <div className="flex sm:hidden flex-1 justify-end mr-3">
@@ -106,7 +103,7 @@ export const navLinks = [
   },
   {
     text: "Bulletins",
-    href: "/admin/blog-dashboard",
+    href: "/admin/bulletins-dashboard",
   },
   {
     text: "Librarian",

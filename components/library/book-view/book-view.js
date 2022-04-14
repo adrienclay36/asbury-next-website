@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import BookListView from './book-list/book-list-view';
-import { LibraryMainContext } from '../library-store-main';
+import { LibraryContext } from '../../../store/library-store';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BsX } from 'react-icons/bs';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
@@ -8,7 +8,7 @@ const BookView = () => {
 
     const [query, setQuery] = useState('');
 
-    const libraryContext = useContext(LibraryMainContext);
+    const libraryContext = useContext(LibraryContext);
 
     const clearInput = () => {
       setQuery('');

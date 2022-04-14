@@ -3,12 +3,12 @@ import SectionHeading from "../ui/section-heading";
 import AboutView from "./about-view/about-view";
 import BookView from './book-view/book-view'
 import styles from "./library-section.module.css";
-import { LibraryMainContext } from "./library-store-main";
+import { LibraryContext } from "../../store/library-store";
 const LibrarySection = () => {
   const [aboutView, setAboutView] = useState(true);
   const [booksView, setBooksView] = useState(false);
 
-  const libraryContext = useContext(LibraryMainContext);
+  const libraryContext = useContext(LibraryContext);
 
   
 

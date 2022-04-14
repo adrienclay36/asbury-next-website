@@ -77,7 +77,10 @@ export const splitQuery = (queryToSplit) => {
 export const getQueriedData = async (table, query, queryFunction) => {
   const andQuery = splitQuery(query);
   if (andQuery) {
-    const { data } = await supabase.rpc(queryFunction, { keyword: andQuery });
+    const { data, error } = await supabase.rpc(queryFunction, { keyword: andQuery });
+    if(error) {
+      alert(error.message);
+    }
     let status = "No Data";
     if (data.length === 0) {
       return { data, status };

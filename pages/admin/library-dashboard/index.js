@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import LibraryOperations from "../../../components/admin/library-dash/library-operations";
-import LibraryProvider from "../../../components/admin/library-dash/library-admin-store";
+import LibraryProvider from "../../../store/library-store";
 import { checkAdmin } from "../../../supabase-util";
 const LibraryDashboard = () => {
 

@@ -1,45 +1,41 @@
-import React, { useState, useContext } from 'react';
-import { useRouter } from 'next/router';
-import { BlogContext } from './blog-store';
-import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
-import CKEditorConfig from './ck-editor-config';
+import React, { useState, useContext } from "react";
+import { useRouter } from "next/router";
+import { BlogContext } from "../../../store/blog-store";
+import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
+import CKEditorConfig from "./ck-editor-config";
 
-const PostEditForm = ({post, id }) => {
-    const [title, setTitle] = useState(post.title);
-    const [author, setAuthor] = useState(post.author);
-    const [content, setContent] = useState(post.postcontent);
-    const [image, setImage] = useState(
-      post.image === "/images/blog-default.png" ? "" : post.image
-    );
-    const [updating, setUpdating] = useState(false);
-    const blogContext = useContext(BlogContext);
-    const router = useRouter();
-    
+const PostEditForm = ({ post, id }) => {
+  const [title, setTitle] = useState(post.title);
+  const [author, setAuthor] = useState(post.author);
+  const [content, setContent] = useState(post.postcontent);
+  const [image, setImage] = useState(
+    post.image === "/images/blog-default.png" ? "" : post.image
+  );
+  const [updating, setUpdating] = useState(false);
+  const blogContext = useContext(BlogContext);
+  const router = useRouter();
 
-    const updatePostHandler = async (e) => {
-        setUpdating(true);
-        e.preventDefault();
-        if(title && author && content) {
+  const updatePostHandler = async (e) => {
+    setUpdating(true);
+    e.preventDefault();
+    if (title && author && content) {
+      let imageContent;
+      if (!image) {
+        imageContent = "/images/blog-default.png";
+      } else {
+        imageContent = image;
+      }
 
-          let imageContent;
-          if(!image) {
-            imageContent = '/images/blog-default.png';
-          } else {
-            imageContent = image;
-          }
-
-          await blogContext.updatePost(id, title, imageContent, author, content);
-        }
-        router.push("/admin/blog-dashboard");
+      await blogContext.updatePost(id, title, imageContent, author, content);
     }
-
-   
+    router.push("/admin/bulletins-dashboard");
+  };
 
   return (
     <>
       <div className="text-center">
         <button
-          onClick={() => router.push("/admin/blog-dashboard")}
+          onClick={() => router.push("/admin/bulletins-dashboard")}
           className="bg-emerald-900 px-4 py-2 text-white font-semibold rounded-lg shadow-md"
         >
           Back To All Posts
@@ -91,7 +87,7 @@ const PostEditForm = ({post, id }) => {
             <label htmlFor="content" className="text-lg mb-2 font-semibold">
               Contents
             </label>
-            <CKEditorConfig content={content} setContent={setContent}/>
+            <CKEditorConfig content={content} setContent={setContent} />
           </div>
           <button
             disabled={updating ? true : false}
