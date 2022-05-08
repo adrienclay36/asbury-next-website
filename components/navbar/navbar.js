@@ -17,6 +17,7 @@ import { Drawer, Modal } from "@mantine/core";
 import SignUpForm from "./sign-up-form";
 import SignInForm from "./sign-in-form";
 import ForgotPasswordForm from "./forgot-password-form";
+import { supabase } from "../../supabase-client";
 import SubMenu from "./sub-menu";
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,11 +51,13 @@ const Navbar = (props) => {
       try {
         const { data, error } = await supabase.auth.signIn({ email, password });
         if (error) {
+          console.log("Error Signging in :: ", error.message);
           throw new Error();
         }
         setShowSignIn(false);
         setSuccess(true);
-      } catch (error) {
+      } catch (err) {
+        console.log(err.message);
         setError("Invalid Credentials");
       }
     } else {

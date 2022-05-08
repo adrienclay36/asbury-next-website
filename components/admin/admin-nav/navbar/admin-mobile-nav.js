@@ -2,15 +2,16 @@ import React from 'react';
 import MobileNavItem from './mobile-nav-item';
 import styles from './mobile-nav.module.css';
 import Link from 'next/link';
+import { Drawer } from '@mantine/core';
 
-const MobileNav = ({ navLinks, isOpen, textColor, logoutHandler, loggingOut }) => {
+const MobileNav = ({ navLinks, isOpen, textColor, logoutHandler, setIsOpen, }) => {
   return (
     <div className="container">
+      <Drawer noFocusTrap position="bottom" size={'90%'} padding={20} transitionDuration={750} opened={isOpen} onClose={() => setIsOpen(false)}>
+
       <ul
         className={`flex flex-1 flex-col text-center uppercase px-4 overflow-hidden ${
           styles["last-li"]
-        } ${
-          !isOpen ? styles["mobile-hidden"] : styles["mobile-open"]
         } ${textColor}`}
       >
         {navLinks.map((link) => (
@@ -23,6 +24,7 @@ const MobileNav = ({ navLinks, isOpen, textColor, logoutHandler, loggingOut }) =
       </button>
       <hr className="border-b" />
       </ul>
+          </Drawer>
     </div>
   );
 };

@@ -16,7 +16,9 @@ const SignInForm = ({ signInHandler, error, resetError, toggleSignUp, toggleForg
   const callSignIn = async (e) => {
     e.preventDefault();
     setAuthenticating(true);
-    await signInHandler(email, password);
+    if(email && password) {
+      await signInHandler(email, password);
+    }
     setAuthenticating(false);
   };
 

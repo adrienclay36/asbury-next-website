@@ -88,6 +88,7 @@ const AdminNavbar = (props) => {
           inverted={props.inverted}
           logoutHandler={logoutHandler}
           loggingOut={loggingOut}
+          setIsOpen={setIsOpen}
         />
       </div>
     </div>
