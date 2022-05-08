@@ -3,10 +3,10 @@ import { Modal } from '@mantine/core';
 import { BiErrorCircle } from 'react-icons/bi';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal, icon=null}) => {
+const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal, icon=null, transitionDuration = 750}) => {
     const router = useRouter();
   return (
-    <Modal centered={centerModal} opened={opened} onClose={onClose}>
+    <Modal transitionDuration={transitionDuration} centered={centerModal} opened={opened} onClose={onClose}>
       <div className="flex flex-1 flex-col justify-center items-center text-center">
         {type == "error" && (
           <BiErrorCircle className="mb-12 text-red-600" size={75} />
