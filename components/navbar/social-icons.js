@@ -15,7 +15,7 @@ import SignInForm from "./sign-in-form";
 import UIModal from "../ui/modal/UIModal";
 import SignUpForm from "./sign-up-form";
 import ForgotPasswordForm from "./forgot-password-form";
-const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSignIn }) => {
+const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSignIn, isOpen }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
   const userContext = useContext(UserContext);
@@ -64,6 +64,12 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
     }
   }, [signUpReminder]);
 
+  useEffect(() => {
+    if(isOpen) {
+      setSignUpReminder(false);
+    }
+  } ,[isOpen])
+
   return (
     <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
       {/* SIGN UP DRAWER */}
@@ -76,6 +82,7 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
           position="bottom"
           placement="start"
           withArrow
+          zIndex={1000}
         >
           <Tooltip
             label="Sign In"

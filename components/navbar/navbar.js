@@ -25,14 +25,12 @@ const Navbar = (props) => {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [forgotPassword, setForgotPassword] = useState(false);
   const [resetPassSuccess, setResetPassSuccess] = useState(false);
 
   const router = useRouter();
   const hideLogo = useMediaQuery("(max-width: 1024px)");
-
-
 
   useEffect(() => {
     if (success) {
@@ -99,9 +97,6 @@ const Navbar = (props) => {
     setForgotPassword(false);
     setError("");
   };
-
-
-
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -170,7 +165,14 @@ const Navbar = (props) => {
         opened={success}
         onClose={() => setSuccess(false)}
       />
-      <SocialIcons textColor="text-white" textHover={"text-slate-200"} showSignIn={showSignIn} showSignUp={showSignUp} setShowSignIn={setShowSignIn} />
+      <SocialIcons
+        textColor="text-white"
+        textHover={"text-slate-200"}
+        showSignIn={showSignIn}
+        showSignUp={showSignUp}
+        setShowSignIn={setShowSignIn}
+        isOpen={isOpen}
+      />
       <nav
         className={`container ${props.classes} flex items-center py-4 ${
           props.marginTop && "sm:mt-12"

@@ -20,6 +20,7 @@ const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
   return (
     <div className="container">
       <Drawer
+      zIndex={10000}
         transitionDuration={750}
         noFocusTrap
         size={"100%"}
