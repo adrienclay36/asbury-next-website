@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MobileNav from "./mobile-nav";
 import Link from "next/link";
 import styles from "./navbar.module.css";
@@ -12,12 +12,93 @@ import { GiSewingNeedle } from "react-icons/gi";
 import { BsFillPeopleFill, BsPaypal } from "react-icons/bs";
 import { Burger } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import UIModal from "../ui/modal/UIModal";
+import { Drawer, Modal } from "@mantine/core";
+import SignUpForm from "./sign-up-form";
+import SignInForm from "./sign-in-form";
+import ForgotPasswordForm from "./forgot-password-form";
 import SubMenu from "./sub-menu";
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const [resetPassSuccess, setResetPassSuccess] = useState(false);
+
   const router = useRouter();
   const hideLogo = useMediaQuery("(max-width: 1024px)");
+
+
+
+  useEffect(() => {
+    if (success) {
+      const timeout = setTimeout(() => {
+        setSuccess(false);
+      }, 2000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [success]);
+
+  const signInHandler = async (email, password) => {
+    if (email && password) {
+      try {
+        const { data, error } = await supabase.auth.signIn({ email, password });
+        if (error) {
+          throw new Error();
+        }
+        setShowSignIn(false);
+        setSuccess(true);
+      } catch (error) {
+        setError("Invalid Credentials");
+      }
+    } else {
+      setError("Both Fields Required");
+    }
+  };
+
+  const resetError = () => {
+    setError("");
+  };
+
+  const toggleSignUp = () => {
+    setShowSignIn(!showSignIn);
+    setShowSignUp(!showSignUp);
+    setError("");
+  };
+
+  const toggleForgotPassword = () => {
+    setShowSignIn(false);
+    setShowSignUp(false);
+    setForgotPassword(true);
+    setError("");
+  };
+
+  const resetPasswordHandler = async (email) => {
+    const { data: resetPassData, error: resetPassError } =
+      await supabase.auth.api.resetPasswordForEmail(email);
+    if (!resetPassError) {
+      setResetPassSuccess(true);
+      setForgotPassword(false);
+    } else {
+      setError(resetPassError.message);
+    }
+  };
+
+  const restartSequence = () => {
+    setShowSignIn(true);
+    setShowSignUp(false);
+    setForgotPassword(false);
+    setError("");
+  };
+
+
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -27,7 +108,66 @@ const Navbar = (props) => {
   };
   return (
     <div>
-      <SocialIcons textColor="text-white" textHover={"text-slate-200"} />
+      {/* SIGN IN/UP MODALS  */}
+
+      <Drawer
+        size={"80%"}
+        opened={showSignUp}
+        onClose={() => setShowSignUp(false)}
+        title="Sign Up"
+        padding="xl"
+        position="top"
+      >
+        <SignUpForm
+          restartSequence={restartSequence}
+          setShowSignUp={setShowSignUp}
+        />
+      </Drawer>
+
+      {/* SIGN IN MODALS */}
+      <Modal centered opened={showSignIn} onClose={() => setShowSignIn(false)}>
+        <SignInForm
+          signInHandler={signInHandler}
+          error={error}
+          resetError={resetError}
+          toggleSignUp={toggleSignUp}
+          toggleForgotPassword={toggleForgotPassword}
+        />
+      </Modal>
+
+      {/* FORGOT PASSWORD MODALS */}
+
+      <Modal
+        centered
+        opened={forgotPassword}
+        onClose={() => setForgotPassword(false)}
+      >
+        <ForgotPasswordForm
+          resetError={resetError}
+          error={error}
+          resetPasswordHandler={resetPasswordHandler}
+          restartSequence={restartSequence}
+        />
+      </Modal>
+
+      <UIModal
+        opened={resetPassSuccess}
+        onClose={() => setResetPassSuccess(false)}
+        centerModal={true}
+        error={error}
+        type="success"
+        message="You will receive an email with further instructions for resetting your password!"
+      />
+
+      <UIModal
+        centerModal={true}
+        error={error}
+        type="success"
+        message="Successfully signed in!"
+        opened={success}
+        onClose={() => setSuccess(false)}
+      />
+      <SocialIcons textColor="text-white" textHover={"text-slate-200"} showSignIn={showSignIn} showSignUp={showSignUp} setShowSignIn={setShowSignIn} />
       <nav
         className={`container ${props.classes} flex items-center py-4 ${
           props.marginTop && "sm:mt-12"
@@ -47,11 +187,12 @@ const Navbar = (props) => {
             if (!link.subNav) {
               return (
                 <Link key={link.text} href={link.href} passHref>
-               
-                    <li tabIndex={0} className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center">
-                      {link.text}
-                    </li>
-                  
+                  <li
+                    tabIndex={0}
+                    className="mb-2 cursor-pointer tracking-widest hover:text-slate-200 text-center"
+                  >
+                    {link.text}
+                  </li>
                 </Link>
               );
             }
@@ -90,6 +231,8 @@ const Navbar = (props) => {
           className={styles.menuSlide}
           navLinks={navLinks}
           inverted={props.inverted}
+          setIsOpen={setIsOpen}
+          setShowSignIn={setShowSignIn}
         />
       </div>
     </div>

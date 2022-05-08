@@ -32,9 +32,7 @@ const Hero = () => {
           />
         </div>
         <div
-          className={`${
-            !open ? styles.fadeIn : styles.fadeOut
-          } text-center mt-16`}
+          className={`text-center mt-16`}
         >
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
             romans 15:7
@@ -64,7 +62,7 @@ const Hero = () => {
             }}
           >
             <HiChevronDoubleDown
-              className={`text-white opacity-70 cursor-pointer hover:text-seaFoam-300 ${styles.chevron} ${!open ? styles.fadeIn : styles.fadeOut}`}
+              className={`text-white opacity-70 cursor-pointer hover:text-seaFoam-300 ${styles.chevron}`}
               size={50}
             />
           </button>

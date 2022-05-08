@@ -15,20 +15,16 @@ import SignInForm from "./sign-in-form";
 import UIModal from "../ui/modal/UIModal";
 import SignUpForm from "./sign-up-form";
 import ForgotPasswordForm from "./forgot-password-form";
-const SocialIcons = ({ textColor, textHover }) => {
+const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSignIn }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
   const userContext = useContext(UserContext);
   const router = useRouter();
-  const [showSignIn, setShowSignIn] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
-  const [success, setSuccess] = useState(false);
+
   const [error, setError] = useState("");
   const [userWelcome, setUserWelcome] = useState(false);
   const [signUpReminder, setSignUpReminder] = useState(false);
   const [welcomed, setWelcomed] = useState(false);
-  const [forgotPassword, setForgotPassword] = useState(false);
-  const [resetPassSuccess, setResetPassSuccess] = useState(false);
 
   useEffect(() => {
     if (userContext.firstName && router.pathname === "/") {
@@ -68,131 +64,10 @@ const SocialIcons = ({ textColor, textHover }) => {
     }
   }, [signUpReminder]);
 
-  useEffect(() => {
-    if (success) {
-      const timeout = setTimeout(() => {
-        setSuccess(false);
-      }, 2000);
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [success]);
-
-  const signInHandler = async (email, password) => {
-    if (email && password) {
-      try {
-        const { data, error } = await supabase.auth.signIn({ email, password });
-        if (error) {
-          throw new Error();
-        }
-        setShowSignIn(false);
-        setSuccess(true);
-      } catch (error) {
-        setError("Invalid Credentials");
-      }
-    } else {
-      setError("Both Fields Required");
-    }
-  };
-
-  const resetError = () => {
-    setError("");
-  };
-
-  const toggleSignUp = () => {
-    setShowSignIn(!showSignIn);
-    setShowSignUp(!showSignUp);
-    setError("");
-  };
-
-  const toggleForgotPassword = () => {
-    setShowSignIn(false);
-    setShowSignUp(false);
-    setForgotPassword(true);
-    setError("");
-  };
-
-  const resetPasswordHandler = async (email) => {
-    const { data: resetPassData, error: resetPassError } =
-      await supabase.auth.api.resetPasswordForEmail(email);
-    if (!resetPassError) {
-      setResetPassSuccess(true);
-      setForgotPassword(false);
-    } else {
-      setError(resetPassError.message);
-    }
-  };
-
-  const restartSequence = () => {
-    setShowSignIn(true);
-    setShowSignUp(false);
-    setForgotPassword(false);
-    setError("");
-  };
-
   return (
     <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
       {/* SIGN UP DRAWER */}
 
-      <Drawer
-        size={"80%"}
-        opened={showSignUp}
-        onClose={() => setShowSignUp(false)}
-        title="Sign Up"
-        padding="xl"
-        position="top"
-      >
-        <SignUpForm
-          restartSequence={restartSequence}
-          setShowSignUp={setShowSignUp}
-        />
-      </Drawer>
-
-      {/* SIGN IN MODALS */}
-      <Modal centered opened={showSignIn} onClose={() => setShowSignIn(false)}>
-        <SignInForm
-          signInHandler={signInHandler}
-          error={error}
-          resetError={resetError}
-          toggleSignUp={toggleSignUp}
-          toggleForgotPassword={toggleForgotPassword}
-        />
-      </Modal>
-
-      {/* FORGOT PASSWORD MODALS */}
-
-      <Modal
-        centered
-        opened={forgotPassword}
-        onClose={() => setForgotPassword(false)}
-      >
-        <ForgotPasswordForm
-          resetError={resetError}
-          error={error}
-          resetPasswordHandler={resetPasswordHandler}
-          restartSequence={restartSequence}
-        />
-      </Modal>
-
-      <UIModal
-        opened={resetPassSuccess}
-        onClose={() => setResetPassSuccess(false)}
-        centerModal={true}
-        error={error}
-        type="success"
-        message="You will receive an email with further instructions for resetting your password!"
-      />
-
-      <UIModal
-        centerModal={true}
-        error={error}
-        type="success"
-        message="Successfully signed in!"
-        opened={success}
-        onClose={() => setSuccess(false)}
-      />
       {!userContext.user && (
         <Tooltip
           opened={signUpReminder && !showSignIn && !showSignUp}
