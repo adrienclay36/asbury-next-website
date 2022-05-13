@@ -155,6 +155,7 @@ const ChildRegistrationForm = () => {
       .insert(formItem);
     if (error) {
       console.log("Error adding registration item:: ", error.message);
+      setLoading(false);
       return;
     }
     setLoading(false);
