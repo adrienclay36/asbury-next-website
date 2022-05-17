@@ -2,8 +2,7 @@ import React, {useState, useContext, useEffect} from "react";
 import Image from "next/image";
 import styles from './comment-item.module.css'
 import { UserContext } from "../../../../store/user-context";
-import { deleteItemFromTable, getUser, getSignedUrl, getPublicUrl, downloadImage } from "../../../../supabase-util";
-import { supabase } from "../../../../supabase-client";
+import { deleteItemFromTable } from "../../../../supabase-util";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import SkeletonComment from "../../../ui/skeleton-comment";
@@ -13,13 +12,10 @@ const CommentItem = ({ comment, id}) => {
   const [userID, setUserID] = useState(comment.user_id);
 
   const userContext = useContext(UserContext);
-  let { author, commentcontent, postdate } = comment;
-  const formatDate = new Date(comment.postdate).toLocaleDateString("en-US");
+  let { author, content, created_at } = comment;
+  const formatDate = new Date(comment.created_at).toLocaleDateString("en-US");
   const disableTooltip = useMediaQuery('(max-width: 900px)')
 
-
-  
-  const { user, avatarURL, loadingUser} = useGetUser(comment.user_id);
 
 
   const deleteCommentHandler = async () => {
@@ -33,8 +29,8 @@ const CommentItem = ({ comment, id}) => {
   const longContent = (
     <>
       <p className="m-4">
-        {!readMore && commentcontent.slice(0, 140) + "..."}
-        {readMore && commentcontent}
+        {!readMore && content.slice(0, 140) + "..."}
+        {readMore && content}
       </p>
 
       <button
@@ -46,43 +42,29 @@ const CommentItem = ({ comment, id}) => {
     </>
   );
 
-  const regularContent = <p className="m-4">{commentcontent}</p>;
+  const regularContent = <p className="m-4">{content}</p>;
 
 
 
-  if(loadingUser) {
-    return (
-      <div
-      >
-        <SkeletonComment/>
-      </div>
-    );
-  }
+
   return (
     <div
       className={`container ${styles.init} flex flex-1 flex-col border-2 my-4 p-6 lg:p-10 md:p-10 rounded-lg shadow-md w-11/12 lg:w-2/6 md:w-2/6 mx-auto`}
     >
       <div className="flex flex-1 justify-start items-center">
         <div className="flex flex-1 justify-start items-center">
-          {user && avatarURL ? (
+       
             <Image
             height={40}
             width={40}
             priority
-              src={avatarURL}
-              alt={user.first_name}
+              src={comment?.avatar_url}
+              alt={comment?.author}
               className={`${styles.init} object-cover rounded-full`}
             />
-          ) : (
-            <Image
-              src="/images/default-2.png"
-              alt="Default Image"
-              height={25}
-              width={25}
-            />
-          )}
+        
           <p className="font-semibold ml-4">
-            {user ? `${user.first_name} ${user.last_name}` : author}
+            {author}
           </p>
         </div>
         <div>
@@ -90,7 +72,7 @@ const CommentItem = ({ comment, id}) => {
         </div>
       </div>
 
-      {commentcontent.length > 140 ? longContent : regularContent}
+      {content.length > 140 ? longContent : regularContent}
 
       {userContext.socialPermissions && userContext.role === "admin" && (
         <div className="flex flex-1 justify-end items-center">

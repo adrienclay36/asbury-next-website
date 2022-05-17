@@ -5,24 +5,23 @@ import { Collapse } from '@mantine/core';
 import NewComment from './new-comment';
 import { UserContext } from '../../../../store/user-context';
 import styles from './comment-list.module.css';
-import NewUserComment from './new-user-comment.js';
-let isInit = true;
 const CommentList = ({ postID, user }) => {
   const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
   const [payload, setPayload] = useState(null);
   const [loadingComments, setLoadingComments] = useState(false);
-  const userContext = useContext(UserContext);
-  const prayerContext = useContext(UserContext);
 
   const getComments = useCallback(async () => {
     setLoadingComments(true);
-    const { data } = await supabase.from('comments').select().match({postid: postID}).order('id', {ascending: false});
+    const { data, error } = await supabase.from('comments').select().match({post_id: postID}).order('id', {ascending: false});
+    if(error) { 
+      console.log("Error getting comments for post:: ", error.message);
+      return;
+    }
     if(data.length > 0) {
 
       setComments(data);
     }
-    isInit = false;
     setLoadingComments(false);
   }, [postID])
 
@@ -78,7 +77,7 @@ const CommentList = ({ postID, user }) => {
       </div>
 
       <Collapse in={open}>
-        {userContext.role === "admin" || userContext.role === "user" ? <NewUserComment setOpen={setOpen} user={user} postID={postID}/> : <NewComment setOpen={setOpen} postID={postID} />}
+        <NewComment setOpen={setOpen} postID={postID} />
       </Collapse>
       {comments.length > 0 &&
         comments.map((comment) => (

@@ -10,7 +10,7 @@ import { AiOutlineCheckCircle, AiOutlineEdit } from "react-icons/ai";
 import UIModal from "../ui/modal/UIModal";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { supabase } from "../../supabase-client";
-import { updateItemInTable } from "../../supabase-util";
+import { downloadImage, updateItemInTable } from "../../supabase-util";
 import { FiKey } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 import { GearIcon } from "@radix-ui/react-icons";
@@ -82,8 +82,11 @@ const UserProfileCard = ({ user }) => {
       } catch (error) {
         console.log(error);
       }
+      const {publicURL, error } = supabase.storage.from('avatars').getPublicUrl(newAvatarPath);
+      
       const response = await updateItemInTable("users", userContext.user.id, {
-        avatar_url: newAvatarPath,
+        avatar_url: publicURL,
+        avatar_path: newAvatarPath,
       });
     } else {
       console.log("Wrong Type");
@@ -98,7 +101,7 @@ const UserProfileCard = ({ user }) => {
 
   const removePhoto = async () => {
     setLoading(true);
-    const newAvatarUrl = "default-2.png";
+    const newAvatarPath = "default-2.png";
     if (userContext.avatarPath !== "default-2.png") {
       try {
         const { data, error } = await supabase.storage
@@ -109,9 +112,14 @@ const UserProfileCard = ({ user }) => {
         console.log(err.message);
       }
     }
+    const { publicURL, error } = supabase.storage
+      .from("avatars")
+      .getPublicUrl(newAvatarPath);
 
+    console.log(publicURL);
     const response = await updateItemInTable("users", userContext.user.id, {
-      avatar_url: newAvatarUrl,
+      avatar_url: publicURL,
+      avatar_path: newAvatarPath,
     });
 
     userContext.checkUser();
@@ -126,7 +134,7 @@ const UserProfileCard = ({ user }) => {
         first_name: firstName,
         last_name: lastName,
       });
-      console.log(response);
+      
       userContext.checkUser();
       setSubmitting(false);
       setEditName(false);

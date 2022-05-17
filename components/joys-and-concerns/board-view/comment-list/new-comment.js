@@ -1,26 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import DualRingLoader from '../../../dual-ring-loader/DualRingLoader';
-import { addItemToTable } from '../../../../supabase-util';
 import axios from 'axios';
+import { supabase } from '../../../../supabase-client';
+import { UserContext } from '../../../../store/user-context';
+
 const NewComment = ({setOpen, postID}) => {
+  const userContext = useContext(UserContext);
     const [author, setAuthor] = useState('');
     const [content, setContent] = useState('');
     const [posting, setPosting] = useState(false);
 
-    const addCommentHandler = async (e) => {
+    const addGuestComment = async (e) => {
         setPosting(true);
         e.preventDefault();
         const ipResponse = await axios.get("https://api.ipify.org?format=json");
         const ipaddress = ipResponse.data.ip;
         const newComment = {
             author: author,
-            commentcontent: content,
-            postid: postID,
-            postdate: new Date(),
+            content: content,
+            post_id: postID,
+            created_at: new Date(),
             ipaddress: ipaddress,
         }
 
-        const { data, error } = await addItemToTable("comments", newComment);
+        const { data, error } = await supabase.from('comments').insert(newComment);
+        if(error) {
+          console.log("Error adding guest comment:: ", error.message);
+        }
         setPosting(false);
         cancelForm();
     }
@@ -30,24 +36,53 @@ const NewComment = ({setOpen, postID}) => {
         setAuthor('');
         setContent('');
     }
+
+    const addUserComment = async (e) => {
+      setPosting(true);
+      e.preventDefault();
+      const newComment = {
+        content: content,
+        post_id: postID,
+        created_at: new Date(),
+        user_id: userContext.user.id,
+        author: `${userContext?.firstName} ${userContext?.lastName}`,
+        avatar_url: userContext?.avatarURL,
+      };
+
+      const { data, error } = await supabase.from('comments').insert(newComment);
+
+      if(error) {
+        console.log("Error adding user comments");
+      }
+
+      setPosting(false);
+      cancelForm();
+    };
+
+    const noUserNameField = (
+      <div className="flex flex-col flex-1 mb-4">
+        <label className="font-semibold mb-2 ml-1" htmlFor="name">
+          Name
+        </label>
+        <input
+          className="p-2 border-2 rounded-lg focus:outline-none active:outline-none"
+          id="name"
+          type="text"
+          placeholder="Enter Your Name"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          maxLength="100"
+          required
+        />
+      </div>
+    );
   return (
     <div className="container w-11/12 lg:w-2/6 md:w-3/6 border-2 p-8 rounded-lg shadow-md mt-6">
-      <form className="container w-full" onSubmit={addCommentHandler}>
-        <div className="flex flex-col flex-1 mb-4">
-          <label className="font-semibold mb-2 ml-1" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="p-2 border-2 rounded-lg focus:outline-none active:outline-none"
-            id="name"
-            type="text"
-            placeholder="Enter Your Name"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            maxLength="100"
-            required
-          />
-        </div>
+      <form
+        className="container w-full"
+        onSubmit={userContext?.user ? addUserComment : addGuestComment}
+      >
+        {!userContext?.user && noUserNameField}
         <div className="flex flex-col flex-1 mb-4">
           <label className="font-semibold mb-2 ml-1" htmlFor="comment">
             Comment

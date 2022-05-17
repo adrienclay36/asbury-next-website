@@ -8,14 +8,10 @@ import useGetImage from "../../hooks/useGetImage";
 const SinglePost = (props) => {
   const [post, setPost] = useState(props.post);
 
-  const { avatarURL, loadingAvatar } = useGetImage(props.avatar_path);
-
   return (
     <Layout title={post.title} description={post.content}>
       <SinglePostSection
         post={post}
-        formatAuthor={props.formatAuthor}
-        avatarURL={avatarURL}
       />
     </Layout>
   );
@@ -38,15 +34,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const slug = context.params.slug;
-  const { data } = await supabase.from("posts").select().eq("id", slug[0]);
-  const userInfo = await getUser(data[0].user_id);
-  const formatAuthor = `${userInfo.first_name} ${userInfo.last_name}`;
+  const { data, error } = await supabase.from("posts").select().eq("id", slug[0]);
+  if(error){
+    console.log(`Error getting post for ID: ${slug[0]}:: `, erro.message);
+  }
 
   return {
     props: {
       post: data[0],
-      avatar_url: userInfo.avatar_path,
-      formatAuthor,
     },
     revalidate: 10,
   };

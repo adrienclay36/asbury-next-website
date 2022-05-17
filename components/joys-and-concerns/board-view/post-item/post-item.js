@@ -1,25 +1,19 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { FaRegHeart, FaHeart, FaSadTear } from "react-icons/fa";
-import { BsX } from "react-icons/bs";
-import { BiHappyBeaming } from "react-icons/bi";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import styles from "./post-item.module.css";
 import { FrontPrayerContext } from "../main-board-store";
 import { useRouter } from "next/router";
 import { UserContext } from "../../../../store/user-context";
-import { supabase } from "../../../../supabase-client";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import useGetUser from "../../../../hooks/useGetUser";
-import SkeletonPost from "../../../ui/skeleton-post";
-const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
+const PostItem = ({ post }) => {
   const [readMore, setReadMore] = useState(false);
-  const [liveLikes, setLiveLikes] = useState(likes);
+  const [liveLikes, setLiveLikes] = useState(post?.likes);
   const [liked, setLiked] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [commentCount, setCommentCount] = useState(false);
 
-  const formatDate = new Date(date).toLocaleDateString("en-US", {
+  const formatDate = new Date(post?.created_at).toLocaleDateString("en-US", {
     timeZone: "America/Denver",
   });
   const prayerContext = useContext(FrontPrayerContext);
@@ -28,8 +22,8 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
 
   let formatAuthor;
-  if (author) {
-    formatAuthor = author
+  if (post?.author) {
+    formatAuthor = post?.author
       .replace(/([a-z])([A-Z])/g, "$1-$2")
       .replace(/\s+/g, "-")
       .replace("---", "-")
@@ -38,55 +32,40 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     formatAuthor = "administrator";
   }
 
-  // If there's a user get the user
-  const { user, avatarURL, loadingUser } = useGetUser(user_id);
-
   const goToPost = () => {
-    if (user) {
-      router.push(
-        `/joys-and-concerns/${user.first_name.toLowerCase()}-${user.last_name.toLowerCase()}/${id}`
-      );
-    } else {
-      router.push(`/joys-and-concerns/${formatAuthor}/${id}`);
-    }
+    router.push(`/joys-and-concerns/${formatAuthor}/${post?.id}`);
   };
 
   const incrementLikeHandler = () => {
-    if (localStorage.getItem(id)) {
+    if (localStorage.getItem(post?.id)) {
       setLiked(false);
       setLiveLikes(liveLikes - 1);
       setClicked(false);
-      prayerContext.decrementLike(id);
-      localStorage.removeItem(id);
+      prayerContext.decrementLike(post?.id);
+      localStorage.removeItem(post?.id);
       return;
     }
     setLiked(true);
-    prayerContext.incrementLike(id);
+    prayerContext.incrementLike(post?.id);
     setLiveLikes(liveLikes + 1);
     setClicked(true);
-    localStorage.setItem(id, 1);
+    localStorage.setItem(post?.id, 1);
   };
 
-  const getCommentCount = useCallback(async () => {
-    const { data, count } = await supabase
-      .from("comments")
-      .select("postid", { count: "exact" })
-      .match({ postid: id });
-    setCommentCount(count);
-  }, [id]);
+  
 
   useEffect(() => {
-    if (localStorage.getItem(id)) {
+    if (localStorage.getItem(post?.id)) {
       setLiked(true);
     }
-    getCommentCount();
-  }, [getCommentCount, id]);
+  
+  }, [post?.id]);
 
   const longContent = (
     <>
       <p>
-        {!readMore && content.slice(0, 140) + "..."}
-        {readMore && content}
+        {!readMore && post?.postcontent.slice(0, 140) + "..."}
+        {readMore && post?.postcontent}
       </p>
 
       <button
@@ -98,20 +77,16 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
     </>
   );
 
-  const regularContent = <p>{content}</p>;
+  const regularContent = <p>{post?.postcontent}</p>;
 
   const deletePostHandler = async () => {
     const confirmation = confirm(
       "Are you sure you want to delete this post? This cannot be undone"
     );
     if (confirmation) {
-      prayerContext.deletePost(id);
+      prayerContext.deletePost(post?.id);
     }
   };
-
-  if (loadingUser) {
-    return <SkeletonPost />;
-  }
 
   const joyLabel = (
     <div className="bg-teal-600 px-4 py-1 rounded-full flex justify-center items-center ">
@@ -128,44 +103,29 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
   return (
     <>
       <div
-        className={`${styles.init} bg-gray-100 z-10 container w-full lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
+        className={`${styles.init} z-10 container w-full lg:w-3/6 md:w-5/6 my-12 rounded-sm border-b-2 border-gray-200`}
       >
         <div className="flex flex-1 justify-start items-center ">
-          {avatarURL && !loadingUser ? (
-            <div className={styles.init}>
-              <Image
-                loading="eager"
-                src={avatarURL}
-                height={60}
-                width={60}
-                alt={user.first_name}
-                className="object-cover
-              rounded-full"
-              />
-            </div>
-          ) : (
+          <div className={styles.init}>
             <Image
-              src={"/images/default-2.png"}
-              priority={true}
-              alt="default user"
-              height={50}
-              width={50}
+              loading="eager"
+              src={post?.avatar_url}
+              height={60}
+              width={60}
+              alt={post?.author}
+              className="object-cover
+              rounded-full"
             />
-          )}
+          </div>
 
           <div className="ml-4">
-            {user ? (
-              <p className="font-semibold">
-                {user.first_name} {user.last_name}
-              </p>
-            ) : (
-              <p className="font-semibold">{author}</p>
-            )}
+            <p className="font-semibold">{post?.author}</p>
+
             <p className="text-seaFoam-500">{formatDate}</p>
           </div>
         </div>
         <div className="p-4">
-          {content.length > 140 ? longContent : regularContent}
+          {post?.postcontent.length > 140 ? longContent : regularContent}
         </div>
         <div className="flex flex-1 justify-between items-center px-4">
           <div className="flex flex-1 items-center">
@@ -176,43 +136,45 @@ const PostItem = ({ id, author, date, content, likes, type, user_id }) => {
                 size={30}
               />
             )}
-            {liked && <FaHeart onClick={incrementLikeHandler} size={30} className="mr-4 text-red-800 cursor-pointer" />}
+            {liked && (
+              <FaHeart
+                onClick={incrementLikeHandler}
+                size={30}
+                className="mr-4 text-red-800 cursor-pointer"
+              />
+            )}
             <p className={`${clicked ? styles.like : ""} text-lg`}>
               {liveLikes}
             </p>
           </div>
-          {type === "joy" ? (
-            joyLabel
-          ) : (
-            concernLabel
-          )}
+          {post.posttype === "joy" ? joyLabel : concernLabel}
         </div>
         <div className="flex flex-1 justify-between items-center">
           <button
             onClick={goToPost}
             className="p-4 mb-4 font-semibold text-seaFoam-500 hover:underline"
           >
-            View Replies ({commentCount ? commentCount : 0})
+            View Replies ({post?.comment_count})
           </button>
         </div>
-        
-          {userContext.role === "admin" && userContext.socialPermissions && (
-            <div className="px-4 pb-2 flex flex-1 justify-center items-center">
+
+        {userContext.role === "admin" && userContext.socialPermissions && (
+          <div className="px-4 pb-2 flex flex-1 justify-center items-center">
             <Tooltip
               disabled={disableTooltip}
               label="Delete this post if it violates community guidelines"
               position="bottom"
               placement="center"
-              >
+            >
               <button
                 onClick={deletePostHandler}
                 className="cursor-pointer hover:underline text-seaFoam-500 font-semibold"
-                >
+              >
                 Admin: Delete Post
               </button>
             </Tooltip>
-                </div>
-          )}
+          </div>
+        )}
       </div>
     </>
   );

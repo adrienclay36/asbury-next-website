@@ -5,8 +5,7 @@ import { BiHappyBeaming } from 'react-icons/bi';
 import styles from './individual-post.module.css';
 import { supabase } from '../../../../supabase-client';
 import { FrontPrayerContext } from '../main-board-store';
-const IndividualPost = ({ id, author, date, content, likes, type}) => {
-  const prayerContext = useContext(FrontPrayerContext);
+const IndividualPost = ({ id, author, date, content, likes, type, avatar_url}) => {
   const [readMore, setReadMore] = useState(false);
   const [liveLikes, setLiveLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
@@ -46,23 +45,23 @@ const IndividualPost = ({ id, author, date, content, likes, type}) => {
   return (
     <>
       <div
-        className={` ${styles.init} container w-11/12 lg:w-3/6 md:w-5/6 border-2 px-6 lg:px-10 md:px-10 pt-10 mt-12 rounded-lg shadow-md`}
+        className={` ${styles.init} z-10 container w-full lg:w-3/6 md:w-5/6 my-12 rounded-sm border-b-2 border-gray-200`}
       >
         <div className="flex flex-1 justify-start items-center ">
           <Image
-            src="/images/default-2.png"
+            src={avatar_url}
             alt="default user"
             height={50}
             width={50}
+            className={`object-cover
+              rounded-full`}
           />
           <div className="ml-4">
             <p className="font-semibold">{author}</p>
             <p className="text-seaFoam-500">{formatDate}</p>
           </div>
         </div>
-        <div className="p-4">
-          {regularContent}
-        </div>
+        <div className="p-4">{regularContent}</div>
         <div className="flex flex-1 justify-between items-center px-4 mb-12">
           <div className="flex flex-1 items-center">
             {!liked && (
@@ -72,8 +71,16 @@ const IndividualPost = ({ id, author, date, content, likes, type}) => {
                 size={30}
               />
             )}
-            {liked && <FaHeart onClick={incrementLikeHandler} size={30} className="mr-4 text-red-800 cursor-pointer" />}
-            <p className={`${clicked ? styles.like : ''} text-lg`}>{liveLikes}</p>
+            {liked && (
+              <FaHeart
+                onClick={incrementLikeHandler}
+                size={30}
+                className="mr-4 text-red-800 cursor-pointer"
+              />
+            )}
+            <p className={`${clicked ? styles.like : ""} text-lg`}>
+              {liveLikes}
+            </p>
           </div>
           {type === "joy" ? (
             <BiHappyBeaming size={35} className="text-green-700" />

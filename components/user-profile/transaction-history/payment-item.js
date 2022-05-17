@@ -34,7 +34,7 @@ const PaymentItem = ({
     <Link href={receiptURL} passHref>
       <a rel="noreferrer" target="_blank">
 
-    <div className="flex flex-1 flex-col lg:flex-row md:flex-row hover:bg-gray-100 cursor-pointer text-center text-sm lg:text-lg md:text-md lg:text-left md:text-left justify-between items-center border-2 shadow-md rounded-md bg-white p-4 lg:p-10 md:p-10 mb-6">
+    <div className="flex flex-1 flex-col lg:flex-row md:flex-row hover:bg-gray-200 cursor-pointer text-center text-sm lg:text-lg md:text-md lg:text-left md:text-left justify-between items-center border-t-2 border-b-2 p-4 lg:p-10 md:p-10 mb-6">
       <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-center lg:justify-start md:justify-start items-center">
         {!refund ? <HiCheckCircle className="text-green-700 mb-4 lg:mb-0 md:mb-0" size={makeIconSmaller ? 30 : 50} /> : <RiCloseCircleFill size={makeIconSmaller ? 30 : 50} className="text-red-700"/>}
         

@@ -10,7 +10,7 @@ const BlogOperations = () => {
   const [routing, setRouting] = useState(false);
   const router = useRouter();
 
-  const navigateNewBook = () => {
+  const navigateNewPost = () => {
     setRouting(true);
     router.push("/admin/bulletins-dashboard/new-post");
   };
@@ -29,7 +29,7 @@ const BlogOperations = () => {
       {userContext.blogPermissions && (
         <div className="flex justify-center items-center w-full lg:w-1/6 md:w-1/6 mx-auto">
           <button
-            onClick={navigateNewBook}
+            onClick={navigateNewPost}
             className="flex flex-1 justify-center items-center px-7 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold uppercase rounded-lg"
           >
             {routing ? <DualRingLoader /> : buttonText}

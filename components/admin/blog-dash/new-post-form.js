@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import { LoadingOverlay } from "@mantine/core";
 import CKEditorConfig from "./ck-editor-config";
+import { supabase } from "../../../supabase-client";
 const NewPostForm = () => {
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -31,13 +32,22 @@ const NewPostForm = () => {
     } else {
       imageContent = "/images/blog-default.png";
     }
-    await blogContext.addPost(
-      title,
-      imageContent,
+    const newPost = {
+      title: title,
+      image: imageContent,
       author,
-      content,
-      userContext.user.id
-    );
+      postcontent: content,
+      postdate: new Date().toLocaleDateString("en-US", {
+        timeZone: "America/Denver",
+      }),
+      user_id: userContext?.user?.id,
+      avatar_url: userContext?.avatarURL,
+    };
+    const { data, error } = await supabase.from('posts').insert(newPost);
+    if(error){
+      console.log("Error adding blog post:: ", error.message);
+      return;
+    }
     router.push("/admin/bulletins-dashboard");
   };
 

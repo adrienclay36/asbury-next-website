@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { BlogContext } from "../../../store/blog-store";
 import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import CKEditorConfig from "./ck-editor-config";
+import { supabase } from "../../../supabase-client";
 
 const PostEditForm = ({ post, id }) => {
   const [title, setTitle] = useState(post.title);
-  const [author, setAuthor] = useState(post.author);
   const [content, setContent] = useState(post.postcontent);
   const [image, setImage] = useState(
     post.image === "/images/blog-default.png" ? "" : post.image
@@ -18,7 +18,7 @@ const PostEditForm = ({ post, id }) => {
   const updatePostHandler = async (e) => {
     setUpdating(true);
     e.preventDefault();
-    if (title && author && content) {
+    if (title && content) {
       let imageContent;
       if (!image) {
         imageContent = "/images/blog-default.png";
@@ -26,7 +26,19 @@ const PostEditForm = ({ post, id }) => {
         imageContent = image;
       }
 
-      await blogContext.updatePost(id, title, imageContent, author, content);
+      const postData = {
+        title: title,
+        image: imageContent,
+        postcontent: content,
+      };
+
+      const { data, error } = await supabase.from('posts').update(postData).match({id: id });
+      if(error) {
+        console.log("Error updating post:: ", error.message);
+        return;
+      }
+
+     
     }
     router.push("/admin/bulletins-dashboard");
   };
@@ -53,20 +65,6 @@ const PostEditForm = ({ post, id }) => {
               id="title"
               type="text"
               value={title}
-              maxLength="70"
-              required
-            />
-          </div>
-          <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="author" className="text-lg mb-2 font-semibold">
-              Author
-            </label>
-            <input
-              onChange={(e) => setAuthor(e.target.value)}
-              className="p-2"
-              id="author"
-              type="text"
-              value={author}
               maxLength="70"
               required
             />

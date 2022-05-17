@@ -45,7 +45,7 @@ const FrontPrayerContextProvider = (props) => {
 
         setLoading(true);
       }
-      const data = await getPagedDataByDate(pageNumber, PAGE_SIZE, TABLE, "postdate");
+      const data = await getPagedDataByDate(pageNumber, PAGE_SIZE, TABLE, "created_at");
       
       setPosts(prevPosts => {
         return [...prevPosts, ...data];
@@ -164,7 +164,7 @@ const FrontPrayerContextProvider = (props) => {
         postcontent: content,
         ipaddress,
         notifications,
-        postdate: new Date(),
+        created_at: new Date(),
       }
       const response = await addItemToTable(TABLE, postToAdd);
       
@@ -202,7 +202,7 @@ const FrontPrayerContextProvider = (props) => {
       const postToAdd = {
         posttype: inputType,
         postcontent: content,
-        postdate: new Date(),
+        created_at: new Date(),
         user_id: user_id,
       };
       const response = await addItemToTable(TABLE, postToAdd);
@@ -213,12 +213,17 @@ const FrontPrayerContextProvider = (props) => {
 
 
     const deletePost = async (id) => {
-      const response = await deleteItemFromTable(TABLE, id);
-      // setPosts(prevPosts => {
-      //   const filtered = prevPosts.filter(post => post.id !== id);
-      //   return filtered;
-      // })
-      console.log(response);
+      // const { data: deleteCommentData , error: deleteCommentError } = await supabase.from('comments').delete().match({post_id: id });
+      // if(error){
+      //   console.log(
+      //     "Error deleting comments for post:: ",
+      //     deleteCommentError.message
+      //   );
+      // }
+      const { data, error } = await supabase.from('prayers').delete().match({id: id });
+      if(error){
+        console.log("Error deleting posting:: ", error.message);
+      }
     }
 
 

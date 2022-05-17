@@ -75,7 +75,6 @@ const BulletinProvider = (props) => {
       query,
       "search_blog_rpc"
     );
-
     setPosts(data);
     if (status !== "ok") {
       setNoData(true);

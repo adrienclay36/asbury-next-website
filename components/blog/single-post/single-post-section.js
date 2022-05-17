@@ -5,7 +5,7 @@ import HRThin from "../../ui/HRThin";
 import Image from "next/image";
 import styles from "./single-post-section.module.css";
 import parse from "html-react-parser";
-const SinglePostSection = ({ post, avatarURL, formatAuthor }) => {
+const SinglePostSection = ({ post }) => {
   const { title, image, author, postcontent, postdate } = post;
   const formatDate = new Date(
     postdate.replace(/-/g, "/").replace(/T.+/, "")
@@ -19,22 +19,20 @@ const SinglePostSection = ({ post, avatarURL, formatAuthor }) => {
 
       <div className="w-5/6 lg:w-3/6 mx-auto flex flex-1 flex-col lg:flex-row md:flex-row justify-between items-center text-center lg:text-left md:text-left">
         <div>
-          {avatarURL ? (
+         
             <Image
-              src={avatarURL}
+              src={post?.avatar_url}
               height={50}
               width={50}
               className={`${styles.init} object-cover rounded-full`}
               alt={author}
             />
-          ) : (
-            <div style={{ height: "55px" }}></div>
-          )}
+          
 
           <div>
             <h1 className="font-semibold uppercase text-xl my-4">{title}</h1>
             <h1 className="font-semibold uppercase text-lg text-seaFoam-700">
-              {formatAuthor}
+              {author}
             </h1>
           </div>
         </div>

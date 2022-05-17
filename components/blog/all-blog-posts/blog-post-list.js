@@ -81,13 +81,7 @@ const BlogPostList = () => {
         {blogContext.posts.map((post, index) => (
           <BlogPostItem
             key={post.id}
-            id={post.id}
-            title={post.title}
-            author={post.author}
-            date={post.postdate}
-            content={post.postcontent}
-            image={post.image}
-            userID={post.user_id}
+            post={post}
             i={index}
           />
         ))}
