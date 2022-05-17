@@ -37,7 +37,7 @@ export default function Home(props) {
     if(userWelcome) {
       const closeWelcome = setTimeout(() => {
         setUserWelcome(false);
-      }, 3000);
+      }, 10000);
 
       return () => clearTimeout(closeWelcome);
     }

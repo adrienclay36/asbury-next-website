@@ -6,25 +6,18 @@ import { ImBubble } from "react-icons/im";
 import { AiOutlineLogout, AiOutlineLogin } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { UserContext } from "../../store/user-context";
-import { Tooltip, Modal, Drawer } from "@mantine/core";
+import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { supabase } from "../../supabase-client";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
-import SignInForm from "./sign-in-form";
-import UIModal from "../ui/modal/UIModal";
-import SignUpForm from "./sign-up-form";
-import ForgotPasswordForm from "./forgot-password-form";
 const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSignIn, isOpen }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
   const userContext = useContext(UserContext);
   const router = useRouter();
 
-  const [error, setError] = useState("");
   const [userWelcome, setUserWelcome] = useState(false);
   const [signUpReminder, setSignUpReminder] = useState(false);
-  const [welcomed, setWelcomed] = useState(false);
 
   useEffect(() => {
     if (userContext.firstName && router.pathname === "/") {
@@ -92,7 +85,7 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
             disabled={disableTooltip}
           >
             <AiOutlineLogin
-              size={32}
+              size={33}
               onClick={() => setShowSignIn(true)}
               className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
             />
@@ -136,7 +129,7 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
                       `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
                     )
                   }
-                  className={`${styles.fade} cursor-pointer object-cover rounded-full`}
+                  className={`cursor-pointer object-cover rounded-full`}
                   src={userContext.avatarURL}
                   title={userContext.firstName}
                 />
@@ -176,7 +169,7 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
             tabIndex={0}
             size={30}
             onClick={() => userContext.logOutHandler()}
-            className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
+            className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
           />
         </Tooltip>
       )}
