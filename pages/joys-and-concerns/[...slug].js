@@ -36,7 +36,7 @@ const IndividualPrayer = (props) => {
         const userInfo = await getUser(fetchedPost.user_id);
         const userImage = await downloadImage(
           "avatars",
-          userInfo.avatar_url
+          userInfo.avatar_path
         );
         setUser(userInfo);
         setUserPost(fetchedPost);

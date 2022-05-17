@@ -77,6 +77,8 @@ const UserContextProvider = (props) => {
       .match({ id: user.id });
     if (data) {
       const userInfo = data[0];
+      setAvatarPath(userInfo.avatar_path);
+      setAvatarURL(userInfo?.avatar_url);
       if (user.app_metadata.provider === "google") {
         const googleArray = user.user_metadata.full_name.split(" ");
         setFirstName(googleArray[0]);
@@ -114,9 +116,8 @@ const UserContextProvider = (props) => {
       setRole(userInfo.role);
       setTitle(userInfo.title);
 
-      const url = await downloadImage("avatars", userInfo.avatar_url);
-      setAvatarPath(userInfo.avatar_url);
-      setAvatarURL(url);
+  
+      
 
       setLoading(false);
     }

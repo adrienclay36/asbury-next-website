@@ -8,7 +8,7 @@ import useGetImage from "../../hooks/useGetImage";
 const SinglePost = (props) => {
   const [post, setPost] = useState(props.post);
 
-  const { avatarURL, loadingAvatar } = useGetImage(props.avatar_url);
+  const { avatarURL, loadingAvatar } = useGetImage(props.avatar_path);
 
   return (
     <Layout title={post.title} description={post.content}>
@@ -45,7 +45,7 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       post: data[0],
-      avatar_url: userInfo.avatar_url,
+      avatar_url: userInfo.avatar_path,
       formatAuthor,
     },
     revalidate: 10,

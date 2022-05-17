@@ -9,7 +9,7 @@ const useGetUser = (user_id) => {
         setLoadingUser(true);
         const userInfo = await getUser(user_id);
         setUser(userInfo);
-        const userImage = await downloadImage('avatars', userInfo.avatar_url);
+        const userImage = await downloadImage('avatars', userInfo.avatar_path);
         setAvatarURL(userImage);
         setLoadingUser(false);
     }, [user_id])
