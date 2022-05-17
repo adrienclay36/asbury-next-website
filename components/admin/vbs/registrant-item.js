@@ -1,6 +1,8 @@
 import React from 'react'
 
-const RegistrantItem = ({ registrant, rows }) => {
+import { useRouter } from 'next/router';
+const RegistrantItem = ({ registrant, rows, href }) => {
+    const router = useRouter();
 
     const tableRow = (text, rowLabel) => (
         <td key={rowLabel} className="px-6 py-4 whitespace-nowrap">
@@ -9,8 +11,9 @@ const RegistrantItem = ({ registrant, rows }) => {
             </div>
         </td>
     )
+    console.log(href);
     return (
-        <tr className="cursor-pointer hover:bg-gray-100">
+        <tr onClick={() => router.push(`${href}/${registrant?.id}`)} className="cursor-pointer hover:bg-gray-100">
 
             {rows.map(row => {
                 if(registrant[row.rowLabel] === true ){

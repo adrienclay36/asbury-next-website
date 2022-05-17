@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import RegistrantItem from './registrant-item'
-const VBSList = ({ registrants }) => {
+const VBSList = ({ registrants, href }) => {
     const [rows, setRows] = useState();
 
-    const getRows = (registrantObject) => {
+    const getRows = useCallback((registrantObject) => {
       let tempRows = [];
       for (let key in registrantObject) {
         tempRows.push({
@@ -12,14 +12,14 @@ const VBSList = ({ registrants }) => {
       }
 
       setRows(tempRows);
-    }
+    }, [])
 
     useEffect(() => {
       if(registrants.length > 0) {
 
         getRows(registrants[0]);
       }
-    }, [])
+    }, [getRows, registrants])
 
 
    
@@ -48,7 +48,7 @@ const VBSList = ({ registrants }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {registrants.map(registrant => (
-                      <RegistrantItem rows={rows} registrant={registrant} key={registrant?.id} />
+                      <RegistrantItem href={href} rows={rows} registrant={registrant} key={registrant?.id} />
                   ))}
                 </tbody>
               </table>

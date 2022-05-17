@@ -1,6 +1,11 @@
-import React from 'react'
-import { Button } from '@mantine/core'
-const CustomButton = ({ leftIcon = null, onClick = () => {}, text, loading = false, styles = null}) => {
+import { Button } from "@mantine/core";
+const AsburyButton = ({
+  leftIcon = null,
+  onClick = () => {},
+  text,
+  loading = false,
+  styles = null,
+}) => {
   return (
     <Button
       type="submit"
@@ -13,6 +18,6 @@ const CustomButton = ({ leftIcon = null, onClick = () => {}, text, loading = fal
       {text}
     </Button>
   );
-}
+};
 
-export default CustomButton
+export default AsburyButton;

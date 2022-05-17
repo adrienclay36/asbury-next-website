@@ -122,7 +122,7 @@ const UserContextProvider = (props) => {
     }
   };
   const checkUser = async () => {
-    const user = await supabase.auth.user();
+    const user = supabase.auth.user();
     if (user) {
       setUserValue(user);
       if (user.app_metadata.provider === "google") {
@@ -137,10 +137,6 @@ const UserContextProvider = (props) => {
     router.reload();
   };
 
-  const signInHandler = async (email, password) => {
-    const { data, error } = await supabase.auth.signIn({ email, password });
-    await checkUser();
-  };
 
   const signInWithGoogle = async () => {
     const { user, session, error } = await supabase.auth.signIn({

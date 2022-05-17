@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { TextInput, Select } from "@mantine/core";
-import CustomButton from "../ui/CustomButton";
+import AsburyButton from "../ui/AsburyButton";
 import styles from "./child-registration-form.module.css";
 import { DatePicker } from "@mantine/dates";
 import { states } from "../../states";
 import { supabase } from "../../supabase-client";
 import { useRouter } from "next/router";
 import UIModal from "../ui/modal/UIModal";
+import { updateItemInTable } from "../../supabase-util";
 const gradeValues = [
   {
     value: "Pre K",
@@ -108,8 +109,10 @@ const childRegistrationSchema = Yup.object().shape({
   agree_to_media: Yup.string().required("You must select an option"),
 });
 
-const ChildRegistrationForm = () => {
-  const [childDOB, setChildDOB] = useState(new Date());
+const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
+  const [childDOB, setChildDOB] = useState(
+    editValues ? new Date(editValues?.child_dob) : new Date()
+  );
   const [dobError, setDobError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -124,6 +127,7 @@ const ChildRegistrationForm = () => {
   }, [childDOB]);
 
   const addToRegistration = async (values, resetForm) => {
+    
     setLoading(true);
     const formItem = {
       child_first: values.child_first,
@@ -150,6 +154,16 @@ const ChildRegistrationForm = () => {
       pickup_relationship: values.pickup_person_relationship,
       agree_to_media: values.agree_to_media === "Yes" ? true : false,
     };
+
+    if(editing) {
+      const response = await updateItemInTable('vbs_children', editValues?.id, formItem);
+      if(response.status === 'ok') {
+        setLoading(false);
+        router.push("/admin/vbs");
+        return;
+      }
+      
+    }
     const { data, error } = await supabase
       .from("vbs_children")
       .insert(formItem);
@@ -177,28 +191,28 @@ const ChildRegistrationForm = () => {
       <Formik
         validationSchema={childRegistrationSchema}
         initialValues={{
-          child_first: "",
-          child_last: "",
-          grade_completed: "Pre K",
-          gender: "M",
-          parent_first: "",
-          parent_last: "",
-          phone: "",
-          address: "",
-          city: "",
-          state: "New Mexico",
-          zipcode: "",
-          mailing_address: "",
-          email: "",
-          emergency_first: "",
-          emergency_last: "",
-          emergency_phone: "",
-          emergency_relationship: "",
-          special_needs_allergies: "",
-          pickup_person: "",
-          pickup_person_phone: "",
-          pickup_person_relationship: "",
-          agree_to_media: "Yes",
+          child_first: editValues?.child_first || '',
+          child_last: editValues?.child_last || '',
+          grade_completed: editValues?.grade_completed || 'Pre K',
+          gender: editValues?.gender || 'M',
+          parent_first: editValues?.parent_first || '',
+          parent_last: editValues?.parent_last || '',
+          phone: editValues?.phone || '',
+          address: editValues?.address || '',
+          city: editValues?.city || '',
+          state: editValues?.state || 'New Mexico',
+          zipcode: editValues?.zipcode || "",
+          mailing_address: editValues?.mailing_address || "",
+          email: editValues?.email || "",
+          emergency_first: editValues?.emergency_first || "",
+          emergency_last: editValues?.emergency_last || "",
+          emergency_phone: editValues?.emergency_phone || "",
+          emergency_relationship: editValues?.emergency_relationship || "",
+          special_needs_allergies: editValues?.special_needs_allergies || "",
+          pickup_person: editValues?.pickup_person || "",
+          pickup_person_phone: editValues?.pickup_person_phone || "",
+          pickup_person_relationship: editValues?.pickup_relationship || "",
+          agree_to_media: editValues?.agree_to_media ? (editValues?.agree_to_media === true ? 'Yes' : 'No') : 'Yes',
         }}
         validateOnMount={false}
         onSubmit={(values, actions) => {
@@ -398,8 +412,8 @@ const ChildRegistrationForm = () => {
               label="Do you agree to allow photos of your child to be used in church presentations or church promotional materials?"
             />
             <div className="justify-center items-center flex flex-1 w-full">
-              <CustomButton
-              styles='w-full'
+              <AsburyButton
+                styles="w-full"
                 loading={loading}
                 text="Submit"
                 onClick={handleSubmit}

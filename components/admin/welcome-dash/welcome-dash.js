@@ -15,10 +15,11 @@ const WelcomeDash = ({ firstName }) => {
           Welcome To Your Asbury Admin Dashboard
         </h1>
         <Link href="/" passHref>
-          <p className="mt-10 text-lg lg:text-xl font-extrabold text-center cursor-pointer hover:underline">Visit The Main Website</p>
+          <p className="mt-10 text-lg lg:text-xl font-extrabold text-center cursor-pointer hover:underline">
+            Visit The Main Website
+          </p>
         </Link>
       </div>
-  
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-12">
         <WelcomeItem
@@ -47,6 +48,12 @@ const WelcomeDash = ({ firstName }) => {
             buttonText="Add Administrator"
           />
         )}
+        <WelcomeItem
+          title="VBS"
+          description="View And Edit VBS Registrants Information"
+          href="/admin/vbs"
+          buttonText="View VBS Dashboard"
+        />
       </div>
     </div>
   );
