@@ -9,7 +9,7 @@ const ModalWithButton = ({ title, text, buttonText, onClick, opened, onClose, ce
             <h1 className="text-xl font-semibold mb-4">{title}</h1>
             {icon}
             <p className={`text-lg ${bold && 'font-semibold'}`}>{text}</p>
-            <AsburyButton text={buttonText} onClick={onClick}/>
+            <AsburyButton margin={'mt-4'} text={buttonText} onClick={onClick}/>
         </div>
     </Modal>
   )

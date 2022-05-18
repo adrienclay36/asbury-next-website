@@ -68,13 +68,11 @@ export default function Home(props) {
         opened={VBSOpen}
         onClose={() => setVBSOpen(false)}
         text={
-          "VBS registration is now open for both children and volunteers! Click the button below to register!"
+          "VBS registration is now open for both children and volunteers! VBS will take place from July 25th - July 29th. Click the button below to check out the details!"
         }
-        icon={
-        <FaChild size={50} className='text-seaFoam-600 my-8' />
-      }
+        icon={<FaChild size={50} className="text-seaFoam-600 my-8" />}
         title="VBS Registration"
-        buttonText={"Register Now"}
+        buttonText={"View The Details"}
         onClick={() => router.push("/vbs")}
         bold
       />
