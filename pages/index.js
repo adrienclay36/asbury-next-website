@@ -45,6 +45,8 @@ export default function Home(props) {
     }
   }, [userWelcome]);
 
+  // TEMP VBS MODAL CONTROLS
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setVBSOpen(true);
@@ -63,7 +65,7 @@ export default function Home(props) {
 
   return (
     <div className="font-primaryFont">
-      {/* Priority load hero image for home page */}
+      {/* TEMP VBS MODAL */}
       <ModalWithButton
         opened={VBSOpen}
         onClose={() => setVBSOpen(false)}
