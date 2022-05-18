@@ -67,15 +67,15 @@ const CommentList = ({ postID, user }) => {
 
   return (
     <>
-    {/* <NewCommentBox post={postID}/> */}
-      <div className="text-center my-12">
+    <NewCommentBox post={postID}/>
+      {/* <div className="text-center my-12">
         <button
           onClick={() => setOpen(!open)}
           className="px-5 py-2 rounded-lg shadow-lg border-2 bg-seaFoam-600 text-white"
         >
           {open ? "Close" : "Add Comment"}
         </button>
-      </div>
+      </div> */}
 
       <Collapse in={open}>
         <NewComment setOpen={setOpen} postID={postID} />
