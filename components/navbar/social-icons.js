@@ -11,6 +11,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
 import AsburyButton from "../ui/AsburyButton";
+import MainButton from '../ui/main-button';
 const SocialIcons = ({
   textColor,
   textHover,
@@ -21,7 +22,7 @@ const SocialIcons = ({
 }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
-  const mobileScreen = useMediaQuery('(max-width: 500px)');
+  const mobileScreen = useMediaQuery('(max-width: 520px)');
   const userContext = useContext(UserContext);
   const router = useRouter();
 
@@ -74,19 +75,11 @@ const SocialIcons = ({
 
   return (
     <>
-      {mobileScreen && (
-        <div className="flex justify-center items-center">
-          <AsburyButton
-            leftIcon={<FaChild size={15} color="white" />}
-            text="VBS Registration"
-            margin={null}
-            styles="-mb-4"
-            onClick={() => router.push("/vbs")}
-          />
-        </div>
-      )}
       <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
-        {!mobileScreen && (
+        {!mobileScreen && <MainButton margin='mr-8' onClick={() => router.push("/vbs")}>
+          VBS Registration
+        </MainButton>}
+        {/* {!mobileScreen && (
           <AsburyButton
             leftIcon={<FaChild size={15} color="white" />}
             text="VBS Registration"
@@ -94,7 +87,7 @@ const SocialIcons = ({
             styles={"lg:mr-8 md:mr-8 mr-4"}
             onClick={() => router.push("/vbs")}
           />
-        )}
+        )} */}
 
         {/* SIGN UP DRAWER */}
         {!userContext.user && (
