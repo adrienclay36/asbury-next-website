@@ -20,7 +20,7 @@ const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
   return (
     <div className="container">
       <Drawer
-      zIndex={10000}
+        zIndex={10000}
         transitionDuration={750}
         noFocusTrap
         size={"100%"}
@@ -28,15 +28,18 @@ const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
         position="right"
         onClose={() => setIsOpen(false)}
         padding={20}
+        className="overflow-scroll"
       >
         <ul
           className={`flex flex-1 flex-col text-center uppercase px-4 overflow-hidden text-black`}
         >
+          <MobileNavItem href="/">Home</MobileNavItem>
           {navLinks.map((link) => (
             <MobileNavItem key={link.text} href={link.href}>
               {link.text}
             </MobileNavItem>
           ))}
+          <MobileNavItem href="/vbs">VBS Registration</MobileNavItem>
         </ul>
         {userContext?.avatarURL ? (
           <div
@@ -59,7 +62,6 @@ const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
             onClick={() => showSignIn()}
             className="flex flex-1 justify-center items-center my-4 mx-auto flex-row"
           >
-           
             <p className="font-primaryFont font-semibold ml-4 underline">
               Sign In
             </p>

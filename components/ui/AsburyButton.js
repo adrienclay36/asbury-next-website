@@ -5,15 +5,18 @@ const AsburyButton = ({
   text,
   loading = false,
   styles = null,
+  variant = 'filled',
+  margin = 'mt-12'
 }) => {
+  const filledClasses = `text-white bg-emerald-900 hover:bg-emerald-800 ${margin} ${styles}`
   return (
     <Button
       type="submit"
       loading={loading}
-      variant="filled"
+      variant={variant}
       leftIcon={leftIcon}
       onClick={onClick}
-      className={`text-white bg-emerald-900 hover:bg-emerald-800 mt-12 ${styles}`}
+      className={filledClasses}
     >
       {text}
     </Button>

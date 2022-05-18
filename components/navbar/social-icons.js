@@ -4,15 +4,24 @@ import { MdOndemandVideo } from "react-icons/md";
 import { useRouter } from "next/router";
 import { ImBubble } from "react-icons/im";
 import { AiOutlineLogout, AiOutlineLogin } from "react-icons/ai";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaChild } from "react-icons/fa";
 import { UserContext } from "../../store/user-context";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
-const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSignIn, isOpen }) => {
+import AsburyButton from "../ui/AsburyButton";
+const SocialIcons = ({
+  textColor,
+  textHover,
+  showSignIn,
+  showSignUp,
+  setShowSignIn,
+  isOpen,
+}) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
+  const mobileScreen = useMediaQuery('(max-width: 500px)');
   const userContext = useContext(UserContext);
   const router = useRouter();
 
@@ -58,65 +67,107 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
   }, [signUpReminder]);
 
   useEffect(() => {
-    if(isOpen) {
+    if (isOpen) {
       setSignUpReminder(false);
     }
-  } ,[isOpen])
+  }, [isOpen]);
 
   return (
-    <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
-      {/* SIGN UP DRAWER */}
-
-      {!userContext.user && (
-        <Tooltip
-          opened={signUpReminder && !showSignIn && !showSignUp}
-          transitionDuration={500}
-          label="Sign In/Sign Up!"
-          position="bottom"
-          placement="start"
-          withArrow
-          zIndex={1000}
-        >
-          <Tooltip
-            label="Sign In"
-            position="bottom"
-            placement="start"
-            withArrow
-            disabled={disableTooltip}
-          >
-            <AiOutlineLogin
-              size={33}
-              onClick={() => setShowSignIn(true)}
-              className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
-            />
-          </Tooltip>
-        </Tooltip>
+    <>
+      {mobileScreen && (
+        <div className="flex justify-center items-center">
+          <AsburyButton
+            leftIcon={<FaChild size={15} color="white" />}
+            text="VBS Registration"
+            margin={null}
+            styles="-mb-4"
+            onClick={() => router.push("/vbs")}
+          />
+        </div>
       )}
-      {userContext.user && (
-        <Tooltip
-          opened={userWelcome}
-          disabled={mobileWelcomeTooltip}
-          label={`Welcome, ${userContext.firstName}`}
-          transitionDuration={500}
-          placement="start"
-          position="bottom"
-          withArrow
-        >
+      <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
+        {!mobileScreen && (
+          <AsburyButton
+            leftIcon={<FaChild size={15} color="white" />}
+            text="VBS Registration"
+            margin={null}
+            styles={"lg:mr-8 md:mr-8 mr-4"}
+            onClick={() => router.push("/vbs")}
+          />
+        )}
+
+        {/* SIGN UP DRAWER */}
+        {!userContext.user && (
           <Tooltip
-            disabled={disableTooltip}
-            label="Your Profile"
+            opened={signUpReminder && !showSignIn && !showSignUp}
+            transitionDuration={500}
+            label="Sign In/Sign Up!"
             position="bottom"
             placement="start"
             withArrow
+            zIndex={1000}
           >
-            {userContext.avatarURL ? (
-              <div className="mr-4 mt-2">
-                <Image
+            <Tooltip
+              label="Sign In"
+              position="bottom"
+              placement="start"
+              withArrow
+              disabled={disableTooltip}
+            >
+              <AiOutlineLogin
+                size={33}
+                onClick={() => setShowSignIn(true)}
+                className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
+              />
+            </Tooltip>
+          </Tooltip>
+        )}
+        {userContext.user && (
+          <Tooltip
+            opened={userWelcome}
+            disabled={mobileWelcomeTooltip}
+            label={`Welcome, ${userContext.firstName}`}
+            transitionDuration={500}
+            placement="start"
+            position="bottom"
+            withArrow
+          >
+            <Tooltip
+              disabled={disableTooltip}
+              label="Your Profile"
+              position="bottom"
+              placement="start"
+              withArrow
+            >
+              {userContext.avatarURL ? (
+                <div className="mr-4 mt-2">
+                  <Image
+                    tabIndex={0}
+                    height={30}
+                    width={30}
+                    priority
+                    alt={userContext.firstName}
+                    onKeyDown={(e) => {
+                      if (e.code === "Enter") {
+                        router.push(
+                          `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                        );
+                      }
+                    }}
+                    onClick={() =>
+                      router.push(
+                        `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
+                      )
+                    }
+                    className={`cursor-pointer object-cover rounded-full`}
+                    src={userContext.avatarURL}
+                    title={userContext.firstName}
+                  />
+                </div>
+              ) : (
+                <FaRegUserCircle
                   tabIndex={0}
-                  height={30}
-                  width={30}
-                  priority
-                  alt={userContext.firstName}
+                  size={30}
                   onKeyDown={(e) => {
                     if (e.code === "Enter") {
                       router.push(
@@ -129,115 +180,95 @@ const SocialIcons = ({ textColor, textHover, showSignIn, showSignUp, setShowSign
                       `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
                     )
                   }
-                  className={`cursor-pointer object-cover rounded-full`}
-                  src={userContext.avatarURL}
-                  title={userContext.firstName}
+                  className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
                 />
-              </div>
-            ) : (
-              <FaRegUserCircle
-                tabIndex={0}
-                size={30}
-                onKeyDown={(e) => {
-                  if (e.code === "Enter") {
-                    router.push(
-                      `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
-                    );
-                  }
-                }}
-                onClick={() =>
-                  router.push(
-                    `/profile/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
-                  )
-                }
-                className={`${styles.fade} ${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-              />
-            )}
+              )}
+            </Tooltip>
           </Tooltip>
-        </Tooltip>
-      )}
+        )}
 
-      {userContext.user && (
+        {userContext.user && (
+          <Tooltip
+            label="Sign Out"
+            position="bottom"
+            placement="start"
+            withArrow
+            disabled={disableTooltip}
+          >
+            <AiOutlineLogout
+              tabIndex={0}
+              size={30}
+              onClick={() => userContext.logOutHandler()}
+              className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
+            />
+          </Tooltip>
+        )}
         <Tooltip
-          label="Sign Out"
+          label="Visit Facebook"
           position="bottom"
           placement="start"
           withArrow
           disabled={disableTooltip}
         >
-          <AiOutlineLogout
+          <a
+            href="https://www.facebook.com/AsburyABQ"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <BsFacebook
+              size={30}
+              tabIndex={0}
+              className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
+            />
+          </a>
+        </Tooltip>
+
+        <Tooltip
+          label="Joys & Concerns"
+          position="bottom"
+          placement="start"
+          withArrow
+          disabled={disableTooltip}
+        >
+          <ImBubble
             tabIndex={0}
+            onClick={() => router.push("/joys-and-concerns")}
             size={30}
-            onClick={() => userContext.logOutHandler()}
             className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
           />
         </Tooltip>
-      )}
-      <Tooltip
-        label="Visit Facebook"
-        position="bottom"
-        placement="start"
-        withArrow
-        disabled={disableTooltip}
-      >
-        <a
-          href="https://www.facebook.com/AsburyABQ"
-          rel="noreferrer"
-          target="_blank"
+
+        <Tooltip
+          label="Live Stream"
+          position="bottom"
+          placement="start"
+          withArrow
+          disabled={disableTooltip}
         >
-          <BsFacebook
-            size={30}
+          <MdOndemandVideo
             tabIndex={0}
+            onClick={() => router.push("/livestream")}
+            size={30}
             className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
           />
-        </a>
-      </Tooltip>
+        </Tooltip>
 
-      <Tooltip
-        label="Joys & Concerns"
-        position="bottom"
-        placement="start"
-        withArrow
-        disabled={disableTooltip}
-      >
-        <ImBubble
-          tabIndex={0}
-          onClick={() => router.push("/joys-and-concerns")}
-          size={30}
-          className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-        />
-      </Tooltip>
-
-      <Tooltip
-        label="Live Stream"
-        position="bottom"
-        placement="start"
-        withArrow
-        disabled={disableTooltip}
-      >
-        <MdOndemandVideo
-          tabIndex={0}
-          onClick={() => router.push("/livestream")}
-          size={30}
-          className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
-        />
-      </Tooltip>
-
-      <Tooltip
-        label="Contact Us"
-        position="bottom"
-        placement="start"
-        withArrow
-        disabled={disableTooltip}
-      >
-        <BsFillEnvelopeFill
-          tabIndex={0}
-          onClick={() => router.push("/contact")}
-          size={30}
-          className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
-        />
-      </Tooltip>
-    </div>
+        <Tooltip
+          label="Contact Us"
+          position="bottom"
+          placement="start"
+          withArrow
+          disabled={disableTooltip}
+        >
+          <BsFillEnvelopeFill
+            tabIndex={0}
+            onClick={() => router.push("/contact")}
+            size={30}
+            className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
+          />
+        </Tooltip>
+      </div>
+    </>
   );
 };
 

@@ -11,10 +11,13 @@ import { UserContext } from "../store/user-context";
 import { Dialog } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/router";
+import { FaChild } from 'react-icons/fa';
+import ModalWithButton from "../components/ui/modal/ModalWithButton";
 export default function Home(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
   const [userWelcome, setUserWelcome] = useState(false);
+  const [VBSOpen, setVBSOpen] = useState(false);
   const userContext = useContext(UserContext);
   const disableNotifications = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
@@ -32,20 +35,49 @@ export default function Home(props) {
     }
   }, [userContext.user, disableNotifications]);
 
-
   useEffect(() => {
-    if(userWelcome) {
+    if (userWelcome) {
       const closeWelcome = setTimeout(() => {
         setUserWelcome(false);
       }, 10000);
 
       return () => clearTimeout(closeWelcome);
     }
-  }, [userWelcome])
+  }, [userWelcome]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setVBSOpen(true);
+    }, 1500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    if (VBSOpen) {
+      const timeout = setTimeout(() => {
+        setVBSOpen(false);
+      }, 10000);
+    }
+    return () => clearTimeout(timeout);
+  }, [VBSOpen]);
 
   return (
     <div className="font-primaryFont">
       {/* Priority load hero image for home page */}
+      <ModalWithButton
+        opened={VBSOpen}
+        onClose={() => setVBSOpen(false)}
+        text={
+          "VBS registration is now open for both children and volunteers! Click the button below to register!"
+        }
+        icon={
+        <FaChild size={50} className='text-seaFoam-600 my-8' />
+      }
+        title="VBS Registration"
+        buttonText={"Register Now"}
+        onClick={() => router.push("/vbs")}
+        bold
+      />
       <Dialog
         withCloseButton
         opened={userWelcome}
