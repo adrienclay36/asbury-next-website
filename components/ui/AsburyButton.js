@@ -6,7 +6,8 @@ const AsburyButton = ({
   loading = false,
   styles = null,
   variant = 'filled',
-  margin = 'mt-12'
+  margin = 'mt-12',
+  disabled = false,
 }) => {
   const filledClasses = `text-white bg-emerald-900 hover:bg-emerald-800 ${margin} ${styles}`
   return (
@@ -17,6 +18,7 @@ const AsburyButton = ({
       leftIcon={leftIcon}
       onClick={onClick}
       className={filledClasses}
+      disabled={disabled}
     >
       {text}
     </Button>

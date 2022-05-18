@@ -5,6 +5,7 @@ import { Collapse } from '@mantine/core';
 import NewComment from './new-comment';
 import { UserContext } from '../../../../store/user-context';
 import styles from './comment-list.module.css';
+import NewCommentBox from './new-comment-box';
 const CommentList = ({ postID, user }) => {
   const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
@@ -67,6 +68,7 @@ const CommentList = ({ postID, user }) => {
 
   return (
     <>
+    {/* <NewCommentBox post={postID}/> */}
       <div className="text-center my-12">
         <button
           onClick={() => setOpen(!open)}
