@@ -62,7 +62,6 @@ const CommentList = ({ postID, user }) => {
         .on("*", (payloadItem) => setPayload(payloadItem))
         .subscribe();
       return () => supabase.removeSubscription(commentSub);
-    
   }, []);
 
 
