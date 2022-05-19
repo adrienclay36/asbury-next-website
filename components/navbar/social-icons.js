@@ -19,10 +19,11 @@ const SocialIcons = ({
   showSignUp,
   setShowSignIn,
   isOpen,
+  hideButton = false,
 }) => {
   const disableTooltip = useMediaQuery("(max-width: 900px)");
   const mobileWelcomeTooltip = useMediaQuery("(min-width: 900px)");
-  const mobileScreen = useMediaQuery('(max-width: 520px)');
+  const mobileScreen = useMediaQuery("(max-width: 520px)");
   const userContext = useContext(UserContext);
   const router = useRouter();
 
@@ -76,9 +77,11 @@ const SocialIcons = ({
   return (
     <>
       <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
-        {!mobileScreen && <MainButton margin='mr-8' onClick={() => router.push("/vbs")}>
-          VBS Registration
-        </MainButton>}
+        {!mobileScreen && !hideButton && (
+          <MainButton margin="mr-8" onClick={() => router.push("/vbs")}>
+            VBS Registration
+          </MainButton>
+        )}
         {/* {!mobileScreen && (
           <AsburyButton
             leftIcon={<FaChild size={15} color="white" />}
