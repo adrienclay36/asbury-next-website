@@ -3,10 +3,11 @@ import { BlogContext } from "../../../store/blog-store";
 import { UserContext } from "../../../store/user-context";
 import styles from "./new-post-form.module.css";
 import { useRouter } from "next/router";
-import DualRingLoader from "../../dual-ring-loader/DualRingLoader";
 import { LoadingOverlay } from "@mantine/core";
 import CKEditorConfig from "./ck-editor-config";
 import { supabase } from "../../../supabase-client";
+import AsburyButton from "../../ui/AsburyButton";
+import { TextInput } from "@mantine/core";
 const NewPostForm = () => {
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -65,12 +66,10 @@ const NewPostForm = () => {
         <LoadingOverlay visible={adding} />
         <form onSubmit={addPostHandler}>
           <div className="flex flex-1 flex-col mb-4">
-            <label htmlFor="title" className="text-lg mb-2 font-semibold">
-              Title
-            </label>
-            <input
+            
+            <TextInput
               onChange={(e) => setTitle(e.target.value)}
-              className={styles.input}
+              label="Title"
               placeholder="Add a title"
               id="title"
               type="text"
@@ -80,15 +79,11 @@ const NewPostForm = () => {
             />
           </div>
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="image" className="text-lg font-semibold">
-              Image Link
-            </label>
-            <p className="text-sm text-gray-500 font-semibold mb-2">
-              Leave this blank to use the default blog image
-            </p>
-            <input
+            
+            <TextInput
+              label="Image Link"
+              description="Leave this blank to use a default image"
               onChange={(e) => setImage(e.target.value)}
-              className={styles.input}
               placeholder="http://www.unsplash.com is a good place to find free stock images"
               id="image"
               type="url"
@@ -96,18 +91,10 @@ const NewPostForm = () => {
             />
           </div>
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="content" className="text-lg mb-2 font-semibold">
-              Contents
-            </label>
-
             <CKEditorConfig setContent={setContent} />
           </div>
-          <button
-            disabled={adding ? true : false}
-            className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
-          >
-            {adding ? <DualRingLoader /> : "Create Post"}
-          </button>
+          
+          <AsburyButton text="Create Post" loading={adding} />
         </form>
       </div>
     </>

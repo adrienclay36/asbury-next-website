@@ -109,7 +109,7 @@ const childRegistrationSchema = Yup.object().shape({
   agree_to_media: Yup.string().required("You must select an option"),
 });
 
-const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
+const ChildRegistrationForm = ({ editValues = null, editing = false, containerStyles = '' }) => {
   const [childDOB, setChildDOB] = useState(
     editValues ? new Date(editValues?.child_dob) : new Date()
   );
@@ -180,7 +180,9 @@ const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
     }, 5000);
   };
   return (
-    <div className="container w-11/12 lg:w-2/6 md:w-2/6 bg-white shadow-lg rounded-lg p-6">
+    <div
+      className={`container w-11/12 lg:w-2/6 md:w-2/6 bg-white shadow-lg rounded-lg p-6 ${containerStyles}`}
+    >
       <UIModal
         opened={success}
         onClose={() => setSuccess(false)}
@@ -191,16 +193,16 @@ const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
       <Formik
         validationSchema={childRegistrationSchema}
         initialValues={{
-          child_first: editValues?.child_first || '',
-          child_last: editValues?.child_last || '',
-          grade_completed: editValues?.grade_completed || 'Pre K',
-          gender: editValues?.gender || 'M',
-          parent_first: editValues?.parent_first || '',
-          parent_last: editValues?.parent_last || '',
-          phone: editValues?.phone || '',
-          address: editValues?.address || '',
-          city: editValues?.city || '',
-          state: editValues?.state || 'New Mexico',
+          child_first: editValues?.child_first || "",
+          child_last: editValues?.child_last || "",
+          grade_completed: editValues?.grade_completed || "Pre K",
+          gender: editValues?.gender || "M",
+          parent_first: editValues?.parent_first || "",
+          parent_last: editValues?.parent_last || "",
+          phone: editValues?.phone || "",
+          address: editValues?.address || "",
+          city: editValues?.city || "",
+          state: editValues?.state || "New Mexico",
           zipcode: editValues?.zipcode || "",
           mailing_address: editValues?.mailing_address || "",
           email: editValues?.email || "",
@@ -212,7 +214,11 @@ const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
           pickup_person: editValues?.pickup_person || "",
           pickup_person_phone: editValues?.pickup_person_phone || "",
           pickup_person_relationship: editValues?.pickup_relationship || "",
-          agree_to_media: editValues?.agree_to_media ? (editValues?.agree_to_media === true ? 'Yes' : 'No') : 'Yes',
+          agree_to_media: editValues?.agree_to_media
+            ? editValues?.agree_to_media === true
+              ? "Yes"
+              : "No"
+            : "Yes",
         }}
         validateOnMount={false}
         onSubmit={(values, actions) => {
@@ -413,7 +419,7 @@ const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
             />
             <div className="justify-center items-center flex flex-1 w-full">
               <AsburyButton
-              margin={'mt-6'}
+                margin={"mt-6"}
                 styles="w-full"
                 loading={loading}
                 text="Submit"

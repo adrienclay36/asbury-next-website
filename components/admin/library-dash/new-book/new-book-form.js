@@ -43,12 +43,7 @@ const NewBookForm = () => {
   return (
     <>
       <div className="text-center">
-        <button
-          onClick={() => router.push("/admin/library-dashboard")}
-          className="bg-emerald-900 px-4 py-2 text-white font-semibold rounded-lg shadow-md"
-        >
-          Back To All Books
-        </button>
+        <AsburyButton onClick={() => router.push("/admin/library-dashboard")} text="Go Back" />
       </div>
       <div className="container w-11/12 lg:w-3/6 mt-12 p-4 border-2 rounded-lg shadow-md mb-40 relative">
         <LoadingOverlay
@@ -118,13 +113,6 @@ const NewBookForm = () => {
             <Radio value="true" label="Yes"/>
             <Radio value="false" label="No"/>
           </RadioGroup>
-          {/* <button
-            type="submit"
-            className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
-            disabled={adding ? true : false}
-          >
-            {adding ? <DualRingLoader /> : "Add Book"}
-          </button> */}
           <AsburyButton margin="mt-2" loading={adding} text="Add Book" />
         </form>
       </div>

@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { supabase } from "../../../../supabase-client";
 import DualRingLoader from "../../../dual-ring-loader/DualRingLoader";
 import { UserContext } from "../../../../store/user-context";
+import AsburyButton from "../../../ui/AsburyButton";
 const AdminNavbar = (props) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -61,13 +62,13 @@ const AdminNavbar = (props) => {
               </Link>
             );
           })}
-          <button
-            onClick={logoutHandler}
-            disabled={loggingOut ? true : false}
-            className="mb-2 cursor-pointer tracking-widest text-lg w-36 hover:bg-emerald-800 uppercase px-3 py-2 bg-emerald-900 rounded-lg shadow-md text-white"
-          >
-            {loggingOut ? <DualRingLoader /> : "Logout"}
-          </button>
+          <div className="mb-3">
+            <AsburyButton
+              text="Log Out"
+              onClick={logoutHandler}
+              loading={loggingOut}
+            />
+          </div>
         </ul>
         <div className="flex sm:hidden flex-1 justify-end mr-3">
           <AiOutlineMenu

@@ -27,9 +27,16 @@ const EditRegistrant = () => {
   }
   return (
     <AdminLayout>
-      <ChildRegistrationForm editValues={registrant} editing={true}/>
+      <div className="container w-11/12 lg:w-2/6 md:w-2/6 mb-4" mb-2>
+        <button onClick={() => router.push("/admin/vbs")} className="font-semibold text-gray-400 hover:underline">&larr; Go Back</button>
+      </div>
+      <ChildRegistrationForm
+        containerStyles="mb-40"
+        editValues={registrant}
+        editing={true}
+      />
     </AdminLayout>
-  )
+  );
 }
 
 export default EditRegistrant

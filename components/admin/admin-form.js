@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { supabase } from '../../supabase-client';
 import styles from './admin-form.module.css';
-import DualRingLoader from '../dual-ring-loader/DualRingLoader';
+
 import { UserContext } from '../../store/user-context';
-import { Modal } from '@mantine/core';
-import { BiErrorCircle } from 'react-icons/bi';
+import { Lock } from 'tabler-icons-react';
 import Link from 'next/link';
 import UIModal from '../ui/modal/UIModal';
+import AsburyButton from '../ui/AsburyButton';
 const AdminForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -135,50 +135,13 @@ const AdminForm = () => {
           </div>
 
           <div>
-            <button
-              disabled={emailSignIn || loggingIn}
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-seaFoam-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-emerald-600 group-hover:text-emerald-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-              {loggingIn ? <DualRingLoader /> : "Sign In"}
-            </button>
+           <AsburyButton leftIcon={<Lock size={20} color="white" />} margin="w-full mx-auto" text="Sign In" loading={loggingIn} />
           </div>
           <Link href="/" passHref>
             <p className="text-center font-semibold text-gray-400 hover:underline cursor-pointer">
               Back To Main Website
             </p>
           </Link>
-          {emailSignIn && (
-            <div className="text-center">
-              <p className="text-semibold text-green-700 mt-10">
-                Check your email to sign in - you will receive a login link!
-              </p>
-            </div>
-          )}
-
-          {/* {error && (
-            <div className="text-center">
-              <p className="text-semibold text-red-700 mt-10">
-                Please check your credentials and try again. If the issue
-                persists, try resetting your password
-              </p>
-            </div>
-          )} */}
         </form>
       </div>
     </div>

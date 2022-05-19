@@ -41,8 +41,7 @@ export const LibraryContext = React.createContext({
     subject,
     author,
     deweyNumber,
-    authorCode,
-    availability
+    authorCode
   ) => {},
   toggleAvailable: (id) => {},
 });
@@ -181,19 +180,21 @@ const LibraryProvider = (props) => {
     author,
     deweyNumber,
     authorCode,
-    availability
   ) => {
-    const boolAvailability = availability === "true" ? true : false;
     const bookData = {
       title: title,
       subject: subject,
       author: author,
       deweynumber: deweyNumber,
       authorcode: authorCode,
-      availability: boolAvailability,
     };
     
     const response = await updateItemInTable(TABLE, id, bookData);
+    if(query){
+      await callQueryFunction();
+    } else {
+      getBooks();
+    }
   };
 
   const toggleAvailable = async (id) => {
