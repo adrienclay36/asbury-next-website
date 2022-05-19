@@ -2,7 +2,7 @@ import React from "react";
 import SectionHeading from "../ui/section-heading";
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
 import Image from "next/image";
-import SquareCard from '../../components/ui/square-card/square-card';
+import SquareCard from "../../components/ui/square-card/square-card";
 const VBSSection = () => {
   return (
     <SectionHeading title="VBS Registration">
@@ -15,7 +15,12 @@ const VBSSection = () => {
           alt="VBS Registration"
         />
       </div>
-      <SquareCard title="July 25th - July 29th" subtitle="8:30 - 11:30" content1="8:30 AM Breakfast (Optional)" content2="11:30 AM Lunch (Optional)"/>
+      <SquareCard
+        title="July 25th - July 29th"
+        subtitle="8:30 AM - 11:30 AM"
+        content1="8:30 AM Breakfast (Optional)"
+        content2="11:30 AM Lunch (Optional)"
+      />
       <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
         <InfoDropdown
           title="Child Registration"
