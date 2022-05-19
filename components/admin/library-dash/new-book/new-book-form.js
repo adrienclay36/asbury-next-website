@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { LibraryContext } from "../../../../store/library-store";
 import { LoadingOverlay } from "@mantine/core";
+import { TextInput, Radio, RadioGroup } from "@mantine/core";
 import DualRingLoader from "../../../dual-ring-loader/DualRingLoader";
-import styles from './new-book-form.module.css';
+import AsburyButton from "../../../ui/AsburyButton";
+
 const NewBookForm = () => {
   const libraryContext = useContext(LibraryContext);
   const [title, setTitle] = useState("");
@@ -54,26 +56,22 @@ const NewBookForm = () => {
         />
         <form onSubmit={addBookHandler}>
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="deweyNumber" className="text-lg mb-2 font-semibold">
-              Dewey Number
-            </label>
-            <input
+            
+            <TextInput
+            label="Dewey Number"
+            required
               onChange={(e) => setDeweyNumber(e.target.value)}
-              className={styles.input}
               id="deweyNumber"
               type="text"
               value={deweyNumber}
               maxLength="140"
-              required
+              
             />
           </div>
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="authorCode" className="text-lg mb-2 font-semibold">
-              Author Code
-            </label>
-            <input
+            <TextInput
               onChange={(e) => setAuthorCode(e.target.value)}
-              className={styles.input}
+              label="Author Code"
               id="authorCode"
               type="text"
               value={authorCode}
@@ -82,12 +80,10 @@ const NewBookForm = () => {
             />
           </div>
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="author" className="text-lg mb-2 font-semibold">
-              Author
-            </label>
-            <input
+            <TextInput
               onChange={(e) => setAuthor(e.target.value)}
-              className={styles.input}
+              label="Author"
+              
               id="author"
               type="text"
               value={author}
@@ -96,12 +92,9 @@ const NewBookForm = () => {
             />
           </div>
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="title" className="text-lg mb-2 font-semibold">
-              Title
-            </label>
-            <input
+            <TextInput
               onChange={(e) => setTitle(e.target.value)}
-              className={styles.input}
+              label="Title"
               id="title"
               type="text"
               value={title}
@@ -111,59 +104,28 @@ const NewBookForm = () => {
           </div>
 
           <div className="flex flex-1 flex-col mb-8">
-            <label htmlFor="subject" className="text-lg mb-2 font-semibold">
-              Subject
-            </label>
-            <input
+            <TextInput
               onChange={(e) => setSubject(e.target.value)}
-              className={styles.input}
               id="subject"
               type="text"
+              label="Subject"
               value={subject}
               maxLength="140"
               required
             />
           </div>
-
-
-
-
-          <div
-            className="flex flex-1 flex-row mb-4"
-            onChangeCapture={(e) => setAvailability(e.target.value)}
-          >
-            <div className="mb-2 mx-2">
-              <label className="mx-2" htmlFor="available">
-                Available
-              </label>
-              <input
-                type="radio"
-                id="available"
-                name="availability"
-                value={true}
-                onChange={optionChange}
-              />
-            </div>
-            <div className="mb-2">
-              <label className="mx-2" htmlFor="unavailable">
-                Checked Out
-              </label>
-              <input
-                type="radio"
-                id="unavailable"
-                name="availability"
-                value={false}
-                onChange={optionChange}
-              />
-            </div>
-          </div>
-          <button
+          <RadioGroup className="mb-4" value={availability} onChange={setAvailability} label="Is this book available?" required>
+            <Radio value="true" label="Yes"/>
+            <Radio value="false" label="No"/>
+          </RadioGroup>
+          {/* <button
             type="submit"
             className="bg-emerald-900 px-4 py-2 rounded-md text-white font-semibold"
             disabled={adding ? true : false}
           >
             {adding ? <DualRingLoader /> : "Add Book"}
-          </button>
+          </button> */}
+          <AsburyButton margin="mt-2" loading={adding} text="Add Book" />
         </form>
       </div>
     </>

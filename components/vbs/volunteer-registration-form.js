@@ -250,6 +250,7 @@ const VolunteerRegistrationForm = ({ editValues = null, editing = false }) => {
 
             <div className="flex flex-1 justify-center items-center w-full">
               <AsburyButton
+                margin={'mt-6'}
                 onClick={handleSubmit}
                 styles="w-full"
                 text="Submit"

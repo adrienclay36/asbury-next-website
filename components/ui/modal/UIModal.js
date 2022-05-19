@@ -3,7 +3,7 @@ import { Modal } from '@mantine/core';
 import { BiErrorCircle } from 'react-icons/bi';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal, icon=null, transitionDuration = 750}) => {
+const UIModal = ({ type, message, href, actionText, opened, onClose, centerModal, icon=null, transitionDuration = 350}) => {
     const router = useRouter();
   return (
     <Modal transitionDuration={transitionDuration} centered={centerModal} opened={opened} onClose={onClose}>

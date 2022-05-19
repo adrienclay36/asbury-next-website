@@ -4,6 +4,8 @@ import BookList from './book-list';
 import { useRouter } from 'next/router';
 import { UserContext } from '../../../store/user-context';
 import DualRingLoader from '../../dual-ring-loader/DualRingLoader';
+import AsburyButton from '../../ui/AsburyButton';
+import { Plus } from 'tabler-icons-react';
 const LibraryOperations = () => {
   const userContext = useContext(UserContext);
   const router = useRouter();
@@ -24,12 +26,7 @@ const LibraryOperations = () => {
   return (
     <div className="container my-12">
       {userContext.libraryPermissions && <div className="flex justify-center items-center w-full lg:w-1/6 md:w-1/6 mx-auto">
-        <button
-          onClick={newBookNavigate}
-          className="flex flex-1 justify-center items-center px-7 py-2 bg-emerald-600 text-white font-semibold uppercase rounded-lg"
-        >
-          {routing ? <DualRingLoader/> : buttonText}
-        </button>
+        <AsburyButton onClick={() => newBookNavigate()} loading={routing} text="Add Book" leftIcon={<Plus color="white" size={20}/>} />
       </div>}
       <BookList/>
     </div>

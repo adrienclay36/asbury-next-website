@@ -413,6 +413,7 @@ const ChildRegistrationForm = ({ editValues = null, editing = false }) => {
             />
             <div className="justify-center items-center flex flex-1 w-full">
               <AsburyButton
+              margin={'mt-6'}
                 styles="w-full"
                 loading={loading}
                 text="Submit"

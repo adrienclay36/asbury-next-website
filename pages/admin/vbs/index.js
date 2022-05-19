@@ -5,7 +5,6 @@ import PageLoading from "../../../components/PageLoading/PageLoading";
 import VBSList from "../../../components/admin/vbs/vbs-list";
 import { Tabs } from "@mantine/core";
 import { FaChild, FaHandHoldingHeart } from "react-icons/fa";
-import AsburyButton from "../../../components/ui/AsburyButton";
 import { CSVLink } from "react-csv";
 import { checkAdmin } from "../../../supabase-util";
 const VBSRegistrationHistory = () => {

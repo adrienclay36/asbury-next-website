@@ -10,7 +10,6 @@ import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
-import AsburyButton from "../ui/AsburyButton";
 import MainButton from '../ui/main-button';
 const SocialIcons = ({
   textColor,
@@ -82,15 +81,6 @@ const SocialIcons = ({
             VBS Registration
           </MainButton>
         )}
-        {/* {!mobileScreen && (
-          <AsburyButton
-            leftIcon={<FaChild size={15} color="white" />}
-            text="VBS Registration"
-            margin={null}
-            styles={"lg:mr-8 md:mr-8 mr-4"}
-            onClick={() => router.push("/vbs")}
-          />
-        )} */}
 
         {/* SIGN UP DRAWER */}
         {!userContext.user && (
