@@ -5,8 +5,6 @@ import { UserContext } from "../../../../store/user-context";
 import { deleteItemFromTable } from "../../../../supabase-util";
 import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import SkeletonComment from "../../../ui/skeleton-comment";
-import useGetUser from "../../../../hooks/useGetUser";
 const CommentItem = ({ comment, id}) => {
   const [readMore, setReadMore] = useState(false);
   const [userID, setUserID] = useState(comment.user_id);
@@ -49,7 +47,7 @@ const CommentItem = ({ comment, id}) => {
 
   return (
     <div
-      className={`container ${styles.init} flex flex-1 flex-col border-2 my-4 p-6 lg:p-10 md:p-10 rounded-lg shadow-md w-11/12 lg:w-2/6 md:w-2/6 mx-auto`}
+      className={`container ${styles.init} flex flex-1 flex-col  my-4 p-6 lg:p-10 md:p-10 border-b-2 rounded-lg w-11/12 lg:w-2/6 md:w-2/6 mx-auto`}
     >
       <div className="flex flex-1 justify-start items-center">
         <div className="flex flex-1 justify-start items-center">
