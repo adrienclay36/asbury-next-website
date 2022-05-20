@@ -4,9 +4,11 @@ import { IoMdExit } from "react-icons/io";
 import { BlogContext } from "../../../store/blog-store";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { UserContext } from "../../../store/user-context";
 const BlogItem = ({ post, permitted }) => {
   const blogContext = useContext(BlogContext);
   const router = useRouter();
+  const userContext = useContext(UserContext)
 
   const formatTitle = post.title
     .replace(/([a-z])([A-Z])/g, "$1-$2")
@@ -50,7 +52,7 @@ const BlogItem = ({ post, permitted }) => {
             </button>
           </a>
         </Link>
-        {permitted && (
+        {permitted && userContext?.user?.id === post?.user_id && (
           <button
             onClick={() => router.push(`/admin/bulletins-dashboard/${post.id}`)}
             className="px-4 py-2 mx-1 mb-2 lg:mb-0 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
@@ -58,7 +60,7 @@ const BlogItem = ({ post, permitted }) => {
             <BsPencilSquare className="text-white" />
           </button>
         )}
-        {permitted && (
+        {permitted && userContext?.user?.id === post?.user_id && (
           <button
             onClick={deletePostHandler}
             className="px-4 py-2 mx-1 my-4 lg:my-0 md:my-0 bg-red-600 rounded-lg hover:bg-red-800"

@@ -55,8 +55,9 @@ const BulletinProvider = (props) => {
   };
 
   const initTotalPages = async () => {
-    const totalPages = await getTotalPages(PAGE_SIZE, TABLE);
-    setTotalPages(totalPages);
+    const totalPagesInit = await getTotalPages(PAGE_SIZE, TABLE);
+    console.log(totalPagesInit);
+    setTotalPages(totalPagesInit);
   };
 
   useEffect(() => {
@@ -105,6 +106,9 @@ const BulletinProvider = (props) => {
   }, [query]);
 
   const increasePage = () => {
+    if(totalPages === 0 || totalPages === 1) {
+      return;
+    }
     setPageNumber(Math.min(totalPages - 1, pageNumber + 1));
   };
   const decreasePage = () => {

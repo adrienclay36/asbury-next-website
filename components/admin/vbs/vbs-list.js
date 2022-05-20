@@ -22,6 +22,13 @@ const VBSList = ({ registrants, href }) => {
     }, [getRows, registrants])
 
 
+    if(registrants.length === 0 ) {
+      return (
+        <div className="flex flex-1 justify-center items-center">
+          <p className="font-semibold text-xl mt-10">No records to show.</p>
+        </div>
+      )
+    }
    
 
     if(!rows) {

@@ -37,6 +37,14 @@ const BlogPostList = () => {
     }
   };
 
+  if(blogContext.posts.length === 0) {
+    return (
+      <div className="flex flex-1 justify-center items-center">
+        <p className="font-semibold text-xl">No Bulletins Yet!</p>
+      </div>
+    )
+  }
+
   return (
     <section>
       <div className="container flex items-center justify-center mb-2">

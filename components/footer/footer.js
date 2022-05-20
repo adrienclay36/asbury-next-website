@@ -15,7 +15,7 @@ const Footer = () => {
     <footer className="py-8 bg-gray-100">
       <div className='flex flex-1 justify-center items-center'>
 
-      {!mobileScreen && <MainButton filled margin="mr-8" onClick={() => router.push("/vbs")}>
+      {!mobileScreen && <MainButton filled onClick={() => router.push("/vbs")}>
         VBS Registration
       </MainButton>}
       </div>

@@ -174,18 +174,22 @@ const ChildRegistrationForm = ({ editValues = null, editing = false, containerSt
     }
     setLoading(false);
     setSuccess(true);
+    window.scrollTo({ top, behavior: "smooth" });
     resetForm();
-    setTimeout(() => {
-      router.push("/vbs");
-    }, 5000);
+    
   };
+
+  const closeAndPush = () => {
+    setSuccess(false);
+    router.push("/vbs");
+  }
   return (
     <div
       className={`container w-11/12 lg:w-2/6 md:w-2/6 bg-white shadow-lg rounded-lg p-6 ${containerStyles}`}
     >
       <UIModal
         opened={success}
-        onClose={() => setSuccess(false)}
+        onClose={() => closeAndPush()}
         centerModal
         type="success"
         message="Success! Your information has been received! If needed, a team member will reach out to you for further information!"

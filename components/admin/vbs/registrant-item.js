@@ -11,7 +11,6 @@ const RegistrantItem = ({ registrant, rows, href }) => {
             </div>
         </td>
     )
-    console.log(href);
     return (
         <tr onClick={() => router.push(`${href}/${registrant?.id}`)} className="cursor-pointer hover:bg-gray-100">
 

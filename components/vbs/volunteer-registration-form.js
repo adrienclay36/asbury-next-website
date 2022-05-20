@@ -124,9 +124,10 @@ const VolunteerRegistrationForm = ({ editValues = null, editing = false }) => {
     setLoading(false);
     setSuccess(true);
     resetForm();
-    setTimeout(() => {
-      router.push("/vbs");
-    }, 5000);
+  };
+  const closeAndPush = () => {
+    setSuccess(false);
+    router.push("/vbs");
   };
 
   return (
@@ -135,7 +136,7 @@ const VolunteerRegistrationForm = ({ editValues = null, editing = false }) => {
         centerModal={true}
         type="success"
         opened={success}
-        onClose={() => setSuccess(false)}
+        onClose={() => closeAndPush()}
         message="Thank you! A team member will contact you with further information regarding VBS!"
       />
       <UIModal
