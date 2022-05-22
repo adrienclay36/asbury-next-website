@@ -283,15 +283,15 @@ export const navLinks = [
     text: "Giving",
     href: "/giving",
     subNav: true,
-    size: "xs",
+    size: "md",
     items: [
+      // {
+      //   title: "PayPal",
+      //   href: "https://www.paypal.com",
+      //   icon: <BsPaypal size={18} />,
+      // },
       {
-        title: "PayPal",
-        href: "https://www.paypal.com",
-        icon: <BsPaypal size={18} />,
-      },
-      {
-        title: "Stripe",
+        title: "One Time Donation",
         href: "/giving/one-time-donation",
         icon: <FaStripeS size={18} />,
       },
