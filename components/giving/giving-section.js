@@ -19,13 +19,9 @@ const GivingSection = () => {
           you can also give in the following ways:"
       />
 
-
       <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
+        <GivingDropdown />
 
-        <GivingDropdown/>
-
-
-        
         {givingItems.map((item) => (
           <InfoDropdown
             key={item.title}
@@ -43,13 +39,11 @@ const GivingSection = () => {
 
 export default GivingSection;
 
-
 export const givingItems = [
-  
   {
     title: "Automated Giving",
     content:
-      "Set up a recurring donation from a bank account, credit/debit card, or online bill pay. Giving from bank accounts and card charges are drafted on the 2nd and 16th of each month and conclude in December of each year. Contact the church office for more information or to set up automatic giving.",
+      "Set up and manage recurring donations right from asburyabq.org! By creating an account, you will be able to set up recurring donations as well as view your transaction history.",
     buttonText: null,
     href: null,
     external: false,

@@ -30,7 +30,7 @@ const UserProfilePage = () => {
   return (
     <Layout title={`${userContext.firstName} ${userContext.lastName}`}>
       <UserProfileCard />
-      <FinancialManagementSection/>
+      {/* <FinancialManagementSection/> */}
     </Layout>
   );
 };

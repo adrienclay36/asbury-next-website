@@ -17,7 +17,7 @@ const GivingDropdown = ({ title, content, buttonText, external, href }) => {
 
   return (
     <>
-      <div className="container mt-8 p-6 w-11/12 lg:w-5/6 md:w-5/6 rounded-lg shadow-lg border-2">
+      <div className="container mt-8 p-6 w-11/12 lg:w-5/6 md:w-5/6 rounded-lg shadow-lg">
         <div className="flex flex-1 justify-between items-center">
           <h1 className="uppercase m-1 font-semibold text-xl">Online Giving</h1>
           <button onClick={toggleOpen}>
@@ -37,32 +37,19 @@ const GivingDropdown = ({ title, content, buttonText, external, href }) => {
             }`}
           >
             <p className="text-lg text-gray-500 text-center">
-              Make an online donation, or set up recurring donations, via our
-              secure PayPal merchant account by clicking below. You can also
-              make a one time payment directly from our website with Stripe
-              Payments.
+              Make a secure, online donation in any amount directly from our website. You will receive an automated email containing a transaction receipt. 
             </p>
 
             <div className="grid grid-cols-1 gap-4 mt-4">
               <Link href="https://www.paypal.com" passHref>
                 <a target="_blank" rel="noreferrer">
-                  <Button
-                    type="submit"
-                    variant="filled"
-                    leftIcon={<BsPaypal />}
-                    className="text-white w-full uppercase tracking-wide"
-                    style={{
-                      fontFamily: "Red Hat Display",
-                      backgroundColor: "#003087",
-                    }}
-                  >
-                    Paypal
-                  </Button>
+                  
                 </a>
               </Link>
               <Button
                 type="submit"
                 variant="filled"
+                disabled={true}
                 onClick={() => router.push("/giving/one-time-donation")}
                 leftIcon={<FaStripeS />}
                 className="text-white bg-emerald-900 hover:bg-emerald-800 w-full uppercase tracking-wide"
@@ -71,7 +58,7 @@ const GivingDropdown = ({ title, content, buttonText, external, href }) => {
                   backgroundColor: "#635BFF",
                 }}
               >
-                One Time Donation With Stripe
+                Online Giving Coming Soon
               </Button>
             </div>
           </div>
