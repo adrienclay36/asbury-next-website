@@ -8,8 +8,10 @@ const AsburyButton = ({
   variant = 'filled',
   margin = 'm-0',
   disabled = false,
+  color = 'bg-emerald-900',
+  hoverColor = 'bg-emerald-800'
 }) => {
-  const filledClasses = `text-white bg-emerald-900 hover:bg-emerald-800 ${margin} ${styles}`
+  const filledClasses = `text-white ${color} ${hoverColor} ${margin} ${styles}`
   return (
     <Button
       type="submit"

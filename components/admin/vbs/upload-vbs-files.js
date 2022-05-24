@@ -6,7 +6,9 @@ import { Progress } from "@mantine/core";
 const UploadVBSFiles = ({ existingFiles, getFiles }) => {
   const [files, setFiles] = useState();
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const inputRef = useRef(null);
   const uploadFiles = async () => {
     setLoading(true);
@@ -33,24 +35,40 @@ const UploadVBSFiles = ({ existingFiles, getFiles }) => {
     setLoading(false);
   };
 
-  const deleteFile = async (fileName) => {
-    setLoading(true);
-    const confirmation = confirm(
+  const deleteSelected = async () => {
+    setDeleting(true);
+    const confirmation = selectedFiles?.length === 1 ? confirm(
       "Are you sure you want to delete this file? This action cannot be undone."
-    );
+    ) : confirm("Are you sure you want to delete these files? This action cannot be undone.");
 
     if (confirmation) {
-      const { data, error } = await supabase.storage
-        .from("vbs-files")
-        .remove([`2022/${fileName}`]);
-      if (error) {
-        console.log("error removing file:: ", error.message);
-        setLoading(false);
-        return;
-      }
+        for(let fileName of selectedFiles) {
+            const { data, error } = await supabase.storage
+              .from("vbs-files")
+              .remove([`2022/${fileName}`]);
+            if (error) {
+              console.log("error removing file:: ", error.message);
+              setDeleting(false);
+              return;
+            }
+        }
       await getFiles();
     }
-    setLoading(false);
+    setDeleting(false);
+    setSelectedFiles([]);
+  };
+
+  const selectFile = (fileName) => {
+    if (selectedFiles.some((file) => file === fileName)) {
+      setSelectedFiles((prevFiles) => {
+        const filtered = prevFiles.filter((f) => f !== fileName);
+        return filtered;
+      });
+    } else {
+      setSelectedFiles((prevFiles) => {
+        return [...prevFiles, fileName];
+      });
+    }
   };
 
   return (
@@ -77,20 +95,32 @@ const UploadVBSFiles = ({ existingFiles, getFiles }) => {
         className="my-8 w-11/12 lg:w-3/6 md:w-3/6 mx-auto"
         value={progress}
       />
+      <div className="justify-center items-center flex flex-1">
+        <AsburyButton
+        color={`bg-red-600`}
+        hoverColor="hover:bg-red-700"
+            onClick={deleteSelected}
+          text={`Delete Selected (${selectedFiles?.length})`}
+          disabled={selectedFiles.length === 0}
+          loading={deleting}
+        />
+      </div>
       <div>
         {existingFiles.map((file) => (
-          <div
-            className="flex flex-1 justify-between items-center bg-white rounded-lg shadow-md p-6 w-11/12 lg:w-2/6 md:w-3/6 mx-auto mt-4"
+          <button
+            disabled={loading}
+            onClick={() => selectFile(file?.name)}
+            className={`flex flex-1 justify-between items-center rounded-lg shadow-md p-6 w-11/12 lg:w-2/6 md:w-3/6 mx-auto mt-4 ${
+              selectedFiles.some((selectedFile) =>
+                selectedFile.includes(file?.name)
+              )
+                ? "bg-gray-200"
+                : "bg-white"
+            }`}
             key={file?.name}
           >
             <p>{file?.name}</p>
-            <button disabled={loading} onClick={() => deleteFile(file?.name)}>
-              <BsFillTrash2Fill
-                size={20}
-                className="text-red-600 cursor-pointer hover:text-red-700"
-              />
-            </button>
-          </div>
+          </button>
         ))}
       </div>
     </>
