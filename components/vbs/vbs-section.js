@@ -21,14 +21,6 @@ const VBSSection = () => {
         content1="8:30 AM Breakfast (Optional)"
         content2="11:30 AM Lunch (Optional)"
       />
-      <div className='container'>
-        <InfoDropdown
-          title="Downloads"
-          content="Download and get involved with VBS related materials!"
-          buttonText="View Downloads"
-          href="/vbs/downloads"
-        />
-      </div>
       <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
         <InfoDropdown
           title="Child Registration"
@@ -41,6 +33,14 @@ const VBSSection = () => {
           content="Help us out with VBS activities and more! Sign up to assists with day to day activities."
           buttonText="Volunteer Form"
           href="/vbs/volunteer-registration"
+        />
+      </div>
+      <div className='container w-11/12 lg:w-2/6 md:w-2/6 mx-auto'>
+        <InfoDropdown
+          title="Downloads"
+          content="Download and get involved with VBS related materials!"
+          buttonText="View Downloads"
+          href="/vbs/downloads"
         />
       </div>
     </SectionHeading>
