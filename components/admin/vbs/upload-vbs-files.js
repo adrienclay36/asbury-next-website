@@ -95,16 +95,16 @@ const UploadVBSFiles = ({ existingFiles, getFiles }) => {
         className="my-8 w-11/12 lg:w-3/6 md:w-3/6 mx-auto"
         value={progress}
       />
-      <div className="justify-center items-center flex flex-1">
+      {existingFiles.length > 0 && <div className="justify-center items-center flex flex-1">
         <AsburyButton
         color={`bg-red-600`}
-        hoverColor="hover:bg-red-700"
+        hoverColor="bg-red-700"
             onClick={deleteSelected}
           text={`Delete Selected (${selectedFiles?.length})`}
           disabled={selectedFiles.length === 0}
           loading={deleting}
         />
-      </div>
+      </div>}
       <div>
         {existingFiles.map((file) => (
           <button
