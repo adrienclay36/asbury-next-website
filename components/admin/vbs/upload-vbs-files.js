@@ -98,7 +98,7 @@ const UploadVBSFiles = ({ existingFiles, getFiles }) => {
       {existingFiles.length > 0 && <div className="justify-center items-center flex flex-1">
         <AsburyButton
         color={`bg-red-600`}
-        hoverColor="bg-red-700"
+        hoverColor={`bg-red-700`}
             onClick={deleteSelected}
           text={`Delete Selected (${selectedFiles?.length})`}
           disabled={selectedFiles.length === 0}
