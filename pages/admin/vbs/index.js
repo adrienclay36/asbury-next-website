@@ -4,12 +4,15 @@ import { supabase } from "../../../supabase-client";
 import PageLoading from "../../../components/PageLoading/PageLoading";
 import VBSList from "../../../components/admin/vbs/vbs-list";
 import { Tabs } from "@mantine/core";
-import { FaChild, FaHandHoldingHeart } from "react-icons/fa";
+import { FaChild, FaHandHoldingHeart, FaUpload } from "react-icons/fa";
 import { CSVLink } from "react-csv";
 import { checkAdmin } from "../../../supabase-util";
+import AsburyButton from "../../../components/ui/AsburyButton";
+import UploadVBSFiles from "../../../components/admin/vbs/upload-vbs-files";
 const VBSRegistrationHistory = () => {
   const [childRegister, setChildRegister] = useState();
   const [volunteers, setVolunteers] = useState();
+  const [existingFiles, setExistingFiles] = useState([]);
 
   const getRegistrants = async () => {
     const { data: childrenData, error: childrenError } = await supabase
@@ -30,6 +33,8 @@ const VBSRegistrationHistory = () => {
       });
       setChildRegister(formattedRows);
     }
+
+    
 
     const { data: volunteerData, error: volunteerError } = await supabase
       .from("vbs_volunteer")
@@ -55,7 +60,22 @@ const VBSRegistrationHistory = () => {
 
   useEffect(() => {
     getRegistrants();
+    getFiles();
   }, []);
+
+  const getFiles = async () => {
+    const { data: data2022, error: error2022 } = await supabase.storage
+      .from("vbs-files")
+      .list("2022", {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name" },
+      });
+    setExistingFiles(data2022);
+  };
+
+
+  
 
   if (!childRegister || !volunteers) {
     return (
@@ -93,7 +113,13 @@ const VBSRegistrationHistory = () => {
                 Download CSV
               </CSVLink>
             </div>
-            <VBSList href="/admin/vbs/edit-volunteer" registrants={volunteers} />
+            <VBSList
+              href="/admin/vbs/edit-volunteer"
+              registrants={volunteers}
+            />
+          </Tabs.Tab>
+          <Tabs.Tab label="Upload Files" icon={<FaUpload size={14} />}>
+            <UploadVBSFiles getFiles={getFiles} existingFiles={existingFiles}/>
           </Tabs.Tab>
         </Tabs>
       </div>
