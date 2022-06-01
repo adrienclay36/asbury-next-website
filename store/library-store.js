@@ -10,7 +10,7 @@ import {
   toggleBooleanValue,
   getSimpleQueriedData
 } from "../supabase-util";
-const PAGE_SIZE = 500;
+const PAGE_SIZE = 50;
 const TABLE = "books";
 const SEARCH_FUNCTION = "simple_book_search";
 export const LibraryContext = React.createContext({

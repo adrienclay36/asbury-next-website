@@ -33,7 +33,8 @@ const BookEditForm = ({ book, setOpen }) => {
     setLoading(false);
   };
 
-  const deleteBookHandler = async () => {
+  const deleteBookHandler = async (e) => {
+    e.preventDefault();
     const confirmDelete = confirm(
       "Are you sure you want to delete this item? This operation cannot be undone."
     );

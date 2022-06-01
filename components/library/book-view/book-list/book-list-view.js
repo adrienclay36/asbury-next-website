@@ -20,7 +20,7 @@ const BookListView = ({ editing }) => {
           No Data for that query...
         </h1>
       )}
-      {!mobileScreen && <BookTableView editing={editing} />}
+      {!mobileScreen && !libraryContext?.loading && !libraryContext.noData && <BookTableView editing={editing} />}
       {mobileScreen && !userContext?.libraryPermissions && (
         <div className="container">
           {libraryContext.books.map((book) => (

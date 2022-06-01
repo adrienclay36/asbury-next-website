@@ -50,7 +50,7 @@ const BookTableView = ({ editing = false }) => {
 };
 
 const TableRow = ({ book, editing = false }) => {
-  const tableDataClass = `text-center pl-2 border-2 shadow-sm border-2 py-2 px-1 ${styles.fontSize}`;
+  const tableDataClass = `text-center pl-2 border-2 shadow-sm py-2 px-1 ${styles.fontSize}`;
   const adminRowClass = "hover:bg-gray-200 cursor-pointer";
   const userContext = useContext(UserContext);
   const libraryContext = useContext(LibraryContext);
@@ -76,22 +76,33 @@ const TableRow = ({ book, editing = false }) => {
         key={book?.id}
         className={userContext?.libraryPermissions && editing && adminRowClass}
       >
-        <td onClick={userContext?.libraryPermissions && editing ? () => setOpen(true) : () => {}} className={tableDataClass}>
+        <td
+          onClick={
+            userContext?.libraryPermissions && editing
+              ? () => setOpen(true)
+              : () => {}
+          }
+          className={tableDataClass}
+        >
           <p>{book?.deweynumber}</p>
         </td>
-        <td onClick={userContext?.libraryPermissions && editing ? () => setOpen(true) : () => {}} className={tableDataClass}>
+        <td
+          onClick={
+            userContext?.libraryPermissions && editing
+              ? () => setOpen(true)
+              : () => {}
+          }
+          className={tableDataClass}
+        >
           <p>{book?.authorcode}</p>
         </td>
         {editing && (
           <td
             onClick={toggleAvailableHandler}
-            className={`${tableDataClass} flex flex-1 justify-between items-center`}
+            className={`flex flex-1 justify-between items-center text-center pl-2 shadow-sm py-2 px-1`}
           >
             <p>{available ? "Available" : "Checked Out"}</p>
-            <Switch
-              value={available}
-              checked={available}
-            />
+            <Switch value={available} checked={available} />
           </td>
         )}
         {!editing && (
@@ -109,13 +120,34 @@ const TableRow = ({ book, editing = false }) => {
             )}
           </td>
         )}
-        <td onClick={userContext?.libraryPermissions && editing ? () => setOpen(true) : () => {}} className={tableDataClass}>
+        <td
+          onClick={
+            userContext?.libraryPermissions && editing
+              ? () => setOpen(true)
+              : () => {}
+          }
+          className={tableDataClass}
+        >
           <p>{book?.author}</p>
         </td>
-        <td onClick={userContext?.libraryPermissions && editing ? () => setOpen(true) : () => {}} className={tableDataClass}>
+        <td
+          onClick={
+            userContext?.libraryPermissions && editing
+              ? () => setOpen(true)
+              : () => {}
+          }
+          className={tableDataClass}
+        >
           <p>{book?.title}</p>
         </td>
-        <td onClick={userContext?.libraryPermissions && editing ? () => setOpen(true) : () => {}} className={tableDataClass}>
+        <td
+          onClick={
+            userContext?.libraryPermissions && editing
+              ? () => setOpen(true)
+              : () => {}
+          }
+          className={tableDataClass}
+        >
           <p>{book?.subject}</p>
         </td>
       </tr>
