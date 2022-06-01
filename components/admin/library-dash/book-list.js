@@ -10,6 +10,7 @@ import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import BookListView from "../../library/book-view/book-list/book-list-view";
 
 
 const BookList = () => {
@@ -50,7 +51,7 @@ const BookList = () => {
   };
   return (
     <div>
-      <div className="container flex items-center justify-center my-10">
+      <div className="flex items-center justify-center my-10">
         <div className="relative focus-within:text-seaFoam-400 lg:w-auto md:w-auto w-full">
           <span className="absolute inset-y-0 right-0 flex items-center pl-1 mr-4">
             {query.length === 0 && <AiOutlineSearch />}
@@ -67,7 +68,7 @@ const BookList = () => {
           />
         </div>
       </div>
-      <div className="flex flex-1 p-4 justify-between items-center container">
+      <div className="container flex flex-1 p-4 justify-between items-center">
         <button
           onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-emerald-600 text-white hover:bg-green-900"
@@ -82,19 +83,10 @@ const BookList = () => {
           <MdOutlineArrowForwardIos />
         </button>
       </div>
-      <div className={`${styles.scroll} border-2`}>
-        {libraryContext.loading && <PageLoading />}
-        {libraryContext.noData && libraryContext.books.length === 0 && (
-          <h1 className="text-center text-lg font-semibold mt-4 text-red-700">
-            No Data found for that query...
-          </h1>
-        )}
-        {!userContext.loading && libraryContext.books.map((book) => (
-          <BookItem key={book.id} id={book.id} book={book} libraryPermissions={userContext.libraryPermissions} />
-        ))}
-      </div>
+      {/* LIST OF BOOKS */}
+      <BookListView editing={true}/>
 
-      <div className="flex flex-1 p-4 justify-between items-center container">
+      <div className="container flex flex-1 p-4 justify-between items-center">
         <button
           onClick={decreasePageHandler}
           className="p-2 mx-4 rounded-lg bg-emerald-600 text-white hover:bg-green-900"

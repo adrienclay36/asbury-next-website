@@ -95,13 +95,14 @@ const DonationSection = () => {
           />
         </Group>
         <Button
+        disabled={true}
           type="submit"
           variant="filled"
           leftIcon={<GiPayMoney size={20} />}
           onClick={toggleCheckout}
           className="text-white bg-emerald-900 hover:bg-emerald-800 mt-12"
         >
-          Begin Checkout
+          Online Giving Coming Soon
         </Button>
       </div>
     </SectionHeading>

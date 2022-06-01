@@ -7,10 +7,12 @@ import {
   addItemToTable,
   deleteItemFromTable,
   updateItemInTable,
-  toggleBooleanValue
+  toggleBooleanValue,
+  getSimpleQueriedData
 } from "../supabase-util";
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 500;
 const TABLE = "books";
+const SEARCH_FUNCTION = "simple_book_search";
 export const LibraryContext = React.createContext({
   books: [],
   book: {},
@@ -56,12 +58,6 @@ const LibraryProvider = (props) => {
   const [query, setQuery] = useState("");
   const [modifying, setModifying] = useState(false);
   const [book, setBook] = useState({});
-  const [user, setUser] = useState();
-
-
-  const getUser = async () => {
-    
-  }
 
   const getBooks = async () => {
     setNoData(false);
@@ -74,8 +70,8 @@ const LibraryProvider = (props) => {
   };
 
   const initTotalPages = async () => {
-    const totalPages = await getTotalPages(PAGE_SIZE, "books");
-    setTotalPages(totalPages);
+    const initPages = await getTotalPages(PAGE_SIZE, "books");
+    setTotalPages(initPages);
   };
 
   useEffect(() => {
@@ -90,10 +86,10 @@ const LibraryProvider = (props) => {
   const callQueryFunction = async () => {
     setLoading(true);
     setBooks([]);
-    const { data, status } = await getQueriedData(
+    const { data, status } = await getSimpleQueriedData(
       "books",
       query,
-      "search_books_ts"
+      SEARCH_FUNCTION
     );
 
     setBooks(data);

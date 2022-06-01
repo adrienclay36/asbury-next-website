@@ -90,6 +90,18 @@ export const getQueriedData = async (table, query, queryFunction) => {
   return;
 };
 
+export const getSimpleQueriedData = async (table, query, queryFunction) => {
+  const { data, error } = await supabase.rpc(queryFunction, { keyword: query });
+  if(error) {
+    alert(error.message);
+  }
+  let status = "No Data";
+  if(data.length === 0) {
+    return { data, status };
+  }
+  return { data: data, status: 'ok' };
+}
+
 export const getItemById = async (table, id) => {
   const { data } = await supabase.from(table).select().match({ id });
   return data;

@@ -11,7 +11,7 @@ const BookEditForm = ({ book, setOpen }) => {
   const [author, setAuthor] = useState(book?.author);
   const [deweyNumber, setDeweyNumber] = useState(book?.deweynumber);
   const [authorCode, setAuthorCode] = useState(book?.authorcode);
-  const [adding, setAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formChanged, setFormChanged] = useState(false);
 
   const didValueChange = (initial, newValue) => {
@@ -20,7 +20,7 @@ const BookEditForm = ({ book, setOpen }) => {
 
   const updateBookHandler = async (e) => {
     e.preventDefault();
-    setAdding(true);
+    setLoading(true);
     await libraryContext.updateBook(
       book?.id,
       title,
@@ -30,6 +30,16 @@ const BookEditForm = ({ book, setOpen }) => {
       authorCode
     );
     setOpen(false);
+    setLoading(false);
+  };
+
+  const deleteBookHandler = async () => {
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this item? This operation cannot be undone."
+    );
+    if (confirmDelete) {
+      libraryContext.deleteBook(book.id);
+    } 
   };
 
   useEffect(() => {
@@ -49,7 +59,7 @@ const BookEditForm = ({ book, setOpen }) => {
   return (
     <>
       <div className="">
-        <form onSubmit={updateBookHandler}>
+        <form>
           <div className="flex flex-1 flex-col mb-8">
             <TextInput
               onChange={(e) => setTitle(e.target.value)}
@@ -110,7 +120,22 @@ const BookEditForm = ({ book, setOpen }) => {
             />
           </div>
           <div className="flex flex-1 justify-center items-center">
-            <AsburyButton disabled={!formChanged} text="Update Book" loading={adding} />
+            <AsburyButton
+              onClick={updateBookHandler}
+              disabled={!formChanged}
+              text="Update Book"
+              loading={loading}
+            />
+          </div>
+          <div className="flex flex-1 justify-center items-center mt-4">
+            <AsburyButton
+              onClick={deleteBookHandler}
+              disabled={loading}
+              color="bg-red-600"
+              hoverColor="hover:bg-red-700"
+              text="Delete Book"
+              
+            />
           </div>
         </form>
       </div>

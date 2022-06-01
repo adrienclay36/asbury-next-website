@@ -24,7 +24,7 @@ const LibraryOperations = () => {
     </>
   )
   return (
-    <div className="container my-12">
+    <div className="my-12">
       {userContext.libraryPermissions && <div className="flex justify-center items-center w-full lg:w-1/6 md:w-1/6 mx-auto">
         <AsburyButton onClick={() => newBookNavigate()} loading={routing} text="Add Book" leftIcon={<Plus color="white" size={20}/>} />
       </div>}

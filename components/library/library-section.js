@@ -5,8 +5,8 @@ import BookView from './book-view/book-view'
 import styles from "./library-section.module.css";
 import { LibraryContext } from "../../store/library-store";
 const LibrarySection = () => {
-  const [aboutView, setAboutView] = useState(true);
-  const [booksView, setBooksView] = useState(false);
+  const [aboutView, setAboutView] = useState(false);
+  const [booksView, setBooksView] = useState(true);
 
   const libraryContext = useContext(LibraryContext);
 
