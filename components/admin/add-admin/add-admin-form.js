@@ -131,8 +131,7 @@ const AddAdminForm = () => {
         <div className="flex flex-1 flex-col justify-center items-center text-center">
           <AiOutlineCheckCircle size={75} className="text-emerald-700 mb-12" />
           <p className="font-semibold text-lg">
-            An e-mail with a confirmation link has been sent to this person. Be sure to let them know their temporary password, which they will
-            be able to change later! 
+            This person has been successfully added as an administrator. Be sure to let this person know their temporary password, which they will be able to change later from their profile.
           </p>
         </div>
       </Modal>

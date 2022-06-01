@@ -3,6 +3,7 @@ import { UserContext } from '../../store/user-context'
 import { TextInput, PasswordInput, Button } from '@mantine/core';
 import { AiOutlineLogin } from 'react-icons/ai';
 import UIModal from '../ui/modal/UIModal';
+import { useRouter } from 'next/router';
 const SignUpForm = ({ setShowSignUp, restartSequence }) => {
     const userContext = useContext(UserContext);
     const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ const SignUpForm = ({ setShowSignUp, restartSequence }) => {
     const [existingUser, setExistingUser] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
+    const router = useRouter();
 
 
 
@@ -39,6 +41,9 @@ const SignUpForm = ({ setShowSignUp, restartSequence }) => {
             setPassword('');
             setFirstName('');
             setLastName('');
+            setTimeout(() => {
+              router.reload();
+            }, 2000)
 
         }
         if(response.status === "duplicate") {
@@ -55,7 +60,7 @@ const SignUpForm = ({ setShowSignUp, restartSequence }) => {
       <UIModal
         centerModal={true}
         type="success"
-        message="A confirmation link has been sent to your email. Following this link will complete your sign up!"
+        message="Sign Up Complete!"
         opened={success}
         onClose={() => closeAll()}
       />

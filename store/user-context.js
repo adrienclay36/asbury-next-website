@@ -207,6 +207,7 @@ const UserContextProvider = (props) => {
       if (submitError) {
         return { status: "error", submitError };
       } else {
+        await checkUser();
         return { status: "ok" };
       }
     }
