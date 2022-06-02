@@ -2,7 +2,7 @@ import "../styles/globals.css";
 
 import { useEffect } from "react";
 import UserContextProvider from "../store/user-context";
-
+import { NotificationsProvider } from "@mantine/notifications";
 import { polyfill } from "smoothscroll-polyfill";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
@@ -32,7 +32,9 @@ function MyApp({ Component, pageProps }) {
       <NextNProgress height={4} color={"#899e9c"} />
 
       <UserContextProvider>
-        <Component {...pageProps} />
+        <NotificationsProvider position="top-right">
+          <Component {...pageProps} />
+        </NotificationsProvider>
       </UserContextProvider>
     </>
   );

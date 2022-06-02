@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { LibraryContext } from "../../../../store/library-store";
 import { TextInput } from "@mantine/core";
 import AsburyButton from "../../../ui/AsburyButton";
+import { showNotification } from "@mantine/notifications";
+import { CircleCheck } from "tabler-icons-react";
 
 const BookEditForm = ({ book, setOpen }) => {
   const libraryContext = useContext(LibraryContext);
@@ -29,8 +31,12 @@ const BookEditForm = ({ book, setOpen }) => {
       deweyNumber,
       authorCode
     );
-    setOpen(false);
-    setLoading(false);
+    showNotification({
+      title: "Success!",
+      message: "Book successfully updated.",
+      icon: <CircleCheck size={30}/>,
+      color: "green",
+    })
   };
 
   const deleteBookHandler = async (e) => {
@@ -39,7 +45,13 @@ const BookEditForm = ({ book, setOpen }) => {
       "Are you sure you want to delete this item? This operation cannot be undone."
     );
     if (confirmDelete) {
-      libraryContext.deleteBook(book.id);
+      await libraryContext.deleteBook(book.id);
+      showNotification({
+        title: "Success!",
+        message: "Book successfully deleted!",
+        icon: <CircleCheck size={30}/>,
+        color: "green",
+      })
     } 
   };
 

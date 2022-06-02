@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { LibraryContext } from "../../../../store/library-store";
+
 import styles from "./book-table-view.module.css";
 const libraryColumns = [
   "Dewey Number",
@@ -56,6 +57,7 @@ const TableRow = ({ book, editing = false }) => {
   const libraryContext = useContext(LibraryContext);
   const [open, setOpen] = useState(false);
   const [available, setAvailable] = useState(book?.availability);
+  
 
   const toggleAvailableHandler = () => {
     libraryContext.toggleAvailable(book.id);
@@ -74,7 +76,7 @@ const TableRow = ({ book, editing = false }) => {
       </Modal>
       <tr
         key={book?.id}
-        className={userContext?.libraryPermissions && editing && adminRowClass}
+        className={userContext?.libraryPermissions && editing ? adminRowClass : null}
       >
         <td
           onClick={
@@ -102,7 +104,7 @@ const TableRow = ({ book, editing = false }) => {
             className={`flex flex-1 justify-between items-center text-center pl-2 shadow-sm py-2 px-1`}
           >
             <p>{available ? "Available" : "Checked Out"}</p>
-            <Switch value={available} checked={available} />
+            <Switch className="cursor-pointer" readOnly value={available} checked={available} />
           </td>
         )}
         {!editing && (
