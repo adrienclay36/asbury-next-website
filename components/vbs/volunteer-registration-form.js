@@ -10,6 +10,7 @@ import UIModal from "../ui/modal/UIModal";
 import { useRouter } from "next/router";
 import AllSwitches from "./AllSwitches";
 import { updateItemInTable } from "../../supabase-util";
+import { sendMail } from "../../utils/send-email-functions";
 
 const volunteerFormSchema = Yup.object().shape({
   first_name: Yup.string().required("First Name Is Required"),
@@ -120,6 +121,18 @@ const VolunteerRegistrationForm = ({ editValues = null, editing = false }) => {
       setLoading(false);
       return;
     }
+    const newRegistrantString = `<p>Hey there! It looks like a new volunteer has registered for VBS!</p>
+    <p><strong>Volunteer Name:</strong> ${values?.first_name} ${values?.last_name}</p>
+    <p><strong>Volunteer Contact Info:</strong></p>
+    <p><strong>Phone:</strong> ${values?.phone}</p>
+    <p><strong>Email:</strong> ${values?.email}</p>
+    <p>You can view the full details of this registrant by visiting <strong><a href="https://www.asburyabq.org/admin/vbs" target="_blank">asburyabq.org/admin/vbs<a></strong></p>
+    `;
+    const response = await sendMail(
+      "familylife@asburyabq.org, asbury-webmaster@asburyabq.org",
+      "New Volunteer - VBS",
+      newRegistrantString
+    );
     window.scrollTo({ top, behavior: "smooth" });
     setLoading(false);
     setSuccess(true);

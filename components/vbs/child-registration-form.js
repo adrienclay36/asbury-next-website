@@ -10,6 +10,7 @@ import { supabase } from "../../supabase-client";
 import { useRouter } from "next/router";
 import UIModal from "../ui/modal/UIModal";
 import { updateItemInTable } from "../../supabase-util";
+import { sendMail } from "../../utils/send-email-functions";
 const gradeValues = [
   {
     value: "Pre K",
@@ -109,7 +110,11 @@ const childRegistrationSchema = Yup.object().shape({
   agree_to_media: Yup.string().required("You must select an option"),
 });
 
-const ChildRegistrationForm = ({ editValues = null, editing = false, containerStyles = '' }) => {
+const ChildRegistrationForm = ({
+  editValues = null,
+  editing = false,
+  containerStyles = "",
+}) => {
   const [childDOB, setChildDOB] = useState(
     editValues ? new Date(editValues?.child_dob) : new Date()
   );
@@ -127,7 +132,6 @@ const ChildRegistrationForm = ({ editValues = null, editing = false, containerSt
   }, [childDOB]);
 
   const addToRegistration = async (values, resetForm) => {
-    
     setLoading(true);
     const formItem = {
       child_first: values.child_first,
@@ -155,15 +159,19 @@ const ChildRegistrationForm = ({ editValues = null, editing = false, containerSt
       agree_to_media: values.agree_to_media === "Yes" ? true : false,
     };
 
-    if(editing) {
-      const response = await updateItemInTable('vbs_children', editValues?.id, formItem);
-      if(response.status === 'ok') {
+    if (editing) {
+      const response = await updateItemInTable(
+        "vbs_children",
+        editValues?.id,
+        formItem
+      );
+      if (response.status === "ok") {
         setLoading(false);
         router.push("/admin/vbs");
         return;
       }
-      
     }
+
     const { data, error } = await supabase
       .from("vbs_children")
       .insert(formItem);
@@ -172,17 +180,29 @@ const ChildRegistrationForm = ({ editValues = null, editing = false, containerSt
       setLoading(false);
       return;
     }
+    const newRegistrantString = `<p>Hey there! It looks like a new child registrant has been registered for VBS!</p>
+    <p><strong>Child Name:</strong> ${values?.child_first} ${values?.child_last}</p>
+    <p><strong>Parent Contact Info:</strong></p>
+    <p><strong>Name:</strong> ${values?.parent_first} ${values?.parent_last}</p>
+    <p><strong>Phone:</strong> ${values?.phone}</p>
+    <p><strong>Email:</strong> ${values?.email}</p>
+    <p>You can view the full details of this registrant by visiting <strong><a href="https://www.asburyabq.org/admin/vbs" target="_blank">asburyabq.org/admin/vbs<a></strong></p>
+    `;
+    const response = await sendMail(
+      "familylife@asburyabq.org, asbury-webmaster@asburyabq.org",
+      "New Child Registrant - VBS",
+      newRegistrantString
+    );
     setLoading(false);
     setSuccess(true);
     window.scrollTo({ top, behavior: "smooth" });
     resetForm();
-    
   };
 
   const closeAndPush = () => {
     setSuccess(false);
     router.push("/vbs");
-  }
+  };
   return (
     <div
       className={`container w-11/12 lg:w-2/6 md:w-2/6 bg-white shadow-lg rounded-lg p-6 ${containerStyles}`}
