@@ -246,12 +246,12 @@ const SocialIcons = ({
           withArrow
           disabled={disableTooltip}
         >
-          {/* <BsFillEnvelopeFill
+          <BsFillEnvelopeFill
             tabIndex={0}
             onClick={() => router.push("/contact")}
             size={30}
             className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
-          /> */}
+          />
         </Tooltip>
       </div>
     </>

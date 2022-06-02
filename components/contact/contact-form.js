@@ -1,89 +1,95 @@
 import React, { useState } from 'react'
 import styles from './contact-form.module.css';
+import { TextInput, Textarea } from '@mantine/core';
+import AsburyButton from '../ui/AsburyButton';
+import { sendMail } from '../../utils/send-email-functions';
+import UIModal from '../ui/modal/UIModal';
 const ContactForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+        const messageContent = `
+        <p>You have received a new message via Asbury's contact form.</p>
+        <p><strong>Sender Name: </strong>${name}</p>
+        <p><strong>Sender Email: </strong>${email}</p>
+        <p><strong>Subject: </strong>${subject}</p>
+        <p><strong>Message: </strong></p>
+        </p>${message}</p>
+        <p>You can reply to this message by clicking <a href="mailto:${email}"><strong>here</strong></a>
+        `
+
+        await sendMail(
+          "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org, familylife@asburyabq.org, librarian@asburyabq.org, revjoe@asburyabq.org",
+          subject,
+          messageContent
+        );
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+        setLoading(false);
+        setSuccess(true);
     }
 
 
   return (
     <div className="container w-full lg:w-2/6 md:w-6/12 shadow-lg rounded-lg border-2 p-6">
+      <UIModal centerModal={true} type="success" message="We have received your message! We will get in touch with you soon. Thanks for contacting us!" opened={success} onClose={() => setSuccess(false)} />
       <form onSubmit={submitHandler}>
         <div className="flex flex-1 flex-col lg:flex-row md:flex-row justify-between">
           <div className="flex flex-1 flex-col">
-            <label className="mb-4" htmlFor="name">
-              Name <span className="text-red-800">*</span>
-            </label>
-            <input
+            <TextInput
               value={name}
               onChange={(e) => setName(e.target.value)}
-              id="name"
-              className="appearance-none mb-4 rounded-md relative block w-full lg:w-11/12 md:w-11/12 px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-seaFoam-500 focus:border-seaFoam-500 focus:z-10 sm:text-sm"
-              type="text"
+              label="Full Name"
               required
-              placeholder="Full Name"
+              className="w-11/12"
+              max="75"
             />
           </div>
           <div className="flex flex-1 flex-col">
-            <label className="mb-4" htmlFor="email">
-              Email <span className="text-red-800">*</span>
-            </label>
-            <input
+            <TextInput
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              id="email"
-              className={styles.input}
               type="email"
+              label="Email"
               required
-              placeholder="Email Address"
+              className="w-11/12"
+              max="75"
             />
           </div>
         </div>
 
         <div className="flex flex-1 flex-col">
-          <label className="mb-4" htmlFor="subject">
-            Subject <span className="text-red-800">*</span>
-          </label>
-          <input
+          <TextInput
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            id="subject"
-            className={styles.input}
-            type="text"
+            label="Subject"
             required
-            placeholder="Subject Line"
+            max="80"
           />
         </div>
 
         <div className="flex flex-1 flex-col">
-          <label className="mb-4" htmlFor="content">
-            Message <span className="text-red-800">*</span>
-          </label>
-          <textarea
+          <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            id="content"
-            className={styles.input}
-            type="text"
+            label="Message"
             required
-            placeholder="Enter your message here."
-            rows="10"
+            max="5000"
+            minRows={8}
           />
         </div>
-        <div className="text-center">
-          <button
-            type="submit"
-            className="mt-6 px-3 py-2 bg-seaFoam-600 rounded-lg text-white font-semibold text-center shadow-lg"
-          >
-            Send Message
-          </button>
+        <div className="text-center mt-4">
+          <AsburyButton loading={loading} text="Submit" />
         </div>
       </form>
     </div>
