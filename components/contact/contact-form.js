@@ -4,6 +4,8 @@ import { TextInput, Textarea } from '@mantine/core';
 import AsburyButton from '../ui/AsburyButton';
 import { sendMail } from '../../utils/send-email-functions';
 import UIModal from '../ui/modal/UIModal';
+const adminList = "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org, familylife@asburyabq.org, librarian@asburyabq.org, revjoe@asburyabq.org";
+const testList = "adrienclay36@gmail.com, asbury-webmaster@asburyabq.org";
 const ContactForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -23,11 +25,11 @@ const ContactForm = () => {
         <p><strong>Subject: </strong>${subject}</p>
         <p><strong>Message: </strong></p>
         </p>${message}</p>
-        <p>You can reply to this message by clicking <a href="mailto:${email}"><strong>here</strong></a>
+        <p>You can reply to this message by clicking <a href="mailto:${email}?subject=RE: ${subject}"><strong>here</strong></a>
         `
 
         await sendMail(
-          "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org, familylife@asburyabq.org, librarian@asburyabq.org, revjoe@asburyabq.org",
+          adminList,
           subject,
           messageContent
         );
