@@ -17,7 +17,6 @@ export default function Home(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
   const [userWelcome, setUserWelcome] = useState(false);
-  const [VBSOpen, setVBSOpen] = useState(false);
   const userContext = useContext(UserContext);
   const disableNotifications = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
@@ -45,39 +44,10 @@ export default function Home(props) {
     }
   }, [userWelcome]);
 
-  // // TEMP VBS MODAL CONTROLS
 
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setVBSOpen(true);
-  //   }, 1500);
-  //   return () => clearTimeout(timeout);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (VBSOpen) {
-  //     const timeout = setTimeout(() => {
-  //       setVBSOpen(false);
-  //     }, 10000);
-  //   }
-  //   return () => clearTimeout(timeout);
-  // }, [VBSOpen]);
 
   return (
     <div className="font-primaryFont">
-      {/* TEMP VBS MODAL */}
-      {/* <ModalWithButton
-        opened={VBSOpen}
-        onClose={() => setVBSOpen(false)}
-        text={
-          "VBS registration is now open for both children and volunteers! VBS will take place from July 25th - July 29th. Click the button below to check out the details!"
-        }
-        icon={<FaChild size={50} className="text-seaFoam-600 my-8" />}
-        title="VBS Registration"
-        buttonText={"View The Details"}
-        onClick={() => router.push("/vbs")}
-        bold
-      /> */}
       <Dialog
         withCloseButton
         opened={userWelcome}

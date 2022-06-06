@@ -204,6 +204,7 @@ const VolunteerRegistrationForm = ({ editValues = null, editing = false }) => {
             <TextInput
               className={styles.textInput}
               value={values.phone}
+              description="10-Digit phone number, no spaces or dashes. (eg. 5051234567)"
               label="Phone Number"
               required
               onChange={handleChange("phone")}
@@ -233,6 +234,7 @@ const VolunteerRegistrationForm = ({ editValues = null, editing = false }) => {
             <TextInput
               className={styles.textInput}
               value={values.zipcode}
+              description="5-Digit Zip Code (eg. 87123)"
               label="Zip Code"
               onChange={handleChange("zipcode")}
               error={errors?.zipcode}

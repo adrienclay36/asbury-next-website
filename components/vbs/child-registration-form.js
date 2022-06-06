@@ -323,6 +323,7 @@ const ChildRegistrationForm = ({
             <TextInput
               value={values.phone}
               onChange={handleChange("phone")}
+              description="10-Digit phone number, no spaces or dashes. (eg. 5051234567)"
               error={errors.phone}
               label="Phone Number"
               className={styles.textInput}
@@ -357,6 +358,7 @@ const ChildRegistrationForm = ({
             <TextInput
               value={values.zipcode}
               onChange={handleChange("zipcode")}
+              description="5-Digit Zip Code (eg. 87123)"
               error={errors.zipcode}
               label="Zip Code"
               className={styles.textInput}
@@ -404,6 +406,7 @@ const ChildRegistrationForm = ({
             <TextInput
               value={values.emergency_phone}
               onChange={handleChange("emergency_phone")}
+              description="10-Digit phone number, no spaces or dashes. (eg. 5051234567)"
               error={errors.emergency_phone}
               label="Emergency Contact Phone Number"
               className={styles.textInput}
