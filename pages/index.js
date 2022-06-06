@@ -45,28 +45,28 @@ export default function Home(props) {
     }
   }, [userWelcome]);
 
-  // TEMP VBS MODAL CONTROLS
+  // // TEMP VBS MODAL CONTROLS
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setVBSOpen(true);
-    }, 1500);
-    return () => clearTimeout(timeout);
-  }, []);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setVBSOpen(true);
+  //   }, 1500);
+  //   return () => clearTimeout(timeout);
+  // }, []);
 
-  useEffect(() => {
-    if (VBSOpen) {
-      const timeout = setTimeout(() => {
-        setVBSOpen(false);
-      }, 10000);
-    }
-    return () => clearTimeout(timeout);
-  }, [VBSOpen]);
+  // useEffect(() => {
+  //   if (VBSOpen) {
+  //     const timeout = setTimeout(() => {
+  //       setVBSOpen(false);
+  //     }, 10000);
+  //   }
+  //   return () => clearTimeout(timeout);
+  // }, [VBSOpen]);
 
   return (
     <div className="font-primaryFont">
       {/* TEMP VBS MODAL */}
-      <ModalWithButton
+      {/* <ModalWithButton
         opened={VBSOpen}
         onClose={() => setVBSOpen(false)}
         text={
@@ -77,7 +77,7 @@ export default function Home(props) {
         buttonText={"View The Details"}
         onClick={() => router.push("/vbs")}
         bold
-      />
+      /> */}
       <Dialog
         withCloseButton
         opened={userWelcome}
