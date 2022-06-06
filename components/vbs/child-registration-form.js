@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { TextInput, Select } from "@mantine/core";
+import { TextInput, Select, Switch } from "@mantine/core";
 import AsburyButton from "../ui/AsburyButton";
 import styles from "./child-registration-form.module.css";
 import { DatePicker } from "@mantine/dates";
@@ -108,6 +108,8 @@ const childRegistrationSchema = Yup.object().shape({
     "Pickup Contact Relationship is Required"
   ),
   agree_to_media: Yup.string().required("You must select an option"),
+  needs_breakfast: Yup.string().required("You must select an option"),
+  needs_lunch: Yup.string().required("You must select an option"),
 });
 
 const ChildRegistrationForm = ({
@@ -157,6 +159,8 @@ const ChildRegistrationForm = ({
       pickup_person_phone: values.pickup_person_phone,
       pickup_relationship: values.pickup_person_relationship,
       agree_to_media: values.agree_to_media === "Yes" ? true : false,
+      needs_breakfast: values.needs_breakfast === "Yes" ? true:  false,
+      needs_lunch: values.needs_lunch === "Yes" ? true : false,
     };
 
     if (editing) {
@@ -243,6 +247,8 @@ const ChildRegistrationForm = ({
               ? "Yes"
               : "No"
             : "Yes",
+          needs_breakfast: editValues?.needs_breakfast ? (editValues?.needs_breakfast === true ? "Yes" : "No") : null,
+          needs_lunch: editValues?.needs_lunch ? (editValues?.needs_breakfast === true ? "Yes" : "No") : null,
         }}
         validateOnMount={false}
         onSubmit={(values, actions) => {
@@ -435,11 +441,27 @@ const ChildRegistrationForm = ({
               required
             />
             <Select
+              className="mb-4"
               data={agreeToMedia}
               value={values.agree_to_media}
               required
               onChange={handleChange("agree_to_media")}
               label="Do you agree to allow photos of your child to be used in church presentations or church promotional materials?"
+            />
+            <Select
+              className="mb-4"
+              data={agreeToMedia}
+              value={values.needs_breakfast}
+              required
+              onChange={handleChange("needs_breakfast")}
+              label="Will your child need breakfast provided?"
+            />
+            <Select
+              data={agreeToMedia}
+              value={values.needs_lunch}
+              required
+              onChange={handleChange("needs_lunch")}
+              label="Will your child need lunch provided?"
             />
             <div className="justify-center items-center flex flex-1 w-full">
               <AsburyButton
