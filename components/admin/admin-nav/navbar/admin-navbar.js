@@ -109,7 +109,7 @@ export const navLinks = [
   },
   {
     text: "Librarian",
-    href: "/admin/library-dashboard",
+    href: "/admin/library-dashboard/upload-file",
   },
   {
     text: "Worship Services",

@@ -14,11 +14,26 @@ const dateNumbers = {
     12: 'Dec',
 }
 
-export const getDateInfo = (date) => {
+const fullMonths = {
+  1: "January",
+  2: "February",
+  3: "March",
+  4: "April",
+  5: "May",
+  6: "June",
+  7: "July",
+  8: "August",
+  9: "September",
+  10: "October",
+  11: "November",
+  12: "December",
+};
+
+export const getDateInfo = (date, fullMonth = false) => {
     const dateObject = new Date(date);
     const month = dateObject.getMonth() + 1;
     const day = dateObject.getDate();
-    const monthText = dateNumbers[month];
+    const monthText = fullMonth ? fullMonths[month] : dateNumbers[month];
     return {
         day,
         monthText,

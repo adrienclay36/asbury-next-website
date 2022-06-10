@@ -31,7 +31,7 @@ const WelcomeDash = ({ firstName }) => {
         <WelcomeItem
           title="Librarian"
           description="Create, update, and delete book records for the library."
-          href="/admin/library-dashboard"
+          href="/admin/library-dashboard/upload-file"
           buttonText="Go to Librarian Dashboard"
         />
         <WelcomeItem
