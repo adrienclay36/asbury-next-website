@@ -21,40 +21,40 @@ const LibraryHome = ({ books, lastUpdated }) => {
 export default LibraryHome;
 
 
-export const getStaticProps = async () => {
-  const { data: lastModified, error: lastModifiedError } =
-      await supabase.storage.from("library").list();
-    if (lastModifiedError) {
-      console.log(
-        "Error getting created_at from file:: ",
-        lastModifiedError.message
-      );
-    }
-    console.log(lastModified);
-    const { monthText, day } = getDateInfo(lastModified[0]?.created_at, true);
-    const year = new Date().getFullYear();
-    const dateString = `${monthText} ${day}, ${year}`;
+// export const getStaticProps = async () => {
+//   const { data: lastModified, error: lastModifiedError } =
+//       await supabase.storage.from("library").list();
+//     if (lastModifiedError) {
+//       console.log(
+//         "Error getting created_at from file:: ",
+//         lastModifiedError.message
+//       );
+//     }
+//     console.log(lastModified);
+//     const { monthText, day } = getDateInfo(lastModified[0]?.created_at, true);
+//     const year = new Date().getFullYear();
+//     const dateString = `${monthText} ${day}, ${year}`;
 
 
-    const { data, error } = await supabase.storage
-      .from("library")
-      .download("Web Search.xls");
-    if (error) {
-      console.log("Error fetching books:: ", error.message);
-      return;
-    }
-    const workbook = XLSX.read(await data.arrayBuffer(), { type: "array" });
-    const jsonBooks = XLSX.utils.sheet_to_json(
-      workbook.Sheets[workbook.SheetNames[0]]
-    );
+//     const { data, error } = await supabase.storage
+//       .from("library")
+//       .download("Web Search.xls");
+//     if (error) {
+//       console.log("Error fetching books:: ", error.message);
+//       return;
+//     }
+//     const workbook = XLSX.read(await data.arrayBuffer(), { type: "array" });
+//     const jsonBooks = XLSX.utils.sheet_to_json(
+//       workbook.Sheets[workbook.SheetNames[0]]
+//     );
 
-  return {
-    props: {
-      books: jsonBooks,
-      lastUpdated: dateString,
-    },
-    revalidate: 3600,
+//   return {
+//     props: {
+//       books: jsonBooks,
+//       lastUpdated: dateString,
+//     },
+//     revalidate: 3600,
     
-  }
+//   }
 
-}
+// }

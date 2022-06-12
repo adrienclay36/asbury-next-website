@@ -13,41 +13,41 @@ const LibrarySection = ({ books, lastUpdated}) => {
   const [aboutView, setAboutView] = useState(false);
   const [booksView, setBooksView] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [booksExcel, setBooksExcel] = useState(books);
-  const [updatedOn, setUpdatedOn] = useState(lastUpdated);
+  const [booksExcel, setBooksExcel] = useState([]);
+  const [updatedOn, setUpdatedOn] = useState('');
 
-  // const getBooksExcel = async () => {
-  //   setLoading(true);
-  //   const { data: lastModified, error: lastModifiedError } =
-  //     await supabase.storage.from("library").list();
-  //   if (lastModifiedError) {
-  //     console.log(
-  //       "Error getting created_at from file:: ",
-  //       lastModifiedError.message
-  //     );
-  //   }
-  //   const { monthText, day } = getDateInfo(lastModified[0]?.created_at, true);
-  //   const year = new Date().getFullYear();
-  //   const dateString = `${monthText} ${day}, ${year}`;
-  //   setUpdatedOn(dateString);
-  //   const { data, error } = await supabase.storage
-  //     .from("library")
-  //     .download("Web Search.xls");
-  //   if (error) {
-  //     console.log("Error fetching books:: ", error.message);
-  //     return;
-  //   }
-  //   const workbook = XLSX.read(await data.arrayBuffer(), { type: "array" });
-  //   const jsonBooks = XLSX.utils.sheet_to_json(
-  //     workbook.Sheets[workbook.SheetNames[0]]
-  //   );
-  //   setBooksExcel(jsonBooks);
-  //   setLoading(false);
-  // };
+  const getBooksExcel = async () => {
+    setLoading(true);
+    const { data: lastModified, error: lastModifiedError } =
+      await supabase.storage.from("library").list();
+    if (lastModifiedError) {
+      console.log(
+        "Error getting created_at from file:: ",
+        lastModifiedError.message
+      );
+    }
+    const { monthText, day } = getDateInfo(lastModified[0]?.created_at, true);
+    const year = new Date().getFullYear();
+    const dateString = `${monthText} ${day}, ${year}`;
+    setUpdatedOn(dateString);
+    const { data, error } = await supabase.storage
+      .from("library")
+      .download("Web Search.xls");
+    if (error) {
+      console.log("Error fetching books:: ", error.message);
+      return;
+    }
+    const workbook = XLSX.read(await data.arrayBuffer(), { type: "array" });
+    const jsonBooks = XLSX.utils.sheet_to_json(
+      workbook.Sheets[workbook.SheetNames[0]]
+    );
+    setBooksExcel(jsonBooks);
+    setLoading(false);
+  };
 
-  // useEffect(() => {
-  //   getBooksExcel();
-  // }, []);
+  useEffect(() => {
+    getBooksExcel();
+  }, []);
 
   const showAbout = () => {
     setAboutView(true);
@@ -85,7 +85,7 @@ const LibrarySection = ({ books, lastUpdated}) => {
       {loading && <LibrarySkeletonGrid/>}
       {aboutView && <AboutView />}
       {/* {booksView && <BookView />} */}
-      {booksView && booksExcel.length > 0 && <HTMLBookView books={books} updatedOn={lastUpdated} />}
+      {booksView && booksExcel.length > 0 && <HTMLBookView books={booksExcel} updatedOn={updatedOn} />}
     </SectionHeading>
   );
 };
