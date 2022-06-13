@@ -91,7 +91,7 @@ const TableRow = ({ book }) => {
           )}
         </td>
         <td className={tableDataClass}>
-          <p>{book?.Author}</p>
+          <p>{book?.AuthorName}</p>
         </td>
         <td className={tableDataClass}>
           <p>{book?.Title}</p>
