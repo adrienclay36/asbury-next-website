@@ -16,16 +16,15 @@ const UploadFile = () => {
 
     if (files[0]) {
         setLoading(true);
-      if (files[0]?.name !== "Web Search.xls") {
-        setLoading(false);
-        setError(true);
-        setErrorMessage("Please only upload Web Search.xls in this form.");
-        return;
-      }
+
+
+        const { data: existingFile, error: existingFileError } = await supabase.storage.from('library').list();
+        
+      
 
       const { data: removeData, error: removeError } = await supabase.storage
         .from("library")
-        .remove(["Web Search.xls"]);
+        .remove([existingFile[0]?.name]);
 
       if (removeError) {
         console.log("Error removing old excel file:: ", removeError.message);
