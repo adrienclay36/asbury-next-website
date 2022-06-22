@@ -12,23 +12,23 @@ const UploadFile = () => {
   const [errorMessage, setErrorMessage] = useState(false);
 
   const uploadFile = async (files) => {
-    
+
 
     if (files[0]) {
-        setLoading(true);
+      setLoading(true);
 
 
-        const { data: existingFile, error: existingFileError } = await supabase.storage.from('library').list();
+      const { data: existingFile, error: existingFileError } = await supabase.storage.from('library').list();
 
-        if(existingFileError) {
-          console.log("Error getting existing files:: " , existingFileError.message);
-          setError(true);
-          setErrorMessage(error.message);
-          setLoading(false);
-          return;
-        }
-        
-      
+      if (existingFileError) {
+        console.log("Error getting existing files:: ", existingFileError.message);
+        setError(true);
+        setErrorMessage(error.message);
+        setLoading(false);
+        return;
+      }
+
+
 
       const { data: removeData, error: removeError } = await supabase.storage
         .from("library")
@@ -50,10 +50,10 @@ const UploadFile = () => {
         setErrorMessage(error.message);
         setLoading(false);
         return;
-      } else {
-        setLoading(false);
-        setSuccess(true);
       }
+      
+      setLoading(false);
+      setSuccess(true);
     }
   };
   return (
