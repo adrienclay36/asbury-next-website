@@ -50,10 +50,10 @@ const UploadFile = () => {
         setErrorMessage(error.message);
         setLoading(false);
         return;
+      } else {
+        setLoading(false);
+        setSuccess(true);
       }
-      
-      setLoading(false);
-      setSuccess(true);
     }
   };
   return (
