@@ -18,12 +18,12 @@ const AdminNavbar = (props) => {
   const userContext = useContext(UserContext);
 
   const logoutHandler = async (e) => {
-    setLoggingOut(true);
     e.preventDefault();
+    setLoggingOut(true);
     await supabase.auth.signOut();
     await userContext.checkUser();
     setTimeout(() => {
-      router.reload("/admin");
+      router.push("/admin");
     }, 1000);
   };
 
