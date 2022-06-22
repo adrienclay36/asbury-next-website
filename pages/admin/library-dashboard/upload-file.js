@@ -19,6 +19,14 @@ const UploadFile = () => {
 
 
         const { data: existingFile, error: existingFileError } = await supabase.storage.from('library').list();
+
+        if(existingFileError) {
+          console.log("Error getting existing files:: " , existingFileError.message);
+          setError(true);
+          setErrorMessage(error.message);
+          setLoading(false);
+          return;
+        }
         
       
 
@@ -28,6 +36,9 @@ const UploadFile = () => {
 
       if (removeError) {
         console.log("Error removing old excel file:: ", removeError.message);
+        setError(true);
+        setErrorMessage(removeError.message);
+        setLoading(false);
         return;
       }
       const { data, error } = await supabase.storage
@@ -35,6 +46,8 @@ const UploadFile = () => {
         .upload("Web Search.xls", files[0]);
       if (error) {
         console.log("error uploading file:: ", error.message);
+        setError(true);
+        setErrorMessage(error.message);
         setLoading(false);
         return;
       } else {

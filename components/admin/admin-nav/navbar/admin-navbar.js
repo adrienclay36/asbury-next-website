@@ -24,7 +24,7 @@ const AdminNavbar = (props) => {
     await userContext.checkUser();
     setTimeout(() => {
       router.reload("/admin");
-    }, 500);
+    }, 1000);
   };
 
   const toggleMenu = () => {
