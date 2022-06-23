@@ -40,7 +40,7 @@ const UploadFile = () => {
         setErrorMessage(removeError.message);
         setLoading(false);
         return;
-      }
+      } 
       const { data, error } = await supabase.storage
         .from("library")
         .upload("Web Search.xls", files[0]);

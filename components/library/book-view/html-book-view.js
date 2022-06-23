@@ -43,7 +43,7 @@ const HTMLBookView = ({ books, updatedOn }) => {
                   <tr>
                     {libraryColumns.map((column) => (
                       <th
-                        className="px-10 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                         key={column}
                       >
                         {column}
@@ -74,13 +74,15 @@ const TableRow = ({ book }) => {
         <td className={tableDataClass}>
           <p>{book?.DeweyNumber}</p>
         </td>
-        <td className={tableDataClass}>
+        <td
+         className={tableDataClass}
+        >
           <p>{book?.Author}</p>
         </td>
         <td className={tableDataClass}>
           {!book?.Borrower ? (
             <div className="flex flex-1 justify-center items-center">
-              <CircleCheck size={15} color="green" />
+              <CircleCheck size={12} color="green" />
               <p className="ml-2">Available</p>
             </div>
           ) : (
