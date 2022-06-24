@@ -5,13 +5,27 @@ import { supabase } from "../../../supabase-client";
 import PageLoading from "../../../components/PageLoading/PageLoading";
 import UIModal from "../../../components/ui/modal/UIModal";
 import { checkAdmin } from "../../../supabase-util";
-import axios from 'axios';
+import axios from "axios";
 const UploadFile = () => {
   const [file, setFile] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [existingFile, setExistingFile] = useState(null);
+
+  const getExistingFile = async () => {
+    const { data, error: existingFileError } = await supabase.storage
+      .from("library")
+      .list();
+    if (!existingFileError) {
+      setExistingFile(data[0]);
+    }
+  };
+
+  useEffect(() => {
+    getExistingFile();
+  }, []);
 
   const uploadFile = async (files) => {
     if (files[0]) {
@@ -54,10 +68,13 @@ const UploadFile = () => {
       }
       const { data, error: uploadError } = await supabase.storage
         .from("library")
-        .upload("Web Search.xls", files[0]);
+        .upload(files[0]?.name, files[0]);
       if (uploadError) {
         console.log("error uploading file:: ", error.message);
-        axios.post('/api/write-logs', { type: 'error', message: uploadError.message });
+        axios.post("/api/write-logs", {
+          type: "error",
+          message: uploadError.message,
+        });
         setError(true);
         setErrorMessage(uploadError.message);
         setLoading(false);
@@ -67,9 +84,9 @@ const UploadFile = () => {
         setSuccess(true);
         axios.post("/api/write-logs", {
           type: "success",
-          message: 'Successfully uploaded XLS File',
+          message: "Successfully uploaded XLS File",
         });
-
+        getExistingFile();
       }
     }
   };
@@ -102,6 +119,17 @@ const UploadFile = () => {
               </section>
             )}
           </Dropzone>
+        </div>
+      )}
+      {existingFile && (
+        <div className="mt-4">
+          <p className="text-lg font-semibold text-center">Existing File</p>
+          <div className="shadow-md rounded-lg p-10 w-2/6 mx-auto">
+            <p className="text-center">File Name: {existingFile?.name}</p>
+            <p className="text-center">
+              Uploaded: {new Date(existingFile?.created_at).toLocaleDateString("en-US")}
+            </p>
+          </div>
         </div>
       )}
     </AdminLayout>
