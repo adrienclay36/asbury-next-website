@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import { supabase } from "../../../supabase-client";
@@ -6,6 +6,7 @@ import PageLoading from "../../../components/PageLoading/PageLoading";
 import UIModal from "../../../components/ui/modal/UIModal";
 import { checkAdmin } from "../../../supabase-util";
 import axios from "axios";
+import { UserContext } from "../../../store/user-context";
 const UploadFile = () => {
   const [file, setFile] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -13,6 +14,7 @@ const UploadFile = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [existingFile, setExistingFile] = useState(null);
+  const userContext = useContext(UserContext);
 
   const getExistingFile = async () => {
     const { data, error: existingFileError } = await supabase.storage
@@ -42,6 +44,7 @@ const UploadFile = () => {
         axios.post("/api/write-logs", {
           type: "error",
           message: existingFileError.message,
+          user: `${userContext?.firstName} ${userContext?.lastName}`,
         });
 
         setError(true);
@@ -59,6 +62,7 @@ const UploadFile = () => {
         axios.post("/api/write-logs", {
           type: "error",
           message: removeError.message,
+          user: `${userContext?.firstName} ${userContext?.lastName}`,
         });
 
         setError(true);
@@ -70,10 +74,12 @@ const UploadFile = () => {
         .from("library")
         .upload(files[0]?.name, files[0]);
       if (uploadError) {
+        console.log(uploadError);
         console.log("error uploading file:: ", error.message);
         axios.post("/api/write-logs", {
           type: "error",
           message: uploadError.message,
+          user: `${userContext?.firstName} ${userContext?.lastName}`,
         });
         setError(true);
         setErrorMessage(uploadError.message);
@@ -85,6 +91,7 @@ const UploadFile = () => {
         axios.post("/api/write-logs", {
           type: "success",
           message: "Successfully uploaded XLS File",
+          user: `${userContext?.firstName} ${userContext?.lastName}`,
         });
         getExistingFile();
       }
