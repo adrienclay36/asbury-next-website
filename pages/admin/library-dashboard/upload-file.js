@@ -4,6 +4,8 @@ import AdminLayout from "../../../components/admin/admin-layout/admin-layout";
 import { supabase } from "../../../supabase-client";
 import PageLoading from "../../../components/PageLoading/PageLoading";
 import UIModal from "../../../components/ui/modal/UIModal";
+import { checkAdmin } from "../../../supabase-util";
+import axios from 'axios';
 const UploadFile = () => {
   const [file, setFile] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -12,23 +14,27 @@ const UploadFile = () => {
   const [errorMessage, setErrorMessage] = useState(false);
 
   const uploadFile = async (files) => {
-
-
     if (files[0]) {
       setLoading(true);
 
-
-      const { data: existingFile, error: existingFileError } = await supabase.storage.from('library').list();
+      const { data: existingFile, error: existingFileError } =
+        await supabase.storage.from("library").list();
 
       if (existingFileError) {
-        console.log("Error getting existing files:: ", existingFileError.message);
+        console.log(
+          "Error getting existing files:: ",
+          existingFileError.message
+        );
+        axios.post("/api/write-logs", {
+          type: "error",
+          message: existingFileError.message,
+        });
+
         setError(true);
         setErrorMessage(error.message);
         setLoading(false);
         return;
       }
-
-
 
       const { data: removeData, error: removeError } = await supabase.storage
         .from("library")
@@ -36,16 +42,22 @@ const UploadFile = () => {
 
       if (removeError) {
         console.log("Error removing old excel file:: ", removeError.message);
+        axios.post("/api/write-logs", {
+          type: "error",
+          message: removeError.message,
+        });
+
         setError(true);
         setErrorMessage(removeError.message);
         setLoading(false);
         return;
-      } 
+      }
       const { data, error } = await supabase.storage
         .from("library")
         .upload("Web Search.xls", files[0]);
       if (error) {
         console.log("error uploading file:: ", error.message);
+        axios.post('/api/write-logs', { type: 'error', message: error.message });
         setError(true);
         setErrorMessage(error.message);
         setLoading(false);
@@ -53,6 +65,11 @@ const UploadFile = () => {
       } else {
         setLoading(false);
         setSuccess(true);
+        axios.post("/api/write-logs", {
+          type: "success",
+          message: 'Successfully uploaded XLS File',
+        });
+
       }
     }
   };
@@ -92,3 +109,7 @@ const UploadFile = () => {
 };
 
 export default UploadFile;
+
+export const getServerSideProps = async ({ req, res }) => {
+  return checkAdmin(req);
+};

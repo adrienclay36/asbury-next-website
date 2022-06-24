@@ -35,6 +35,7 @@
     "html-to-react": "^1.4.8",
     "ical": "^0.8.0",
     "micro": "^9.3.4",
+    "moment": "^2.29.3",
     "nanoid": "^3.3.0",
     "next": "^12.1.0",
     "next-transpile-modules": "^9.0.0",

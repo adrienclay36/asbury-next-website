@@ -47,6 +47,8 @@ const UserContextProvider = (props) => {
   const [blogPermissions, setBlogPermissions] = useState(false);
   const [invitePermissions, setInvitePermissions] = useState(false);
   const [socialPermissions, setSocialPermissions] = useState(false);
+  const [schedulePermission, setSchedulePermissions] = useState(false);
+  const [externalAdmin, setExternalAdmin] = useState(false);
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -234,6 +236,12 @@ const UserContextProvider = (props) => {
         ["social", "master"].includes(userRole)
       );
       setSocialPermissions(social);
+
+      const schedule = permissions.some((userRole) => ['scheduling', 'master'].includes(userRole));
+      setSchedulePermissions(schedule);
+
+      const external = permissions.some((userRole) => ['external'].includes(userRole));
+      setExternalAdmin(external);
     }
   }, [permissions]);
 
