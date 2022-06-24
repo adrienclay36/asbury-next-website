@@ -52,14 +52,14 @@ const UploadFile = () => {
         setLoading(false);
         return;
       }
-      const { data, error } = await supabase.storage
+      const { data, error: uploadError } = await supabase.storage
         .from("library")
         .upload("Web Search.xls", files[0]);
-      if (error) {
+      if (uploadError) {
         console.log("error uploading file:: ", error.message);
-        axios.post('/api/write-logs', { type: 'error', message: error.message });
+        axios.post('/api/write-logs', { type: 'error', message: uploadError.message });
         setError(true);
-        setErrorMessage(error.message);
+        setErrorMessage(uploadError.message);
         setLoading(false);
         return;
       } else {
