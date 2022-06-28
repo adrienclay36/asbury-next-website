@@ -23,7 +23,7 @@ const ScheduleView = () => {
       <p className="text-center text-lg mt-4">
         Select a date below to search the existing schedule for the Cafe
       </p>
-      <div className="container w-1/6 mt-6">
+      <div className="container w-full lg:w-full md:w-full mt-6">
         <iframe
           name="Print Schedules"
           title="Print Schedules"
