@@ -4,8 +4,8 @@ import AboutView from './about-view/about-view';
 import ScheduleView from './schedule-view/schedule-view';
 import styles from "./asbury-cafe-section.module.css";
 const AsburyCafeSection = () => {
-    const [aboutView, setAboutView] = useState(true);
-    const [scheduleView, setScheduleView] = useState(false);
+    const [aboutView, setAboutView] = useState(false);
+    const [scheduleView, setScheduleView] = useState(true);
 
 
 
