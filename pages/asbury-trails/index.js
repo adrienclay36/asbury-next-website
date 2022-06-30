@@ -7,7 +7,7 @@ const AsburyTrailsHome = ({ files }) => {
     return (
         <Layout title="Asbury Trails" description="The official monthly newsletter for Asbury United Methodist Church, where you can find information regarding all the latest events and news around the community.">
             <SectionHeading title="Asbury Trails">
-                <TrailsList />
+                <TrailsList files={files} />
             </SectionHeading>
         </Layout>
     )
@@ -16,11 +16,10 @@ const AsburyTrailsHome = ({ files }) => {
 export default AsburyTrailsHome
 
 export const getStaticProps = async ({ req, res }) => {
-    const {data, error} = await supabase.storage.from('trails').list('trails');
-    console.log(data);
+    const { data, error } = await supabase.storage.from('trails').list();
     return {
         props: {
-            files: []
+            files: data
         }
     }
 }
