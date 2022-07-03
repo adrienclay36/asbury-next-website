@@ -273,13 +273,13 @@ export const navLinks = [
   },
 
   {
-    text: "Bulletins",
+    text: "News",
     href: "/blog",
     subNav: true,
     size: 'md',
     items: [
       {
-        title: 'Blog',
+        title: 'Bulletins',
         href: '/blog',
         icon: <MessageDots size={20}/>,
       },
