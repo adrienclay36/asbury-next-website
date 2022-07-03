@@ -15,6 +15,7 @@ const UploadVBSFiles = ({ existingFiles, getFiles }) => {
     setLoading(true);
     if (files) {
       const progressTotal = files.length;
+      
 
       for (let i = 0; i < files.length; i++) {
         const { data, error } = await supabase.storage

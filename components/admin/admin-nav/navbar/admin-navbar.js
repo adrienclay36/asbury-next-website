@@ -115,8 +115,8 @@ export const navLinks = [
     text: "Worship Services",
     href: "/admin/worship-service-dashboard",
   },
-  // {
-  //   text: 'Scheduling',
-  //   href: '/admin/cafe-scheduling',
-  // },
+  {
+    text: 'Asbury Trails',
+    href: '/admin/asbury-trails',
+  },
 ];

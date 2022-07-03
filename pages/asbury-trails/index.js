@@ -16,7 +16,7 @@ const AsburyTrailsHome = ({ files }) => {
 export default AsburyTrailsHome
 
 export const getStaticProps = async ({ req, res }) => {
-    const { data, error } = await supabase.storage.from('trails').list('', { sortBy: { column: 'created_at' }});
+    const { data, error } = await supabase.from('asbury_trails').select().order('created_at', { ascending: false })
     return {
         props: {
             files: data

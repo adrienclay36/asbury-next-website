@@ -205,6 +205,32 @@ export const checkAdmin = async (req) => {
   };
 };
 
+export const checkAdminBooleanValue = async (req) => {
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+  if (!user) {
+    return {
+      props: {},
+      redirect: { destination: "/admin" },
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .match({ id: user.id });
+  let userInfo;
+  if (data) {
+    userInfo = data[0];
+    if (!user || userInfo.role !== "admin") {
+      return {
+        props: {},
+        redirect: { destination: "/" },
+      };
+    }
+  }
+
+  return true;
+};
 
 export const checkUser = async (req) => {
 
