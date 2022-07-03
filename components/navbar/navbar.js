@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "./navbar.module.css";
 import SocialIcons from "./social-icons";
 import LogoUnited from "../logo/LogoUnited";
+import { MessageDots, Bookmarks } from "tabler-icons-react";
 import { CgCross } from "react-icons/cg";
 import { FaChild, FaStripeS } from "react-icons/fa";
 import { RiWomenLine } from "react-icons/ri";
@@ -274,6 +275,20 @@ export const navLinks = [
   {
     text: "Bulletins",
     href: "/blog",
+    subNav: true,
+    size: 'md',
+    items: [
+      {
+        title: 'Blog',
+        href: '/blog',
+        icon: <MessageDots size={20}/>,
+      },
+      {
+        title: 'Asbury Trails',
+        href: '/asbury-trails',
+        icon: <Bookmarks size={20}/>
+      }
+    ]
   },
   {
     text: "Events",
