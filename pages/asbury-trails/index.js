@@ -20,6 +20,7 @@ export const getStaticProps = async ({ req, res }) => {
     return {
         props: {
             files: data
-        }
+        },
+        revalidate: 10,
     }
 }
