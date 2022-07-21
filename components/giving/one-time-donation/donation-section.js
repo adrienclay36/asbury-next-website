@@ -58,7 +58,7 @@ const DonationSection = () => {
             type="success"
             opened={success}
             onClose={() => setSuccess(false)}
-            message="Donation succeeded! Thank you so much for your contribution! Acts of kindess from people such as yourself are what allow our community to thrive and grow. A receipt for this transaction will be emailed to you automatically. If you did not receive this email, please contact us at {{EMAIL}} and we will send it again."
+            message="Donation succeeded! Thank you so much for your contribution! Acts of kindess from people such as yourself are what allow our community to thrive and grow. A receipt for this transaction will be emailed to you automatically. If you did not receive this email, please contact us at officeadmin@asburyabq.org and we will send it again."
           />
         )}
         {userContext.user && (
@@ -67,7 +67,7 @@ const DonationSection = () => {
             type="success"
             opened={success}
             onClose={() => setSuccess(false)}
-            actionText={'View Transaction History'}
+            actionText={"View Transaction History"}
             href="/profile/transaction-history"
             message={`As always, thank you ${userContext.firstName}. You will receive an email containing a receipt for this transaction! You can also view and download your receipt by visiting your transaction history in your user profile`}
           />
@@ -95,14 +95,15 @@ const DonationSection = () => {
           />
         </Group>
         <Button
-        disabled={true}
+          loading={checkingOut}
+          disabled={true}
           type="submit"
           variant="filled"
           leftIcon={<GiPayMoney size={20} />}
           onClick={toggleCheckout}
           className="text-white bg-emerald-900 hover:bg-emerald-800 mt-12"
         >
-          Online Giving Coming Soon
+          Online Donations Coming Soon
         </Button>
       </div>
     </SectionHeading>
