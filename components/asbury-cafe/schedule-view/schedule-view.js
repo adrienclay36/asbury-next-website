@@ -13,7 +13,7 @@ const ScheduleView = () => {
     <div>
       <div className="text-center my-6">
         <a
-          href="https://c0abi487.caspio.com/dp/eb2a500084270df956ed4da68402"
+          href="https://c0abi487.caspio.com/dp/eb2a50002a387c33d89944eba2b6"
           rel="noreferrer"
           target="_blank"
         >
