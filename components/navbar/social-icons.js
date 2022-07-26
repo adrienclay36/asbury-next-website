@@ -10,7 +10,7 @@ import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
-import MainButton from '../ui/main-button';
+import MainButton from "../ui/main-button";
 const SocialIcons = ({
   textColor,
   textHover,

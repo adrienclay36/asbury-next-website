@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }) {
       <NextNProgress height={4} color={"#899e9c"} />
 
       <UserContextProvider>
-        <NotificationsProvider position="top-right">
+        <NotificationsProvider position="bottom-right">
           <Component {...pageProps} />
         </NotificationsProvider>
       </UserContextProvider>

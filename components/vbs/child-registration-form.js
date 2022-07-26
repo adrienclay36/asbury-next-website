@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { TextInput, Select, Switch } from "@mantine/core";
+import { TextInput, Select } from '@mantine/core'
 import AsburyButton from "../ui/AsburyButton";
 import styles from "./child-registration-form.module.css";
 import { DatePicker } from "@mantine/dates";

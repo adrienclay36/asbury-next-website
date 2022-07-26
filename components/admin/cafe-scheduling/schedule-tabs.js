@@ -18,6 +18,8 @@ const ScheduleTabs = ( ) => {
       <Tabs.Tab label="Shifts"></Tabs.Tab>
     </Tabs>
   );
+
+  
 }
 
 export default ScheduleTabs

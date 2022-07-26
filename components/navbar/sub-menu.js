@@ -5,14 +5,20 @@ import { useRouter } from 'next/router';
 const SubMenu = ({ items, control, size }) => {
   const router = useRouter();
   return (
-    <Menu trigger="hover" withArrow shadow="xl" position="bottom" placement="center" control={control} size={size}>
+    <Menu trigger="hover" withArrow shadow="xl" position="bottom" placement="center" size={size}>
+      <Menu.Target>
+        {control}
+      </Menu.Target>
+      <Menu.Dropdown>
+
         {
-            items.map(item => (
-             
-                <Menu.Item key={item.title} icon={item.icon ? item.icon : ''} onClick={() => router.push(item.href)}>{item.title}</Menu.Item>
-              
+          items.map(item => (
+            
+            <Menu.Item key={item.title} icon={item.icon ? item.icon : ''} onClick={() => router.push(item.href)}>{item.title}</Menu.Item>
+            
             ))
-        }
+          }
+          </Menu.Dropdown>
     </Menu>
   )
 }

@@ -11,8 +11,7 @@ import { UserContext } from "../store/user-context";
 import { Dialog } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { FaChild } from 'react-icons/fa';
-import ModalWithButton from "../components/ui/modal/ModalWithButton";
+import { showNotification, shwoNotification } from '@mantine/notifications';
 export default function Home(props) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
@@ -25,14 +24,21 @@ export default function Home(props) {
       setLoading(false);
     }, 750);
 
-    if (userContext.user && !disableNotifications) {
+    if (userContext.firstName && !disableNotifications) {
       const timeout = setTimeout(() => {
         setUserWelcome(true);
+        showNotification({
+          title: `Welcome, ${userContext?.firstName}`,
+          message: 'Good To See You Again!',
+          color: 'green',
+          autoClose: 10000,
+          
+        })
       }, 1000);
 
       return () => clearTimeout(timeout);
     }
-  }, [userContext.user, disableNotifications]);
+  }, [userContext.firstName, disableNotifications]);
 
   useEffect(() => {
     if (userWelcome) {
@@ -48,37 +54,7 @@ export default function Home(props) {
 
   return (
     <div className="font-primaryFont">
-      <Dialog
-        withCloseButton
-        opened={userWelcome}
-        onClose={() => setUserWelcome(false)}
-      >
-        {userContext.avatarPath === "default-2.png" ? (
-          <>
-            <p className="text-center my-2">
-              We noticed you haven&apos;t added a profile picture..
-            </p>
-            <div className="text-center">
-              <button
-                onClick={() =>
-                  router.push(
-                    `/profile/${
-                      userContext.user.id
-                    }/${userContext.firstName.toLowerCase()}-${userContext.lastName.toLowerCase()}`
-                  )
-                }
-                className="text-gray-500 font-semibold hover:underline text-center"
-              >
-                Add One Now
-              </button>
-            </div>
-          </>
-        ) : (
-          <p className="text-seaFoam-600 text-xl text-center">
-            Welcome, {userContext.firstName}
-          </p>
-        )}
-      </Dialog>
+      
       <div className={styles.heroImage} style={{ display: "none" }}>
         <img alt="Asbury Background" src="/images/hero.jpg" />
       </div>
