@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { LibraryContext } from "../../../../store/library-store";
 import { LoadingOverlay } from "@mantine/core";
-import { TextInput, Radio, RadioGroup } from "@mantine/core";
+import { TextInput, Radio } from "@mantine/core";
 import DualRingLoader from "../../../dual-ring-loader/DualRingLoader";
 import AsburyButton from "../../../ui/AsburyButton";
 
@@ -109,10 +109,10 @@ const NewBookForm = () => {
               required
             />
           </div>
-          <RadioGroup className="mb-4" value={availability} onChange={setAvailability} label="Is this book available?" required>
+          <Radio.Group className="mb-4" value={availability} onChange={setAvailability} label="Is this book available?" required>
             <Radio value="true" label="Yes"/>
             <Radio value="false" label="No"/>
-          </RadioGroup>
+          </Radio.Group>
           <AsburyButton margin="mt-2" loading={adding} text="Add Book" />
         </form>
       </div>
