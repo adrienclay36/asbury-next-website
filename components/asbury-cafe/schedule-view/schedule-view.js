@@ -20,6 +20,15 @@ const ScheduleView = () => {
           <AsburyButton text="Coordinator Sign-In" />
         </a>
       </div>
+      <div className="text-center my-6">
+        <a
+          href="https://c0abi487.caspio.com/dp/eb2a5000095791f32aae45e08424"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <AsburyButton text="Coordinator Registration" />
+        </a>
+      </div>
       <p className="text-center text-lg mt-4">
         Select a date below to search the existing schedule for the Cafe
       </p>
