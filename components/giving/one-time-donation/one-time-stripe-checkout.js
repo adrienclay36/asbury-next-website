@@ -111,7 +111,7 @@ const OneTimeStripeCheckout = ({
       setAddress({ city: "", line1: "", postal_code: "" });
       setState("");
       sendMail(
-        "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org, revjoe@asburyabq.org",
+        "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org",
         `Someone Donated $${amount}`,
         newDonationString
       );

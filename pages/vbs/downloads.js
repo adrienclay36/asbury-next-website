@@ -12,29 +12,37 @@ const VBSDownloads = ({ data2021, data2022 }) => {
 
 export default VBSDownloads
 
-export const getStaticProps = async (context) => {
-    const { data: data2021 , error: error2021 } = await supabase.storage
-      .from("vbs-files")
-      .list("2021", {
-        limit: 20,
-        offset: 0,
-        sortBy: { column: "name"},
-      });
-    const { data: data2022, error: error2022 } = await supabase.storage
-    .from("vbs-files")
-    .list("2022", {
-        limit: 20,
-        offset: 0,
-        sortBy: { column: 'name'}
-    });
+// export const getStaticProps = async (context) => {
+//     const { data: data2021 , error: error2021 } = await supabase.storage
+//       .from("vbs-files")
+//       .list("2021", {
+//         limit: 20,
+//         offset: 0,
+//         sortBy: { column: "name"},
+//       });
+//     const { data: data2022, error: error2022 } = await supabase.storage
+//     .from("vbs-files")
+//     .list("2022", {
+//         limit: 20,
+//         offset: 0,
+//         sortBy: { column: 'name'}
+//     });
     
     
 
 
-    return {
-        props: {
-            data2021,
-            data2022,
-        }
-    }
+//     return {
+//         props: {
+//             data2021,
+//             data2022,
+//         }
+//     }
+// }
+
+// DISABLE VBS UNTIL NEXT YEAR
+export const getServerSideProps = (context) => {
+  return {
+    props: {},
+    redirect: { destination: "/" }
+  }
 }

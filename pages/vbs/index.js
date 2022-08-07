@@ -10,3 +10,12 @@ const index = () => {
 }
 
 export default index
+
+
+// DISABLE VBS UNTIL NEXT YEAR
+export const getServerSideProps = (context) => {
+  return {
+    props: {},
+    redirect: { destination: "/" }
+  }
+}

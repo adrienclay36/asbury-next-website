@@ -39,7 +39,8 @@ const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
               {link.text}
             </MobileNavItem>
           ))}
-          <MobileNavItem href="/vbs">VBS Registration</MobileNavItem>
+          {/*  DISABLE VBS UNTIL NEXT YEAR  */}
+          {/* <MobileNavItem href="/vbs">VBS Registration</MobileNavItem> */}
         </ul>
         {userContext?.avatarURL ? (
           <div

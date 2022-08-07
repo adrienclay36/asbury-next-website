@@ -13,3 +13,11 @@ const ChildRegistrationPage = () => {
 }
 
 export default ChildRegistrationPage
+
+// DISABLE VBS UNTIL NEXT YEAR
+export const getServerSideProps = (context) => {
+  return {
+    props: {},
+    redirect: { destination: "/" }
+  }
+}

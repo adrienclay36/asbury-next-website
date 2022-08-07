@@ -14,3 +14,10 @@ const VolunteerRegistration = () => {
 
 export default VolunteerRegistration;
 
+// DISABLE VBS UNTIL NEXT YEAR
+export const getServerSideProps = (context) => {
+  return {
+    props: {},
+    redirect: { destination: "/" }
+  }
+}
