@@ -9,7 +9,7 @@ const ScheduleView = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 w-11/12 lg:w-4/6 mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 w-11/12 lg:w-4/6 mx-auto items-start">
         <InfoDropdown
           title={"Coordinator Sign In"}
           buttonText="Sign In"
@@ -33,7 +33,12 @@ const ScheduleView = () => {
         />
       </div>
       <div className="text-center">
-        <AsburyButton onClick={() => videoRef.current.scrollIntoView({ behavior: 'smooth' })} text="Pie Cafe Training Video" />
+        <AsburyButton
+          onClick={() =>
+            videoRef.current.scrollIntoView({ behavior: "smooth" })
+          }
+          text="Pie Cafe Training Video"
+        />
       </div>
       <p className="text-center text-lg mt-4">
         Select a date below to search the existing schedule for the Cafe
@@ -47,19 +52,18 @@ const ScheduleView = () => {
           Sorry, but your browser does not support frames.
         </iframe>
       </div>
-      <SectionHeading reactRef={videoRef} title="Pie Cafe Training Video" >
-
-      <div className="container w-full" >
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/_ElHpZ52wbg"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+      <SectionHeading reactRef={videoRef} title="Pie Cafe Training Video">
+        <div className="container w-full">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/_ElHpZ52wbg"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
       </SectionHeading>
     </div>
   );
