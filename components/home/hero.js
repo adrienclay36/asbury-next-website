@@ -31,17 +31,22 @@ const Hero = () => {
             onOpen={onOpen}
           />
         </div>
-        <div
-          className={`text-center mt-16`}
-        >
+        <div className={`text-center mt-16`}>
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
-            romans 15:7
+            {/* romans 15:7 */}
+            65 Years!
           </h1>
-          <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
+          {/* <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
             Therefore welcome one another as Christ has welcomed you, for the
             glory of God.
+            
+          </p> */}
+          <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12 w-10/12 mx-auto">
+            Join us on Sunday, Sept. 25, where we will celebrate the 65
+            <sup>th </sup>
+            anniversary of Asbury’s building dedication
           </p>
-          <div id="action-buttons" className="mt-12">
+          {/* <div id="action-buttons" className="mt-12">
             <MainButton
               onClick={() => router.push("/welcome")}
               margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}
@@ -50,6 +55,20 @@ const Hero = () => {
             </MainButton>
             <MainButton onClick={() => router.push("/worship")} margin={"mx-4"}>
               Worship
+            </MainButton>
+          </div> */}
+          <div id="action-buttons" className="mt-12">
+            <MainButton
+              onClick={() => router.push("/celebration-sixty-five")}
+              margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}
+            >
+              Celebration Information
+            </MainButton>
+            <MainButton
+              onClick={() => router.push("/welcome")}
+              margin={"mx-4"}
+            >
+              Our History
             </MainButton>
           </div>
         </div>

@@ -26,13 +26,7 @@ export const staffInfo = [
       "Joe is a native of Las Cruces and “cradle to grave” Methodist, who graduated from Pepperdine University, then Pepperdine School of Law. For 19 years, he was a civil trial attorney and also extensively involved in New Mexico and national politics. After clearly hearing God’s voice calling him into ministry, Joe graduated from Claremont School of Theology and began serving a United Methodist church in Los Angeles.",
     image: "/images/headshots/Joe-One.png",
   },
-  {
-    name: "Kevin Chavez",
-    jobTitle: "Traditional Music Director",
-    description:
-      "Kevin Chavez is the director of music at Asbury, with talents ranging from singing to a multitude of instruments. Kevin brings life and music to Asbury on a daily basis, and is always looking for new volunteers to get involved in the music programs at Asbury. Join him for the bell choir - no previous experience needed!",
-    image: "/images/headshots/Kevin-One.png",
-  },
+
   {
     name: "Richard Ramsay",
     jobTitle: "Building Manager",
