@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Navbar from '../navbar/navbar';
-import styles from './hero.module.css';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import Image from "next/image";
+import Navbar from "../navbar/navbar";
+import styles from "./hero.module.css";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { HiChevronDoubleDown } from "react-icons/hi";
-
-import MainButton from '../ui/main-button';
+import Lottie from "lottie-react";
+import celebration from "../../animations/pop.json";
+import MainButton from "../ui/main-button";
 
 const Hero = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-
   const onOpen = () => {
     setOpen(!open);
     console.log("toggling open");
-  }
-
-
+  };
 
   return (
     <section className={styles.fadeIn}>
@@ -31,7 +29,7 @@ const Hero = () => {
             onOpen={onOpen}
           />
         </div>
-        <div className={`text-center mt-16`}>
+        <div className={`text-center mt-4`}>
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
             {/* romans 15:7 */}
             65 Years!
@@ -41,6 +39,11 @@ const Hero = () => {
             glory of God.
             
           </p> */}
+          <div className="flex flex-1 justify-center items-center -mb-12">
+            <div style={{ height: 200, width: 200 }}>
+              <Lottie animationData={celebration} autoplay loop />
+            </div>
+          </div>
           <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12 w-10/12 mx-auto">
             Join us on Sunday, Sept. 25, where we will celebrate the 65
             <sup>th </sup>
@@ -64,10 +67,7 @@ const Hero = () => {
             >
               Celebration Information
             </MainButton>
-            <MainButton
-              onClick={() => router.push("/welcome")}
-              margin={"mx-4"}
-            >
+            <MainButton onClick={() => router.push("/welcome")} margin={"mx-4"}>
               Our History
             </MainButton>
           </div>
