@@ -29,7 +29,7 @@ const Hero = () => {
             onOpen={onOpen}
           />
         </div>
-        <div className={`text-center mt-4`}>
+        <div className={`text-center mt-4 lg:mt-12 md:mt-8`}>
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
             {/* romans 15:7 */}
             65 Years!
