@@ -76,7 +76,6 @@ const SocialIcons = ({
   return (
     <>
       <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
-
         {/* TODO: DISABLE VBS UNTIL NEXT YEAR */}
         {/* {!mobileScreen && !hideButton && (
           <MainButton margin="mr-8" onClick={() => router.push("/vbs")}>
@@ -90,23 +89,25 @@ const SocialIcons = ({
             opened={signUpReminder && !showSignIn && !showSignUp}
             transitionDuration={500}
             label="Sign In/Sign Up!"
-            position="bottom"
-            placement="start"
+            position="bottom-start"
+          
             withArrow
             zIndex={1000}
           >
             <Tooltip
               label="Sign In"
-              position="bottom"
-              placement="start"
+              position="bottom-start"
+              mt="xs"
               withArrow
               disabled={disableTooltip}
             >
-              <AiOutlineLogin
-                size={33}
-                onClick={() => setShowSignIn(true)}
-                className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
-              />
+              <div>
+                <AiOutlineLogin
+                  size={33}
+                  onClick={() => setShowSignIn(true)}
+                  className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
+                />
+              </div>
             </Tooltip>
           </Tooltip>
         )}
@@ -116,7 +117,6 @@ const SocialIcons = ({
             disabled={mobileWelcomeTooltip}
             label={`Welcome, ${userContext.firstName}`}
             transitionDuration={500}
-         
             position="bottom-start"
             withArrow
           >
@@ -124,9 +124,7 @@ const SocialIcons = ({
               disabled={disableTooltip}
               label="Your Profile"
               position="bottom-start"
-           
               withArrow
-              
             >
               {userContext.avatarURL ? (
                 <div className="mr-4 mt-2">
@@ -179,16 +177,14 @@ const SocialIcons = ({
         {userContext.user && (
           <Tooltip mt="xs" withArrow label="Logout" position="bottom-start">
             <div>
-
-            <AiOutlineLogout
-              tabIndex={0}
-              size={30}
-              onClick={() => userContext.logOutHandler()}
-              className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
+              <AiOutlineLogout
+                tabIndex={0}
+                size={30}
+                onClick={() => userContext.logOutHandler()}
+                className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
               />
-              </div>
-              </Tooltip>
-          
+            </div>
+          </Tooltip>
         )}
         <Tooltip
           label="Visit Facebook"
@@ -211,7 +207,6 @@ const SocialIcons = ({
         </Tooltip>
 
         <Tooltip
-          
           label="Joys & Concerns"
           position="bottom-start"
           mt="xs"
@@ -219,14 +214,13 @@ const SocialIcons = ({
           disabled={disableTooltip}
         >
           <div>
-
-          <ImBubble
-            tabIndex={0}
-            onClick={() => router.push("/joys-and-concerns")}
-            size={30}
-            className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
+            <ImBubble
+              tabIndex={0}
+              onClick={() => router.push("/joys-and-concerns")}
+              size={30}
+              className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
             />
-            </div>
+          </div>
         </Tooltip>
 
         <Tooltip
@@ -237,14 +231,13 @@ const SocialIcons = ({
           disabled={disableTooltip}
         >
           <div>
-
-          <MdOndemandVideo
-            tabIndex={0}
-            onClick={() => router.push("/livestream")}
-            size={30}
-            className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
+            <MdOndemandVideo
+              tabIndex={0}
+              onClick={() => router.push("/livestream")}
+              size={30}
+              className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
             />
-            </div>
+          </div>
         </Tooltip>
 
         <Tooltip
@@ -256,14 +249,13 @@ const SocialIcons = ({
           disabled={disableTooltip}
         >
           <div>
-
-          <BsFillEnvelopeFill
-            tabIndex={0}
-            onClick={() => router.push("/contact")}
-            size={30}
-            className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
+            <BsFillEnvelopeFill
+              tabIndex={0}
+              onClick={() => router.push("/contact")}
+              size={30}
+              className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
             />
-            </div>
+          </div>
         </Tooltip>
       </div>
     </>
