@@ -32,8 +32,9 @@ const Hero = () => {
         <div className={`text-center mt-4 lg:mt-12 md:mt-8`}>
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
             {/* romans 15:7 */}
-            65 Years!
+            Thank You
           </h1>
+          <h2 className="text-white font-light tracking-widest uppercase text-2xl lg:text-2xl mt-6">For 65+ Years Of Asbury</h2>
           {/* <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
             Therefore welcome one another as Christ has welcomed you, for the
             glory of God.
@@ -67,9 +68,9 @@ const Hero = () => {
             >
               Celebration Information
             </MainButton>
-            <MainButton onClick={() => router.push("/welcome")} margin={"mx-4"}>
-              Our History
-            </MainButton>
+            <a href="https://jmnsjblfovgbschcmyzc.supabase.co/storage/v1/object/public/other-files/Asbury_History.pdf" rel="noreferrer" target="_blank">
+              <MainButton margin={"mx-4"}>Read About Asbury</MainButton>
+            </a>
           </div>
         </div>
         <div className="flex flex-1 justify-center mt-12">

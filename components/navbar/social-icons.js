@@ -116,16 +116,17 @@ const SocialIcons = ({
             disabled={mobileWelcomeTooltip}
             label={`Welcome, ${userContext.firstName}`}
             transitionDuration={500}
-            placement="start"
-            position="bottom"
+         
+            position="bottom-start"
             withArrow
           >
             <Tooltip
               disabled={disableTooltip}
               label="Your Profile"
-              position="bottom"
-              placement="start"
+              position="bottom-start"
+           
               withArrow
+              
             >
               {userContext.avatarURL ? (
                 <div className="mr-4 mt-2">
@@ -176,25 +177,23 @@ const SocialIcons = ({
         )}
 
         {userContext.user && (
-          <Tooltip
-            label="Sign Out"
-            position="bottom"
-            placement="start"
-            withArrow
-            disabled={disableTooltip}
-          >
+          <Tooltip mt="xs" withArrow label="Logout" position="bottom-start">
+            <div>
+
             <AiOutlineLogout
               tabIndex={0}
               size={30}
               onClick={() => userContext.logOutHandler()}
               className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-            />
-          </Tooltip>
+              />
+              </div>
+              </Tooltip>
+          
         )}
         <Tooltip
           label="Visit Facebook"
-          position="bottom"
-          placement="start"
+          position="bottom-start"
+          mt="xs"
           withArrow
           disabled={disableTooltip}
         >
@@ -212,48 +211,59 @@ const SocialIcons = ({
         </Tooltip>
 
         <Tooltip
+          
           label="Joys & Concerns"
-          position="bottom"
-          placement="start"
+          position="bottom-start"
+          mt="xs"
           withArrow
           disabled={disableTooltip}
         >
+          <div>
+
           <ImBubble
             tabIndex={0}
             onClick={() => router.push("/joys-and-concerns")}
             size={30}
             className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-          />
+            />
+            </div>
         </Tooltip>
 
         <Tooltip
           label="Live Stream"
-          position="bottom"
-          placement="start"
+          position="bottom-start"
+          mt="xs"
           withArrow
           disabled={disableTooltip}
         >
+          <div>
+
           <MdOndemandVideo
             tabIndex={0}
             onClick={() => router.push("/livestream")}
             size={30}
             className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
-          />
+            />
+            </div>
         </Tooltip>
 
         <Tooltip
           label="Contact Us"
-          position="bottom"
+          position="bottom-start"
           placement="start"
           withArrow
+          mt="xs"
           disabled={disableTooltip}
         >
+          <div>
+
           <BsFillEnvelopeFill
             tabIndex={0}
             onClick={() => router.push("/contact")}
             size={30}
             className={`${textColor} mt-0.5 hover:${textHover} cursor-pointer`}
-          />
+            />
+            </div>
         </Tooltip>
       </div>
     </>

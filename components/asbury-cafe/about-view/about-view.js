@@ -5,7 +5,9 @@ import styles from './about-view.module.css';
 import { GiPieSlice, GiBarn } from "react-icons/gi";
 import Image from 'next/image';
 import SectionHeading from '../../ui/section-heading';
+import { useRouter } from 'next/router';
 const AboutView = () => {
+  const router = useRouter();
   return (
     <div>
       <InfoCardVerticle
@@ -19,6 +21,12 @@ const AboutView = () => {
                 Methodist Church's building fund. The specialty of homemade pie was the first
                 menu item, and the church facilities took shape as the cafe prospered. In 1971
                 the decision was made to donate 100% of all profit to local charities."
+        buttonText="Learn More"
+        onClick={() =>
+          router.push(
+            "https://jmnsjblfovgbschcmyzc.supabase.co/storage/v1/object/public/other-files/Cafe%20history--short.pdf?t=2022-09-23T13%3A02%3A36.289Z"
+          )
+        }
       />
       <div className="my-12">
         <h1 className="text-center text-lg font-semibold text-seaFoam-600 w-full lg:w-3/6 md:w-4/6 mx-auto">
@@ -65,13 +73,12 @@ const AboutView = () => {
       </div>
 
       <SectionHeading title="News Articles">
-          <NewsArticleList/>
+        <NewsArticleList />
       </SectionHeading>
-
 
       <div>
         <InfoCardVerticle
-        icon={<GiBarn size={200} className="mb-12 text-seaFoam-600" />}
+          icon={<GiBarn size={200} className="mb-12 text-seaFoam-600" />}
           sizeProps={"text-lg lg:text-2xl md:text-2xl"}
           title="Small Beginnings"
           content="The cafe now serves a greater number of fairgoers than ever! The menu includes
