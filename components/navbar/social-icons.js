@@ -10,7 +10,6 @@ import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
-import MainButton from "../ui/main-button";
 const SocialIcons = ({
   textColor,
   textHover,
@@ -103,9 +102,9 @@ const SocialIcons = ({
             >
               <div>
                 <AiOutlineLogin
-                  size={33}
+                  size={34}
                   onClick={() => setShowSignIn(true)}
-                  className={`${textColor} mr-4 mt-2 hover:${textHover} cursor-pointer`}
+                  className={`${textColor} mr-3 mt-1 hover:${textHover} cursor-pointer`}
                 />
               </div>
             </Tooltip>
@@ -206,7 +205,7 @@ const SocialIcons = ({
           </a>
         </Tooltip>
 
-        <Tooltip
+        {/* <Tooltip
           label="Joys & Concerns"
           position="bottom-start"
           mt="xs"
@@ -221,9 +220,9 @@ const SocialIcons = ({
               className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
             />
           </div>
-        </Tooltip>
+        </Tooltip> */}
 
-        <Tooltip
+        {/* <Tooltip
           label="Live Stream"
           position="bottom-start"
           mt="xs"
@@ -238,7 +237,7 @@ const SocialIcons = ({
               className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
             />
           </div>
-        </Tooltip>
+        </Tooltip> */}
 
         <Tooltip
           label="Contact Us"

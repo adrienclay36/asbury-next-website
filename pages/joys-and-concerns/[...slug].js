@@ -85,3 +85,10 @@ const IndividualPrayer = () => {
 };
 
 export default IndividualPrayer;
+
+export const getServerSideProps = (context) => {
+  return {
+    props: {},
+    redirect: { destination: "/" } 
+  }
+}

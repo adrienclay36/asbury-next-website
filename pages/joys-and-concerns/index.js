@@ -14,3 +14,10 @@ const JoysAndConcerns = () => {
 };
 
 export default JoysAndConcerns;
+
+export const getServerSideProps = (context) => {
+  return {
+    props: {},
+    redirect: { destination: "/" } 
+  }
+}

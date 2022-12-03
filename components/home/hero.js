@@ -31,16 +31,16 @@ const Hero = () => {
         </div>
         <div className={`text-center mt-4 lg:mt-12 md:mt-8`}>
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
-            {/* romans 15:7 */}
-            Thank You
+            romans 15:7
+            {/* Thank You */}
           </h1>
-          <h2 className="text-white font-light tracking-widest uppercase text-2xl lg:text-2xl mt-6">For 65+ Years Of Asbury</h2>
-          {/* <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
+          {/* <h2 className="text-white font-light tracking-widest uppercase text-2xl lg:text-2xl mt-6">For 65+ Years Of Asbury</h2> */}
+          <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
             Therefore welcome one another as Christ has welcomed you, for the
             glory of God.
             
-          </p> */}
-          <div className="flex flex-1 justify-center items-center -mb-12">
+          </p>
+          {/* <div className="flex flex-1 justify-center items-center -mb-12">
             <div style={{ height: 200, width: 200 }}>
               <Lottie animationData={celebration} autoplay loop />
             </div>
@@ -49,8 +49,8 @@ const Hero = () => {
             Join us on Sunday, Sept. 25, where we will celebrate the 65
             <sup>th </sup>
             anniversary of Asbury’s building dedication
-          </p>
-          {/* <div id="action-buttons" className="mt-12">
+          </p> */}
+          <div id="action-buttons" className="mt-12">
             <MainButton
               onClick={() => router.push("/welcome")}
               margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}
@@ -60,8 +60,8 @@ const Hero = () => {
             <MainButton onClick={() => router.push("/worship")} margin={"mx-4"}>
               Worship
             </MainButton>
-          </div> */}
-          <div id="action-buttons" className="mt-12">
+          </div>
+          {/* <div id="action-buttons" className="mt-12">
             <MainButton
               onClick={() => router.push("/celebration-sixty-five")}
               margin={"mx-4 mb-6 lg:mb-0 md:mb-0"}
@@ -71,7 +71,7 @@ const Hero = () => {
             <a href="https://jmnsjblfovgbschcmyzc.supabase.co/storage/v1/object/public/other-files/Asbury_History.pdf" rel="noreferrer" target="_blank">
               <MainButton margin={"mx-4"}>Read About Asbury</MainButton>
             </a>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-1 justify-center mt-12">
           <button

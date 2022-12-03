@@ -338,8 +338,8 @@ export const navLinks = [
     text: "Asbury Cafe",
     href: "/asbury-cafe",
   },
-  {
-    text: "Joys & Concerns",
-    href: "/joys-and-concerns",
-  },
+  // {
+  //   text: "Joys & Concerns",
+  //   href: "/joys-and-concerns",
+  // },
 ];
