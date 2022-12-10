@@ -29,7 +29,7 @@ export default function CKEditorConfig ({ content, setContent }) {
       onChange={(event, editor) => {
         const data = editor.getData();
         setContent(data);
-        console.log(data);
+        
       }}
     />
   ) : (
