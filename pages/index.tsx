@@ -12,11 +12,11 @@ import { Dialog } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { showNotification } from '@mantine/notifications';
-import { PostItem } from "../types/post-item";
+import { BulletinItem } from "../types/bulletin-item";
 import { GetStaticProps, NextPage } from "next";
 
 interface HomeProps {
-  posts: PostItem[]
+  posts: BulletinItem[]
 }
 const Home: NextPage<HomeProps> = (props) => {
   const [loading, setLoading] = useState(true);

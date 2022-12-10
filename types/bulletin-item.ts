@@ -1,4 +1,4 @@
-export interface PostItem {
+export interface BulletinItem {
     id: string;
     avatar_url: string;
     author: string;

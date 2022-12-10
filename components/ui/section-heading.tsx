@@ -1,6 +1,13 @@
 import React from 'react';
 
-const SectionHeading = ({ title, subheading, children, reactRef = null }) => {
+
+interface Props {
+  title?: string;
+  subheading?: string;
+  children?: React.ReactNode;
+  reactRef?: React.LegacyRef<HTMLDivElement>,
+}
+const SectionHeading: React.FC<Props> = ({ title, subheading, children, reactRef = null }) => {
   return (
     <section ref={reactRef} id={title} className="bg-gray-100 py-12">
       {title && (
@@ -15,7 +22,7 @@ const SectionHeading = ({ title, subheading, children, reactRef = null }) => {
 
       <div className="text-center text-seaFoam-500">
         <h1 className="text-md lg:text-4xl md:text-2xl mt-12 uppercase tracking-widest">
-          {subheading || null}
+          {subheading}
         </h1>
       </div>
       {children}

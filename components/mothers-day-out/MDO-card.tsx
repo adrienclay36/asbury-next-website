@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from './MDO-card.module.css';
 const MDOCard = () => {
   return (
 

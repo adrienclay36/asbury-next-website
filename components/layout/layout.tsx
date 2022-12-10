@@ -3,7 +3,13 @@ import Head from "next/head";
 import Footer from "../footer/footer";
 
 import NavHeroCondensed from "../navbar-condensed/navhero-condensed";
-const Layout = (props) => {
+
+interface Props {
+  description: string;
+  title: string;
+  children: React.ReactNode;
+}
+const Layout: React.FC<Props> = (props) => {
 
   return (
     <>

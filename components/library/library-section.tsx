@@ -9,7 +9,13 @@ import { supabase } from "../../supabase-client";
 import { getDateInfo } from '../../utils/dates';
 import LibrarySkeletonGrid from "./book-view/book-list/library-skeleton-grid";
 const XLSX = require("xlsx");
-const LibrarySection = ({ books, lastUpdated}) => {
+
+
+interface Props {
+  books?: any;
+  lastUpdated?: any;
+}
+const LibrarySection: React.FC<Props> = ({ books, lastUpdated}) => {
   const [aboutView, setAboutView] = useState(false);
   const [booksView, setBooksView] = useState(true);
   const [loading, setLoading] = useState(false);

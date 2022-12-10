@@ -48,7 +48,7 @@ const Navbar = (props) => {
   const signInHandler = async (email, password) => {
     if (email && password) {
       try {
-        const { data, error } = await supabase.auth.signIn({ email, password });
+        const { error } = await supabase.auth.signIn({ email, password });
         if (error) {
           console.log("Error Signging in :: ", error.message);
           throw new Error();
@@ -126,8 +126,8 @@ const Navbar = (props) => {
       {/* SIGN IN MODALS */}
       <Modal centered opened={showSignIn} onClose={() => setShowSignIn(false)}>
         <SignInForm
+        error={error}
           signInHandler={signInHandler}
-          error={error}
           resetError={resetError}
           toggleSignUp={toggleSignUp}
           toggleForgotPassword={toggleForgotPassword}
@@ -153,14 +153,12 @@ const Navbar = (props) => {
         opened={resetPassSuccess}
         onClose={() => setResetPassSuccess(false)}
         centerModal={true}
-        error={error}
         type="success"
         message="You will receive an email with further instructions for resetting your password!"
       />
 
       <UIModal
         centerModal={true}
-        error={error}
         type="success"
         message="Successfully signed in!"
         opened={success}
@@ -232,11 +230,8 @@ const Navbar = (props) => {
       </nav>
       <div className="sm:hidden md:block lg:block">
         <MobileNav
-          textColor={props.textColor}
           isOpen={isOpen}
-          className={styles.menuSlide}
           navLinks={navLinks}
-          inverted={props.inverted}
           setIsOpen={setIsOpen}
           setShowSignIn={setShowSignIn}
         />

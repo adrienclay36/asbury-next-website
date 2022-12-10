@@ -1,10 +1,10 @@
 import React from 'react';
-import { PostItem } from '../../../types/post-item';
+import { BulletinItem } from '../../../types/bulletin-item';
 import BlogHomePage from './blog-home-page';
 import EventsHomePage from './events-home-page.js';
 
 interface Props {
-  posts: PostItem[];
+  posts: BulletinItem[];
 }
 
 const BlogEvents: React.FC<Props> = ({ posts }) => {

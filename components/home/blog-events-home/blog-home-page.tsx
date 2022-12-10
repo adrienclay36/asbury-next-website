@@ -2,10 +2,10 @@ import React from "react";
 import BlogItem from "./blog-item";
 import PageLoading from '../../PageLoading/PageLoading';
 import { useRouter } from 'next/router';
-import { PostItem } from "../../../types/post-item";
+import { BulletinItem } from "../../../types/bulletin-item";
 
 interface Props {
-  posts: PostItem[];
+  posts: BulletinItem[];
 }
 
 const BlogHomePage: React.FC<Props> = ({ posts }) => {
