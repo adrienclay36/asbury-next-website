@@ -6,6 +6,10 @@ import { RiSecurePaymentLine } from 'react-icons/ri';
 import SectionHeading from '../ui/section-heading';
 
 const MDOSection = () => {
+
+  const trClass = "text-xs lg:text-base md:text-base";
+  const tdClass = "lg:px-6 md:px-6 px-2 py-4 whitespace-nowrap";
+  const thClass = "lg:px-6 md:px-6 px-2 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
   return (
     <SectionHeading title={"MDO"}>
       <MDOCard />
@@ -30,7 +34,7 @@ const MDOSection = () => {
         </div>
       </div>
 
-      <div className="container flex flex-col mt-12 w-11/12 lg:w-2/6 md:11/12">
+      <div className="container flex flex-col mt-12 w-11/12 lg:w-3/6 md:11/12">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -39,19 +43,19 @@ const MDOSection = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className={thClass}
                     >
                       Rates
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className={thClass}
                     >
                       Half Day
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className={thClass}
                     >
                       Full Day
                     </th>
@@ -59,76 +63,76 @@ const MDOSection = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>One Child</h1>
+                        <h1 className={trClass}>One Child</h1>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>$25.00</h1>
+                        <h1 className={trClass}>$25.00</h1>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>$25.00</h1>
+                        <h1 className={trClass}>$25.00</h1>
                       </div>
                     </td>
                   </tr>
 
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>
+                        <h1 className={trClass}>
                           Each Additional{" "}
                           <span className="text-red-600">*</span>
                         </h1>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>Add $20</h1>
+                        <h1 className={trClass}>Add $20</h1>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>Add $35</h1>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <h1>7:30AM - 8:00AM</h1>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <h1>Additional $4</h1>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <h1>Additional $4</h1>
+                        <h1 className={trClass}>Add $35</h1>
                       </div>
                     </td>
                   </tr>
 
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>5:00PM - 5:30PM</h1>
+                        <h1 className={trClass}>7:30AM - 8:00AM</h1>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>Additional $4</h1>
+                        <h1 className={trClass}>Additional $4</h1>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className={tdClass}>
                       <div className="flex items-center">
-                        <h1>Additional $4</h1>
+                        <h1 className={trClass}>Additional $4</h1>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td className={tdClass}>
+                      <div className="flex items-center">
+                        <h1 className={trClass}>5:00PM - 5:30PM</h1>
+                      </div>
+                    </td>
+                    <td className={tdClass}>
+                      <div className="flex items-center">
+                        <h1 className={trClass}>Additional $4</h1>
+                      </div>
+                    </td>
+                    <td className={tdClass}>
+                      <div className="flex items-center">
+                        <h1 className={trClass}>Additional $4</h1>
                       </div>
                     </td>
                   </tr>
