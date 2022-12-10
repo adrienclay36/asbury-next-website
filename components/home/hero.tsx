@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import { HiChevronDoubleDown } from "react-icons/hi";
 import MainButton from "../ui/main-button";
 import axios from "axios";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@mantine/core";
 
 interface VOTD {
   bookname: string;
@@ -17,21 +18,19 @@ interface VOTD {
 const Hero = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  
-
 
   const getVOTD = async () => {
-    const response = await axios.get('https://labs.bible.org/api/?passage=votd&type=json');
-    if(response.data) {
-      if(response.data.length > 0) {
+    const response = await axios.get(
+      "https://labs.bible.org/api/?passage=votd&type=json"
+    );
+    if (response.data) {
+      if (response.data.length > 0) {
         return response.data[0] as VOTD;
       }
     }
-  }
+  };
 
-  const { data, isLoading } = useQuery<VOTD | undefined>(['votd'], getVOTD)
-
-
+  const { data, isLoading } = useQuery<VOTD | undefined>(["votd"], getVOTD);
 
   const onOpen = () => {
     setOpen(!open);
@@ -55,12 +54,26 @@ const Hero = () => {
             {!isLoading && `${data.bookname} ${data.chapter}:${data.verse}`}
             
           </h1>
-        
+          {isLoading && (
+              <div className="w-11/12 lg:w-2/6 md:w-2/6 mx-auto">
+                <Skeleton height={10} />
+              </div>
+            )}
+
           <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
             {/* Therefore welcome one another as Christ has welcomed you, for the
             glory of God.            */}
             {!isLoading && `${data.text}`}
+            
           </p>
+          {isLoading && (
+              <div className="w-11/12 lg:w-3/6 md:w-3/6 mx-auto">
+                <Skeleton height={10} width={"100%"} animate className="mb-2" />
+                <Skeleton height={10} animate className="mb-2" />
+                <Skeleton height={10} animate className="mb-2" />
+                <Skeleton height={10} animate className="mb-2" />
+              </div>
+            )}
           <div id="action-buttons" className="mt-12">
             <MainButton
               onClick={() => router.push("/welcome")}
