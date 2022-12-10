@@ -28,13 +28,16 @@ const StaffCard: React.FC<Props> = ({ name, jobTitle, description, image, email 
       <p className="my-4 text-gray-600">{description}</p>
       </div>
     </Modal>
-    <motion.div onClick={() => setModalOpen(true)} whileHover={{ scale: 1.1  }} whileTap={{ scale: .99 }} style={{ width: 300, height: 300 }} className="text-center mb-8 container cursor-pointer">
+    <motion.div onClick={() => setModalOpen(true)} whileHover={{ scale: 1.1  }} whileTap={{ scale: .99 }} style={{ width: 300, height: 400 }} className="text-center container cursor-pointer">
 
     <div className="flex flex-1 justify-center items-center">
       <Image src={image} height={300} width={300} className="rounded-full"/>
     </div>
+    <div className="mb-8">
+
       <p className="font-semibold my-3">{name}</p>
       <p>{jobTitle}</p>
+    </div>
     </motion.div>
     </>
   );
