@@ -60,7 +60,7 @@ const Hero = () => {
               </div>
             )}
 
-          <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
+          <p className="text-white font-light tracking-wide opacity-70 uppercase text-xl lg:text-4xl lg:w-10/12 md:w-10/12 w-10/12 mx-auto mt-12">
             {/* Therefore welcome one another as Christ has welcomed you, for the
             glory of God.            */}
             {!isLoading && `${data.text}`}
