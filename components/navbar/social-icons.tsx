@@ -10,7 +10,19 @@ import { Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Image from "next/image";
 import styles from "./social-icons.module.css";
-const SocialIcons = ({
+
+
+
+interface Props {
+  textColor?: string;
+  textHover?: string;
+  showSignIn?: boolean
+  showSignUp?: boolean;
+  setShowSignIn?: (booleanValue: boolean) => void;
+  isOpen?: boolean;
+  hideButton?: boolean;
+}
+const SocialIcons: React.FC<Props> = ({
   textColor,
   textHover,
   showSignIn,
@@ -242,7 +254,7 @@ const SocialIcons = ({
         <Tooltip
           label="Contact Us"
           position="bottom-start"
-          placement="start"
+          
           withArrow
           mt="xs"
           disabled={disableTooltip}

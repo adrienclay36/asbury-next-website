@@ -1,7 +1,13 @@
 import React from 'react';
+import { PostItem } from '../../../types/post-item';
 import BlogHomePage from './blog-home-page';
 import EventsHomePage from './events-home-page.js';
-const BlogEvents = ({ posts }) => {
+
+interface Props {
+  posts: PostItem[];
+}
+
+const BlogEvents: React.FC<Props> = ({ posts }) => {
   return (
     <section id="features" className="bg-gray-100 py-12">
       <div className="text-center flex flex-1 justify-center">

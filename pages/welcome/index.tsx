@@ -7,8 +7,8 @@ const WelcomeHome = () => {
   return (
       <Layout title={'Welcome'} description={'Find out what Asbury UMC all about - Who we are, and what we do!'}>
           <WelcomeSection/>
-          <WelcomeDiv/>
           <StaffSection/>
+          <WelcomeDiv/>
       </Layout>
   );
 };

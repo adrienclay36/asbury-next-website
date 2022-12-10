@@ -11,8 +11,14 @@ import { UserContext } from "../store/user-context";
 import { Dialog } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { showNotification, shwoNotification } from '@mantine/notifications';
-export default function Home(props) {
+import { showNotification } from '@mantine/notifications';
+import { PostItem } from "../types/post-item";
+import { GetStaticProps, NextPage } from "next";
+
+interface HomeProps {
+  posts: PostItem[]
+}
+const Home: NextPage<HomeProps> = (props) => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState(props.posts);
   const [userWelcome, setUserWelcome] = useState(false);
@@ -68,7 +74,9 @@ export default function Home(props) {
   );
 }
 
-export const getStaticProps = async (context) => {
+export default Home;
+
+export const getStaticProps: GetStaticProps = async (context) => {
   const { data } = await supabase
     .from("posts")
     .select()

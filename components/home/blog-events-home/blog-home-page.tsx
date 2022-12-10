@@ -2,7 +2,13 @@ import React from "react";
 import BlogItem from "./blog-item";
 import PageLoading from '../../PageLoading/PageLoading';
 import { useRouter } from 'next/router';
-const BlogHomePage = ({ posts }) => {
+import { PostItem } from "../../../types/post-item";
+
+interface Props {
+  posts: PostItem[];
+}
+
+const BlogHomePage: React.FC<Props> = ({ posts }) => {
   const router = useRouter();
   return (
     <section>

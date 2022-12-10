@@ -2,8 +2,17 @@ import React, { useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import styles from "./info-dropdown.module.css";
 import { useRouter } from 'next/router';
-import Link from "next/link";
-const InfoDropdown = ({ title, content, buttonText, external, href }) => {
+
+
+interface Props {
+  title: string;
+  content: string;
+  buttonText?: string;
+  external?: boolean;
+  href?: string;
+}
+
+const InfoDropdown: React.FC<Props> = ({ title, content, buttonText, external, href }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const router = useRouter();

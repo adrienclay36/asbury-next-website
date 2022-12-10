@@ -1,5 +1,6 @@
 import React from "react";
 import FeatureItem from "./feature-item";
+
 const Features = () => {
   return (
     <section id="features" className="bg-gray-100 py-12">

@@ -3,7 +3,14 @@ import styles from './feature-item.module.css';
 import Link from 'next/link';
 import Image from "next/image";
 import { useRouter } from 'next/router';
-const FeatureItem = ({ href, title, image, subtext }) => {
+
+interface Props {
+  href: string;
+  title: string;
+  image: string;
+  subtext: string;
+}
+const FeatureItem: React.FC<Props> = ({ href, title, image, subtext }) => {
   const router = useRouter();
   return (
       <>
