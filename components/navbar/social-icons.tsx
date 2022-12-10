@@ -217,40 +217,6 @@ const SocialIcons: React.FC<Props> = ({
           </a>
         </Tooltip>
 
-        {/* <Tooltip
-          label="Joys & Concerns"
-          position="bottom-start"
-          mt="xs"
-          withArrow
-          disabled={disableTooltip}
-        >
-          <div>
-            <ImBubble
-              tabIndex={0}
-              onClick={() => router.push("/joys-and-concerns")}
-              size={30}
-              className={`${textColor} mr-4 mt-0.5 hover:${textHover} cursor-pointer`}
-            />
-          </div>
-        </Tooltip> */}
-
-        {/* <Tooltip
-          label="Live Stream"
-          position="bottom-start"
-          mt="xs"
-          withArrow
-          disabled={disableTooltip}
-        >
-          <div>
-            <MdOndemandVideo
-              tabIndex={0}
-              onClick={() => router.push("/livestream")}
-              size={30}
-              className={`${textColor} mt-0.5 mr-4 hover:${textHover} cursor-pointer`}
-            />
-          </div>
-        </Tooltip> */}
-
         <Tooltip
           label="Contact Us"
           position="bottom-start"

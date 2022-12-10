@@ -4,10 +4,34 @@ import styles from "./hero.module.css";
 import { useRouter } from "next/router";
 import { HiChevronDoubleDown } from "react-icons/hi";
 import MainButton from "../ui/main-button";
+import axios from "axios";
+import { useQuery } from '@tanstack/react-query';
+
+interface VOTD {
+  bookname: string;
+  chapter: string;
+  text: string;
+  verse: string;
+}
 
 const Hero = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  
+
+
+  const getVOTD = async () => {
+    const response = await axios.get('https://labs.bible.org/api/?passage=votd&type=json');
+    if(response.data) {
+      if(response.data.length > 0) {
+        return response.data[0] as VOTD;
+      }
+    }
+  }
+
+  const { data, isLoading } = useQuery<VOTD | undefined>(['votd'], getVOTD)
+
+
 
   const onOpen = () => {
     setOpen(!open);
@@ -27,13 +51,15 @@ const Hero = () => {
         </div>
         <div className={`text-center mt-4 lg:mt-12 md:mt-8`}>
           <h1 className="text-white font-light tracking-widest opacity-80 uppercase text-4xl lg:text-7xl">
-            romans 15:7
+            {/* romans 15:7 */}
+            {!isLoading && `${data.bookname} ${data.chapter}:${data.verse}`}
             
           </h1>
         
           <p className="text-white font-light tracking-wide opacity-70 uppercase text-2xl lg:text-4xl lg:w-100 mx-auto mt-12">
-            Therefore welcome one another as Christ has welcomed you, for the
-            glory of God.           
+            {/* Therefore welcome one another as Christ has welcomed you, for the
+            glory of God.            */}
+            {!isLoading && `${data.text}`}
           </p>
           <div id="action-buttons" className="mt-12">
             <MainButton

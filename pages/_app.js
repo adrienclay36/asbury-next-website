@@ -9,6 +9,13 @@ import NextNProgress from "nextjs-progressbar";
 import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
+import {
+  useQueryclient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -30,12 +37,13 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <NextNProgress height={4} color={"#899e9c"} />
-
-      <UserContextProvider>
-        <NotificationsProvider position="bottom-right">
-          <Component {...pageProps} />
-        </NotificationsProvider>
-      </UserContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <UserContextProvider>
+          <NotificationsProvider position="bottom-right">
+            <Component {...pageProps} />
+          </NotificationsProvider>
+        </UserContextProvider>
+      </QueryClientProvider>
     </>
   );
 }

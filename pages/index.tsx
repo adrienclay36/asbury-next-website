@@ -24,6 +24,9 @@ const Home: NextPage<HomeProps> = (props) => {
   const [userWelcome, setUserWelcome] = useState(false);
   const userContext = useContext(UserContext);
   const disableNotifications = useMediaQuery("(max-width: 900px)");
+
+  
+
   const router = useRouter();
   useEffect(() => {
     setTimeout(() => {
