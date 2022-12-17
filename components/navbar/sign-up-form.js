@@ -33,25 +33,28 @@ const SignUpForm = ({ setShowSignUp, restartSequence }) => {
           setSubmitting(false);
           return;
         }
-        const response = await userContext.signUpHandler(email, password, firstName, lastName);
-        if(response.status === "ok") {
+        const response = userContext.signUpHandler(email, password, firstName, lastName);
+        if(response) {
+
+          if(response.status === "ok") {
+              setSubmitting(false);
+              setSuccess(true);
+              setEmail('');
+              setPassword('');
+              setFirstName('');
+              setLastName('');
+              setTimeout(() => {
+                router.reload();
+              }, 2000)
+  
+          }
+          if(response.status === "duplicate") {
+            setExistingUser('This User Already Exists');
             setSubmitting(false);
-            setSuccess(true);
-            setEmail('');
-            setPassword('');
-            setFirstName('');
-            setLastName('');
-            setTimeout(() => {
-              router.reload();
-            }, 2000)
-
-        }
-        if(response.status === "duplicate") {
-          setExistingUser('This User Already Exists');
-          setSubmitting(false);
-          setSuccess(false);
-          
-
+            setSuccess(false);
+            
+  
+          }
         }
 
     }

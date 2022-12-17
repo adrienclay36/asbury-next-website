@@ -1,19 +1,24 @@
 import React, { useState, useContext } from "react";
 import { TextInput, PasswordInput, Button } from "@mantine/core";
 import { AiOutlineLogin } from "react-icons/ai";
-import { useRouter } from "next/router";
 import { UserContext } from "../../store/user-context";
-import Link from 'next/link';
 import GoogleButton from 'react-google-button';
 
-const SignInForm = ({ signInHandler, error, resetError, toggleSignUp, toggleForgotPassword }) => {
+
+interface Props {
+  signInHandler: (email: string, password: string) => void;
+  error: string;
+  resetError: () => void;
+  toggleSignUp: () => void;
+  toggleForgotPassword: () => void;
+}
+const SignInForm: React.FC<Props> = ({ signInHandler, error, resetError, toggleSignUp, toggleForgotPassword }) => {
   const [authenticating, setAuthenticating] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
   const userContext = useContext(UserContext);
 
-  const callSignIn = async (e) => {
+  const callSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAuthenticating(true);
     if(email && password) {
@@ -22,13 +27,14 @@ const SignInForm = ({ signInHandler, error, resetError, toggleSignUp, toggleForg
     setAuthenticating(false);
   };
 
-  const passwordChangeHandler = (e) => {
+  const passwordChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (error) {
       resetError();
     }
+    
     setPassword(e.target.value);
   };
-  const emailChangeHandler = (e) => {
+  const emailChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (error) {
       resetError();
     }
@@ -40,7 +46,7 @@ const SignInForm = ({ signInHandler, error, resetError, toggleSignUp, toggleForg
       <h1 className="text-center font-bold mb-4 text-lg lg:text-3xl md:text-2xl">
         Sign In
       </h1>
-      <form onSubmit={callSignIn}>
+      <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => callSignIn(e)}>
         <TextInput
           className="mb-4"
           label="Email"

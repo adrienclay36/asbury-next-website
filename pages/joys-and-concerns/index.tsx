@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import JoysAndConcernsSection from "../../components/joys-and-concerns/joys-and-concerns-section";
 import Layout from "../../components/layout/layout";
 import FrontPrayerContextProvider from "../../components/joys-and-concerns/board-view/main-board-store";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 const JoysAndConcerns = () => {
 
   return (
@@ -15,9 +16,10 @@ const JoysAndConcerns = () => {
 
 export default JoysAndConcerns;
 
-export const getServerSideProps = (context) => {
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {},
-    redirect: { destination: "/" } 
+    redirect: { destination: "/", permanent: true }
   }
 }

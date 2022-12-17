@@ -4,7 +4,16 @@ import styles from './mobile-nav.module.css';
 import { Drawer } from '@mantine/core';
 import { UserContext } from '../../store/user-context';
 import Image from 'next/image';
-const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
+import { NavLink } from './navbar';
+
+interface Props {
+  navLinks: NavLink[];
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSignIn: React.Dispatch<React.SetStateAction<boolean>>;
+} 
+
+const MobileNav: React.FC<Props> = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
   const userContext = useContext(UserContext);
   
 
@@ -22,7 +31,7 @@ const MobileNav = ({ navLinks, isOpen, setIsOpen, setShowSignIn }) => {
       <Drawer
         zIndex={10000}
         transitionDuration={750}
-        noFocusTrap
+        trapFocus={false}
         size={"100%"}
         opened={isOpen}
         position="right"

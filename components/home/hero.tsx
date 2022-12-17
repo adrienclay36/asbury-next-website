@@ -44,7 +44,6 @@ const Hero = () => {
           <Navbar
             textColor="text-white"
             invertImage={true}
-            home={true}
             onOpen={onOpen}
           />
         </div>
@@ -89,9 +88,11 @@ const Hero = () => {
         <div className="flex flex-1 justify-center mt-12">
           <button
             onClick={() => {
-              document
-                .getElementById("features")
-                .scrollIntoView({ behavior: "smooth" });
+              if(document) {
+
+                
+                document.getElementById("features")?.scrollIntoView({ behavior: "smooth"});
+              }
             }}
           >
             <HiChevronDoubleDown

@@ -1,7 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import styles from './mobile-nav-item.module.css'
-const MobileNavItem = (props) => {
+
+interface Props {
+  href: string;
+  children: React.ReactNode;
+}
+const MobileNavItem: React.FC<Props> = (props) => {
   return (
     <>
       <Link href={props.href} passHref>

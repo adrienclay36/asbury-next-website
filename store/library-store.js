@@ -23,9 +23,9 @@ export const LibraryContext = React.createContext({
   noData: false,
   increasePage: () => {},
   decreasePage: () => {},
-  setQuery: () => {},
+  setQuery: (query) => {},
   getBooks: () => {},
-  setNoData: () => {},
+  setNoData: (booleanValue) => {},
   addBook: (
     title,
     subject,

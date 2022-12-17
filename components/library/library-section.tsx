@@ -32,7 +32,7 @@ const LibrarySection: React.FC<Props> = ({ books, lastUpdated}) => {
         lastModifiedError.message
       );
     }
-    const { monthText, day } = getDateInfo(lastModified[0]?.created_at, true);
+    const { monthText, day } = getDateInfo(lastModified && lastModified.length && lastModified[0]?.created_at, true);
     const year = new Date().getFullYear();
     const dateString = `${monthText} ${day}, ${year}`;
     setUpdatedOn(dateString);
@@ -43,7 +43,7 @@ const LibrarySection: React.FC<Props> = ({ books, lastUpdated}) => {
       console.log("Error fetching books:: ", error.message);
       return;
     }
-    const workbook = XLSX.read(await data.arrayBuffer(), { type: "array" });
+    const workbook = XLSX.read(await data?.arrayBuffer(), { type: "array" });
     const jsonBooks = XLSX.utils.sheet_to_json(
       workbook.Sheets[workbook.SheetNames[0]]
     );

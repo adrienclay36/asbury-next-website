@@ -6,7 +6,7 @@ import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from "@fullcalendar/daygrid";
 import PageLoading from '../PageLoading/PageLoading';
-import axios from 'axios';
+
 
 const EventsSection = () => {
   const [loading, setLoading] = useState(true);

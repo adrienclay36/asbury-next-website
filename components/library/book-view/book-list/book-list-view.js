@@ -7,7 +7,9 @@ import BookTableView from "./book-table-view";
 import BookItem from "../../../admin/library-dash/book-item";
 import { UserContext } from "../../../../store/user-context";
 
-const BookListView = ({ editing }) => {
+
+
+const BookListView = ({ editing = false }) => {
   const libraryContext = useContext(LibraryContext);
   const mobileScreen = useMediaQuery("(max-width: 520px)");
   const userContext = useContext(UserContext);

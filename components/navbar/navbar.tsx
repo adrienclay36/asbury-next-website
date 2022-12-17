@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MobileNav from "./mobile-nav";
 import Link from "next/link";
-import styles from "./navbar.module.css";
 import SocialIcons from "./social-icons";
 import LogoUnited from "../logo/LogoUnited";
 import { MessageDots, Bookmarks } from "tabler-icons-react";
@@ -20,7 +19,16 @@ import SignInForm from "./sign-in-form";
 import ForgotPasswordForm from "./forgot-password-form";
 import { supabase } from "../../supabase-client";
 import SubMenu from "./sub-menu";
-const Navbar = (props) => {
+
+interface Props {
+  onOpen: () => void;
+  classes?: string;
+  marginTop?: boolean;
+  invertImage?: boolean;
+  textColor?: string;
+
+}
+const Navbar: React.FC<Props> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const [showSignIn, setShowSignIn] = useState(false);
@@ -45,7 +53,7 @@ const Navbar = (props) => {
     }
   }, [success]);
 
-  const signInHandler = async (email, password) => {
+  const signInHandler = async (email: string, password: string) => {
     if (email && password) {
       try {
         const { error } = await supabase.auth.signIn({ email, password });
@@ -56,7 +64,7 @@ const Navbar = (props) => {
         setShowSignIn(false);
         setSuccess(true);
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
         setError("Invalid Credentials");
       }
     } else {
@@ -81,7 +89,7 @@ const Navbar = (props) => {
     setError("");
   };
 
-  const resetPasswordHandler = async (email) => {
+  const resetPasswordHandler = async (email: string) => {
     const { data: resetPassData, error: resetPassError } =
       await supabase.auth.api.resetPasswordForEmail(email);
     if (!resetPassError) {
@@ -242,7 +250,21 @@ const Navbar = (props) => {
 
 export default Navbar;
 
-export const navLinks = [
+export type NavLink = {
+  text: string;
+  href: string;
+  subNav?: boolean;
+  size?: string;
+  items?: SubNav[];
+}
+
+export type SubNav = {
+  title: string;
+  href: string;
+  icon: React.ReactNode;
+}
+
+export const navLinks: NavLink[] = [
   {
     text: "Welcome",
     href: "/welcome",

@@ -5,7 +5,14 @@ import LibraryProvider from "../../store/library-store";
 import { supabase } from "../../supabase-client";
 const XLSX = require('xlsx');
 import { getDateInfo } from "../../utils/dates";
-const LibraryHome = ({ books, lastUpdated }) => {
+
+
+
+interface Props {
+  books: any;
+  lastUpdated: string;
+}
+const LibraryHome: React.FC<Props> = ({ books, lastUpdated }) => {
   return (
     <LibraryProvider>
       <Layout

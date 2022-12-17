@@ -2,6 +2,7 @@ import React from "react";
 
 import styles from "./book-list/book-table-view.module.css";
 import { CircleX, CircleCheck } from "tabler-icons-react";
+import { ExcelBook } from "../../../types/excel-book";
 const libraryColumns = [
   "Dewey Number",
   "Author",
@@ -11,7 +12,12 @@ const libraryColumns = [
   "Subject",
 ];
 
-const HTMLBookView = ({ books, updatedOn }) => {
+interface Props {
+  books: ExcelBook[];
+  updatedOn: string;
+}
+
+const HTMLBookView: React.FC<Props>= ({ books, updatedOn }) => {
 
   return (
     <>
@@ -65,7 +71,11 @@ const HTMLBookView = ({ books, updatedOn }) => {
   );
 };
 
-const TableRow = ({ book }) => {
+
+interface TableRowProps {
+  book: ExcelBook;
+}
+const TableRow: React.FC<TableRowProps> = ({ book }) => {
   const tableDataClass = `text-center pl-2 border-2 shadow-sm py-2 px-1 ${styles.fontSize}`;
 
   return (
