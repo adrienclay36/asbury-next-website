@@ -18,7 +18,7 @@ interface Props {
   textHover?: string;
   showSignIn?: boolean
   showSignUp?: boolean;
-  setShowSignIn?: (booleanValue: boolean) => void;
+  setShowSignIn: (booleanValue: boolean) => void;
   isOpen?: boolean;
   hideButton?: boolean;
 }
