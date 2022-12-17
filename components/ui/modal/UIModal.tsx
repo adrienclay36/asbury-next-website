@@ -9,8 +9,8 @@ interface Props {
   message?: string;
   href?: string;
   actionText?: string;
-  opened?: boolean;
-  onClose?: () => void;
+  opened: boolean;
+  onClose: () => void;
   centerModal?: boolean;
   icon?: React.ReactNode;
   transitionDuration?: number;
@@ -29,7 +29,7 @@ const UIModal: React.FC<Props> = ({ type, message, href, actionText, opened, onC
         )}
         <p className="font-semibold text-lg mb-4">{message}</p>
         {icon}
-        {actionText && (
+        {actionText && href && (
           <button
             onClick={() => router.push(href)}
             className="hover:underline text-gray-500 font-semibold"
