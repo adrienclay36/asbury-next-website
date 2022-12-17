@@ -18,7 +18,7 @@ interface Props {
   textHover?: string;
   showSignIn?: boolean
   showSignUp?: boolean;
-  setShowSignIn: (booleanValue: boolean) => void;
+  setShowSignIn?: (booleanValue: boolean) => void;
   isOpen?: boolean;
   hideButton?: boolean;
 }
@@ -115,7 +115,7 @@ const SocialIcons: React.FC<Props> = ({
               <div>
                 <AiOutlineLogin
                   size={34}
-                  onClick={() => setShowSignIn(true)}
+                  onClick={setShowSignIn ? () => setShowSignIn(true) : null}
                   className={`${textColor} mr-3 mt-1 hover:${textHover} cursor-pointer`}
                 />
               </div>
