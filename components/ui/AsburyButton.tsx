@@ -1,5 +1,19 @@
 import { Button } from "@mantine/core";
-const AsburyButton = ({
+
+
+interface Props {
+  leftIcon?: React.ReactNode;
+  onClick?: () => any;
+  text: string;
+  loading?: boolean;
+  styles?: string;
+  variant?: "gradient" | "filled" | "outline" | "light" | "white" | "default" | "subtle" | undefined;
+  margin?: string;
+  disabled?: boolean;
+  color?: string;
+  hoverColor?: string;
+}
+const AsburyButton: React.FC<Props> = ({
   leftIcon = null,
   onClick = () => {},
   text,
