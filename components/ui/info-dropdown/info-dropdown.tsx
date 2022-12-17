@@ -59,7 +59,7 @@ const InfoDropdown: React.FC<Props> = ({ title, content, buttonText, external, h
                 {/* For internal links using router */}
                 {!external && (
                   <button
-                    onClick={() => router.push(href)}
+                    onClick={href ? () => router.push(href) : () => {}}
                     className="py-3 px-7 bg-emerald-900 hover:bg-seaFoam-600 text-white uppercase font-semibold rounded-lg mt-4 w-full"
                   >
                     {buttonText}
