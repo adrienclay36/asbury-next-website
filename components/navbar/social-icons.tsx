@@ -115,7 +115,7 @@ const SocialIcons: React.FC<Props> = ({
               <div>
                 <AiOutlineLogin
                   size={34}
-                  onClick={setShowSignIn ? () => setShowSignIn(true) : null}
+                  onClick={setShowSignIn ? () => setShowSignIn(true) : () => {}}
                   className={`${textColor} mr-3 mt-1 hover:${textHover} cursor-pointer`}
                 />
               </div>
