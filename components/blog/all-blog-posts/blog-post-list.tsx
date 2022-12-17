@@ -9,35 +9,35 @@ const BlogPostList = () => {
   const [query, setQuery] = useState('');
   const blogContext = useContext(BlogContext);
   
-  const provideQuery = (e) => {
+  const provideQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-    blogContext.setQuery(e.target.value);
+    blogContext?.setQuery(e.target.value);
     
   }
   
   const clearInput = () => {
     setQuery("");
-    blogContext.setNoData(false);
-    blogContext.getPosts();
+    blogContext?.setNoData(false);
+    blogContext?.getPosts();
   };
 
   const decreasePageHandler = () => {
-    blogContext.decreasePage();
+    blogContext?.decreasePage();
     if (query) {
       setQuery("");
-      blogContext.setQuery("");
+      blogContext?.setQuery("");
     }
   };
 
   const increasePageHandler = () => {
-    blogContext.increasePage();
+    blogContext?.increasePage();
     if (query) {
       setQuery("");
-      blogContext.setQuery("");
+      blogContext?.setQuery("");
     }
   };
 
-  if(blogContext.posts.length === 0) {
+  if(blogContext?.posts !== undefined && blogContext?.posts.length > 0 && blogContext?.posts.length === 0) {
     return (
       <div className="flex flex-1 justify-center items-center">
         <p className="font-semibold text-xl">No Bulletins Yet!</p>
@@ -79,14 +79,14 @@ const BlogPostList = () => {
           <MdOutlineArrowForwardIos />
         </button>
       </div>
-      {blogContext.loading && <SkeletonGrid />}
-      {blogContext.noData && (
+      {blogContext?.loading && <SkeletonGrid />}
+      {blogContext?.noData && (
         <h1 className="text-lg text-center mt-4 font-semibold">
           No posts found...
         </h1>
       )}
       <div className="container grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 my-12">
-        {blogContext.posts.map((post, index) => (
+        {blogContext?.posts && blogContext?.posts.map((post, index) => (
           <BlogPostItem
             key={post.id}
             post={post}

@@ -5,7 +5,14 @@ import Image from "next/image";
 import styles from "./blog-post-item.module.css";
 import SkeletonPost from "../../ui/skeleton-post";
 import parse from "html-react-parser";
-const BlogPostItem = ({ post, i }) => {
+import { BulletinItem } from "../../../types/bulletin-item";
+
+interface Props {
+  post: BulletinItem;
+  i: number;
+}
+
+const BlogPostItem: React.FC<Props> = ({ post, i }) => {
   const router = useRouter();
   const formatDate = new Date(
     post?.postdate.replace(/-/g, "/").replace(/T.+/, "")
@@ -16,7 +23,7 @@ const BlogPostItem = ({ post, i }) => {
     .replace("---", "-")
     .toLowerCase();
 
-  const getPreviewText = (inputContent) => {
+  const getPreviewText = (inputContent: string) => {
       if(inputContent.indexOf("</p>") > 50) {
         
         return inputContent.slice(0, 50) + "...</p>";
@@ -32,7 +39,6 @@ const BlogPostItem = ({ post, i }) => {
       return slicedContent;
     }
   };
-  console.log(post?.postcontent);
 
   return (
     <div className={styles[`post-animation-${i}`]}>
@@ -65,7 +71,7 @@ const BlogPostItem = ({ post, i }) => {
         <div className="h-0.5 w-3/6 rounded-lg bg-gray-200 mx-auto my-5"></div>
         <div className="px-10 pb-5">
           {post?.postcontent.length > 50 &&
-            parse(getPreviewText(post?.postcontent))}
+            parse(getPreviewText(post?.postcontent)!)}
           {post?.postcontent.length < 50 && parse(post?.postcontent)}
         </div>
         <div className="flex justify-center lg:justify-end md:justify-center items-center p-4">

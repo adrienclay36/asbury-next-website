@@ -23,13 +23,11 @@ const QuiltSectionTwo = () => {
           <QuiltItem
             title={"Cutting the fabric and sorting it into like colors"}
             icon={<RiScissorsCutLine size={50} />}
-            extraMargin="mt-2"
           />
           <QuiltItem
             title={
               "Choosing five colors to put together for the top and a coordinated piece for the back"
             }
-            extraMargin="mt-10"
             icon={<MdInvertColors size={50} />}
           />
           <QuiltItem

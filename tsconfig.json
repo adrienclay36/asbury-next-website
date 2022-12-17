@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/navbar/sign-up-form.js", "components/library/book-view/book-list/book-table-view.js", "components/library/book-view/book-list/book-list-view.js"  ],
+, "components/navbar/sign-up-form.js", "components/library/book-view/book-list/book-table-view.js", "components/library/book-view/book-list/book-list-view.js", "components/contact/contact-form.tsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -15,7 +15,7 @@ const ContactForm = () => {
     const [success, setSuccess] = useState(false);
 
 
-    const submitHandler = async (e) => {
+    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setLoading(true);
         const messageContent = `
@@ -86,7 +86,7 @@ const ContactForm = () => {
             onChange={(e) => setMessage(e.target.value)}
             label="Message"
             required
-            max="5000"
+            maxLength={5000}
             minRows={8}
           />
         </div>
