@@ -4,7 +4,12 @@ import { supabase } from "../../supabase-client";
 import { useRouter } from "next/router";
 import moment from "moment";
 import Image from "next/image";
-const TrailsList = ({ files }) => {
+import { AsburyTrailsItem } from "../../types/asbury-trails-item";
+
+interface Props {
+  files: AsburyTrailsItem[];
+}
+const TrailsList: React.FC<Props> = ({ files }) => {
   return (
     <div className="container">
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6">
@@ -16,7 +21,10 @@ const TrailsList = ({ files }) => {
   );
 };
 
-const FileItem = ({ file }) => {
+interface FileItemProps {
+  file: AsburyTrailsItem;
+}
+const FileItem: React.FC<FileItemProps> = ({ file }) => {
   const router = useRouter();
   const format = "MM-DD-YYYY hh:mm A";
   console.log(file?.created_at);
@@ -24,13 +32,15 @@ const FileItem = ({ file }) => {
   const formatDate = moment(new Date(file?.created_at)).format(format);
 
   const downloadFile = async () => {
-    const { data, error } = await supabase.storage
+    const { data, error } = supabase.storage
       .from("trails")
       .getPublicUrl(file?.filename);
     if (error) {
       console.log("Error getting public URL for file:: ", error.message);
     }
-    router.push(data?.publicURL);
+    if(data) {
+      router.push(data?.publicURL);
+    }
   };
   return (
     <div
