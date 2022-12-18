@@ -3,9 +3,9 @@ import React from "react";
 
 interface Props {
   title?: string;
-  subtitle?: string;
-  content1?: React.ReactNode;
-  content2?: React.ReactNode;
+  subtitle?: React.ReactNode | string;
+  content1?: React.ReactNode | string;
+  content2?: React.ReactNode | string;
 }
 const SquareCard: React.FC<Props> = ({ title, subtitle, content1, content2}) => {
   return (
