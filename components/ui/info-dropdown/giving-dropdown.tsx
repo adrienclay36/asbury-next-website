@@ -4,9 +4,8 @@ import { Button } from '@mantine/core';
 import styles from "./info-dropdown.module.css";
 import { useRouter } from 'next/router';
 import Link from "next/link";
-import { BsPaypal } from "react-icons/bs";
 import { FaStripeS } from 'react-icons/fa';
-const GivingDropdown = ({ title, content, buttonText, external, href }) => {
+const GivingDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const router = useRouter();

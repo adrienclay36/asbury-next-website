@@ -1,6 +1,15 @@
 import React from 'react'
 
-const InfoCardVerticle = (props) => {
+
+interface Props {
+  title: string;
+  icon: React.ReactNode;
+  content: string;
+  buttonText?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  sizeProps?: string;
+}
+const InfoCardVerticle: React.FC<Props> = (props) => {
   return (
     <div className="container flex flex-1 flex-col justify-center items-center p-6 border-2 my-12 w-11/12 lg:w-3/6 md:w-3/6 shadow-lg rounded-lg">
       {props.icon}

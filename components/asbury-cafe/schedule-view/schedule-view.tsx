@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import AsburyButton from "../../ui/AsburyButton";
 import { useRouter } from "next/router";
-import InfoDropdown from '../../../components/ui/info-dropdown/info-dropdown';
+import InfoDropdown from '../../ui/info-dropdown/info-dropdown';
 import SectionHeading from "../../ui/section-heading";
 const ScheduleView = () => {
   const router = useRouter();
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLDivElement>(null);
 
   return (
     <div>
@@ -35,7 +35,7 @@ const ScheduleView = () => {
       <div className="text-center">
         <AsburyButton
           onClick={() =>
-            videoRef.current.scrollIntoView({ behavior: "smooth" })
+            videoRef.current!.scrollIntoView({ behavior: "smooth" })
           }
           text="Pie Cafe Training Video"
         />

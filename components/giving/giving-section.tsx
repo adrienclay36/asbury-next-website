@@ -3,7 +3,7 @@ import SectionHeading from "../ui/section-heading";
 
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
 import SquareCard from "../ui/square-card/square-card";
-import GivingDropdown from "../ui/info-dropdown/giving-dropdown.js";
+import GivingDropdown from "../ui/info-dropdown/giving-dropdown.jsx";
 
 const GivingSection = () => {
   return (
@@ -27,9 +27,9 @@ const GivingSection = () => {
             key={item.title}
             title={item.title}
             content={item.content}
-            buttonText={item.buttonText}
+            buttonText={item.buttonText!}
             external={item.external}
-            href={item.href}
+            href={item.href!}
           />
         ))}
       </div>

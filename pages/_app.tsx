@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-
+import { AppProps } from "next/app";
 import { useEffect } from "react";
 import UserContextProvider from "../store/user-context";
 import { NotificationsProvider } from "@mantine/notifications";
@@ -10,14 +10,13 @@ import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import {
-  useQueryclient,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     polyfill();
   }, []);
