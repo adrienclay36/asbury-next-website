@@ -1,6 +1,10 @@
+import { GetServerSideProps, NextPage } from 'next';
 import React from 'react'
 import ResetPasswordForm from '../../components/admin/reset-pass-form'
-const PasswordRecovery = ({ token }) => {
+interface Props {
+  token: string;
+}
+const PasswordRecovery: NextPage<Props> = ({ token }) => {
   return (
     <>
         <ResetPasswordForm token={token}/>
@@ -10,7 +14,7 @@ const PasswordRecovery = ({ token }) => {
 
 export default PasswordRecovery
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const token = query.token;
     if (!token) {
       return {

@@ -1,3 +1,3 @@
 export type PermissionSet = Permission[];
 
-export type Permission = "librarian" | "admin" | "blog"
+export type Permission = "library" | "invite" | "blog" | "social" | "external" | "scheduling";

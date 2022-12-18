@@ -3,7 +3,7 @@ import SectionHeading from "../ui/section-heading";
 
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
 import SquareCard from "../ui/square-card/square-card";
-import GivingDropdown from "../ui/info-dropdown/giving-dropdown.jsx";
+import GivingDropdown from "../ui/info-dropdown/giving-dropdown";
 
 const GivingSection = () => {
   return (
