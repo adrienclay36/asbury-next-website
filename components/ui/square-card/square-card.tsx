@@ -1,6 +1,13 @@
 import React from "react";
 
-const SquareCard = ({ title, subtitle, content1, content2}) => {
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  content1?: React.ReactNode;
+  content2?: React.ReactNode;
+}
+const SquareCard: React.FC<Props> = ({ title, subtitle, content1, content2}) => {
   return (
     <div className="container flex flex-1 flex-col items-center justify-center mx-auto shadow-lg rounded-lg m-12 w-11/12 lg:w-2/6 md:11/12 py-10 px-4 lg:px-10 md:px-10">
       <h1 className="mx-10 text-2xl lg:text-3xl md:text-3xl uppercase text-seaFoam-700 text-center">{title}</h1>
