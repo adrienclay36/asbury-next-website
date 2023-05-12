@@ -2,20 +2,39 @@ import React from "react";
 import SectionHeading from "../ui/section-heading";
 import InfoDropdown from "../ui/info-dropdown/info-dropdown";
 import Image from "next/image";
-import SquareCard from "../../components/ui/square-card/square-card";
+import SquareCard from "../ui/square-card/square-card";
+import AsburyButton from '../ui/AsburyButton';
+import { supabase } from "../../supabase-client";
+import { useRouter } from "next/router";
 const VBSSection = () => {
+  const router = useRouter();
+
+  const downloadPDF = async () => {
+    const { data, error } = await supabase.storage.from('vbs-files/2023').download('vbs.pdf');
+    const url = URL.createObjectURL(data!);
+    const a = document.createElement('a');
+    a.href = url;
+    a.rel = 'noreferrer';
+    a.target = '_blank';
+    a.download = 'VBS-2023.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }
   return (
     <SectionHeading title="VBS Registration">
-      <div className="flex flex-1 justify-center items-center">
-        <Image
-          className="self-center"
-          src="/images/CokesburySurfShack.png"
-          height={400}
-          width={400}
-          alt="VBS Registration"
-        />
-      </div>
+      <div className="container flex flex-1 flex-col justify-center items-center">
+  
+        <img src="/images/VBS-2023.png" className="w-2/6 mb-4"/>
+        <AsburyButton onClick={downloadPDF} text="PDF Download"/>
+        </div>
       <SquareCard
+        title="VBS Registration Open Now"
+        subtitle="July 24th - July 28th"
+        content1="9:00 AM - 12:00 PM"
+      />
+      {/* <SquareCard
         title="July 25th - July 29th"
         subtitle="8:30 AM - 11:30 AM"
         content1="8:30 AM Breakfast (Optional)"
@@ -41,8 +60,7 @@ const VBSSection = () => {
           content="Download and get involved with VBS related materials!"
           buttonText="View Downloads"
           href="/vbs/downloads"
-        />
-      </div>
+        /> */}
     </SectionHeading>
   );
 };

@@ -17,7 +17,7 @@ import { GearIcon } from "@radix-ui/react-icons";
 import SectionHeading from "../ui/section-heading";
 import Link from "next/link";
 
-const UserProfileCard = ({ user }) => {
+const UserProfileCard = () => {
   const userContext = useContext(UserContext);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);

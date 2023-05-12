@@ -8,6 +8,8 @@ import { UserContext } from "../../store/user-context";
 import useGetUser from "../../hooks/useGetUser";
 import FinancialManagementSection from '../../components/user-profile/financial-management-section';
 import SkeletonProfile from "../../components/ui/skeleton-profile";
+
+
 const UserProfilePage = () => {
   const router = useRouter();
   const userContext = useContext(UserContext);
@@ -21,14 +23,14 @@ const UserProfilePage = () => {
 
   if (userContext.loading) {
     return (
-      <Layout title="Loading Profile">
+      <Layout description="Loading Profile" title="Loading Profile">
         <SkeletonProfile />
       </Layout>
     );
   }
 
   return (
-    <Layout title={`${userContext.firstName} ${userContext.lastName}`}>
+    <Layout description="Your profile on Asbury UMC" title={`${userContext.firstName} ${userContext.lastName}`}>
       <UserProfileCard />
       {/* <FinancialManagementSection/> */}
     </Layout>
