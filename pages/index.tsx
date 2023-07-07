@@ -20,7 +20,6 @@ interface HomeProps {
 }
 const Home: NextPage<HomeProps> = (props) => {
   const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState(props.posts);
   const [userWelcome, setUserWelcome] = useState(false);
   const userContext = useContext(UserContext);
   const disableNotifications = useMediaQuery("(max-width: 900px)");

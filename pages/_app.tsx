@@ -3,16 +3,14 @@ import { AppProps } from "next/app";
 import { useEffect } from "react";
 import UserContextProvider from "../store/user-context";
 import { NotificationsProvider } from "@mantine/notifications";
+import { MantineProvider } from "@mantine/core";
 import { polyfill } from "smoothscroll-polyfill";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
 import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
@@ -38,9 +36,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <NextNProgress height={4} color={"#899e9c"} />
       <QueryClientProvider client={queryClient}>
         <UserContextProvider>
-          <NotificationsProvider position="bottom-right">
-            <Component {...pageProps} />
-          </NotificationsProvider>
+          <MantineProvider theme={{ fontFamily: 'Red Hat Display'}}>
+            <NotificationsProvider position="bottom-right">
+              <Component {...pageProps} />
+            </NotificationsProvider>
+          </MantineProvider>
         </UserContextProvider>
       </QueryClientProvider>
     </>

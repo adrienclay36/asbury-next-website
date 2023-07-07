@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { Button } from '@mantine/core';
+import { Button } from "@mantine/core";
 import styles from "./info-dropdown.module.css";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import Link from "next/link";
-import { FaStripeS } from 'react-icons/fa';
+import { FaStripeS } from "react-icons/fa";
+import { FaPaypal } from "react-icons/fa";
 const GivingDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
@@ -36,28 +37,30 @@ const GivingDropdown = () => {
             }`}
           >
             <p className="text-lg text-gray-500 text-center">
-              Make a secure, online donation in any amount directly from our website. You will receive an automated email containing a transaction receipt. 
+              Make a secure, online donation in any amount directly from our
+              website. You will receive an automated email containing a
+              transaction receipt.
             </p>
 
             <div className="grid grid-cols-1 gap-4 mt-4">
               <Link href="https://www.paypal.com" passHref>
-                <a target="_blank" rel="noreferrer">
-                  
-                </a>
+                <a target="_blank" rel="noreferrer"></a>
               </Link>
               <Button
                 type="submit"
                 variant="filled"
-                disabled={true}
-                onClick={() => router.push("/giving/one-time-donation")}
-                leftIcon={<FaStripeS />}
+                onClick={() =>
+                  router.push(
+                    "https://www.paypal.com/donate/?hosted_button_id=UC6JPRH49BAEY"
+                  )
+                }
+                leftIcon={<FaPaypal />}
                 className="text-white bg-emerald-900 hover:bg-emerald-800 w-full uppercase tracking-wide"
                 style={{
                   fontFamily: "Red Hat Display",
-                  backgroundColor: "#635BFF",
                 }}
               >
-                Online Giving Coming Soon
+                Donate Via Paypal
               </Button>
             </div>
           </div>

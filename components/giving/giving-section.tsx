@@ -21,7 +21,6 @@ const GivingSection = () => {
 
       <div className="sm:container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-start mt-12">
         <GivingDropdown />
-
         {givingItems.map((item) => (
           <InfoDropdown
             key={item.title}
@@ -41,20 +40,19 @@ export default GivingSection;
 
 export const givingItems = [
   {
-    title: "Automated Giving",
-    content:
-      "Set up and manage recurring donations right from asburyabq.org! By creating an account, you will be able to set up recurring donations as well as view your transaction history.",
-    buttonText: null,
-    href: null,
-    external: false,
-  },
-  {
     title: "By Check",
     content:
       "Write a check payable to Asbury UMC and mail to: 10000 Candelaria Road NE Albuquerque, New Mexico 87112",
     buttonText: null,
     href: null,
     external: false,
+  },
+  {
+    title: "Electronic Funds Transfer",
+    content: "Deposit money on a regular basis automatically via automatic funds withdrawal. Contact the office for more information.",
+    buttonText: null,
+    href: "",
+    external: true,
   },
   {
     title: "STOCK OR MUTUAL FUNDS",

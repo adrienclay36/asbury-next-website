@@ -317,16 +317,16 @@ export const navLinks: NavLink[] = [
     subNav: true,
     size: "md",
     items: [
-      // {
-      //   title: "PayPal",
-      //   href: "https://www.paypal.com",
-      //   icon: <BsPaypal size={18} />,
-      // },
       {
-        title: "One Time Donation",
-        href: "/giving/one-time-donation",
-        icon: <FaStripeS size={18} />,
+        title: "PayPal",
+        href: "https://www.paypal.com/donate/?hosted_button_id=UC6JPRH49BAEY",
+        icon: <BsPaypal size={18} />,
       },
+      // {
+      //   title: "One Time Donation",
+      //   href: "/giving/one-time-donation",
+      //   icon: <FaStripeS size={18} />,
+      // },
     ],
   },
   {
