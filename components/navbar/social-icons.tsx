@@ -89,11 +89,11 @@ const SocialIcons: React.FC<Props> = ({
     <>
       <div className="container flex flex-wrap justify-center lg:justify-end md:justify-end items-center mt-4 h-16">
         {/* TODO: DISABLE VBS UNTIL NEXT YEAR */}
-        {!mobileScreen && !hideButton && (
+        {/* {!mobileScreen && !hideButton && (
           <MainButton margin="mr-8" onClick={() => router.push("/vbs")}>
             VBS Registration
           </MainButton>
-        )}
+        )} */}
 
         {/* SIGN UP DRAWER */}
         {!userContext.user && (
