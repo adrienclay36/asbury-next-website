@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import AsburyButton from "../../ui/AsburyButton";
 import { useRouter } from "next/router";
-import InfoDropdown from '../../ui/info-dropdown/info-dropdown';
+import InfoDropdown from "../../ui/info-dropdown/info-dropdown";
 import SectionHeading from "../../ui/section-heading";
 const ScheduleView = () => {
   const router = useRouter();
@@ -57,10 +57,9 @@ const ScheduleView = () => {
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/_ElHpZ52wbg"
+            src="https://www.youtube.com/embed/29XVhx9SzfQ?si=Ncv3yMmvlPOA2K1g"
             title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           ></iframe>
         </div>
