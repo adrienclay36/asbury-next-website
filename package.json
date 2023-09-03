@@ -61,6 +61,10 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz",
     "yup": "^0.32.11"
   },
+  "resolutions": {
+    "word-wrap": "1.2.4",
+    "semver": "7.5.2"
+  },
   "devDependencies": {
     "@types/node": "^18.11.12",
     "@types/react": "^18.0.26",
