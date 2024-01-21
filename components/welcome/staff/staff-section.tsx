@@ -7,16 +7,22 @@ const StaffSection = () => {
         <h1 className="text-4xl mt-8 uppercase tracking-widest">STAFF</h1>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-12">
-          {staffInfo.map(member => (
-              <StaffCard key={member.name} name={member.name} jobTitle={member.jobTitle} description={member.description} image={member.image}/>
-          ))}
+        {staffInfo.map((member) => (
+          <StaffCard
+            key={member.name}
+            name={member.name}
+            jobTitle={member.jobTitle}
+            description={member.description}
+            image={member.image}
+            email={member.email}
+          />
+        ))}
       </div>
     </section>
   );
 };
 
 export default StaffSection;
-
 
 export const staffInfo = [
   {
@@ -31,9 +37,10 @@ export const staffInfo = [
   {
     name: "Linda Brady",
     jobTitle: "Office Administrator",
-    description: "Linda Brady acts as our office administrator, and is available to answer your questions via the contact form in the top right.",
+    description:
+      "Linda Brady acts as our office administrator, and is available to answer your questions via the contact form in the top right.",
     image: "/images/headshots/Linda-One.png",
-    email: 'officeadmin@asburyabq.org'
+    email: "officeadmin@asburyabq.org",
   },
   {
     name: "Richard Ramsay",
@@ -42,5 +49,12 @@ export const staffInfo = [
       "Our building manager Richard has provided care and assistance at Asbury for years, and is responsible for the maintenance and care of our facilities. ",
     image: "/images/headshots/Richard-One.png",
     email: undefined,
+  },
+  {
+    name: "Michele Walton",
+    jobTitle: "Family Life Coordinator",
+    description: "",
+    email: "FamilyLife@asburyabq.org",
+    image: "/images/headshots/Michele-One.jpg",
   },
 ];

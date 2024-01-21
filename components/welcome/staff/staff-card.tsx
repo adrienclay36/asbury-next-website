@@ -21,10 +21,9 @@ const StaffCard: React.FC<Props> = ({ name, jobTitle, description, image, email 
       </div>
       <div className="text-left p-0 lg:p-4 md:p-4">
 
-
       <p className="font-semibold text-lg">{name}</p>
       <p className="font-semibold text-gray-400">{jobTitle}</p>
-      <p className="font-semibold text-gray-400">{email}</p>
+      {email && <p className="font-semibold text-gray-400">{email}</p>}
       <p className="my-4 text-gray-600">{description}</p>
       </div>
     </Modal>

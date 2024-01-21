@@ -1,15 +1,21 @@
-import React from 'react'
-import InfoCardVerticle from '../../ui/info-card-vertical';
-import NewsArticleList from './news-article-list';
-import styles from './about-view.module.css';
+import React from "react";
+import InfoCardVerticle from "../../ui/info-card-vertical";
+import NewsArticleList from "./news-article-list";
+import styles from "./about-view.module.css";
 import { GiPieSlice, GiBarn } from "react-icons/gi";
-import Image from 'next/image';
-import SectionHeading from '../../ui/section-heading';
-import { useRouter } from 'next/router';
+import { BsEnvelope } from "react-icons/bs";
+import Image from "next/image";
+import SectionHeading from "../../ui/section-heading";
+import { useRouter } from "next/router";
 const AboutView = () => {
   const router = useRouter();
   return (
     <div>
+      <InfoCardVerticle
+        content="For all inquiries regarding the Asbury Pie Cafe, please contact us at piecafe@asburyabq.org"
+        icon={<BsEnvelope className="text-teal-900" size={75} />}
+        title="piecafe@asburyabq.org"
+      />
       <InfoCardVerticle
         icon={<GiPieSlice size={100} className="text-teal-900 mb-12" />}
         sizeProps={"text-lg lg:text-2xl md:text-2xl"}
@@ -94,6 +100,6 @@ that it supports."
       </div>
     </div>
   );
-}
+};
 
-export default AboutView
+export default AboutView;
