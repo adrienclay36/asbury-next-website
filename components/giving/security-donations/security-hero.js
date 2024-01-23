@@ -69,7 +69,7 @@ const SecurityHero = () => {
       <div className="mt-12">
         <InfoCardDirectional
           title="Our Financial Advisor"
-          content="Asbury’s Financial Advisor at Morgan Stanley Smith Barney is Don Friedman, telephone 505-889-2885 or 1-800-776-5973, and fax 505-889-2858. They  are located just south of Coronado at 6701 Uptown Blvd, Albuquerque, 87110.
+          content="Asbury’s Financial Advisor at Morgan Stanley Smith Barney is Lisa Obeji, telephone 505-883-6262 or toll-free at 1-800-776-5973, and fax at 505-889-2853. Located at 6565 Americas Parkway, Ste 400, Albuquerque, NM 87110. F
         You also need to contact Asbury to get the security sold from Asbury’s account, designate the use of the proceeds, and obtain the proper IRS documentation from the church."
           icon={<FaRegBuilding className="text-seaFoam-700" size={175} />}
         />

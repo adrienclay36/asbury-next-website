@@ -4,7 +4,7 @@ import { TextInput, Textarea } from '@mantine/core';
 import AsburyButton from '../ui/AsburyButton';
 import { sendMail } from '../../utils/send-email-functions';
 import UIModal from '../ui/modal/UIModal';
-const adminList = "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org, familylife@asburyabq.org, librarian@asburyabq.org, revjoe@asburyabq.org";
+const adminList = "asbury-webmaster@asburyabq.org, officeadmin@asburyabq.org, familylife@asburyabq.org, librarian@asburyabq.org, revjoe@asburyabq.org, piecafe@asburyabq.org";
 const testList = "adrienclay36@gmail.com, asbury-webmaster@asburyabq.org";
 const ContactForm = () => {
     const [name, setName] = useState('');
